@@ -108,5 +108,24 @@
   "cobblemon.move.landsliderush": "Landslide Rush",
   "cobblemon.move.landsliderush.desc": "The user rushes downhill at the target, then exits the battle and swaps in a party member.",
   "cobblemon.move.seedyrecede": "Seedy Recede",
-  "cobblemon.move.seedyrecede.desc": "The user grab recedes back into its pokeball hurling seeds at the opponent, then exits the battle and swaps in a party member."
+  "cobblemon.move.seedyrecede.desc": "The user grab recedes back into its pokeball hurling seeds at the opponent, then exits the battle and swaps in a party member.",
+  "cobblemon.move.acidrain": "Acid Rain",
+  "cobblemon.move.acidrain.desc": "The user summons a toxic downpour lasting five turns. It damages all Pokémon except Poison and Steel Types.",
+  "cobblemon.move.asteroidbelt": "Asteroid Belt",
+  "cobblemon.move.asteroidbelt.desc": "The user surrounds itself with a ring of asteroids. Attacks that get too close are damaged and may be left frozen solid.",
+  "cobblemon.move.atomsplit": "Atom Split",
+  "cobblemon.move.atomsplit.desc": "The user attacks everything around it by causing a tremendous explosion. The user faints upon using this move.",
+  "cobblemon.move.depthcharge": "Depth Charge",
+  "cobblemon.move.depthcharge.desc": "The user fires a blast of energy from the deep. May paralyze the target.",
+  "cobblemon.move.dustdevil": "Dust Devil",
+  "cobblemon.move.dustdevil.desc": "A cyclone of thick dust is whipped up. This move hits Pokémon that are in the air.",
+  "cobblemon.move.engulf": "Engulf",
+  "cobblemon.move.engulf.desc": "Using a black hole, the user clears its side of the field of trapping moves and hazards while damaging the target in the process.",
+  
+  "cobblemon.battle.weather.acidrain.start": "It started to rain acid!",
+  "cobblemon.battle.weather.acidrain.upkeep": "Acid continues to fall.",
+  "cobblemon.battle.weather.acidrain.end": "The  acid rain stopped.",
+  
+  "cobblemon.battle.damage.acidrain": "%1$s was melted by the acid rain.",
+  "cobblemon.battle.damage.asteroidbelt": "%1$s was battered by the asteroids."
 }

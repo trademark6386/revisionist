@@ -22,6 +22,22 @@ __export(moves_exports, {
 });
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
+  acidrain: {
+    num: 957,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Acid Rain",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "AcidRain",
+    secondary: null,
+    target: "all",
+    type: "Poison",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   ancientroar: {
     num: 918,
     accuracy: 100,
@@ -34,6 +50,37 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Rock",
+    contestType: "Tough"
+  },
+  asteroidbelt: {
+    num: 958,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Asteroid Belt",
+    pp: 10,
+    flags: { noassist: 1, failcopycat: 1 },
+    volatileStatus: "asteroidbelt",
+    condition: {
+      duration: 5,
+      onTryHit(target, source, move) {
+        if (this.checkMoveMakesContact(move, source, target)) {
+          this.damage(source.baseMaxhp / 8, source, target);
+        }
+        return this.NOT_FAIL;
+      },
+	  onDamagingHit(damage, target, source, move) {
+      if (this.checkMoveMakesContact(move, source, target)) {
+        if (this.randomChance(1, 10)) {
+          source.trySetStatus("frz", target);
+        }
+      }
+    }
+    },
+    secondary: null,
+    target: "self",
+    type: "Rock",
+    zMove: { boost: { def: 1 } },
     contestType: "Tough"
   },
   asteroidshot: {
@@ -52,6 +99,21 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cute"
+  },
+  atomsplit: {
+    num: 959,
+    accuracy: 100,
+    basePower: 250,
+    category: "special",
+    name: "Atom Split",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Normal",
+    contestType: "Beautiful"
   },
   barbedtackle: {
     num: 926,
@@ -337,6 +399,80 @@ const Moves = {
     type: "Dark",
     contestType: "Cool"
   },
+  depthcharge: {
+    num: 960,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Depth Charge",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "par"
+    },
+    target: "normal",
+    type: "Water",
+    contestType: "Cute"
+  },
+  dive: {
+    num: 291,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Dive",
+    pp: 10,
+    priority: 0,
+    flags: {
+      contact: 1,
+      charge: 1,
+      protect: 1,
+      mirror: 1,
+      nonsky: 1,
+      allyanim: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failinstruct: 1
+    },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      if (attacker.hasAbility("gulpmissile") && attacker.species.name === "Cramorant" && !attacker.transformed) {
+        const forme = attacker.hp <= attacker.maxhp / 2 ? "cramorantgorging" : "cramorantgulping";
+        attacker.formeChange(forme, move);
+      }
+      this.add("-prepare", attacker, move.name);
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    condition: {
+      duration: 2,
+      onImmunity(type, pokemon) {
+        if (type === "sandstorm" || type === "hail")
+          return false;
+      },
+      onInvulnerability(target, source, move) {
+        if ([" depthcharge", "surf", "whirlpool"].includes(move.id)) {
+          return;
+        }
+        return false;
+      },
+      onSourceModifyDamage(damage, source, target, move) {
+        if (move.id === "depthcharge" || move.id === "surf" || move.id === "whirlpool") {
+          return this.chainModify(2);
+        }
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Water",
+    contestType: "Beautiful"
+  },
   dracoblitz: {
     num: 932,
     accuracy: 100,
@@ -419,6 +555,74 @@ const Moves = {
     target: "normal",
     type: "Grass",
     contestType: "Tough"
+  },
+  dustdevil: {
+    num: 961,
+    accuracy: 80,
+    basePower: 90,
+    category: "Special",
+    name: "Dust Devil",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, nonsky: 1 },
+    onEffectiveness(typeMod, target, type, move) {
+      if (move.type !== "Ground")
+        return;
+      if (!target)
+        return;
+      if (!target.runImmunity("Ground")) {
+        if (target.hasType("Flying"))
+          return 0;
+      }
+    },
+    ignoreImmunity: { "Ground": true },
+    secondary: null,
+    target: "normal",
+    type: "Ground",
+    zMove: { basePower: 180 },
+    contestType: "Beautiful"
+  },
+  engulf: {
+    num: 962,
+    accuracy: 100,
+    basePower: 20,
+    category: "Special",
+    name: "Engulf",
+    pp: 40,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onAfterHit(target, pokemon) {
+      if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
+        this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
+      }
+      const sideConditions = ["spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      for (const condition of sideConditions) {
+        if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
+          this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
+        }
+      }
+      if (pokemon.hp && pokemon.volatiles["partiallytrapped"]) {
+        pokemon.removeVolatile("partiallytrapped");
+      }
+    },
+    onAfterSubDamage(damage, target, pokemon) {
+      if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
+        this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
+      }
+      const sideConditions = ["spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      for (const condition of sideConditions) {
+        if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
+          this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
+        }
+      }
+      if (pokemon.hp && pokemon.volatiles["partiallytrapped"]) {
+        pokemon.removeVolatile("partiallytrapped");
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Cool"
   },
   faengrush: {
     num: 934,
