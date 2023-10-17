@@ -88,7 +88,8 @@
   "cobblemon.move.thunderslash": "Thunder Slash",
   "cobblemon.move.thunderslash.desc": "The foe is slashed with an electrified blade. Critical hits land easier.",
   "cobblemon.move.typhoon": "Typhoon",
-  "cobblemon.move.typhoon.desc": "The user is whipped around by a strong typhoon. It may also lower the target's accuracy.",
+  "cobblemon.move.vanish": "Vanish",
+  "cobblemon.move.vanish.desc": "The user becomes nigh invisible using its ghost body. This sharply raises its evasiveness.",
   "cobblemon.move.venomswipe": "Venom Swipe",
   "cobblemon.move.venomswipe.desc": "The user swipes around its venomous tail aimlessly. This may poison struck targets.",
   "cobblemon.move.smogdiffusion": "Smog Diffusion",
@@ -121,10 +122,20 @@
   "cobblemon.move.dustdevil.desc": "A cyclone of thick dust is whipped up. This move hits Pokémon that are in the air.",
   "cobblemon.move.engulf": "Engulf",
   "cobblemon.move.engulf.desc": "Using a black hole, the user clears its side of the field of trapping moves and hazards while damaging the target in the process.",
+  "cobblemon.move.miraclewill": "Miracle Will",
+  "cobblemon.move.miraclewill.desc": "The target puts all of its willpower into an attack. If the target is an ally, it restores its HP instead.",
+  "cobblemon.move.perplex": "Perplex",
+  "cobblemon.move.perplex.desc": "The user assaults its foe with bewildering ideas. This move's power is increased if the target is confused.",
+  "cobblemon.move.standoff": "Standoff",
+  "cobblemon.move.standoff.desc": "The user initiates a duel. Both Pokémon may only attack and cannot switch until one of them has fainted.",
   
   "cobblemon.battle.weather.acidrain.start": "It started to rain acid!",
   "cobblemon.battle.weather.acidrain.upkeep": "Acid continues to fall.",
   "cobblemon.battle.weather.acidrain.end": "The  acid rain stopped.",
+  
+  "cobblemon.battle.sidestart.brace": "%1$s braces for impact!",
+  
+  "cobblemon.battle.sideend.brace": "%1$s is no longer bracing for impact!",
   
   "cobblemon.battle.damage.acidrain": "%1$s was melted by the acid rain.",
   "cobblemon.battle.damage.asteroidbelt": "%1$s was battered by the asteroids."

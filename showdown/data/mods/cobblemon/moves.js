@@ -793,6 +793,34 @@ const Moves = {
     zMove: { boost: { spa: 1 } },
     contestType: "Beautiful"
   },
+  miraclewill: {
+    num: 964,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Miracle Will",
+    pp: 10,
+    priority: 0,
+    flags: { bullet: 1, protect: 1, mirror: 1, allyanim: 1 },
+    onTryHit(target, source, move) {
+      if (source.isAlly(target)) {
+        move.basePower = 0;
+        move.infiltrates = true;
+      }
+    },
+    onHit(target, source) {
+      if (source.isAlly(target)) {
+        if (!this.heal(Math.floor(target.baseMaxhp * 0.5))) {
+          this.add("-immune", target);
+          return this.NOT_FAIL;
+        }
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    contestType: "Cute"
+  },
   mudslide: {
     num: 908,
     accuracy: 95,
@@ -887,6 +915,25 @@ const Moves = {
     target: "normal",
     type: "Flying",
     contestType: "Cute"
+  },
+  perplex: {
+    num: 965,
+    accuracy: 100,
+    basePower: 65,
+    category: "Special",
+    name: "Perplex",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+	onBasePower(basePower, pokemon, target) {
+      if (target.status === "confusion") {
+        return this.chainModify(2);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    contestType: "Clever"
   },
   piercepincer: {
     num: 950,
@@ -1040,6 +1087,24 @@ const Moves = {
     type: "Poison",
     contestType: "Cool"
   },
+  standoff: {
+    num: 966,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Standoff",
+    pp: 5,
+    priority: 0,
+    flags: { reflectable: 1, mirror: 1 },
+    onHit(target, source, move) {
+      return target.addVolatile("trapped", source, move, "trapper");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    zMove: { boost: { spd: 1 } },
+    contestType: "Cool"
+  },
   tartantrum: {
     num: 942,
     accuracy: 95,
@@ -1191,7 +1256,8 @@ const Moves = {
       }
     },
     target: "normal",
-    type: "bug"
+    type: "Bug",
+    contestType: "Tough"
   },
   windshear: {
     num: 915,
