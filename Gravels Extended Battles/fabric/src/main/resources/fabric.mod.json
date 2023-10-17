@@ -1,24 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "cobblemon_fabric_mdk",
-  "version": "1.0.0",
-  "name": "Cobblemon Fabric MDK",
-  "description": "A MDK useful for Fabric Development",
-  "authors": [
-    "The Cobblemon Team"
-  ],
-  "license": "MPL-2.0",
+  "id": "gravels_extended_battles",
+  "version": "${mod_version}",
+
+  "name": "Gravel's Extended Battles",
+  "description": "${mod_description}",
+  "authors": ["${mod_authors}"],
+  "contact": {},
+
+
+  "license": "All Rights Reserved",
+  "icon": "icon.png",
+
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.cobblemon.fabric.example.FabricModExample"
+      "drai.dev.gravelmon.fabric.GravelsExtendedBattlesFabric"
     ]
   },
+  "mixins": [
+    "gravels_extended_battles.mixins.json"
+  ],
   "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=${minecraft_version}",
     "java": ">=17",
-    "minecraft": ">=1.20.1",
-    "fabricloader": ">=0.14.21",
-    "fabric": "*",
-    "cobblemon": ">=1.4.0"
+    "fabric-api": "*",
+    "cobblemon": ">=1.4"
   }
 }
