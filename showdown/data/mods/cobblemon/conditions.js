@@ -60,6 +60,40 @@ const Conditions = {
     onFieldEnd() {
       this.add("-weather", "none");
     }
+  },
+  darkness: {
+    name: "Darkness",
+    effectType: "Weather",
+    duration: 5,
+    onWeatherModifyDamage(damage, attacker, defender, move) {
+      if (defender.hasItem("utilityumbrella"))
+        return;
+      if (move.type === "Ghost" || type === "Dark") {
+        this.debug("darkness ghost boost");
+        return this.chainModify(1.5);
+      }
+      if (move.type === "Fairy") {
+        this.debug("darkness fairy suppress");
+        return this.chainModify(0.5);
+      }
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Darkness", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Darkness");
+      }
+    },
+    onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "Darkness", "[upkeep]");
+      this.eachEvent("Weather");
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
   }
 };
 //# sourceMappingURL=conditions.js.map
