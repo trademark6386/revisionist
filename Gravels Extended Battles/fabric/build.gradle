@@ -20,6 +20,7 @@ loom {
             runDir "build/datagen"
         }
     }
+
 }
 configurations {
     common

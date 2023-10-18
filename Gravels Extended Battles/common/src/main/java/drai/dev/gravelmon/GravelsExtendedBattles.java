@@ -1,7 +1,9 @@
 package drai.dev.gravelmon;
 
 import dev.architectury.platform.*;
+import net.minecraft.resources.*;
 import org.apache.commons.io.*;
+import org.intellij.lang.annotations.*;
 
 import java.io.*;
 import java.net.*;
@@ -24,6 +26,34 @@ public class GravelsExtendedBattles {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    static public String exportResource(String minecraftFolder,String resourceName) throws Exception {
+        InputStream stream = null;
+        OutputStream resStreamOut = null;
+        String jarFolder;
+        try {
+            stream = GravelsExtendedBattles.class.getResourceAsStream("..\\..\\..\\"+resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+            if(stream == null) {
+                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
+            }
+
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            jarFolder = minecraftFolder +resourceName;
+            //jarFolder = "C:\\Users\\Stijn\\Desktop\\test\\"+resourceName;
+            resStreamOut = new FileOutputStream(jarFolder);
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            stream.close();
+            resStreamOut.close();
+        }
+
+        return jarFolder + resourceName;
     }
 
 }
