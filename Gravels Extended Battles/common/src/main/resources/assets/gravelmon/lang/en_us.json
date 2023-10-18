@@ -214,5 +214,24 @@
   "cobblemon.battle.damage.acidrain": "%1$s was melted by the acid rain.",
   "cobblemon.battle.damage.asteroidbelt": "%1$s was battered by the asteroids.",
   "cobblemon.battle.damage.fallout": "%1$s was irradiated by the toxic fallout.",
-  "cobblemon.battle.damage.thunderstorm": "%1$s is hit by lightning!"
+  "cobblemon.battle.damage.thunderstorm": "%1$s is hit by lightning!",
+  
+  "cobblemon.ability.orbitaltide": "Orbital Tide",
+  "cobblemon.ability.orbitaltide.desc": "Turns the ground into Grassy Terrain when the Pokémon enters a battle.",
+  "cobblemon.ability.perforate": "Perforate",
+  "cobblemon.ability.perforate.desc": "Moves of the same type as the Pokémon ignore immunities.",
+  "cobblemon.ability.permafrost": "Permafrost",
+  "cobblemon.ability.permafrost.desc": "Boosts the Pokémon's Defense in a hailstorm.",
+  "cobblemon.ability.pollution": "Pollution",
+  "cobblemon.ability.pollution.desc": "The Pokémon summons acid rain in battle.",
+  "cobblemon.ability.scavenger": "Scavenger",
+  "cobblemon.ability.scavenger.desc": "Regains HP after knocking out any Pokémon.",
+  "cobblemon.ability.sunbathe": "Sunbathe",
+  "cobblemon.ability.sunbathe.desc": "The Pokémon gradually regains HP in sunlight.",
+  "cobblemon.ability.terrorize": "Terrorize",
+  "cobblemon.ability.terrorize.desc": "Normal-type moves become Ghost-type moves. The power of those moves is boosted a little.",
+  "cobblemon.ability.digitize": "Derrorize",
+  "cobblemon.ability.digitize.desc": "Normal-type moves become Digital-type moves. The power of those moves is boosted a little.",
+  "cobblemon.ability.fossilize": "Fossilize",
+  "cobblemon.ability.fossilize.desc": "Normal-type moves become Rock-type moves. The power of those moves is boosted a little."
 }
