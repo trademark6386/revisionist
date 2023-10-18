@@ -29,6 +29,7 @@ public abstract class TypeWidgetMixin {
             System.out.println("I tried to set the resources");
             ICON_WIDGET_INIT=true;
         }
+        System.out.println(((TypeWidget)(Object)this).getWidth());
         Intrinsics.checkNotNullParameter(type, "type");
         Intrinsics.checkNotNullParameter(pMatrixStack, "pMatrixStack");
         Identifier texture = typeResource;
@@ -36,7 +37,7 @@ public abstract class TypeWidgetMixin {
         int width = ((TypeWidget)(Object)this).getWidth();
         int height = ((TypeWidget)(Object)this).getHeight();
         double offset = (double)((float)((TypeWidget)(Object)this).getWidth() * (float)type.getTextureXMultiplier()) + 0.1;
-        int textureWidth = 36 * GravelsExtendedBattlesFabric.TYPE_COUNT;
+        int textureWidth = ((TypeWidget)(Object)this).getWidth() * GravelsExtendedBattlesFabric.TYPE_COUNT;
         blitk(pMatrixStack,
                 texture,
                 iconX,

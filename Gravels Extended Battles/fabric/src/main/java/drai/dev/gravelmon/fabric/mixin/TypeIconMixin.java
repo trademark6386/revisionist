@@ -46,6 +46,7 @@ public abstract class TypeIconMixin {
         System.out.println(small);
         Intrinsics.checkNotNullParameter(context, "context");
         int diameter = this.small ? 18 : 36;
+        System.out.println(diameter);
         float offsetX = this.centeredX ? (float)(diameter / 2) * 0.5F + (this.secondaryType != null ? this.doubleCenteredOffset : 0.0F) : 0.0F;
         MatrixStack matrixStack;
         if (this.secondaryType != null) {
