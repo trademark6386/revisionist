@@ -1,7 +1,9 @@
 package drai.dev.gravelmon;
 
 import dev.architectury.platform.*;
+import net.minecraft.resources.*;
 import org.apache.commons.io.*;
+import org.intellij.lang.annotations.*;
 
 import java.io.*;
 import java.net.*;
