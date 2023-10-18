@@ -24,7 +24,8 @@ module.exports = __toCommonJS(typechart_exports);
 const TypeChart = {
   bug: {
     damageTaken: {
-      Bug: 0,
+      fallout: 3,
+	  Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
@@ -84,7 +85,7 @@ const TypeChart = {
 	  Shadow: 1,
 	  Slime: 0,
 	  Sound: 3,
-      Steel: 0,
+      Steel: 1,
       Water: 0,
 	  Wind: 3
     }
@@ -180,7 +181,7 @@ const TypeChart = {
 	  Plastic: 0,
       Poison: 0,
       Psychic: 2,
-	  Questionmark: 1,
+	  Questionmark: 0,
       Rock: 0,
 	  Shadow: 1,
 	  Slime: 1,
@@ -217,7 +218,7 @@ const TypeChart = {
       Rock: 0,
 	  Shadow: 1,
 	  Slime: 0,
-	  Sound: 0,
+	  Sound: 2,
       Steel: 0,
       Water: 2,
 	  Wind: 0
@@ -227,7 +228,8 @@ const TypeChart = {
   electric: {
     damageTaken: {
       par: 3,
-      Bug: 0,
+      thunderstorm: 3,
+	  Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
@@ -286,7 +288,7 @@ const TypeChart = {
       Rock: 0,
 	  Shadow: 1,
 	  Slime: 0,
-	  Sound: 0,
+	  Sound: 1,
       Steel: 1,
       Water: 0,
 	  Wind: 0
@@ -458,7 +460,7 @@ const TypeChart = {
       Rock: 0,
 	  Shadow: 1,
 	  Slime: 0,
-	  Sound: 0,
+	  Sound: 2,
       Steel: 0,
       Water: 2,
 	  Wind: 0
@@ -468,7 +470,8 @@ const TypeChart = {
   ground: {
     damageTaken: {
       sandstorm: 3,
-      Bug: 0,
+      thunderstorm: 3,
+	  Bug: 0,
 	  Cosmic: 2,
 	  Crystal: 0,
       Dark: 0,
@@ -541,9 +544,9 @@ const TypeChart = {
       Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 1,
-      Dark: 0,
+      Dark: 1,
 	  Digital: 0,
-      Dragon: 0,
+      Dragon: 2,
       Electric: 2,
       Fairy: 0,
       Fighting: 0,
@@ -603,7 +606,8 @@ const TypeChart = {
   },
   nuclear: {
     damageTaken: {
-      Bug: 0,
+      fallout: 3,
+	  Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
@@ -617,7 +621,7 @@ const TypeChart = {
       Ghost: 0,
       Grass: 0,
       Ground: 1,
-      Ice: 0,
+      Ice: 1,
 	  light: 0,
       Normal: 0,
 	  Nuclear: 3,
@@ -738,13 +742,13 @@ const TypeChart = {
     },
     inherit: true
   },
-  questionarmk: {
+  questionmark: {
     damageTaken: {
-      Bug: 1,
+      Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
-	  Digital: 1,
+	  Digital: 0,
       Dragon: 0,
       Electric: 0,
       Fairy: 0,
@@ -763,7 +767,7 @@ const TypeChart = {
       Psychic: 0,
 	  Questionmark: 0,
       Rock: 0,
-	  Shadow: 1,
+	  Shadow: 0,
 	  Slime: 0,
 	  Sound: 0,
       Steel: 0,
@@ -879,15 +883,15 @@ const TypeChart = {
 	  Crystal: 0,
       Dark: 0,
 	  Digital: 0,
-      Dragon: 0,
+      Dragon: 1,
       Electric: 1,
-      Fairy: 0,
+      Fairy: 2,
       Fighting: 0,
       Fire: 0,
-      Flying: 0,
+      Flying: 2,
       Ghost: 2,
       Grass: 0,
-      Ground: 2,
+      Ground: 0,
       Ice: 0,
 	  light: 0,
       Normal: 0,
@@ -901,7 +905,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
-      Water: 0,
+      Water: 2,
 	  Wind: 1
     }
   },
@@ -910,7 +914,8 @@ const TypeChart = {
       psn: 3,
       tox: 3,
 	  acidrain: 3,
-      sandstorm: 3,
+      fallout: 3,
+	  sandstorm: 3,
       Bug: 2,
 	  Cosmic: 0,
 	  Crystal: 0,

@@ -22,32 +22,6 @@ __export(items_exports, {
 });
 module.exports = __toCommonJS(items_exports);
 const Items = {
-  lapapaberry: {
-    name: "Lapapa Berry",
-    spritenum: 503,
-    isBerry: true,
-    naturalGift: {
-      basePower: 80,
-      type: "Poison"
-    },
-    onUpdate(pokemon) {
-      if (pokemon.hp <= pokemon.maxhp / 4 || pokemon.hp <= pokemon.maxhp / 2 && pokemon.hasAbility("gluttony") && pokemon.abilityState.gluttony) {
-        pokemon.eatItem();
-      }
-    },
-    onTryEatItem(item, pokemon) {
-      if (!this.runEvent("TryHeal", pokemon))
-        return false;
-    },
-    onEat(pokemon) {
-      this.heal(pokemon.baseMaxhp / 3);
-      if (pokemon.getNature().minus === "spd") {
-        pokemon.addVolatile("confusion");
-      }
-    },
-    num: 503,
-    gen: 3
-  },
   longclub: {
     name: "Long Club",
     fling: {

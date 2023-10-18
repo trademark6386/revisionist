@@ -22,6 +22,24 @@ __export(moves_exports, {
 });
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
+  achillesheel: {
+    num: 967,
+    accuracy: true,
+    basePower: 50,
+    category: "Special",
+    name: "Achilles Heel",
+    pp: 15,
+    priority: 0,
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Normal" || type === "Fire" || type === "Water" || type === "Electric" || type === "Grass" || type === "Ice" || type === "Fighting" || type === "Poison" || type === "Ground" || type === "Flying" || type === "Psychic" || type === "Bug" || type === "Rock" || type === "Dragon" || type === "Dark" || type === "Steel" || type === "Fairy" || type === "Wind" || type === "Cosmic" || type === "Sound" || type === "Nuclear" || type === "Digital" || type === "Plastic" || type === "Light" || type === "Crystal" || type === "Slime")
+        return 1;
+    },
+    flags: { protect: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Normal",
+    contestType: "Cool"
+  },
   acidrain: {
     num: 957,
     accuracy: true,
@@ -98,6 +116,23 @@ const Moves = {
     },
     target: "normal",
     type: "Rock",
+    contestType: "Cute"
+  },
+  atomicpunch: {
+    num: 972,
+    accuracy: 95,
+    basePower: 80,
+    category: "Physical",
+    name: "Atomic Punch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "par"
+    },
+    target: "normal",
+    type: "Nuclear",
     contestType: "Cute"
   },
   atomsplit: {
@@ -186,6 +221,10 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Ground",
     contestType: "Tough"
+  },
+  boomburst: {
+    inherit: true,
+    type: "Sound"
   },
   brace: {
     num: 902,
@@ -363,6 +402,25 @@ const Moves = {
     type: "Fire",
     contestType: "Tough"
   },
+  confide: {
+    inherit: true,
+    type: "Sound"
+  },
+  coralbreak: {
+    num: 973,
+    accuracy: 95,
+    basePower: 80,
+    category: "Special",
+    overrideDefensiveStat: "def",
+    name: "Coral Break",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Water",
+    contestType: "Beautiful"
+  },
   corrode: {
     num: 919,
     accuracy: 100,
@@ -380,6 +438,20 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Poison",
+    contestType: "Beautiful"
+  },
+  crystalrush: {
+    num: 968,
+    accuracy: 100,
+    basePower: 45,
+    category: "Physical",
+    name: "Crystal Rush",
+    pp: 30,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
     contestType: "Beautiful"
   },
   darkmatter: {
@@ -527,6 +599,21 @@ const Moves = {
     zMove: { boost: { spa: 1 } },
     contestType: "Cute"
   },
+  drainlife: {
+    num: 974,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Drain Life",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, heal: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Clever"
+  },
   drakonvoice: {
     num: 923,
     accuracy: 85,
@@ -582,6 +669,10 @@ const Moves = {
     zMove: { basePower: 180 },
     contestType: "Beautiful"
   },
+  echoedvoice: {
+    inherit: true,
+    type: "Sound"
+  },
   engulf: {
     num: 962,
     accuracy: 100,
@@ -624,6 +715,31 @@ const Moves = {
     type: "Ghost",
     contestType: "Cool"
   },
+  expunge: {
+    num: 976,
+    accuracy: 70,
+    basePower: 110,
+    category: "Special",
+    name: "Expunge",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    onModifyMove(move, pokemon, target) {
+      switch (target?.effectiveWeather()) {
+        case "fallout":
+          move.accuracy = true;
+          break;
+      }
+    },
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Nuclear")
+        return 1;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cool"
+  },
   faengrush: {
     num: 934,
     accuracy: 95,
@@ -640,6 +756,51 @@ const Moves = {
     target: "normal",
     type: "Fairy",
     contestType: "Cool"
+  },
+  fallout: {
+    num: 975,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Fallout",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    weather: "Fallout",
+    secondary: null,
+    target: "all",
+    type: "Nuclear",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
+  fissionburst: {
+    num: 977,
+    accuracy: 100,
+    basePower: 150,
+    category: "special",
+    name: "Fission Burst",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Nuclear",
+    contestType: "Beautiful"
+  },
+  flameimpact: {
+    num: 978,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Flame Impact",
+    pp: 15,
+    priority: 2,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    contestType: "Beautiful"
   },
   flamejet: {
     num: 953,
@@ -718,11 +879,59 @@ const Moves = {
     type: "Ice",
     contestType: "Cool"
   },
+  
+  gammaray: {
+    num: 979,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "Gamma Ray",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Tough"
+  },
+  gemstoneglimmer: {
+    num: 980,
+    accuracy: 95,
+    basePower: 75,
+    category: "Special",
+    name: "Gemstone Glimmer",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 25,
+      boosts: {
+        accuracy: -1
+      }
+    },
+    target: "normal",
+    type: "Rock",
+    contestType: "Tough"
+  },
   gigatonhammer: {
         inherit: true,
         basePower: 90,
 		critRatio: 2,
-    },
+  },
+  goldenfist: {
+    num: 981,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Golden Fist",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fighting",
+    contestType: "Clever"
+  },
   groomguard: {
     num: 938,
     accuracy: true,
@@ -740,6 +949,74 @@ const Moves = {
     type: "Normal",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Cute"
+  },
+  growl: {
+    inherit: true,
+    type: "Sound"
+  },
+  halflife: {
+    num: 982,
+    accuracy: 90,
+    basePower: 0,
+    damageCallback(pokemon, target) {
+      return this.clampIntRange(target.getUndynamaxedHP() / 2, 1);
+    },
+    category: "Special",
+    name: "Half-Life",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Tough"
+  },
+  healbell: {
+    inherit: true,
+    type: "Sound"
+  },
+  howl: {
+    inherit: true,
+    type: "Sound"
+  },
+  hypervoice: {
+    inherit: true,
+    type: "Sound"
+  },
+  infernalblade: {
+    num: 983,
+    accuracy: 95,
+    basePower: 90,
+    category: "Special",
+    name: "Infernal Blade",
+    pp: 10,
+    priority: 0,
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Fairy")
+        return 1;
+    },
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Fire",
+    contestType: "Beautiful"
+  },
+  instantcrush: {
+    num: 984,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Instant Crush",
+    pp: 10,
+    priority: 1,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    contestType: "Beautiful"
   },
   jetstrike: {
     num: 906,
@@ -792,6 +1069,40 @@ const Moves = {
     type: "Grass",
     zMove: { boost: { spa: 1 } },
     contestType: "Beautiful"
+  },
+  metalcruncher: {
+    num: 985,
+    accuracy: 85,
+    basePower: 120,
+    category: "Physical",
+    name: "Metal Cruncher",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 85,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Steel",
+    contestType: "Tough"
+  },
+  metalwhip: {
+    num: 986,
+    accuracy: 90,
+    basePower: 50,
+    category: "Physical",
+    name: "Metal Whip",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    volatileStatus: "partiallytrapped",
+    secondary: null,
+    target: "normal",
+    type: "Steel",
+    contestType: "Tough"
   },
   miraclewill: {
     num: 964,
@@ -859,6 +1170,22 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
   },
+  newmoon: {
+    num: 969,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "New Moon",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "Darkness",
+    secondary: null,
+    target: "all",
+    type: "Dark",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   nimbusfist: {
     num: 939,
     accuracy: 100,
@@ -878,43 +1205,81 @@ const Moves = {
     type: "Water",
     contestType: "Tough"
   },
-  overdrive: {
-    num: 909,
-    accuracy: true,
-    basePower: 0,
-    category: "Status",
-    name: "Overdrive",
+  nobleroar: {
+    inherit: true,
+    type: "Sound"
+  },
+  nuclearslash: {
+    num: 987,
+    accuracy: 90,
+    basePower: 55,
+    category: "Physical",
+    name: "Nuclear Slash",
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: {
-      spa: 1,
-      spe: 1
-    },
+    flags: { contact: 1, protect: 1, mirror: 1 },
     secondary: null,
-    target: "self",
-    type: "Electric",
-    zMove: { boost: { spa: 1 } },
-    contestType: "Cool"
+	critRatio: 2,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cute"
   },
-  overheadbeat: {
+  nuclearwaste: {
+    num: 988,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "Nuclear waste",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    // No Guard-like effect for Poison-type users implemented in Scripts#tryMoveHit
+    status: "tox",
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    zMove: { boost: { def: 1 } },
+    contestType: "Clever"
+  },
+  oceanswrath: {
+    num: 989,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Ocean's Wrath",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    volatileStatus: "partiallytrapped",
+    secondary: null,
+    target: "normal",
+    type: "Water",
+    contestType: "Beautiful"
+  },
+  overheadstrike: {
     num: 949,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
-    name: "Overhead Beat",
+    name: "Overhead Strike",
     pp: 20,
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1 },
-    onBasePower(basePower, pokemon) {
-      if (pokemon.status && pokemon.status !== "slp") {
-        return this.chainModify(2);
+    basePowerCallback(pokemon, target, move) {
+      if (target.status || target.hasAbility("comatose")) {
+        this.debug("BP doubled from status condition");
+        return move.basePower * 2;
       }
+      return move.basePower;
     },
     secondary: null,
     target: "normal",
     type: "Flying",
     contestType: "Cute"
+  },
+  perishsong: {
+    inherit: true,
+    type: "Sound"
   },
   perplex: {
     num: 965,
@@ -988,6 +1353,25 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Tough"
   },
+  protonbeam: {
+    num: 990,
+    accuracy: 90,
+    basePower: 100,
+    category: "Special",
+    name: "Proton Beam",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Beautiful"
+  },
   psybolt: {
     num: 911,
     accuracy: 100,
@@ -1001,6 +1385,65 @@ const Moves = {
     target: "normal",
     type: "Psychic",
     contestType: "Beautiful"
+  },
+  quantumleap: {
+    num: 991,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Quantum Leap",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, charge: 1, mirror: 1, nosleeptalk: 1, noassist: 1, failinstruct: 1 },
+    breaksProtect: true,
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    condition: {
+      duration: 2,
+      onInvulnerability: false
+    },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cool"
+  },
+  radioacid: {
+    num: 992,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Radioacid",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cute"
+  },
+  relicsong: {
+    inherit: true,
+    type: "Sound"
+  },
+  roar: {
+    inherit: true,
+    type: "Sound"
+  },
+  round: {
+    inherit: true,
+    type: "Sound"
   },
   saltcrash: {
     num: 917,
@@ -1021,6 +1464,10 @@ const Moves = {
     },
     target: "normal",
     type: "Fighting"
+  },
+  screech: {
+    inherit: true,
+    type: "Sound"
   },
   searingslash: {
     num: 941,
@@ -1047,7 +1494,7 @@ const Moves = {
     category: "Physical",
     name: "Seedy Recede",
     pp: 20,
-    priority: 0,
+    priority: -6,
     flags: { contact: 1, protect: 1, mirror: 1 },
     selfSwitch: true,
     secondary: null,
@@ -1069,6 +1516,27 @@ const Moves = {
     target: "normal",
     type: "Steel"
   },
+  sing: {
+    inherit: true,
+    type: "Sound"
+  },
+  skyfall: {
+    num: 993,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Sky Fall",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "par"
+    },
+    target: "normal",
+    type: "Flying",
+    contestType: "Cute"
+  },
   smogdiffusion: {
     num: 948,
     accuracy: 100,
@@ -1087,6 +1555,20 @@ const Moves = {
     type: "Poison",
     contestType: "Cool"
   },
+  snore: {
+    inherit: true,
+    type: "Sound"
+  },
+  solarbeam: {
+    inherit: true,
+    onBasePower(basePower, pokemon, target) {
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "darkness"];
+      if (weakWeathers.includes(pokemon.effectiveWeather())) {
+        this.debug("weakened by weather");
+        return this.chainModify(0.5);
+      }
+    }
+  },
   standoff: {
     num: 966,
     accuracy: true,
@@ -1104,6 +1586,24 @@ const Moves = {
     type: "Dark",
     zMove: { boost: { spd: 1 } },
     contestType: "Cool"
+  },
+  suddenstrike: {
+    num: 994,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Sudden Strike",
+    pp: 30,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Beautiful"
+  },
+  supersonic: {
+    inherit: true,
+    type: "Sound"
   },
   tartantrum: {
     num: 942,
@@ -1156,6 +1656,22 @@ const Moves = {
     type: "Grass",
     contestType: "Cute"
   },
+  thunder: {
+    inherit: true,
+    onModifyMove(move, pokemon, target) {
+      switch (target?.effectiveWeather()) {
+        case "raindance":
+        case "primordialsea":
+		case "thunderstorm":
+          move.accuracy = true;
+          break;
+        case "sunnyday":
+        case "desolateland":
+          move.accuracy = 50;
+          break;
+      }
+    }
+  },
   thundercrush: {
     num: 952,
     accuracy: 80,
@@ -1165,8 +1681,12 @@ const Moves = {
     pp: 5,
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1 },
-    critRatio: 2,
-    secondary: null,
+    secondary: {
+      chance: 50,
+      boosts: {
+        def: -1
+      }
+    },
     target: "normal",
     type: "Electric",
     contestType: "Cool"
@@ -1186,6 +1706,22 @@ const Moves = {
     type: "Electric",
     contestType: "Cute"
   },
+  thunderstorm: {
+    num: 995,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Thunderstorm",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    weather: "Thunderstorm",
+    secondary: null,
+    target: "all",
+    type: "Electric",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   typhoon: {
     num: 945,
     accuracy: 100,
@@ -1204,6 +1740,10 @@ const Moves = {
     target: "normal",
     type: "Flying",
     contestType: "Tough"
+  },
+  uproar: {
+    inherit: true,
+    type: "Sound"
   },
   vanish: {
     num: 946,
@@ -1239,6 +1779,72 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Tough"
+  },
+  weatherball: {
+    inherit: true,
+    onModifyType(move, pokemon) {
+      switch (pokemon.effectiveWeather()) {
+        case "sunnyday":
+        case "desolateland":
+          move.type = "Fire";
+          break;
+        case "raindance":
+        case "primordialsea":
+          move.type = "Water";
+          break;
+        case "sandstorm":
+          move.type = "Rock";
+          break;
+        case "hail":
+        case "snow":
+          move.type = "Ice";
+          break;
+		case "darkness":
+          move.type = "Dark";
+          break;
+		case "acidrain":
+          move.type = "Poison";
+          break;
+		case "fallout":
+          move.type = "Nuclear";
+          break;
+		case "thunderstorm":
+          move.type = "Electric";
+          break;
+      }
+    },
+    onModifyMove(move, pokemon) {
+      switch (pokemon.effectiveWeather()) {
+        case "sunnyday":
+        case "desolateland":
+          move.basePower *= 2;
+          break;
+        case "raindance":
+        case "primordialsea":
+          move.basePower *= 2;
+          break;
+        case "sandstorm":
+          move.basePower *= 2;
+          break;
+        case "hail":
+        case "snow":
+          move.basePower *= 2;
+          break;
+		case "darkness":
+          move.basePower *= 2;
+          break;
+		case "acidrain":
+          move.basePower *= 2;
+          break;
+		case "fallout":
+          move.basePower *= 2;
+          break;
+		case "thunderstorm":
+          move.basePower *= 2;
+          break;
+      }
+      this.debug("BP: " + move.basePower);
+    }
   },
   webball: {
     num: 914,
@@ -1279,6 +1885,34 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Flying"
+  },
+  wormhole: {
+    num: 971,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "wormhole",
+    pp: 30,
+    priority: 1,
+    flags: {},
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    contestType: "Beautiful"
+  },
+  zombiestrike: {
+    num: 970,
+    accuracy: 90,
+    basePower: 90,
+    category: "Physical",
+    name: "Zombie Strike",
+    pp: 15,
+    priority: 0,
+    flags: { contact:1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Tough"
   }
 };
 //# sourceMappingURL=moves.js.map
