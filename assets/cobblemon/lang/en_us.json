@@ -194,6 +194,8 @@
   "cobblemon.battle.weather.thunderstorm.upkeep": "The thunderstorm is raging.",
   "cobblemon.battle.weather.thunderstorm.end": "The  thunderstorm subsided.",
   
+  "cobblemon.battle.heal.sunbathe": "%1$s restored HP from Sun Bathe!",
+  
   "cobblemon.battle.sidestart.brace": "%1$s braces for impact!",
   
   "cobblemon.battle.sideend.brace": "%1$s is no longer bracing for impact!",
@@ -204,13 +206,15 @@
   "cobblemon.battle.damage.thunderstorm": "%1$s is hit by lightning!",
   
   "cobblemon.ability.orbitaltide": "Orbital Tide",
-  "cobblemon.ability.orbitaltide.desc": "Turns the ground into Grassy Terrain when the Pokémon enters a battle.",
+  "cobblemon.ability.orbitaltide.desc": "Gravity is intensified while on the field.",
   "cobblemon.ability.perforate": "Perforate",
   "cobblemon.ability.perforate.desc": "Moves of the same type as the Pokémon ignore immunities.",
   "cobblemon.ability.permafrost": "Permafrost",
   "cobblemon.ability.permafrost.desc": "Boosts the Pokémon's Defense in a hailstorm.",
   "cobblemon.ability.pollution": "Pollution",
   "cobblemon.ability.pollution.desc": "The Pokémon summons acid rain in battle.",
+  "cobblemon.ability.psychout": "Psych Out",
+  "cobblemon.ability.psychout.desc": "Lowers the foe's Special Attack stat.",
   "cobblemon.ability.scavenger": "Scavenger",
   "cobblemon.ability.scavenger.desc": "Regains HP after knocking out any Pokémon.",
   "cobblemon.ability.sunbathe": "Sunbathe",
@@ -220,5 +224,7 @@
   "cobblemon.ability.digitize": "Derrorize",
   "cobblemon.ability.digitize.desc": "Normal-type moves become Digital-type moves. The power of those moves is boosted a little.",
   "cobblemon.ability.fossilize": "Fossilize",
-  "cobblemon.ability.fossilize.desc": "Normal-type moves become Rock-type moves. The power of those moves is boosted a little."
+  "cobblemon.ability.fossilize.desc": "Normal-type moves become Rock-type moves. The power of those moves is boosted a little.",
+  "cobblemon.ability.allure": "Allure",
+  "cobblemon.ability.allure.desc": "Lowers the evasiveness of foes of the opposite gender."
 }

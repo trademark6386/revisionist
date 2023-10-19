@@ -22,6 +22,27 @@ __export(abilities_exports, {
 });
 module.exports = __toCommonJS(abilities_exports);
 const Abilities = {
+  allure: {
+    onStart(pokemon) {
+      let activated = false;
+      for (const target of pokemon.adjacentFoes()) {
+        if (!activated) {
+          this.add("-ability", pokemon, "Allure", "boost");
+          activated = true;
+        }
+        if (pokemon.gender === "M" && target.gender === "F" || pokemon.gender === "F" && target.gender === "M") { 
+		 if (target.volatiles["substitute"]) {
+          this.add("-immune", target);
+        } else {
+          this.boost({ evasion: -1 }, target, pokemon, null, true);
+        }
+      }
+	 }
+    },
+    name: "Allure",
+    rating: 0,
+    num: 309
+  },
   damp: {
     onAnyTryMove(target, source, effect) {
       if ([ "atomsplit", "explosion", "mindblown", "mistyexplosion", "selfdestruct"].includes(effect.id)) {
@@ -94,7 +115,7 @@ const Abilities = {
   },
   orbitaltide: {
     onStart(source) {
-      this.field.setPseudoWeather("gravity");
+      this.field.setTerrain("gravity");
     },
     name: "Orbital Tide",
     rating: 4,
@@ -106,9 +127,7 @@ const Abilities = {
       if (!move.ignoreImmunity)
         move.ignoreImmunity = {};
       if (move.ignoreImmunity !== true) {
-        move.ignoreImmunity["Poison"] = true;
         move.ignoreImmunity["Ghost"] = true;
-		move.ignoreImmunity["Flying"] = true;
       }
     },
     name: "Perforate",
@@ -138,7 +157,7 @@ const Abilities = {
       let activated = false;
       for (const target of pokemon.adjacentFoes()) {
         if (!activated) {
-          this.add("-ability", pokemon, "Intimidate", "boost");
+          this.add("-ability", pokemon, "Psych Out", "boost");
           activated = true;
         }
         if (target.volatiles["substitute"]) {
@@ -148,14 +167,14 @@ const Abilities = {
         }
       }
     },
-    name: "Intimidate",
+    name: "Psych Out",
     rating: 3.5,
     num: 303
   },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
       if (effect && effect.effectType === "Move") {
-        this.pokemon.heal(pokemon.baseMaxhp / 4);
+        this.heal(pokemon.baseMaxhp / 4);
       }
     },
     name: "Scavenger",
