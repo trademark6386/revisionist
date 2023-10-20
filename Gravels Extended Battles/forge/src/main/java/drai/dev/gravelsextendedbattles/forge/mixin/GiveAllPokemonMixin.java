@@ -1,4 +1,4 @@
-package drai.dev.gravelmon.fabric.mixin;
+package drai.dev.gravelsextendedbattles.forge.mixin;
 
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.storage.pc.*;
@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.util.*;
 import com.mojang.brigadier.*;
 import com.mojang.brigadier.context.*;
 import com.mojang.brigadier.exceptions.*;
-import kotlin.collections.*;
 import kotlin.jvm.internal.*;
 import kotlin.ranges.*;
 import net.minecraft.server.command.*;
@@ -18,8 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
 
-import static drai.dev.gravelmon.GravelsExtendedBattles.bannedLabels;
-import static drai.dev.gravelmon.GravelsExtendedBattles.sortedSpecies;
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.*;
 
 @Mixin(com.cobblemon.mod.common.command.GiveAllPokemon.class)
 public class GiveAllPokemonMixin {

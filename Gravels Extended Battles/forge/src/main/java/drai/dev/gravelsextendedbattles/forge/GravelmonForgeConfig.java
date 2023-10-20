@@ -1,10 +1,10 @@
-package drai.dev.gravelmon.fabric;
+package drai.dev.gravelsextendedbattles.forge;
 
 import eu.midnightdust.lib.config.*;
 
 import java.util.*;
 
-public class GravelmonFabricConfig extends MidnightConfig {
+public class GravelmonForgeConfig extends MidnightConfig {
     @Entry(name = "Banned Labels: ") public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
     /*
     The .json language file for your config class could look similar to this:

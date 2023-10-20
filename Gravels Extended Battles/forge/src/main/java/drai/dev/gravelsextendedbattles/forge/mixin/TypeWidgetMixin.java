@@ -1,4 +1,4 @@
-package drai.dev.gravelmon.forge.mixin;
+package drai.dev.gravelsextendedbattles.forge.mixin;
 
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.summary.widgets.type.*;
@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.*;
-import static drai.dev.gravelmon.forge.GravelsExtendedBattlesForge.ICON_WIDGET_INIT;
-import static drai.dev.gravelmon.forge.GravelsExtendedBattlesForge.TYPE_COUNT;
+import static drai.dev.gravelsextendedbattles.forge.GravelsExtendedBattlesForge.ICON_WIDGET_INIT;
+import static drai.dev.gravelsextendedbattles.forge.GravelsExtendedBattlesForge.TYPE_COUNT;
 
 @Mixin(TypeWidget.class)
 public abstract class TypeWidgetMixin {

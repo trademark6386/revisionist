@@ -325,6 +325,34 @@ const Moves = {
     type: "Psychic",
     contestType: "Beautiful"
   },
+  bugbuzzsound: {
+    num: 951,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Bug Out",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, distance: 1 },
+    onModifyMove(move, pokemon, target) {
+      const bugTypeEffectiveness = defender.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = defender.runEffectiveness(move);
+      move.type = "Bug";
+      if (bugTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>bugTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+    recoil: [33, 100],
+    secondary: null,
+    target: "any",
+    type: "Bug",
+    contestType: "Cool"
+  },
   bugout: {
     num: 951,
     accuracy: 100,

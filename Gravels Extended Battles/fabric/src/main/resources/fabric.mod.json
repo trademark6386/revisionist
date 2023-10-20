@@ -14,7 +14,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "drai.dev.gravelmon.fabric.GravelsExtendedBattlesFabric"
+      "drai.dev.gravelsextendedbattles.fabric.GravelsExtendedBattlesFabric"
     ]
   },
   "mixins": [

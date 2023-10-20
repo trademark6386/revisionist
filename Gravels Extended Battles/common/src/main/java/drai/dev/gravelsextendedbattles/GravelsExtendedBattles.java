@@ -1,19 +1,13 @@
-package drai.dev.gravelmon;
+package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.*;
 import com.cobblemon.mod.common.api.events.*;
-import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.pokemon.*;
-import dev.architectury.platform.*;
 import kotlin.*;
-import net.minecraft.resources.*;
 import org.apache.commons.io.*;
-import org.intellij.lang.annotations.*;
 
 import java.io.*;
 import java.net.*;
-import java.nio.file.*;
-import java.nio.file.FileSystem;
 import java.util.*;
 
 public class GravelsExtendedBattles {
@@ -28,6 +22,7 @@ public class GravelsExtendedBattles {
 
             return Unit.INSTANCE;
         });*/
+
     }
 
 

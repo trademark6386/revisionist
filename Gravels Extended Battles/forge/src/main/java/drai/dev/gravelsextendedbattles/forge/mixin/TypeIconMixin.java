@@ -1,21 +1,18 @@
-package drai.dev.gravelmon.fabric.mixin;
+package drai.dev.gravelsextendedbattles.forge.mixin;
 
-import com.cobblemon.mod.common.api.gui.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.*;
-import com.oracle.svm.core.annotate.*;
 import kotlin.jvm.internal.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.blitk;
-import static drai.dev.gravelmon.fabric.GravelsExtendedBattlesFabric.ICON_MIXIN_INIT;
-import static drai.dev.gravelmon.fabric.GravelsExtendedBattlesFabric.TYPE_COUNT;
+import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.*;
+import static drai.dev.gravelsextendedbattles.forge.GravelsExtendedBattlesForge.ICON_MIXIN_INIT;
+import static drai.dev.gravelsextendedbattles.forge.GravelsExtendedBattlesForge.TYPE_COUNT;
 
 @Mixin(TypeIcon.class)
 public abstract class TypeIconMixin {

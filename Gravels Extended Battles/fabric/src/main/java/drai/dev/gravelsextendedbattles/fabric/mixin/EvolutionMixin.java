@@ -1,4 +1,4 @@
-package drai.dev.gravelmon.fabric.mixin;
+package drai.dev.gravelsextendedbattles.fabric.mixin;
 
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.requirement.*;
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import static drai.dev.gravelmon.GravelsExtendedBattles.bannedLabels;
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
 @Mixin(Evolution.DefaultImpls.class)
 public class EvolutionMixin {

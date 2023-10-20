@@ -1,11 +1,17 @@
-package drai.dev.gravelmon.forge;
+package drai.dev.gravelsextendedbattles.forge;
 
-import drai.dev.gravelmon.*;
-import eu.midnightdust.lib.util.*;
+import com.cobblemon.mod.common.api.*;
+import com.cobblemon.mod.common.api.events.*;
+import drai.dev.gravelsextendedbattles.*;
+import drai.dev.gravelsextendedbattles.*;
+import eu.midnightdust.lib.config.*;
+import kotlin.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.loading.*;
 
 import java.io.*;
+
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
 @Mod(GravelsExtendedBattles.MOD_ID)
 public class GravelsExtendedBattlesForge {
@@ -21,6 +27,21 @@ public class GravelsExtendedBattlesForge {
                 throw new RuntimeException(e);
             }
         }
+        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, pokemonEntitySpawnEvent -> {
+            var pokemon = pokemonEntitySpawnEvent.getEntity().getPokemon();
+            for (String label : bannedLabels) {
+                if(pokemon.hasLabels(label)){
+                    pokemonEntitySpawnEvent.getEntity().discard();
+                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
+                    //TODO uncomment this when the bug regarding spawn canceling is fixed.
+                    pokemonEntitySpawnEvent.cancel();
+                }
+            }
+            return Unit.INSTANCE;
+        });
+        GravelsExtendedBattles.init();
+        MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
+        GravelsExtendedBattles.bannedLabels = GravelmonForgeConfig.bannedLabels.toArray(new String[0]);
     }
 
     static public String exportResource(String minecraftFolder,String resourceName) throws Exception {
