@@ -22,10 +22,8 @@ public abstract class TypeWidgetMixin {
     private void changeTypeIconResource(ElementalType type, MatrixStack pMatrixStack, int pX, int pY, CallbackInfo ci){
         if(!ICON_WIDGET_INIT){
             typeResource = new Identifier("gravelmon","textures/gui/types.png");
-            System.out.println("I tried to set the resources");
             ICON_WIDGET_INIT=true;
         }
-        System.out.println(((TypeWidget)(Object)this).getWidth());
         Intrinsics.checkNotNullParameter(type, "type");
         Intrinsics.checkNotNullParameter(pMatrixStack, "pMatrixStack");
         Identifier texture = typeResource;

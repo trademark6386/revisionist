@@ -1,6 +1,7 @@
 package drai.dev.gravelmon.fabric;
 
 import drai.dev.gravelmon.*;
+import eu.midnightdust.lib.config.*;
 import net.fabricmc.api.*;
 import net.fabricmc.loader.api.*;
 
@@ -20,6 +21,9 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 throw new RuntimeException(e);
             }
         }
+        GravelsExtendedBattles.init();
+        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
+        GravelsExtendedBattles.bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
     }
 
     static public String exportResource(String minecraftFolder,String resourceName) throws Exception {

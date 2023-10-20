@@ -28,7 +28,6 @@ public abstract class ElementalTypesMixin {
             createType("sound");
             createType("wind");
             isInit=true;
-            System.out.println("I added the sound type, yippeeeee");
         }
     }
 

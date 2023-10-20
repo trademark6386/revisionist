@@ -1,6 +1,11 @@
 package drai.dev.gravelmon;
 
+import com.cobblemon.mod.common.api.*;
+import com.cobblemon.mod.common.api.events.*;
+import com.cobblemon.mod.common.api.pokemon.*;
+import com.cobblemon.mod.common.pokemon.*;
 import dev.architectury.platform.*;
+import kotlin.*;
 import net.minecraft.resources.*;
 import org.apache.commons.io.*;
 import org.intellij.lang.annotations.*;
@@ -16,7 +21,13 @@ public class GravelsExtendedBattles {
     public static final ArrayList<String> showdownFiles = new ArrayList<>(
             List.of("abilities.js","conditions.js", "items.js", "moves.js", "pokedex.js", "scripts.js", "typechart.js"));
     public static URL SHOW_DOWN_FOLDER = GravelsExtendedBattles.class.getResource("\\showdown");
+    public static String[] bannedLabels;
+    public static List<Species> sortedSpecies;
     public static void init() {
+       /* CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, evolutionAcceptedEvent -> {
+
+            return Unit.INSTANCE;
+        });*/
     }
 
 
