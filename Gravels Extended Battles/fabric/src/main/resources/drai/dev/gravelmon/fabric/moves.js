@@ -150,6 +150,23 @@ const Moves = {
     type: "Normal",
     contestType: "Beautiful"
   },
+  bansheesscream: {
+    num: 996,
+    accuracy: 80,
+    basePower: 100,
+    category: "Special",
+    name: "Banshee's Scream",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 35,
+      volatileStatus: "perishsong"
+    },
+    target: "normal",
+    type: "Sound",
+    contestType: "Clever"
+  },
   barbedtackle: {
     num: 926,
     accuracy: 100,
@@ -222,9 +239,19 @@ const Moves = {
     type: "Ground",
     contestType: "Tough"
   },
-  boomburst: {
-    inherit: true,
-    type: "Sound"
+  boomburstsound: {
+    num: 998,
+    accuracy: 100,
+    basePower: 140,
+    category: "Special",
+    name: "Boomburst Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Sound",
+    contestType: "Tough"
   },
   brace: {
     num: 902,
@@ -369,6 +396,36 @@ const Moves = {
     zMove: { basePower: 170 },
     contestType: "Tough"
   },
+  chattersound: {
+    num: 999,
+    accuracy: 100,
+    basePower: 65,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Chatter Sound",
+    pp: 20,
+    priority: 0,
+    flags: {
+      protect: 1,
+      mirror: 1,
+      sound: 1,
+      distance: 1,
+      bypasssub: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failcopycat: 1,
+      failinstruct: 1,
+      failmimic: 1
+    },
+    noSketch: true,
+    secondary: {
+      chance: 100,
+      volatileStatus: "confusion"
+    },
+    target: "any",
+    type: "Sound",
+    contestType: "Cute"
+  },
   cheapshot: {
     num: 904,
     accuracy: 100,
@@ -401,10 +458,6 @@ const Moves = {
     target: "normal",
     type: "Fire",
     contestType: "Tough"
-  },
-  confide: {
-    inherit: true,
-    type: "Sound"
   },
   coralbreak: {
     num: 973,
@@ -669,9 +722,44 @@ const Moves = {
     zMove: { basePower: 180 },
     contestType: "Beautiful"
   },
-  echoedvoice: {
-    inherit: true,
-    type: "Sound"
+  echoedvoicesound: {
+    num: 999,
+    accuracy: 100,
+    basePower: 40,
+    basePowerCallback(pokemon, target, move) {
+      let bp = move.basePower;
+      if (this.field.pseudoWeather.echoedvoice) {
+        bp = move.basePower * this.field.pseudoWeather.echoedvoice.multiplier;
+      }
+      this.debug("BP: " + move.basePower);
+      return bp;
+    },
+    category: "Special",
+    name: "Echoed Voice Sound",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    onTry() {
+      this.field.addPseudoWeather("echoedvoice");
+    },
+    condition: {
+      duration: 2,
+      onFieldStart() {
+        this.effectState.multiplier = 1;
+      },
+      onFieldRestart() {
+        if (this.effectState.duration !== 2) {
+          this.effectState.duration = 2;
+          if (this.effectState.multiplier < 5) {
+            this.effectState.multiplier++;
+          }
+        }
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Beautiful"
   },
   engulf: {
     num: 962,
@@ -773,6 +861,44 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  fiesta: {
+    num: 1000,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Fiesta",
+    pp: 20,
+    priority: 0,
+    flags: { reflectable: 1, nonsky: 1, mustpressure: 1 },
+    sideCondition: "fiesta",
+    condition: {
+        onSideStart(side) {
+            this.add("-sidestart", side, "Fiesta");
+            this.effectState.layers = 1;
+        },
+        onSideRestart(side) {
+            if (this.effectState.layers >= 3) return false;
+            this.add("-sidestart", side, "Fiesta");
+            this.effectState.layers++;
+        },
+        onEntryHazard(pokemon, source) {
+            if (pokemon.hp < pokemon.maxhp) {
+                this.heal(pokemon.maxhp / 2);
+                this.add('-heal', pokemon, pokemon.getHealth, '[from] move: Fiesta');
+                this.effectState.layers--;
+				 // Remove the Fiesta condition after healing
+                if (this.effectState.layers <= 0) {
+                    pokemon.side.removeSideCondition("fiesta");
+				}
+            }
+        },
+    },
+    secondary: null,
+    target: "allySide",
+    type: "Normal",
+    zMove: { boost: { def: 1 } },
+    contestType: "Clever",
+  },
   fissionburst: {
     num: 977,
     accuracy: 100,
@@ -830,6 +956,42 @@ const Moves = {
     type: "Water",
     contestType: "Beautiful"
   },
+  flash: {
+    inherit: true,
+    type: "Light"
+  },
+  flashbang: {
+    num: 997,
+    accuracy: 100,
+    basePower: 65,
+    category: "Special",
+    name: "Flashbang",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    selfSwitch: true,
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
+  },
+  flashpulse: {
+    num: 996,
+    accuracy: 90,
+    basePower: 85,
+    category: "Special",
+    name: "Flash Pulse",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Clever"
+  },
   focusedram: {
     num: 936,
     accuracy: 100,
@@ -879,7 +1041,6 @@ const Moves = {
     type: "Ice",
     contestType: "Cool"
   },
-  
   gammaray: {
     num: 979,
     accuracy: 100,
@@ -912,11 +1073,6 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Tough"
-  },
-  gigatonhammer: {
-        inherit: true,
-        basePower: 90,
-		critRatio: 2,
   },
   goldenfist: {
     num: 981,
@@ -1069,6 +1225,10 @@ const Moves = {
     type: "Grass",
     zMove: { boost: { spa: 1 } },
     contestType: "Beautiful"
+  },
+  lightscreen: {
+    inherit: true,
+    type: "Light"
   },
   metalcruncher: {
     num: 985,
@@ -1433,6 +1593,10 @@ const Moves = {
     type: "Nuclear",
     contestType: "Cute"
   },
+  reflect: {
+    inherit: true,
+    type: "Light"
+  },
   relicsong: {
     inherit: true,
     type: "Sound"
@@ -1568,6 +1732,10 @@ const Moves = {
         return this.chainModify(0.5);
       }
     }
+  },
+  spotlight: {
+    inherit: true,
+    type: "Light"
   },
   standoff: {
     num: 966,
@@ -1849,7 +2017,7 @@ const Moves = {
   webball: {
     num: 914,
     accuracy: 100,
-    basePower: 65,
+    basePower: 60,
     category: "Special",
     name: "Web Ball",
     pp: 15,

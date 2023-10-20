@@ -43,6 +43,18 @@ const Abilities = {
     rating: 0,
     num: 309
   },
+  conundrum: {
+    onDamagingHit(damage, target, source, move) {
+      if (this.checkMoveMakesContact(move, source, target)) {
+        if (this.randomChance(3, 10)) {
+          source.addVolatile("confusion", this.effectState.target);
+        }
+      }
+    },
+    name: "Conundrum",
+    rating: 1.5,
+    num: 310
+  },
   damp: {
     onAnyTryMove(target, source, effect) {
       if ([ "atomsplit", "explosion", "mindblown", "mistyexplosion", "selfdestruct"].includes(effect.id)) {
@@ -86,6 +98,17 @@ const Abilities = {
     name: "Digitize",
     rating: 4,
     num: 307
+  },
+  feedback: {
+    onDamagingHitOrder: 1,
+    onDamagingHit(damage, target, source, move) {
+        if (!move.flags.contact && move.category !== "Status") {
+            this.damage(source.baseMaxhp / 8, source, target);
+        }
+    },
+    name: "Feedback",
+    rating: 2.5,
+    num: 311
   },
   fossilize: {
     onModifyTypePriority: -1,
@@ -170,6 +193,17 @@ const Abilities = {
     name: "Psych Out",
     rating: 3.5,
     num: 303
+  },
+  quickdraw: {
+    onModifyPriority(priority, pokemon, target, move) {
+        if (move && !['Detect', 'Endure', 'Protect', 'Quick Guard', 'Wide Guard'].includes(move.name)) {
+            return 0;
+        }
+        return priority;
+    },
+    name: "Quickdraw",
+    rating: 4,
+    num: 312
   },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {

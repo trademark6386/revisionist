@@ -176,9 +176,6 @@ const Conditions = {
       if (this.field.isWeather("thunderstorm"))
         this.eachEvent("Weather");
     },
-    onWeather(target) {
-      this.damage(target.baseMaxhp / 16);
-    },
     onFieldEnd() {
       this.add("-weather", "none");
     }
