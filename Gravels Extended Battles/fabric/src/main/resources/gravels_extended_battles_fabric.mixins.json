@@ -6,7 +6,10 @@
   "mixins": [
     "ElementalTypesMixin",
     "TypeIconMixin",
-    "TypeWidgetMixin"
+    "TypeWidgetMixin",
+    "EvolutionMixin",
+    "GiveAllPokemonMixin",
+    "SpawnAllPokemonMixin"
   ],
   "client": [
   ],

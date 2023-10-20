@@ -40,13 +40,10 @@ public abstract class TypeIconMixin {
         if(!ICON_MIXIN_INIT){
             smallTypesResource = new Identifier("gravelmon","textures/gui/types_small.png");
             typesResource = new Identifier("gravelmon","textures/gui/types.png");
-            System.out.println("I tried to set the resources");
             ICON_MIXIN_INIT=true;
         }
-        System.out.println(small);
         Intrinsics.checkNotNullParameter(context, "context");
         int diameter = this.small ? 18 : 36;
-        System.out.println(diameter);
         float offsetX = this.centeredX ? (float)(diameter / 2) * 0.5F + (this.secondaryType != null ? this.doubleCenteredOffset : 0.0F) : 0.0F;
         MatrixStack matrixStack;
         if (this.secondaryType != null) {
