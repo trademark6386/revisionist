@@ -1,18 +1,15 @@
-package drai.dev.gravelmon.fabric.mixin;
+package drai.dev.gravelsextendedbattles.fabric.mixin;
 
 import com.cobblemon.mod.common.api.types.*;
-import com.cobblemon.mod.common.client.gui.*;
-import com.cobblemon.mod.common.client.render.item.*;
-import drai.dev.gravelmon.*;
-import drai.dev.gravelmon.fabric.*;
+import drai.dev.gravelsextendedbattles.*;
+import drai.dev.gravelsextendedbattles.fabric.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.level.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import static drai.dev.gravelmon.fabric.GravelsExtendedBattlesFabric.TYPE_COUNT;
+import static drai.dev.gravelsextendedbattles.fabric.GravelsExtendedBattlesFabric.TYPE_COUNT;
 
 @Mixin(ElementalTypes.class)
 public abstract class ElementalTypesMixin {

@@ -1,13 +1,13 @@
-package drai.dev.gravelmon.forge.mixin;
+package drai.dev.gravelsextendedbattles.forge.mixin;
 
 import com.cobblemon.mod.common.api.types.*;
+import drai.dev.gravelsextendedbattles.forge.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import static drai.dev.gravelmon.forge.GravelsExtendedBattlesForge.*;
 @Mixin(ElementalTypes.class)
 public abstract class ElementalTypesMixin {
     private static boolean isInit = false;
@@ -33,10 +33,10 @@ public abstract class ElementalTypesMixin {
 
     private void createType(String typeName) {
         var type = new ElementalType(typeName, Text.translatable("cobblemon.type."+typeName),
-                0x780fd5,TYPE_COUNT,
+                0x780fd5, GravelsExtendedBattlesForge.TYPE_COUNT,
                 new Identifier("gravelmon",
                         "types/"+typeName+".png"));
-        TYPE_COUNT++;
+        GravelsExtendedBattlesForge.TYPE_COUNT++;
         register(type);
     }
 
