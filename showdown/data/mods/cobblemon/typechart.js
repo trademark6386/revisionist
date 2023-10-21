@@ -812,7 +812,8 @@ const TypeChart = {
   },
   shadow: {
     damageTaken: {
-      Bug: 1,
+      shadowyaura: 3,
+	  Bug: 1,
 	  Cosmic: 1,
 	  Crystal: 0,
       Dark: 1,

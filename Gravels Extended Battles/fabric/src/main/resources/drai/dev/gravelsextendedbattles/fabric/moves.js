@@ -158,7 +158,7 @@ const Moves = {
     name: "Banshee's Scream",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
     secondary: {
       chance: 35,
       volatileStatus: "perishsong"
@@ -323,6 +323,38 @@ const Moves = {
     },
     target: "normal",
     type: "Psychic",
+    contestType: "Beautiful"
+  },
+  bugbuzzsound: {
+    num: 1001,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Bug Buzz Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+	onModifyType(move, pokemon, target) {
+      const bugTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Bug";
+      if (bugTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>bugTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spd: -1
+      }
+    },
+    target: "normal",
+    type: "Bug",
     contestType: "Beautiful"
   },
   bugout: {
@@ -539,6 +571,33 @@ const Moves = {
     },
     target: "normal",
     type: "Water",
+    contestType: "Cute"
+  },
+  disarmingvoicesound: {
+    num: 1002,
+    accuracy: true,
+    basePower: 40,
+    category: "Special",
+    name: "Disarming Voice Sound",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    onModifyType(move, pokemon, target) {
+      const fairyTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Fairy";
+      if (fairyTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>fairyTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+	secondary: null,
+    target: "allAdjacentFoes",
+    type: "Fairy",
     contestType: "Cute"
   },
   dive: {
@@ -956,10 +1015,6 @@ const Moves = {
     type: "Water",
     contestType: "Beautiful"
   },
-  flash: {
-    inherit: true,
-    type: "Light"
-  },
   flashbang: {
     num: 997,
     accuracy: 100,
@@ -1106,10 +1161,6 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Cute"
   },
-  growl: {
-    inherit: true,
-    type: "Sound"
-  },
   halflife: {
     num: 982,
     accuracy: 90,
@@ -1127,17 +1178,64 @@ const Moves = {
     type: "Nuclear",
     contestType: "Tough"
   },
-  healbell: {
-    inherit: true,
-    type: "Sound"
+  healbellsound: {
+    num: 1003,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Unobtainable",
+    name: "Heal Bell Sound",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, sound: 1, distance: 1, bypasssub: 1 },
+    onHit(target, source) {
+      this.add("-activate", source, "move: Heal Bell");
+      let success = false;
+      const allies = [...target.side.pokemon, ...target.side.allySide?.pokemon || []];
+      for (const ally of allies) {
+        if (ally !== source && ally.hasAbility("soundproof"))
+          continue;
+        if (ally.cureStatus())
+          success = true;
+      }
+      return success;
+    },
+    target: "allyTeam",
+    type: "Sound",
+    zMove: { effect: "heal" },
+    contestType: "Beautiful"
   },
-  howl: {
-    inherit: true,
-    type: "Sound"
+  howlsound: {
+    num: 1004,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Howl Sound",
+    pp: 40,
+    priority: 0,
+    flags: { snatch: 1, sound: 1 },
+    boosts: {
+      atk: 1
+    },
+    secondary: null,
+    target: "allies",
+    type: "Sound",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Cool"
   },
-  hypervoice: {
-    inherit: true,
-    type: "Sound"
+  hypervoicesound: {
+    num: 1005,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Hyper Voice Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Sound",
+    contestType: "Cool"
   },
   infernalblade: {
     num: 983,
@@ -1225,10 +1323,6 @@ const Moves = {
     type: "Grass",
     zMove: { boost: { spa: 1 } },
     contestType: "Beautiful"
-  },
-  lightscreen: {
-    inherit: true,
-    type: "Light"
   },
   metalcruncher: {
     num: 985,
@@ -1365,9 +1459,24 @@ const Moves = {
     type: "Water",
     contestType: "Tough"
   },
-  nobleroar: {
-    inherit: true,
-    type: "Sound"
+  nobleroarsound: {
+    num: 1006,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Noble Roar Sound",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    boosts: {
+      atk: -1,
+      spa: -1
+    },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    zMove: { boost: { def: 1 } },
+    contestType: "Tough"
   },
   nuclearslash: {
     num: 987,
@@ -1437,9 +1546,53 @@ const Moves = {
     type: "Flying",
     contestType: "Cute"
   },
-  perishsong: {
-    inherit: true,
-    type: "Sound"
+  perishsongsound: {
+    num: 1007,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Perish Song Sound",
+    pp: 5,
+    priority: 0,
+    flags: { sound: 1, distance: 1, bypasssub: 1 },
+    onHitField(target, source, move) {
+      let result = false;
+      let message = false;
+      for (const pokemon of this.getAllActive()) {
+        if (this.runEvent("Invulnerability", pokemon, source, move) === false) {
+          this.add("-miss", source, pokemon);
+          result = true;
+        } else if (this.runEvent("TryHit", pokemon, source, move) === null) {
+          result = true;
+        } else if (!pokemon.volatiles["perishsong"]) {
+          pokemon.addVolatile("perishsong");
+          this.add("-start", pokemon, "perish3", "[silent]");
+          result = true;
+          message = true;
+        }
+      }
+      if (!result)
+        return false;
+      if (message)
+        this.add("-fieldactivate", "move: Perish Song");
+    },
+    condition: {
+      duration: 4,
+      onEnd(target) {
+        this.add("-start", target, "perish0");
+        target.faint();
+      },
+      onResidualOrder: 24,
+      onResidual(pokemon) {
+        const duration = pokemon.volatiles["perishsong"].duration;
+        this.add("-start", pokemon, "perish" + duration);
+      }
+    },
+    secondary: null,
+    target: "all",
+    type: "Sound",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
   },
   perplex: {
     num: 965,
@@ -1593,21 +1746,80 @@ const Moves = {
     type: "Nuclear",
     contestType: "Cute"
   },
-  reflect: {
-    inherit: true,
-    type: "Light"
+  relicsongsound: {
+    num: 1008,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Relic Song Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: {
+      chance: 10,
+      status: "slp"
+    },
+    onHit(target, pokemon, move) {
+      if (pokemon.baseSpecies.baseSpecies === "Meloetta" && !pokemon.transformed) {
+        move.willChangeForme = true;
+      }
+    },
+    onAfterMoveSecondarySelf(pokemon, target, move) {
+      if (move.willChangeForme) {
+        const meloettaForme = pokemon.species.id === "meloettapirouette" ? "" : "-Pirouette";
+        pokemon.formeChange("Meloetta" + meloettaForme, this.effect, false, "[msg]");
+      }
+    },
+    target: "allAdjacentFoes",
+    type: "Sound",
+    contestType: "Beautiful"
   },
-  relicsong: {
-    inherit: true,
-    type: "Sound"
+  roarsound: {
+    num: 1009,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Roar Sound",
+    pp: 20,
+    priority: -6,
+    flags: { reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, allyanim: 1, noassist: 1, failcopycat: 1 },
+    forceSwitch: true,
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cool"
   },
-  roar: {
-    inherit: true,
-    type: "Sound"
-  },
-  round: {
-    inherit: true,
-    type: "Sound"
+  roundsound: {
+    num: 1010,
+    accuracy: 100,
+    basePower: 60,
+    basePowerCallback(target, source, move) {
+      if (move.sourceEffect === "roundsound") {
+        this.debug("BP doubled");
+        return move.basePower * 2;
+      }
+      return move.basePower;
+    },
+    category: "Special",
+    name: "Round Sound",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    onTry(source, target, move) {
+      for (const action of this.queue.list) {
+        if (!action.pokemon || !action.move || action.maxMove || action.zmove)
+          continue;
+        if (action.move.id === "roundsound") {
+          this.queue.prioritizeAction(action, move);
+          return;
+        }
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Beautiful"
   },
   saltcrash: {
     num: 917,
@@ -1629,9 +1841,23 @@ const Moves = {
     target: "normal",
     type: "Fighting"
   },
-  screech: {
-    inherit: true,
-    type: "Sound"
+  screechsound: {
+    num: 1011,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "Screech Sound",
+    pp: 40,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, allyanim: 1 },
+    boosts: {
+      def: -2
+    },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Clever"
   },
   searingslash: {
     num: 941,
@@ -1666,6 +1892,301 @@ const Moves = {
     type: "Grass",
     contestType: "Cute"
   },
+  shadowblast: {
+    num: 1019,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Shadow Blast",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, distance: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "any",
+    type: "Shadow",
+    contestType: "Cool"
+  },
+  shadowblitz: {
+    num: 1020,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Shadow Blitz",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Tough"
+  },
+  shadowbolt: {
+    num: 1021,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Shadow Bolt",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "par"
+    },
+    target: "normal",
+    type: "Shadow",
+    contestType: "Cool"
+  },
+  shadowbreak: {
+    num: 1022,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Shadow Break",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Tough"
+  },
+  shadowchill: {
+    num: 1023,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Shadow Chill",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Shadow",
+    contestType: "Beautiful"
+  },
+  shadowdown: {
+    num: 1024,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Down",
+    pp: 40,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, allyanim: 1 },
+    boosts: {
+      def: -2
+    },
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Clever"
+  },
+  shadowend: {
+    num: 1025,
+    accuracy: 80,
+    basePower: 120,
+    category: "Physical",
+    name: "Shadow End",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Tough"
+  },
+  shadowfire: {
+    num: 1026,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Shadow Fire",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Shadow",
+    contestType: "Beautiful"
+  },
+  shadowhalf: {
+    num: 1027,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Half",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1 },
+    onHit(target, source) {
+        if (target.hp > target.maxhp / 2) {
+            this.damage(target.maxhp / 2, target);
+        }
+        if (source.hp > source.maxhp / 2) {
+            this.damage(source.maxhp / 2, source);
+        }
+    },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Shadow",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
+  shadowhold: {
+    num: 1028,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Hold",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    onHit(target, source, move) {
+      return target.addVolatile("trapped", source, move, "trapper");
+    },
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Shadow",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cute"
+  },
+  shadowmist: {
+    num: 1029,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Mist",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    boosts: {
+      evasion: -2
+    },
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Shadow",
+    zMove: { boost: { accuracy: 1 } },
+    contestType: "Cute"
+  },
+  shadowpanic: {
+    num: 1030,
+    accuracy: 60,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Panic",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 },
+    volatileStatus: "confusion",
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Ghost",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Clever"
+  },
+  shadowrave: {
+    num: 1031,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Shadow Rave",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Shadow",
+    contestType: "Beautiful"
+  },
+  shadowrush: {
+    num: 1018,
+    accuracy: 100,
+    basePower: 55,
+    category: "Physical",
+    name: "Shadow Rush",
+    pp: 25,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Tough"
+  },
+  shadowshed: {
+    num: 1032,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Psychic Fangs",
+    pp: 10,
+    priority: 0,
+    flags: {},
+	onTryHit(pokemon) {
+      pokemon.side.removeSideCondition("safeguard");
+	  pokemon.side.removeSideCondition("reflect");
+      pokemon.side.removeSideCondition("lightscreen");
+      pokemon.side.removeSideCondition("auroraveil");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Shadow",
+    contestType: "Clever"
+  },
+  shadowsky: {
+    num: 1035,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Shadow Sky",
+    pp: 10,
+    priority: 0,
+    flags: {},
+    weather: "Shadowyaura",
+    secondary: null,
+    target: "all",
+    type: "Shadow",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
+  shadowstorm: {
+    num: 1033,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Shadow Rave",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Shadow",
+    contestType: "Beautiful"
+  },
+  shadowwave: {
+    num: 1034,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Shadow Wave",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Shadow",
+    contestType: "Beautiful"
+  },
   shieldbash: {
     num: 912,
     accuracy: 100,
@@ -1680,9 +2201,21 @@ const Moves = {
     target: "normal",
     type: "Steel"
   },
-  sing: {
-    inherit: true,
-    type: "Sound"
+  singsound: {
+    num: 1012,
+    accuracy: 55,
+    basePower: 0,
+    category: "Status",
+    name: "Sing Sound",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    status: "slp",
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Cute"
   },
   skyfall: {
     num: 993,
@@ -1699,6 +2232,45 @@ const Moves = {
     },
     target: "normal",
     type: "Flying",
+    contestType: "Cute"
+  },
+  sleeptalksound: {
+    num: 1013,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Sleep Talk Sound",
+    pp: 10,
+    priority: 0,
+    flags: { failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failinstruct: 1, failmimic: 1 },
+    sleepUsable: true,
+    onTry(source) {
+      return source.status === "slp" || source.hasAbility("comatose");
+    },
+    onHit(pokemon) {
+      const moves = [];
+      for (const moveSlot of pokemon.moveSlots) {
+        const moveid = moveSlot.id;
+        if (!moveid)
+          continue;
+        const move = this.dex.moves.get(moveid);
+        if (move.flags["nosleeptalk"] || move.flags["charge"] || move.isZ && move.basePower !== 1 || move.isMax) {
+          continue;
+        }
+        moves.push(moveid);
+      }
+      let randomMove = "";
+      if (moves.length)
+        randomMove = this.sample(moves);
+      if (!randomMove) {
+        return false;
+      }
+      this.actions.useMove(randomMove, pokemon);
+    },
+    secondary: null,
+    target: "self",
+    type: "Sound",
+    zMove: { effect: "crit2" },
     contestType: "Cute"
   },
   smogdiffusion: {
@@ -1719,9 +2291,26 @@ const Moves = {
     type: "Poison",
     contestType: "Cool"
   },
-  snore: {
-    inherit: true,
-    type: "Sound"
+  snoresound: {
+    num: 1014,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Snore Sound",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    sleepUsable: true,
+    onTry(source) {
+      return source.status === "slp" || source.hasAbility("comatose");
+    },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Sound",
+    contestType: "Cute"
   },
   solarbeam: {
     inherit: true,
@@ -1733,9 +2322,60 @@ const Moves = {
       }
     }
   },
-  spotlight: {
-    inherit: true,
-    type: "Light"
+  sonicboomsound: {
+    num: 1015,
+    accuracy: 90,
+    basePower: 0,
+    damage: 20,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Sonic Boom Sound",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
+  },
+  sparklingariasound: {
+    num: 1016,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Sparkling Aria Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: {
+      dustproof: true,
+      chance: 100,
+      volatileStatus: "sparklingaria"
+    },
+	onModifyType(move, pokemon, target) {
+      const waterTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Water";
+      if (waterTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>waterTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+    onAfterMove(source, target, move) {
+      for (const pokemon of this.getAllActive()) {
+        if (pokemon !== source && pokemon.removeVolatile("sparklingaria") && pokemon.status === "brn" && !source.fainted) {
+          pokemon.cureStatus();
+        }
+      }
+    },
+    target: "allAdjacent",
+    type: "Water",
+    contestType: "Tough"
   },
   standoff: {
     num: 966,
@@ -1769,9 +2409,21 @@ const Moves = {
     type: "Dark",
     contestType: "Beautiful"
   },
-  supersonic: {
-    inherit: true,
-    type: "Sound"
+  supersonicsound: {
+    num: 1017,
+    accuracy: 55,
+    basePower: 0,
+    category: "Status",
+    name: "Supersonic sound",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    volatileStatus: "confusion",
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Clever"
   },
   tartantrum: {
     num: 942,
@@ -1909,10 +2561,6 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
-  uproar: {
-    inherit: true,
-    type: "Sound"
-  },
   vanish: {
     num: 946,
     accuracy: true,
@@ -1979,6 +2627,9 @@ const Moves = {
 		case "thunderstorm":
           move.type = "Electric";
           break;
+		case "shadowyaura":
+          move.type = "Shadow";
+          break;
       }
     },
     onModifyMove(move, pokemon) {
@@ -2008,6 +2659,9 @@ const Moves = {
           move.basePower *= 2;
           break;
 		case "thunderstorm":
+          move.basePower *= 2;
+          break;
+		case "shadowyaura":
           move.basePower *= 2;
           break;
       }
