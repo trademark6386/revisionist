@@ -106,6 +106,11 @@ const Tags = {
     desc: "Doesn't affect Bulletproof Pok\xE9mon.",
     moveFilter: (move) => "bullet" in move.flags
   },
+  speed: {
+    name: "Speed",
+    desc: "Boosted 1.5x by Acceleration.",
+    moveFilter: (move) => "speed" in move.flags
+  },
   bypassprotect: {
     name: "Bypass Protect",
     desc: "Bypasses Protect, Detect, King's Shield, and Spiky Shield.",

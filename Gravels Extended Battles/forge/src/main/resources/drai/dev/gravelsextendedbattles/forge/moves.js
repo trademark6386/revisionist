@@ -22,6 +22,10 @@ __export(moves_exports, {
 });
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
+  accelerock: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   achillesheel: {
     num: 967,
     accuracy: true,
@@ -131,6 +135,20 @@ const Moves = {
     type: "Rock",
     contestType: "Cute"
   },
+  astralshot: {
+    num: 1037,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Astral Shot",
+    pp: 15,
+    priority: 1,
+    flags: { protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Beautiful"
+  },
   atomicpunch: {
     num: 972,
     accuracy: 95,
@@ -237,6 +255,36 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  bide: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, nosleeptalk: 1, failinstruct: 1, speed: 1 }
+  },
+  bigbang: {
+    num: 1038,
+    accuracy: 100,
+    basePower: 105,
+    category: "Physical",
+    name: "Big Bang",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      onHit(target, source) {
+        const result = this.random(3);
+        if (result === 0) {
+          target.trySetStatus("brn", source);
+        } else if (result === 1) {
+          target.trySetStatus("par", source);
+        } else {
+          target.trySetStatus("frz", source);
+        }
+      }
+    },
+    target: "allAdjacent",
+    type: "Cosmic",
+    contestType: "Beautiful"
   },
   bonesweep: {
     num: 927,
@@ -385,6 +433,10 @@ const Moves = {
     type: "Bug",
     contestType: "Cool"
   },
+  bulletpunch: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
+  },
   cactussmash: {
     num: 930,
     accuracy: 100,
@@ -504,6 +556,38 @@ const Moves = {
     type: "Fire",
     contestType: "Tough"
   },
+  cometcrash: {
+    num: 1046,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Comet Crash",
+    pp: 10,
+    priority: -6,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    forceSwitch: true,
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cute"
+  },
+  cometshower: {
+    num: 1039,
+    accuracy: 95,
+    basePower: 80,
+    category: "Physical",
+    name: "Comet Shower",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 25,
+      volatileStatus: "flinch"
+    },
+    target: "allAdjacent",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   coralbreak: {
     num: 973,
     accuracy: 95,
@@ -538,6 +622,23 @@ const Moves = {
     type: "Poison",
     contestType: "Beautiful"
   },
+  cosmicray: {
+    num: 1040,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Cosmic Ray",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, pulse: 1, mirror: 1, distance: 1 },
+    secondary: {
+      chance: 15,
+      volatileStatus: "flinch"
+    },
+    target: "any",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   crystallization: {
     num: 1036,
     accuracy: 100,
@@ -568,7 +669,7 @@ const Moves = {
     name: "Crystal Rush",
     pp: 30,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Crystal",
@@ -589,6 +690,36 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Dark",
+    contestType: "Cool"
+  },
+  decapattack: {
+    num: 1041,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Decap Attack",
+    pp: 10,
+    priority: 0,
+    flags: { bullet: 1, protect: 1, mirror: 1 },
+	recoil: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    contestType: "Tough"
+  },
+  dejavu: {
+    num: 1042,
+    accuracy: true,
+    basePower: 105,
+    category: "Special",
+    name: "Deja-Vu",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Psychic",
     contestType: "Cool"
   },
   depthcharge: {
@@ -718,7 +849,7 @@ const Moves = {
     name: "Draco Jet",
     pp: 15,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Dragon",
@@ -868,6 +999,28 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  eevoboost: {
+    num: 1043,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Eevoboost",
+    pp: 5,
+    priority: -1,
+    flags: { snatch: 1 },
+    boosts: {
+      atk: 1,
+      def: 1,
+      spa: 1,
+      spd: 1,
+      spe: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   engulf: {
     num: 962,
     accuracy: 100,
@@ -935,6 +1088,10 @@ const Moves = {
     type: "Nuclear",
     contestType: "Cool"
   },
+  extremespeed: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   faengrush: {
     num: 934,
     accuracy: 95,
@@ -952,6 +1109,10 @@ const Moves = {
     type: "Fairy",
     contestType: "Cool"
   },
+  fakeout: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   fallout: {
     num: 975,
     accuracy: true,
@@ -967,6 +1128,10 @@ const Moves = {
     type: "Nuclear",
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
+  },
+  feint: {
+    inherit: true,
+	flags: { mirror: 1, noassist: 1, failcopycat: 1, speed: 1 }
   },
   fiesta: {
     num: 1000,
@@ -1006,6 +1171,10 @@ const Moves = {
     zMove: { boost: { def: 1 } },
     contestType: "Clever",
   },
+  firstimpression: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   fissionburst: {
     num: 977,
     accuracy: 100,
@@ -1029,7 +1198,7 @@ const Moves = {
     name: "Flame Impact",
     pp: 15,
     priority: 2,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Fire",
@@ -1043,7 +1212,7 @@ const Moves = {
     name: "Flame Jet",
     pp: 30,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Fire",
@@ -1057,7 +1226,7 @@ const Moves = {
     name: "Flash Flood",
     pp: 15,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Water",
@@ -1285,6 +1454,10 @@ const Moves = {
     type: "Sound",
     contestType: "Cool"
   },
+  iceshard: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, speed: 1 }
+  },
   infernalblade: {
     num: 983,
     accuracy: 95,
@@ -1314,11 +1487,15 @@ const Moves = {
     name: "Instant Crush",
     pp: 10,
     priority: 1,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Psychic",
     contestType: "Beautiful"
+  },
+  jetpunch: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
   },
   jetstrike: {
     num: 906,
@@ -1328,7 +1505,7 @@ const Moves = {
     name: "Jet Strike",
     pp: 15,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Flying",
@@ -1371,6 +1548,10 @@ const Moves = {
     type: "Grass",
     zMove: { boost: { spa: 1 } },
     contestType: "Beautiful"
+  },
+  machpunch: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
   },
   metalcruncher: {
     num: 985,
@@ -1453,6 +1634,21 @@ const Moves = {
     type: "Ground",
     contestType: "Cute"
   },
+  nailflick: {
+    num: 1044,
+    accuracy: 90,
+    basePower: 50,
+    category: "Physical",
+    name: "Nail Flick",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+	critRatio: 2,
+    target: "normal",
+    type: "Normal",
+    contestType: "Cute"
+  },
   nanorepair: {
     num: 925,
     accuracy: true,
@@ -1526,6 +1722,20 @@ const Moves = {
     zMove: { boost: { def: 1 } },
     contestType: "Tough"
   },
+  nostrilflare: {
+    num: 1045,
+    accuracy: 90,
+    basePower: 55,
+    category: "Special",
+    name: "Nostril Flare",
+    pp: 20,
+    priority: 1,
+    flags: { protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    contestType: "Tough"
+  },
   nuclearslash: {
     num: 987,
     accuracy: 90,
@@ -1593,6 +1803,20 @@ const Moves = {
     target: "normal",
     type: "Flying",
     contestType: "Cute"
+  },
+  pentascale: {
+    num: 1050,
+    accuracy: 100,
+    category: "Special",
+    name: "Penta Scale",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
   },
   perishsongsound: {
     num: 1007,
@@ -1741,7 +1965,7 @@ const Moves = {
     name: "Psybolt",
     pp: 30,
     priority: 1,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Psychic",
@@ -1776,6 +2000,10 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Cool"
+  },
+  quickattack: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   radioacid: {
     num: 992,
@@ -1821,6 +2049,26 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Sound",
     contestType: "Beautiful"
+  },
+  rhythmstrike: {
+    num: 1049,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Rhythm Strike",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        def: -1,
+		spd: -1
+      }
+    },
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
   },
   roarsound: {
     num: 1009,
@@ -1932,7 +2180,6 @@ const Moves = {
     category: "Physical",
     name: "Seedy Recede",
     pp: 20,
-    priority: -6,
     flags: { contact: 1, protect: 1, mirror: 1 },
     selfSwitch: true,
     secondary: null,
@@ -2207,6 +2454,10 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  shadowsneak: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   shadowstorm: {
     num: 1033,
     accuracy: 100,
@@ -2443,6 +2694,29 @@ const Moves = {
     zMove: { boost: { spd: 1 } },
     contestType: "Cool"
   },
+  starshot: {
+    num: 1047,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Star Shot",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onModifyPriority(priority, source, target, move) {
+      if (this.field.isTerrain("gravity") && source.isGrounded()) {
+        return priority + 1;
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Gravity",
+    contestType: "Cool"
+  },
+  suckerpunch: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
   suddenstrike: {
     num: 994,
     accuracy: 100,
@@ -2451,10 +2725,26 @@ const Moves = {
     name: "Sudden Strike",
     pp: 30,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Dark",
+    contestType: "Beautiful"
+  },
+  supernova: {
+    num: 1048,
+    accuracy: 100,
+    basePower: 250,
+    category: "Physical",
+    name: "Super Nova",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+	pseudoWeather: "gravity",
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Cosmic",
     contestType: "Beautiful"
   },
   supersonicsound: {
@@ -2609,6 +2899,10 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
+  vacuumwave: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, speed: 1 }
+  },
   vanish: {
     num: 946,
     accuracy: true,
@@ -2643,6 +2937,10 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Tough"
+  },
+  watershuriken: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, speed: 1 }
   },
   weatherball: {
     inherit: true,
@@ -2764,11 +3062,15 @@ const Moves = {
     name: "wormhole",
     pp: 30,
     priority: 1,
-    flags: {},
+    flags: { speed: 1 },
     secondary: null,
     target: "normal",
     type: "Psychic",
     contestType: "Beautiful"
+  },
+  zippyzap: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   zombiestrike: {
     num: 970,
