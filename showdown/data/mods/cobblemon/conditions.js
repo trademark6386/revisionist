@@ -176,7 +176,7 @@ const Conditions = {
     onFieldEnd() {
       this.add("-weather", "none");
     }
-  }
+  },
   thunderstorm: {
     name: "Thunderstorm",
     effectType: "Weather",

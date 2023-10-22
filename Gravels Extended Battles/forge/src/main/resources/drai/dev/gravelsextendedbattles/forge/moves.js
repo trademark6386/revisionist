@@ -65,7 +65,20 @@ const Moves = {
     pp: 15,
     priority: 0,
     flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1 },
-    secondary: null,
+    onModifyType(move, pokemon, target) {
+      const rockTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Rock";
+      if (rockTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>rockTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+	secondary: null,
     target: "normal",
     type: "Rock",
     contestType: "Tough"
@@ -525,6 +538,28 @@ const Moves = {
     type: "Poison",
     contestType: "Beautiful"
   },
+  crystallization: {
+    num: 1036,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Crystallization",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      if (target.getTypes().join() === "Crystal" || !target.setType("Crystal")) {
+        this.add("-fail", target);
+        return null;
+      }
+      this.add("-start", target, "typechange", "Crystal");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Cute"
+  },
   crystalrush: {
     num: 968,
     accuracy: 100,
@@ -735,7 +770,20 @@ const Moves = {
     pp: 10,
     priority: 0,
     flags: { sound: 1, bypasssub: 1, protect: 1, mirror: 1 },
-    secondary: null,
+    onModifyType(move, pokemon, target) {
+      const dragonTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Sound";
+      const soundTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Dragon";
+      if (dragonTypeEffectiveness === soundTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Sound")){
+          move.type = "Sound";
+        }
+      } else if(soundTypeEffectiveness>dragonTypeEffectiveness){
+        move.type = "Sound"
+      }
+    },
+	secondary: null,
     target: "normal",
     type: "Dragon",
     contestType: "Tough"
