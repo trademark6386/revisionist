@@ -298,7 +298,7 @@ const TypeChart = {
     damageTaken: {
       Bug: 2,
 	  Cosmic: 0,
-	  
+	  Crystal: 0,
       Dark: 2,
 	  Digital: 0,
       Dragon: 0,
