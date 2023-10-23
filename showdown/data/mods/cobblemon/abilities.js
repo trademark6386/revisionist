@@ -139,6 +139,30 @@ const Abilities = {
     rating: 4,
     num: 347
   },
+  bloodthirst: {
+    onModifyMove(move) {
+      if (move.flags["bite"]) {
+        if (!move.drain) {
+          move.drain = [1, 8]; // Drains 1/8 of the damage dealt
+        }
+      }
+    },
+	name: "Bloodthirst",
+	rating: 2,
+	num: 353
+  },
+  bouncy: {
+    onDamagingHitOrder: 1,
+    onDamagingHit(damage, target, source, move) {
+      if (this.checkMoveMakesContact(move, source, target, true)) {
+        const damageDealt = Math.floor(damage / 3);
+		this.damage(damageDealt, source, target);
+      }
+    },
+    name: "Bouncy",
+    rating: 2.5,
+    num: 353
+  },
   castlemoat: {
   onTryHitPriority: 1,
   onTryHit(target, source, move) {
@@ -313,6 +337,20 @@ const Abilities = {
     name: "Feedback",
     rating: 2.5,
     num: 311
+  },
+  flameeater: {
+    onTryHit(target, source, move) {
+      if (target !== source && move.type === "Fire") {
+        if (!this.heal(target.baseMaxhp / 4)) {
+          this.add("-immune", target, "[from] ability: Flame Eater");
+        }
+        return null;
+      }
+    },
+    isBreakable: true,
+    name: "Flame Eater",
+    rating: 3.5,
+    num: 355
   },
   fossilize: {
     onModifyTypePriority: -1,
@@ -582,6 +620,18 @@ const Abilities = {
     rating: 4,
     num: 312
   },
+  sandman: {
+    onDamagingHit(damage, target, source, move) {
+      if (this.checkMoveMakesContact(move, source, target)) {
+        if (this.randomChance(3, 10)) {
+          source.trySetStatus("slp", target);
+        }
+      }
+    },
+    name: "Sandman",
+    rating: 1.5,
+    num: 356
+  },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
       if (effect && effect.effectType === "Move") {
@@ -591,6 +641,17 @@ const Abilities = {
     name: "Scavenger",
     rating: 3.5,
     num: 304
+  },
+  scarecrow: {
+    onTryHit(target, source, move) {
+      if (move.type === 'Flying') {
+        this.add('-immune', target, '[from] ability: Scarecrow');
+        return null;
+      }
+	},
+	name: "Scarecrow",
+	rating: 2,
+    num: 357
   },
   shadowcall: {
     onModifyAtkPriority: 5,
@@ -773,6 +834,43 @@ const Abilities = {
     name: "Terrorize",
     rating: 4,
     num: 306
+  },
+  unstable: {
+    onPrepareHit(source, target, move) {
+      if (this.effectState.unstable)
+        return;
+      if (move.hasBounced || move.flags["futuremove"] || move.sourceEffect === "snatch")
+        return;
+      const type = move.type;
+      if (type && type !== "???" && source.getTypes().join() !== type) {
+        if (!source.setType(type))
+          return;
+        this.effectState.unstable = true;
+        this.add("-start", source, "typechange", type, "[from] ability: Unstable");
+      }
+    },
+	onAfterMoveSecondary(target, source, move) {
+      if (!target.hp)
+        return;
+      const type = move.type;
+      if (target.isActive && move.effectType === "Move" && move.category !== "Status" && type !== "???" && !target.hasType(type)) {
+        if (!target.setType(type))
+          return false;
+        this.add("-start", target, "typechange", type, "[from] ability: Unstable");
+        if (target.side.active.length === 2 && target.position === 1) {
+          const action = this.queue.willMove(target);
+          if (action && action.move.id === "curse") {
+            action.targetLoc = -1;
+          }
+        }
+      }
+    },
+    onSwitchIn(pokemon) {
+      delete this.effectState.unstable;
+    },
+    name: "Unstable",
+    rating: 4,
+    num: 354
   },
   windforce: {
     onTryHitPriority: 1,
