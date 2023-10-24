@@ -400,7 +400,7 @@ const Moves = {
     condition: {
       duration: 2,
       onInvulnerability(target, source, move) {
-        if (["gust", "gustwind", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
+        if (["gust", "gustwind", "tornado", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
           return;
         }
         return false;
@@ -703,6 +703,34 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
+  constructionblocks: {
+    num: 1118,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Construction Blocks",
+    pp: 20,
+    priority: 0,
+    flags: { reflectable: 1, mustpressure: 1 },
+    sideCondition: "constructionblocks",
+    condition: {
+      // this is a side condition
+      onSideStart(side) {
+        this.add("-sidestart", side, "move: Construction Blocks");
+      },
+      onEntryHazard(pokemon) {
+        if (pokemon.hasItem("heavydutyboots"))
+          return;
+        const typeMod = this.clampIntRange(pokemon.runEffectiveness(this.dex.getActiveMove("constructionblocks")), -6, 6);
+        this.damage(pokemon.maxhp * Math.pow(2, typeMod) / 8);
+      }
+    },
+    secondary: null,
+    target: "foeSide",
+    type: "Plastic",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cool"
+  },
   coralbreak: {
     num: 973,
     accuracy: 95,
@@ -774,6 +802,99 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
+  courtchange: {
+    num: 756,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Court Change",
+    pp: 10,
+    priority: 0,
+    flags: { mirror: 1 },
+    onHitField(target, source) {
+      const sideConditions = [
+        "mist",
+        "lightscreen",
+        "reflect",
+        "spikes",
+        "safeguard",
+        "tailwind",
+        "toxicspikes",
+        "stealthrock",
+        "waterpledge",
+        "firepledge",
+        "grasspledge",
+        "stickyweb",
+        "auroraveil",
+		"fiesta",
+		"constructionblocks",
+        "gmaxsteelsurge",
+        "gmaxcannonade",
+        "gmaxvinelash",
+        "gmaxwildfire"
+      ];
+      let success = false;
+      if (this.gameType === "freeforall") {
+        const offset = this.random(3) + 1;
+        const sides = [this.sides[0], this.sides[2], this.sides[1], this.sides[3]];
+        const temp = { 0: {}, 1: {}, 2: {}, 3: {} };
+        for (const side of sides) {
+          for (const id in side.sideConditions) {
+            if (!sideConditions.includes(id))
+              continue;
+            temp[side.n][id] = side.sideConditions[id];
+            delete side.sideConditions[id];
+            const effectName = this.dex.conditions.get(id).name;
+            this.add("-sideend", side, effectName, "[silent]");
+            success = true;
+          }
+        }
+        for (let i = 0; i < 4; i++) {
+          const sourceSideConditions = temp[sides[i].n];
+          const targetSide = sides[(i + offset) % 4];
+          for (const id in sourceSideConditions) {
+            targetSide.sideConditions[id] = sourceSideConditions[id];
+            const effectName = this.dex.conditions.get(id).name;
+            let layers = sourceSideConditions[id].layers || 1;
+            for (; layers > 0; layers--)
+              this.add("-sidestart", targetSide, effectName, "[silent]");
+          }
+        }
+      } else {
+        const sourceSideConditions = source.side.sideConditions;
+        const targetSideConditions = source.side.foe.sideConditions;
+        const sourceTemp = {};
+        const targetTemp = {};
+        for (const id in sourceSideConditions) {
+          if (!sideConditions.includes(id))
+            continue;
+          sourceTemp[id] = sourceSideConditions[id];
+          delete sourceSideConditions[id];
+          success = true;
+        }
+        for (const id in targetSideConditions) {
+          if (!sideConditions.includes(id))
+            continue;
+          targetTemp[id] = targetSideConditions[id];
+          delete targetSideConditions[id];
+          success = true;
+        }
+        for (const id in sourceTemp) {
+          targetSideConditions[id] = sourceTemp[id];
+        }
+        for (const id in targetTemp) {
+          sourceSideConditions[id] = targetTemp[id];
+        }
+        this.add("-swapsideconditions");
+      }
+      if (!success)
+        return false;
+      this.add("-activate", source, "move: Court Change");
+    },
+    secondary: null,
+    target: "all",
+    type: "Normal"
+  },
   crackleslam: {
     num: 1054,
     accuracy: 90,
@@ -826,6 +947,23 @@ const Moves = {
     target: "normal",
     type: "Crystal",
     contestType: "Beautiful"
+  },
+  cymbalcrash: {
+    num: 1119,
+    accuracy: 95,
+    basePower: 90,
+    category: "Physical",
+    name: "Cymbal Crash",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, sound: 1 },
+    secondary: {
+      chance: 20,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
   },
   darkmatter: {
     num: 920,
@@ -886,7 +1024,8 @@ const Moves = {
         "gmaxsteelsurge"
       ];
       const removeAll = [
-        "fiesta",
+        "constructionblocks",
+		"fiesta",
 		"spikes",
         "toxicspikes",
         "stealthrock",
@@ -942,7 +1081,8 @@ const Moves = {
         "gmaxsteelsurge"
       ];
       const removeAll = [
-        "fiesta",
+        "constructionblocks",
+		"fiesta",
 		"spikes",
         "toxicspikes",
         "stealthrock",
@@ -1558,6 +1698,20 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  echoingblow: {
+    num: 1120,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Echoing Blow",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1, sound: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
+  },
   eevoboost: {
     num: 1043,
     accuracy: true,
@@ -1593,7 +1747,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -1607,7 +1761,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -1927,12 +2081,29 @@ const Moves = {
     type: "Light",
     contestType: "Clever"
   },
+  flop: {
+    num: 1124,
+    accuracy: 80,
+    basePower: 80,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Flop",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+	critRatio: 2,
+    recoil: [1, 4],
+    secondary: null,
+    target: "normal",
+    type: "Slime",
+    contestType: "Cool"
+  },
   fly: {
     inherit: true,
     condition: {
       duration: 2,
       onInvulnerability(target, source, move) {
-        if (["gust", "gustwind", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
+        if (["gust", "gustwind", "tornado", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
           return;
         }
         return false;
@@ -2646,6 +2817,50 @@ const Moves = {
     type: "Psychic",
     contestType: "Cute"
   },
+  mortalspin: {
+    num: 866,
+    accuracy: 100,
+    basePower: 30,
+    category: "Physical",
+    name: "Mortal Spin",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onAfterHit(target, pokemon) {
+      if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
+        this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
+      }
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      for (const condition of sideConditions) {
+        if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
+          this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
+        }
+      }
+      if (pokemon.hp && pokemon.volatiles["partiallytrapped"]) {
+        pokemon.removeVolatile("partiallytrapped");
+      }
+    },
+    onAfterSubDamage(damage, target, pokemon) {
+      if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
+        this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
+      }
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      for (const condition of sideConditions) {
+        if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
+          this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
+        }
+      }
+      if (pokemon.hp && pokemon.volatiles["partiallytrapped"]) {
+        pokemon.removeVolatile("partiallytrapped");
+      }
+    },
+    secondary: {
+      chance: 100,
+      status: "psn"
+    },
+    target: "allAdjacentFoes",
+    type: "Poison"
+  },
   mudslide: {
     num: 908,
     accuracy: 95,
@@ -2835,6 +3050,23 @@ const Moves = {
     type: "Flying",
     contestType: "Cute"
   },
+  ozonebeam: {
+    num: 1128,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Ozone Beam",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      status: "psn"
+    },
+    target: "normal",
+    type: "Wind",
+    contestType: "Tough"
+  },
   pentascale: {
     num: 1050,
     accuracy: 100,
@@ -2973,6 +3205,38 @@ const Moves = {
     target: "normal",
     type: "Bug",
     contestType: "Tough"
+  },
+  polyblast: {
+    num: 1119,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Polyblast",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, pulse: 1, mirror: 1, distance: 1 },
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "any",
+    type: "Plastic",
+    contestType: "Beautiful"
+  },
+  polygonalsword: {
+    num: 1121,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Polygonal Sword",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Cool"
   },
   possession: {
     num: 910,
@@ -3165,7 +3429,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -3179,7 +3443,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -3249,7 +3513,7 @@ const Moves = {
     basePower: 0,
     category: "Status",
     name: "Reflective Cloak",
-    pp: 5,
+    pp: 10,
     priority: 4,
     flags: { noassist: 1, failcopycat: 1 },
     stallingMove: true,
@@ -3318,7 +3582,7 @@ const Moves = {
     name: "Rhythm Strike",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, sound: 1 },
     secondary: {
       chance: 100,
       boosts: {
@@ -3848,7 +4112,7 @@ const Moves = {
         if (source === this.effectState.target && target === this.effectState.source) {
           return;
         }
-        if (["gust", "gustwind", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
+        if (["gust", "gustwind", "tornado", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
           return;
         }
         return false;
@@ -3922,6 +4186,25 @@ const Moves = {
     zMove: { effect: "crit2" },
     contestType: "Cute"
   },
+  slimyspit: {
+    num: 1126,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Slimy Spit",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Clever"
+  },
   smogdiffusion: {
     num: 948,
     accuracy: 100,
@@ -3987,6 +4270,23 @@ const Moves = {
     type: "Sound",
     contestType: "Cool"
   },
+  spam: {
+    num: 1123,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+    name: "Spam",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
   sparklingariasound: {
     num: 1016,
     accuracy: 100,
@@ -4046,6 +4346,23 @@ const Moves = {
     type: "Light",
     zMove: { boost: { spd: 1 } },
     contestType: "Cute"
+  },
+  squallstrike: {
+    num: 1129,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Squall Strike",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Wind",
+    contestType: "Beautiful"
   },
   standoff: {
     num: 966,
@@ -4160,6 +4477,23 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Clever"
   },
+  superstar: {
+    num: 1122,
+    accuracy: 90,
+    basePower: 120,
+    category: "Physical",
+    name: "Superstar",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, recharge: 1, protect: 1, mirror: 1 },
+    self: {
+      volatileStatus: "mustrecharge"
+    },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
   swiftcosmic: {
     num: 1099,
     accuracy: true,
@@ -4225,6 +4559,25 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  tendril: {
+    num: 1125,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Tendril",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Tough"
   },
   terrorize: {
     num: 913,
@@ -4340,6 +4693,20 @@ const Moves = {
     target: "normal",
     type: "Grass",
     contestType: "Cool"
+  },
+  tornado: {
+    num: 1127,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Tornado",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, nonsky: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Wind",
+    contestType: "Beautiful"
   },
   twisterwind: {
     num: 1094,
