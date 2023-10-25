@@ -1,0 +1,18 @@
+{
+  "species": "cobblemon:stunky",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:cutout_poser",
+      "model": "cobblemon:cutout_geb.geo",
+      "texture": "cobblemon:textures/pokemon/stunky.png",
+      "layers": []
+    },
+    {
+      "aspects": [
+        "shiny"
+      ],
+      "texture": "cobblemon:textures/pokemon/stunky_shiny.png"
+    }  ]
+}
