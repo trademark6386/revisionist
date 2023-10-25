@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:zoroark",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": ["hisuian"],
+      "poser": "cobblemon:cutout_poser",
+      "model": "cobblemon:cutout_geb.geo",
+      "texture": "cobblemon:textures/pokemon/hisuian_zoroark.png",
+      "layers": []
+    },
+    {
+      "aspects": [
+        "shiny",
+        "hisuian"
+      ],
+      "texture": "cobblemon:textures/pokemon/hisuian_zoroark_shiny.png"
+    }  ]
+}
