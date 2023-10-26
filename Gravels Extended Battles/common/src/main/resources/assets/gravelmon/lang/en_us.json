@@ -394,7 +394,7 @@
   "cobblemon.move.ancientroarsound": "Ancient Roar",
   "cobblemon.move.ancientroarsound.desc": "The user's voice shakes with a primal roar, damaging its foes with pure fear. The move may use Rock-Type or Sound-Type.",
   "cobblemon.move.drakonvoicesound": "Drakon Voice",
-  "cobblemon.move.drakonvoicesound.desc": "The sheer force of the user's draconic voice obliterates everything in its path. The move may use Dragon-Type or Sound-Type.",
+  "cobblemon.move.drakonvoicesound.desc": "The sheer force of the user's draconic deals damage using the Dragon-Type or Sound-Type.",
   "cobblemon.move.atomsplitnuclear": "Atom Split",
   "cobblemon.move.atomsplitnuclear.desc": "The user attacks everything around it by causing a tremendous explosion. The user faints upon using this move.",
   "cobblemon.move.wormholecosmic": "Wormhole",
