@@ -414,7 +414,7 @@ const Abilities = {
     rating: 3.5,
     num: 346
   },
-  heliphobia: {
+  heliophobia: {
     onSourceBasePowerPriority: 17,
     onSourceBasePower(basePower, attacker, defender, move) {
       if (move.type === "Light") {
@@ -431,7 +431,7 @@ const Abilities = {
       }
     },
     isBreakable: true,
-    name: "Heliphobia",
+    name: "Heliophobia",
     rating: 3,
     num: 319
   },
