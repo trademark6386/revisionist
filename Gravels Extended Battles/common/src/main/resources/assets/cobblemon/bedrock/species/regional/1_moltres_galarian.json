@@ -7,13 +7,23 @@
       "poser": "cobblemon:cutout_poser",
       "model": "cobblemon:cutout_geb.geo",
       "texture": "cobblemon:textures/pokemon/galarian_moltres.png",
-      "layers": []
+      "layers": [
+        {
+          "name": "emissive"
+        }
+      ]
     },
     {
       "aspects": [
         "shiny",
         "galarian"
       ],
-      "texture": "cobblemon:textures/pokemon/galarian_moltres_shiny.png"
-    }  ]
+      "texture": "cobblemon:textures/pokemon/galarian_moltres_shiny.png",
+      "layers": [
+        {
+          "name": "emissive"
+        }
+      ]
+    }
+  ]
 }

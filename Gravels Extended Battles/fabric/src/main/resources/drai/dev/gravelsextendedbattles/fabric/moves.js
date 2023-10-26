@@ -1592,7 +1592,7 @@ const Moves = {
         const result = this.random(2);
         if (result === 0) {
           target.trySetStatus("brn", source);
-        } else (result === 1) {
+        } else if(result === 1) {
           target.trySetStatus("frz", source);
         }
       }
