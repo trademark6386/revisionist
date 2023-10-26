@@ -435,6 +435,17 @@ const Abilities = {
     rating: 3,
     num: 319
   },
+  highnoon: {
+    onModifyPriority(priority, pokemon, target, move) {
+        if (move && !['Detect', 'Endure', 'Protect', 'Quick Guard', 'Wide Guard'].includes(move.name)) {
+            return 0;
+        }
+        return priority;
+    },
+    name: "High Noon",
+    rating: 4,
+    num: 312
+  },
   hubris: {
     onSourceAfterFaint(length, target, source, effect) {
       if (effect && effect.effectType === "Move") {
@@ -634,17 +645,6 @@ const Abilities = {
     name: "Psych Out",
     rating: 3.5,
     num: 303
-  },
-  quickdraw: {
-    onModifyPriority(priority, pokemon, target, move) {
-        if (move && !['Detect', 'Endure', 'Protect', 'Quick Guard', 'Wide Guard'].includes(move.name)) {
-            return 0;
-        }
-        return priority;
-    },
-    name: "Quickdraw",
-    rating: 4,
-    num: 312
   },
   sandman: {
     onDamagingHit(damage, target, source, move) {

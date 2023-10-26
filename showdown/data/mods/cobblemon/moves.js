@@ -1592,7 +1592,7 @@ const Moves = {
         const result = this.random(2);
         if (result === 0) {
           target.trySetStatus("brn", source);
-        } else (result === 1) {
+        } else if(result === 1) {
           target.trySetStatus("frz", source);
         }
       }
@@ -4765,7 +4765,7 @@ const Moves = {
     priority: 0,
     flags: { protect: 1, mirror: 1 },
     secondary: {
-      chance: 100,
+      chance: 30,
       boosts: {
         accuracy: -1
       }

@@ -4765,7 +4765,7 @@ const Moves = {
     priority: 0,
     flags: { protect: 1, mirror: 1 },
     secondary: {
-      chance: 100,
+      chance: 30,
       boosts: {
         accuracy: -1
       }
