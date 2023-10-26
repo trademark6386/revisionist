@@ -26,6 +26,6 @@
     "java": ">=17",
     "fabric-api": "*",
     "cobblemon": ">=1.4",
-    "midnightLib": ">=1.4"
+    "midnightlib": ">=1.4"
   }
 }
