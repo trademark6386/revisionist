@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
+import java.util.*;
+
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.*;
 
 @Mixin(com.cobblemon.mod.common.command.SpawnAllPokemon.class)
@@ -22,7 +24,7 @@ public class SpawnAllPokemonMixin {
     public void executeInject(CommandContext<ServerCommandSource> context,
                               IntRange range, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         ServerPlayerEntity player = ((ServerCommandSource)context.getSource()).getPlayerOrThrow();
-        for (Species species : PokemonSpecies.INSTANCE.getImplemented()) {
+        for (Species species : PokemonSpecies.INSTANCE.getSpecies()) {
             if(range.contains(species.getNationalPokedexNumber())){
                 var isValid = true;
                 for (String label : bannedLabels) {
@@ -30,10 +32,28 @@ public class SpawnAllPokemonMixin {
                         isValid = false;
                     }
                 }
+                if(Arrays.stream(bannedLabels).toList().contains("not_modeled") && !species.getImplemented()){
+                    isValid = false;
+                }
                 if(isValid){
                     var pokemon = species.create(10);
                     pokemon.sendOut(player.getServerWorld(),player.getPos(), (pokemonEntity) -> {
                         pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
+                    var regionalAspects = new ArrayList<String>(List.of("galarian", "whitestriped", "alolan", "paldean", "hisuian"));
+                    var splitEvolutionRegionals = new ArrayList<String>(List.of("pikachu","cubone", "exeggcute", "koffing", "mimejr"));
+                    for (FormData formData : species.getForms()) {
+                        for (String aspect : regionalAspects) {
+                            if(formData.getAspects().contains(aspect)&&!splitEvolutionRegionals.contains(species.getName().toLowerCase())){
+                                pokemon = species.create(10);
+                                pokemon.setAspects(new HashSet<>(List.of(aspect)));
+                                pokemon.sendOut(player.getServerWorld(),player.getPos(), (pokemonEntity) -> {
+                                    pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
+                            }
+                        }
+
+
+                    }
+
                 }
             }
         }

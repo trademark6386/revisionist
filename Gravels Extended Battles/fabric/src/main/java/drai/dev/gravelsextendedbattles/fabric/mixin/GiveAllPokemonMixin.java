@@ -60,10 +60,8 @@ public class GiveAllPokemonMixin {
                     var regionalAspects = new ArrayList<String>(List.of("galarian", "whitestriped", "alolan", "paldean", "hisuian"));
                     var splitEvolutionRegionals = new ArrayList<String>(List.of("pikachu","cubone", "exeggcute", "koffing", "mimejr"));
                     for (FormData formData : species.getForms()){
-                        for (String aspect :
-                                regionalAspects) {
+                        for (String aspect : regionalAspects) {
                             if(formData.getAspects().contains(aspect)&&!splitEvolutionRegionals.contains(species.getName().toLowerCase())){
-                                System.out.println("created Pokemon form: "+aspect+" "+species.getName());
                                 var form = species.create(10);
                                 form.setAspects(new HashSet<>(List.of(aspect)));
                                 pc.add(form);
