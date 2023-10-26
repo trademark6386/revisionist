@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="MPL2.0"
-issueTrackerURL="https://Arcaryx/Cobblemon-Integrations/issues"
+issueTrackerURL=""
 [[mods]]
 modId="gravels_extended_battles"
 version="${mod_version}"
@@ -23,6 +23,12 @@ ordering="NONE"
 side="BOTH"
 [[dependencies.gravels_extended_battles]]
 modId="cobblemon"
+mandatory=true
+versionRange="[1.4,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.gravels_extended_battles]]
+modId="midnightlib"
 mandatory=true
 versionRange="[1.4,)"
 ordering="NONE"
