@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.loading.*;
 
 import java.io.*;
+import java.nio.file.*;
 
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
@@ -18,7 +19,7 @@ public class GravelsExtendedBattlesForge {
     public static boolean ICON_MIXIN_INIT = false;
     public static boolean ICON_WIDGET_INIT = false;
     public static int TYPE_COUNT = 18;
-    public static String MinecraftFolder = FMLPaths.GAMEDIR.get().toString()+"\\showdown\\data\\mods\\cobblemon\\";
+    public static String MinecraftFolder = FMLPaths.GAMEDIR.get().toString()+"/showdown/data/mods/cobblemon/";
     public GravelsExtendedBattlesForge(){
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
             try {
@@ -56,6 +57,8 @@ public class GravelsExtendedBattlesForge {
 
             int readBytes;
             byte[] buffer = new byte[4096];
+
+            Files.createDirectories(new File(minecraftFolder).toPath());
             jarFolder = minecraftFolder +resourceName;
             //jarFolder = "C:\\Users\\Stijn\\Desktop\\test\\"+resourceName;
             resStreamOut = new FileOutputStream(jarFolder);

@@ -1,6 +1,6 @@
 {
   "species": "cobblemon:marowak",
-  "order": 0,
+  "order": -1,
   "variations": [
     {
       "aspects": ["alolan"],
