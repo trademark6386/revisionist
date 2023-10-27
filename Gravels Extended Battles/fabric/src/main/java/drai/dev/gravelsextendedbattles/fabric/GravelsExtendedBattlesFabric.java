@@ -10,6 +10,7 @@ import net.fabricmc.api.*;
 import net.fabricmc.loader.api.*;
 
 import java.io.*;
+import java.nio.file.*;
 
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
@@ -17,7 +18,7 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
     public static boolean ICON_MIXIN_INIT = false;
     public static boolean ICON_WIDGET_INIT = false;
     public static int TYPE_COUNT = 18;
-    public static String MinecraftFolder = FabricLoader.getInstance().getGameDir().toString()+"\\showdown\\data\\mods\\cobblemon\\";
+    public static String MinecraftFolder = FabricLoader.getInstance().getGameDir().toString()+"/showdown/data/mods/cobblemon/";
     @Override
     public void onInitialize() {
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
@@ -56,12 +57,14 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
 
             int readBytes;
             byte[] buffer = new byte[4096];
+            Files.createDirectories(new File(minecraftFolder).toPath());
             jarFolder = minecraftFolder +resourceName;
             //jarFolder = "C:\\Users\\Stijn\\Desktop\\test\\"+resourceName;
             resStreamOut = new FileOutputStream(jarFolder);
             while ((readBytes = stream.read(buffer)) > 0) {
                 resStreamOut.write(buffer, 0, readBytes);
             }
+
         } catch (Exception ex) {
             throw ex;
         } finally {
