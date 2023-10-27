@@ -3927,7 +3927,7 @@ const Moves = {
     volatileStatus: "confusion",
     secondary: null,
     target: "allAdjacentFoes",
-    type: "Ghost",
+    type: "Shadow",
     zMove: { boost: { spa: 1 } },
     contestType: "Clever"
   },
