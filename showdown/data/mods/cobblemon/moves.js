@@ -2168,7 +2168,7 @@ const Moves = {
     num: 1068,
     accuracy: 100,
     basePower: 80,
-    category: "¨Physical",
+    category: "Physical",
     name: "Gale Rush",
     pp: 15,
     priority: 0,
@@ -3070,6 +3070,7 @@ const Moves = {
   pentascale: {
     num: 1050,
     accuracy: 100,
+    basePower: 15,
     category: "Special",
     name: "Penta Scale",
     pp: 20,
@@ -3079,7 +3080,7 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Sound",
-    contestType: "Cool"
+    contestType: "Beautiful"
   },
   perishsongsound: {
     num: 1007,
@@ -3535,7 +3536,7 @@ const Moves = {
     accuracy: true,
     basePower: 0,
     category: "Status",
-    name: "Reflect",
+    name: "Reflect Light",
     pp: 20,
     priority: 0,
     flags: { snatch: 1 },
@@ -4398,7 +4399,7 @@ const Moves = {
     },
     secondary: null,
     target: "normal",
-    type: "Gravity",
+    type: "Cosmic",
     contestType: "Cool"
   },
   suckerpunch: {
