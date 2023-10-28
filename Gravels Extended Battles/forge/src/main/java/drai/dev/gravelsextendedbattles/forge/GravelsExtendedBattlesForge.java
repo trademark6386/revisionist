@@ -2,15 +2,22 @@ package drai.dev.gravelsextendedbattles.forge;
 
 import com.cobblemon.mod.common.api.*;
 import com.cobblemon.mod.common.api.events.*;
+import com.cobblemon.mod.common.api.pokemon.*;
+import com.cobblemon.mod.common.api.reactive.*;
+import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.*;
+import kotlin.Unit;
+import net.minecraft.util.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.loading.*;
+import org.jetbrains.annotations.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.*;
 
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
@@ -20,6 +27,9 @@ public class GravelsExtendedBattlesForge {
     public static boolean ICON_WIDGET_INIT = false;
     public static int TYPE_COUNT = 18;
     public static String MinecraftFolder = FMLPaths.GAMEDIR.get().toString()+"/showdown/data/mods/cobblemon/";
+
+    public static List<Identifier> modeledPokemonIdentifiers = new ArrayList<>();
+    public static SimpleObservable<Boolean> scaleNeedsARefresh = new SimpleObservable<>();
     public GravelsExtendedBattlesForge(){
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
             try {
@@ -34,15 +44,41 @@ public class GravelsExtendedBattlesForge {
                 if(pokemon.hasLabels(label)){
                     pokemonEntitySpawnEvent.getEntity().discard();
                     System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
-                    //TODO uncomment this when the bug regarding spawn canceling is fixed.
                     pokemonEntitySpawnEvent.cancel();
                 }
+            }
+            return Unit.INSTANCE;
+        });
+        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.HIGHEST, registeredSpecies -> {
+            scaleNeedsARefresh.emit(true);
+            return Unit.INSTANCE;
+        });
+        scaleNeedsARefresh.subscribe(Priority.HIGHEST, registeredSpecies -> {
+            if(!PokemonSpecies.INSTANCE.getSpecies().isEmpty()){
+                return refreshScale(PokemonSpecies.INSTANCE);
             }
             return Unit.INSTANCE;
         });
         GravelsExtendedBattles.init();
         MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
         GravelsExtendedBattles.bannedLabels = GravelmonForgeConfig.bannedLabels.toArray(new String[0]);
+    }
+
+    @NotNull
+    private static Unit refreshScale(@NotNull PokemonSpecies instance) {
+        for (Species species : instance.getSpecies()) {
+            boolean scaleChangeNeeded = false;
+            if (!Arrays.stream(bannedLabels).toList().contains("not_modeled") && !species.getImplemented()) {
+                if (!modeledPokemonIdentifiers.contains(species.getResourceIdentifier())) {
+                    scaleChangeNeeded = true;
+                }
+            }
+            if (scaleChangeNeeded) {
+                species.setBaseScale(0.3F);
+            }
+        }
+        modeledPokemonIdentifiers = new ArrayList<>();
+        return Unit.INSTANCE;
     }
 
     static public String exportResource(String minecraftFolder,String resourceName) throws Exception {

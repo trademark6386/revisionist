@@ -2,25 +2,45 @@ package drai.dev.gravelsextendedbattles.fabric;
 
 import com.cobblemon.mod.common.api.*;
 import com.cobblemon.mod.common.api.events.*;
+import com.cobblemon.mod.common.api.pokemon.*;
+import com.cobblemon.mod.common.api.reactive.*;
+import com.cobblemon.mod.common.api.reactive.Observable;
+import com.cobblemon.mod.common.api.spawning.detail.*;
+import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.*;
+import kotlin.Unit;
 import net.fabricmc.api.*;
+import net.fabricmc.fabric.api.command.v2.*;
 import net.fabricmc.loader.api.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.*;
 
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.sortedSpecies;
 
 public class GravelsExtendedBattlesFabric implements ModInitializer {
     public static boolean ICON_MIXIN_INIT = false;
     public static boolean ICON_WIDGET_INIT = false;
     public static int TYPE_COUNT = 18;
+
+    public static List<Identifier> modeledPokemonIdentifiers = new ArrayList<>();
+    public static SimpleObservable<Boolean> scaleNeedsARefresh = new SimpleObservable<>();
     public static String MinecraftFolder = FabricLoader.getInstance().getGameDir().toString()+"/showdown/data/mods/cobblemon/";
+    public static void addModeledPokemon(Identifier identifier){
+        modeledPokemonIdentifiers.add(identifier);
+    }
+
     @Override
     public void onInitialize() {
+        CommandRegistrationCallback.EVENT.register(GravelmonCommands::register);
+        scaleNeedsARefresh.emit(false);
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
             try {
                 exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
@@ -40,9 +60,40 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
             }
             return Unit.INSTANCE;
         });
+        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.HIGHEST, registeredSpecies -> {
+            scaleNeedsARefresh.emit(true);
+            return Unit.INSTANCE;
+        });
+        scaleNeedsARefresh.subscribe(Priority.HIGHEST, registeredSpecies -> {
+            if(!PokemonSpecies.INSTANCE.getSpecies().isEmpty()){
+                return refreshScale(PokemonSpecies.INSTANCE);
+            }
+             return Unit.INSTANCE;
+        });
         GravelsExtendedBattles.init();
         MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
         bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
+    }
+
+    @NotNull
+    private static Unit refreshScale(@NotNull PokemonSpecies instance) {
+
+        for (Species species : instance.getSpecies()) {
+            boolean scaleChangeNeeded = false;
+            if (!Arrays.stream(bannedLabels).toList().contains("not_modeled") && !species.getImplemented()) {
+                if (!modeledPokemonIdentifiers.contains(species.getResourceIdentifier())) {
+                    scaleChangeNeeded = true;
+                }
+            }
+            if (scaleChangeNeeded) {
+                var identifier = new Identifier("gravelmon", species.getResourceIdentifier().getPath());
+                //identifier.to
+                //TODO check if its possible to see how high the tallest pixel inside the 96x96 image is.
+                species.setBaseScale(0.3F);
+            }
+        }
+        modeledPokemonIdentifiers = new ArrayList<>();
+        return Unit.INSTANCE;
     }
 
     static public String exportResource(String minecraftFolder,String resourceName) throws Exception {

@@ -9,7 +9,8 @@
     "TypeWidgetMixin",
     "EvolutionMixin",
     "GiveAllPokemonMixin",
-    "SpawnAllPokemonMixin"
+    "SpawnAllPokemonMixin",
+    "VaryingModelRepositoryMixin"
   ],
   "client": [
   ],
