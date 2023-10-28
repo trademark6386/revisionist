@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:basculin",
+  "order": -1,
+  "variations": [
+    {
+      "aspects": ["whitestriped"],
+      "poser": "gravelmon:cutout_poser",
+      "model": "gravelmon:cutout_geb.geo",
+      "texture": "gravelmon:textures/pokemon/whitestriped_basculin.png",
+      "layers": []
+    },
+    {
+      "aspects": [
+        "shiny",
+        "whitestriped"
+      ],
+      "texture": "gravelmon:textures/pokemon/whitestriped_basculin_shiny.png"
+    }  ]
+}

@@ -1,0 +1,18 @@
+{
+  "species": "cobblemon:ferrothorn",
+  "order": -1,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "gravelmon:cutout_poser",
+      "model": "gravelmon:cutout_geb.geo",
+      "texture": "gravelmon:textures/pokemon/ferrothorn.png",
+      "layers": []
+    },
+    {
+      "aspects": [
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/ferrothorn_shiny.png"
+    }  ]
+}
