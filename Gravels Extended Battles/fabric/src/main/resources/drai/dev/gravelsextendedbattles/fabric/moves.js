@@ -3536,7 +3536,7 @@ const Moves = {
     accuracy: true,
     basePower: 0,
     category: "Status",
-    name: "Reflect",
+    name: "Reflect Light",
     pp: 20,
     priority: 0,
     flags: { snatch: 1 },
