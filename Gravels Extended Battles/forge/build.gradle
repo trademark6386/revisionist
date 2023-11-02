@@ -40,7 +40,7 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
-    modImplementation "maven.modrinth:midnightlib:1.1.0-forge"
+    modImplementation "maven.modrinth:midnightlib:1.4.1-forge"
     mappings loom.layered() {
         mappings "net.fabricmc:yarn:${project.yarn_mappings}"
     }
