@@ -33,3 +33,9 @@ mandatory=true
 versionRange="[1.4,)"
 ordering="NONE"
 side="BOTH"
+[[dependencies.gravels_extended_battles]]
+modId="architectury"
+mandatory=true
+versionRange="[9.1.10,)"
+ordering="NONE"
+side="BOTH"

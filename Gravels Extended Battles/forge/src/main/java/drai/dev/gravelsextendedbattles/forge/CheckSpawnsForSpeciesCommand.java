@@ -1,12 +1,10 @@
-package drai.dev.gravelsextendedbattles.fabric;
+package drai.dev.gravelsextendedbattles.forge;
 
 import com.cobblemon.mod.common.*;
-import com.cobblemon.mod.common.api.conditional.*;
 import com.cobblemon.mod.common.api.permission.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.spawning.*;
 import com.cobblemon.mod.common.api.spawning.condition.*;
-import com.cobblemon.mod.common.api.spawning.context.*;
 import com.cobblemon.mod.common.api.spawning.detail.*;
 import com.cobblemon.mod.common.command.argument.*;
 import com.cobblemon.mod.common.registry.*;
@@ -19,7 +17,6 @@ import net.minecraft.registry.tag.*;
 import net.minecraft.server.command.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.structure.*;
 import org.jetbrains.annotations.*;
 
@@ -50,13 +47,13 @@ public class CheckSpawnsForSpeciesCommand {
         var player = context.getSource().getPlayerOrThrow();
         PokemonProperties pokemonProperties = PokemonPropertiesArgumentType.Companion.getPokemonProperties(context, "species");
         List<SpawnDetail> pokemonSpawnDetails = CobblemonSpawnPools.INSTANCE.getWORLD_SPAWN_POOL().getDetails().stream().filter(spawnDetail -> {
-            if(spawnDetail instanceof PokemonSpawnDetail) {
-                var species = ((PokemonSpawnDetail) spawnDetail).getPokemon().getSpecies();
-                var aspects = ((PokemonSpawnDetail) spawnDetail).getPokemon().getAspects();
-                return pokemonProperties.getSpecies().equals(species) && pokemonProperties.getAspects().equals(aspects);
-            }
-             return false;
-        }
+                    if(spawnDetail instanceof PokemonSpawnDetail) {
+                        var species = ((PokemonSpawnDetail) spawnDetail).getPokemon().getSpecies();
+                        var aspects = ((PokemonSpawnDetail) spawnDetail).getPokemon().getAspects();
+                        return pokemonProperties.getSpecies().equals(species) && pokemonProperties.getAspects().equals(aspects);
+                    }
+                    return false;
+                }
         ).toList();
         var messages = new ArrayList<MutableText>();
         if(!pokemonSpawnDetails.isEmpty()){
@@ -102,8 +99,8 @@ public class CheckSpawnsForSpeciesCommand {
     }
 
     private static MutableText addSpawningCondition(SpawningCondition spawnCondition, MutableText mutableText) {
-       var conditionText = "";
-       List<String> conditionEntries = new ArrayList<>();
+        var conditionText = "";
+        List<String> conditionEntries = new ArrayList<>();
         if(spawnCondition.getDimensions() != null){
             var dimensions = "Spawns in Dimensions: (";
             boolean isFirstDimension = true;
@@ -235,8 +232,8 @@ public class CheckSpawnsForSpeciesCommand {
 
         }
         mutableText.append(Text.translatable(
-                  conditionText+
-                          whileText
+                conditionText+
+                        whileText
         ));
         return mutableText;
     }

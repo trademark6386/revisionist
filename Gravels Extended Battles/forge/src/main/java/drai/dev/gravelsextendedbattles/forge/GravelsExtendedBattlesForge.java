@@ -5,12 +5,15 @@ import com.cobblemon.mod.common.api.events.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.reactive.*;
 import com.cobblemon.mod.common.pokemon.*;
-import drai.dev.gravelsextendedbattles.*;
+import com.mojang.brigadier.*;
 import drai.dev.gravelsextendedbattles.*;
 import eu.midnightdust.lib.config.*;
-import kotlin.*;
 import kotlin.Unit;
+import net.minecraft.server.command.*;
 import net.minecraft.util.*;
+import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.event.*;
+import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.loading.*;
 import org.jetbrains.annotations.*;
@@ -19,6 +22,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.MOD_ID;
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.bannedLabels;
 
 @Mod(GravelsExtendedBattles.MOD_ID)
@@ -62,6 +66,15 @@ public class GravelsExtendedBattlesForge {
         GravelsExtendedBattles.init();
         MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
         GravelsExtendedBattles.bannedLabels = GravelmonForgeConfig.bannedLabels.toArray(new String[0]);
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    public static class ServerModEvents {
+        @SubscribeEvent
+        public static void RegisterServerCommandsEvent(RegisterCommandsEvent event){
+            CommandDispatcher<ServerCommandSource> dispatcher = event.getDispatcher();
+            CheckSpawnsForSpeciesCommand.register(dispatcher);
+        }
     }
 
     @NotNull
