@@ -297,6 +297,14 @@ const Abilities = {
     rating: 2,
     num: 335
   },
+  dragonarmor: {
+    onModifyMove(move) {
+      move.stab = 2;
+    },
+    name: "Dragon Armor",
+    rating: 4,
+    num: 359
+  },
   escapevelocity: {
     onModifySpe(spe) {
       if (this.field.isTerrain("gravity")) {
@@ -507,6 +515,14 @@ const Abilities = {
     name: "Invigorate",
     rating: 4,
     num: 358
+  },
+  junglespirit: {
+    onModifyMove(move) {
+      move.stab = 2;
+    },
+    name: "Jungle Spirit",
+    rating: 4,
+    num: 360
   },
   lazy: {
     onStart(pokemon) {
@@ -897,6 +913,14 @@ const Abilities = {
     name: "Unstable",
     rating: 4,
     num: 354
+  },
+  voicetuning: {
+    onModifyMove(move) {
+      move.stab = 2;
+    },
+    name: "Voice Tuning",
+    rating: 4,
+    num: 361
   },
   windforce: {
     onTryHitPriority: 1,
