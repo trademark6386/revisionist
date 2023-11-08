@@ -22,6 +22,24 @@ __export(moves_exports, {
 });
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
+  abyssallure: {
+    num: 1154,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Abyssal Lure",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onAfterMoveSecondarySelf(pokemon, target, move) {
+      if (!target || target.fainted || target.hp <= 0)
+        this.boost({ spa: 2 }, pokemon, pokemon, move);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Cool"
+  },
   accelerock: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
@@ -257,6 +275,29 @@ const Moves = {
     type: "Nuclear",
     contestType: "Beautiful"
   },
+  audacity: {
+    num: 1155,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Audacity",
+    pp: 5,
+    priority: 0,
+    flags: { sound: 1, distance: 1, bypasssub: 1 },
+	boosts: {
+      atk: 2,
+      spe: 2,
+	  evasion: 2
+    },
+    secondary: {
+      chance: 100,
+      volatileStatus: "perishsong"
+    },
+    target: "Self",
+    type: "Fighting",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   bansheesscream: {
     num: 996,
     accuracy: 80,
@@ -406,6 +447,39 @@ const Moves = {
     target: "allAdjacent",
     type: "Eldritch",
     contestType: "Beautiful"
+  },
+  blackout: {
+    num: 1158,
+    accuracy: 85,
+    basePower: 70,
+    category: "Physical",
+    name: "Blackout",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "slp"
+    },
+    target: "normal",
+    type: "Ghost",
+    contestType: "Beautiful"
+  },
+  boltblitz: {
+    num: 1156,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Head Charge",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    recoil: [1, 4],
+    secondary: null,
+    target: "normal",
+    type: "Electric",
+    contestType: "Tough"
   },
   bonesweep: {
     num: 927,
@@ -626,6 +700,24 @@ const Moves = {
     type: "Grass",
     contestType: "Cool"
   },
+  carbonize: {
+    num: 1157,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Carbonize",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "psn"
+    },
+    critRatio: 2,
+    target: "normal",
+    type: "Steel",
+    contestType: "Cool"
+  },
   causticbreath: {
     num: 903,
     accuracy: 100,
@@ -726,6 +818,44 @@ const Moves = {
     target: "normal",
     type: "Fire",
     contestType: "Tough"
+  },
+  cloudburst: {
+    num: 1159,
+    accuracy: 90,
+    basePower: 140,
+    category: "Special",
+    name: "Cloudburst",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Flying",
+    contestType: "Beautiful"
+  },
+  cloudburstwind: {
+    num: 1160,
+    accuracy: 90,
+    basePower: 140,
+    category: "Special",
+    name: "Cloudburst Wind",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Wind",
+    contestType: "Beautiful"
   },
   cometcrash: {
     num: 1046,
@@ -1002,6 +1132,38 @@ const Moves = {
     type: "Electric",
     contestType: "Cool"
   },
+  crystalize: {
+    num: 1161,
+    accuracy: 90,
+    basePower: 110,
+    category: "Special",
+    name: "Crystalize",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Rock"
+  },
+  crystalizecrystal: {
+    num: 1162,
+    accuracy: 90,
+    basePower: 110,
+    category: "Special",
+    name: "Crystalize Crystal",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Crystal"
+  },
   crystallization: {
     num: 1036,
     accuracy: 100,
@@ -1112,6 +1274,23 @@ const Moves = {
     target: "normal",
     type: "Dark",
     contestType: "Cool"
+  },
+  dazzledust: {
+    num: 1163,
+    accuracy: 95,
+    basePower: 0,
+    damageCallback(pokemon, target) {
+      return this.clampIntRange(target.getUndynamaxedHP() / 2, 1);
+    },
+    category: "Special",
+    name: "Dazzle Dust",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
   },
   decapattack: {
     num: 1041,
@@ -1292,6 +1471,22 @@ const Moves = {
     target: "normal",
     type: "Dark",
     contestType: "Beautiful"
+  },
+  devildarts: {
+    num: 1164,
+    accuracy: 100,
+    basePower: 45,
+    category: "Physical",
+    name: "Devil  Darts",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    multihit: 2,
+    smartTarget: true,
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    maxMove: { basePower: 130 }
   },
   diamondclaw: {
     num: 1055,
@@ -1925,6 +2120,26 @@ const Moves = {
     type: "Normal",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
+  },
+  electroburst: {
+    num: 1165,
+    accuracy: 90,
+    basePower: 100,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Leaf Tornado",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 40,
+      boosts: {
+        accuracy: -1
+      }
+    },
+    target: "allAdjacentFoes",
+    type: "Electric",
+    contestType: "Cool"
   },
   engulf: {
     num: 962,
@@ -2682,6 +2897,25 @@ const Moves = {
     maxMove: { basePower: 130 },
     contestType: "Cute"
   },
+  grimstinger: {
+    num: 1166,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Grim Stinger",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onBasePower(basePower, pokemon, target) {
+      if (target.status === "slp") {
+        return this.chainModify(2);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Beautiful"
+  },
   groomguard: {
     num: 938,
     accuracy: true,
@@ -2777,6 +3011,21 @@ const Moves = {
     target: "allyTeam",
     type: "Sound",
     zMove: { effect: "heal" },
+    contestType: "Beautiful"
+  },
+  hivemind: {
+    num: 1167,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    overrideDefensiveStat: "def",
+    name: "Hivemind",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
     contestType: "Beautiful"
   },
   howlsound: {
@@ -3225,6 +3474,22 @@ const Moves = {
     target: "normal",
     type: "Psychic",
     contestType: "Cute"
+  },
+  moonrazer: {
+    num: 1168,
+    accuracy: 100,
+    basePower: 85,
+    category: "Special",
+    name: "Moongrazer",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "slp"
+    },
+    target: "normal",
+    type: "Fairy"
   },
   mortalspin: {
     num: 866,
@@ -3798,6 +4063,27 @@ const Moves = {
     type: "Psychic",
     contestType: "Cool"
   },
+  pummel: {
+    num: 1169,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Pummel",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      self: {
+        boosts: {
+          atk: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Fighting",
+    contestType: "Tough"
+  },
   quantumleap: {
     num: 991,
     accuracy: 100,
@@ -3863,6 +4149,28 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Cute"
+  },
+  ragingwaves: {
+    num: 1170,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Outrage",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, failinstruct: 1 },
+    self: {
+      volatileStatus: "lockedmove"
+    },
+    onAfterMove(pokemon) {
+      if (pokemon.volatiles["lockedmove"] && pokemon.volatiles["lockedmove"].duration === 1) {
+        pokemon.removeVolatile("lockedmove");
+      }
+    },
+    secondary: null,
+    target: "randomNormal",
+    type: "Water",
+    contestType: "Cool"
   },
   rapidspin: {
     num: 229,
@@ -4043,6 +4351,56 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  replicate: {
+    num: 1171,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Past",
+    name: "Replicate",
+    pp: 1,
+    noPPBoosts: true,
+    priority: 0,
+    flags: {
+      bypasssub: 1,
+      allyanim: 1,
+      failencore: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failcopycat: 1,
+      failinstruct: 1,
+      failmimic: 1
+    },
+    onHit(target, source) {
+      const disallowedMoves = ["chatter", "sketch", "struggle"];
+      const move = target.lastMove;
+      if (source.transformed || !move || source.moves.includes(move.id))
+        return false;
+      if (disallowedMoves.includes(move.id) || move.isZ || move.isMax)
+        return false;
+      const sketchIndex = source.moves.indexOf("sketch");
+      if (sketchIndex < 0)
+        return false;
+      const sketchedMove = {
+        move: move.name,
+        id: move.id,
+        pp: move.pp,
+        maxpp: move.pp,
+        target: move.target,
+        disabled: false,
+        used: false
+      };
+      source.moveSlots[sketchIndex] = sketchedMove;
+      source.baseMoveSlots[sketchIndex] = sketchedMove;
+      this.add("-activate", source, "move: Sketch", move.name);
+    },
+    noSketch: true,
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    zMove: { boost: { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 } },
+    contestType: "Clever"
+  },
   rhythmstrike: {
     num: 1049,
     accuracy: 100,
@@ -4062,6 +4420,25 @@ const Moves = {
     target: "normal",
     type: "Sound",
     contestType: "Cool"
+  },
+  ripen: {
+    num: 1172,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Ripen",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      def: 1,
+      spa: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Grass",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
   },
   ripplewave: {
     num: 1082,
@@ -4127,6 +4504,21 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  rubblerush: {
+    num: 1173,
+    accuracy: 80,
+    basePower: 140,
+    category: "Physical",
+    name: "Brave Bird",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [33, 100],
+    secondary: null,
+    target: "normal",
+    type: "Rock",
+    contestType: "Cool"
+  },
   saltcrash: {
     num: 917,
     accuracy: 100,
@@ -4146,6 +4538,36 @@ const Moves = {
     },
     target: "normal",
     type: "Fighting"
+  },
+  salttherapy: {
+    num: 1185,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Salt Therapy",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1 },
+    sideCondition: "salttherapy",
+    condition: {
+      duration: 5,
+      onStart(side) {
+        this.add('-sidestart', side, 'move: Salt Therapy');
+      },
+      onResidualOrder: 6,
+      onResidual(side) {
+        const target = this.effectState.target;
+        const heal = this.heal(target.baseMaxhp / 16);
+        this.add('-heal', target, target.getHealth, '[from] move: Salt Therapy', '[of] ' + target);
+      },
+      onSideEnd(side) {
+        this.add('-sideend', side, 'move: Salt Therapy');
+      },
+    },
+    secondary: null,
+    target: "allySide",
+    type: "Rock",
+    contestType: "Beautiful",
   },
   screechsound: {
     num: 1011,
@@ -4196,6 +4618,22 @@ const Moves = {
     target: "normal",
     type: "Grass",
     contestType: "Cute"
+  },
+  shadetrance: {
+    num: 1174,
+    accuracy: 75,
+    basePower: 0,
+    category: "Status",
+    name: "Shade Trance",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    status: "slp",
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
   },
   shadowblast: {
     num: 1019,
@@ -4510,6 +4948,40 @@ const Moves = {
     target: "normal",
     type: "Steel"
   },
+  shimmershot: {
+    num: 1175,
+    accuracy: 80,
+    basePower: 65,
+    category: "Special",
+    name: "Shimmer Shot",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "confusion"
+    },
+    target: "allAdjacentFoes",
+    type: "Questionmark",
+    contestType: "Beautiful"
+  },
+  shimmershotlight: {
+    num: 1176,
+    accuracy: 80,
+    basePower: 65,
+    category: "Special",
+    name: "Shimmer Shot Light",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "confusion"
+    },
+    target: "allAdjacentFoes",
+    type: "Light",
+    contestType: "Beautiful"
+  },
   signalbeamlight: {
     num: 1109,
     accuracy: 100,
@@ -4557,6 +5029,21 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Cute"
   },
+  siphon: {
+    num: 1177,
+    accuracy: 75,
+    basePower: 100,
+    category: "Special",
+    name: "Siphon",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Clever"
+  },
   siphonbite: {
     num: 1083,
     accuracy: 100,
@@ -4571,6 +5058,23 @@ const Moves = {
     target: "normal",
     type: "Bug",
     contestType: "Cool"
+  },
+  sizzlebeak: {
+    num: 1178,
+    accuracy: 95,
+    basePower: 25,
+    category: "Physical",
+    name: "Sizzle Beak",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Fire",
+    contestType: "Cute"
   },
   skydrop: {
     inherit: true,
@@ -4898,6 +5402,21 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
+  stonesurge: {
+    num: 1179,
+    accuracy: 95,
+    basePower: 90,
+    category: "Physical",
+    name: "Stone Surge",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Rock",
+    contestType: "Cool"
+  },
   suckerpunch: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
@@ -5004,6 +5523,20 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Cosmic",
     contestType: "Cool"
+  },
+  swindle: {
+    num: 1180,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Swindle",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Clever"
   },
   tailwindwind: {
     num: 1092,
@@ -5124,6 +5657,20 @@ const Moves = {
       }
     }
   },
+  thunderclap: {
+    num: 1181,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Thunderclap",
+    pp: 30,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Electric",
+    contestType: "Clever"
+  },
   thundercrush: {
     num: 952,
     accuracy: 80,
@@ -5205,6 +5752,25 @@ const Moves = {
     type: "Wind",
     contestType: "Beautiful"
   },
+  twirlenade: {
+    num: 1182,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Twirlenade",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1 },
+    volatileStatus: "confusion",
+    boosts: {
+      spe: 2,
+      evasion: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    contestType: "Clever"
+  },
   twisterwind: {
     num: 1094,
     accuracy: 100,
@@ -5271,6 +5837,24 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
+  uvray: {
+    num: 1184,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "UV Ray",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1 },
+    thawsTarget: true,
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
   vacuumwave: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, speed: 1 }
@@ -5309,6 +5893,27 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Tough"
+  },
+  virugait: {
+    num: 1183,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Virugait",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      self: {
+        boosts: {
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Poison",
+    contestType: "Cool"
   },
   watershuriken: {
     inherit: true,
