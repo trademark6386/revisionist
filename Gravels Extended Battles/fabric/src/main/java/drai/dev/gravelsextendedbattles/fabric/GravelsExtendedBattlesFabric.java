@@ -48,6 +48,13 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 throw new RuntimeException(e);
             }
         }
+        for (String fileName : GravelsExtendedBattles.fangameTypechart) {
+            try {
+                exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, pokemonEntitySpawnEvent -> {
             var pokemon = pokemonEntitySpawnEvent.getEntity().getPokemon();
             for (String label : bannedLabels) {
