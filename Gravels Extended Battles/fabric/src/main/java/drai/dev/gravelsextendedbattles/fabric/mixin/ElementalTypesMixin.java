@@ -30,6 +30,7 @@ public abstract class ElementalTypesMixin {
             createType("slime", 0x75e47b);
             createType("sound", 0x59bfa6);
             createType("wind", 0x6eefb6);
+            createType("eldritch", 0x962c46);
             isInit=true;
         }
     }

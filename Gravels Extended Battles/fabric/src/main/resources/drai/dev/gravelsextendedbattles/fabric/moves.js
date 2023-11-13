@@ -1047,6 +1047,7 @@ const Moves = {
         "stickyweb",
         "auroraveil",
 		"fiesta",
+		"salttherapy",
 		"constructionblocks",
         "gmaxsteelsurge",
         "gmaxcannonade",
@@ -1326,6 +1327,7 @@ const Moves = {
         "lightscreen",
         "auroraveil",
         "safeguard",
+		"salttherapy",
         "mist",
         "spikes",
         "toxicspikes",
@@ -1383,6 +1385,7 @@ const Moves = {
         "lightscreen",
         "auroraveil",
         "safeguard",
+		"salttherapy",
         "mist",
         "spikes",
         "toxicspikes",
@@ -2154,7 +2157,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -2168,7 +2171,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -3504,7 +3507,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -3518,7 +3521,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -4185,7 +4188,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -4199,7 +4202,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "salttherapy", "stickyweb", "gmaxsteelsurge"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
