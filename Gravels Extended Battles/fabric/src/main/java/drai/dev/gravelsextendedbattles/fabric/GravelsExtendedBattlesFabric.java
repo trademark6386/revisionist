@@ -48,6 +48,26 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 throw new RuntimeException(e);
             }
         }
+        boolean enableFangameTypechart = GravelmonFabricConfig.enableFangameTypechart;
+
+        if (enableFangameTypechart) {
+            for (String fileName : GravelsExtendedBattles.fangameTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            // If fangameTypechart is disabled, use showdownFiles instead
+            for (String fileName : GravelsExtendedBattles.gebTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         for (String fileName : GravelsExtendedBattles.fangameTypechart) {
             try {
                 exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
