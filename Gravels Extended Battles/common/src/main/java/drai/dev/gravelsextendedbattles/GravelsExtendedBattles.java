@@ -11,6 +11,7 @@ import java.net.*;
 import java.util.*;
 
 public class GravelsExtendedBattles {
+    public static final String MOD_ID = "gravels_extended_battles";
     public static final ArrayList<String> showdownFiles = new ArrayList<>(
             List.of("abilities.js","conditions.js", "items.js", "moves.js", "pokedex.js", "scripts.js"));
     public static final ArrayList<String> fangameTypechart = new ArrayList<>(
