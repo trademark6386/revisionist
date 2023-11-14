@@ -39,6 +39,9 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        GravelsExtendedBattles.init();
+        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
+        bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
         CommandRegistrationCallback.EVENT.register(GravelmonCommands::register);
         scaleNeedsARefresh.emit(false);
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
@@ -48,8 +51,8 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 throw new RuntimeException(e);
             }
         }
-        boolean enableFangameTypechart = GravelmonFabricConfig.enableFangameTypechart;
 
+        boolean enableFangameTypechart = GravelmonFabricConfig.enableFangameTypechart;
         if (enableFangameTypechart) {
             for (String fileName : GravelsExtendedBattles.fangameTypechart) {
                 try {
@@ -97,9 +100,6 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
             }
              return Unit.INSTANCE;
         });
-        GravelsExtendedBattles.init();
-        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
-        bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
     }
 
     @NotNull
