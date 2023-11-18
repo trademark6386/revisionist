@@ -39,6 +39,9 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        GravelsExtendedBattles.init();
+        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
+        bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
         CommandRegistrationCallback.EVENT.register(GravelmonCommands::register);
         scaleNeedsARefresh.emit(false);
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
@@ -46,6 +49,35 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            }
+        }
+
+        boolean enableFangameTypechart = GravelmonFabricConfig.enableFangameTypechart;
+        if (enableFangameTypechart) {
+            for (String fileName : GravelsExtendedBattles.fangameTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // Rename the typechart2.js file after loading
+            try {
+                String originalFilePath = GravelsExtendedBattlesFabric.MinecraftFolder + File.separator + "typechart2.js";
+                String renamedFilePath = GravelsExtendedBattlesFabric.MinecraftFolder + File.separator + "typechart.js";
+                renameFile(originalFilePath, renamedFilePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // If fangameTypechart is disabled, use showdownFiles instead
+            for (String fileName : GravelsExtendedBattles.gebTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, pokemonEntitySpawnEvent -> {
@@ -70,9 +102,12 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
             }
              return Unit.INSTANCE;
         });
-        GravelsExtendedBattles.init();
-        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
-        bannedLabels = GravelmonFabricConfig.bannedLabels.toArray(new String[0]);
+    }
+
+    private static void renameFile(String originalFilePath, String newFilePath) throws IOException {
+        Path source = Paths.get(originalFilePath);
+        Path destination = Paths.get(newFilePath);
+        Files.move(source, destination);
     }
 
     @NotNull
