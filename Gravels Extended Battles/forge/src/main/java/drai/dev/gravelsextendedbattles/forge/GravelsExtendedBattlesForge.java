@@ -35,11 +35,44 @@ public class GravelsExtendedBattlesForge {
     public static List<Identifier> modeledPokemonIdentifiers = new ArrayList<>();
     public static SimpleObservable<Boolean> scaleNeedsARefresh = new SimpleObservable<>();
     public GravelsExtendedBattlesForge(){
+        GravelsExtendedBattles.init();
+        MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
+        GravelsExtendedBattles.bannedLabels = GravelmonForgeConfig.bannedLabels.toArray(new String[0]);
+
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
             try {
                 exportResource(MinecraftFolder, fileName);
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            }
+        }
+
+        boolean enableFangameTypechart = GravelmonForgeConfig.enableFangameTypechart;
+        if (enableFangameTypechart) {
+            for (String fileName : GravelsExtendedBattles.fangameTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesForge.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // Rename the typechart2.js file after loading
+            try {
+                String originalFilePath = GravelsExtendedBattlesForge.MinecraftFolder + File.separator + "typechart2.js";
+                String renamedFilePath = GravelsExtendedBattlesForge.MinecraftFolder + File.separator + "typechart.js";
+                renameFile(originalFilePath, renamedFilePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // If fangameTypechart is disabled, use showdownFiles instead
+            for (String fileName : GravelsExtendedBattles.gebTypechart) {
+                try {
+                    exportResource(GravelsExtendedBattlesForge.MinecraftFolder, fileName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, pokemonEntitySpawnEvent -> {
@@ -63,9 +96,12 @@ public class GravelsExtendedBattlesForge {
             }
             return Unit.INSTANCE;
         });
-        GravelsExtendedBattles.init();
-        MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
-        GravelsExtendedBattles.bannedLabels = GravelmonForgeConfig.bannedLabels.toArray(new String[0]);
+    }
+
+    private static void renameFile(String originalFilePath, String newFilePath) throws IOException {
+        Path source = Paths.get(originalFilePath);
+        Path destination = Paths.get(newFilePath);
+        Files.move(source, destination);
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)

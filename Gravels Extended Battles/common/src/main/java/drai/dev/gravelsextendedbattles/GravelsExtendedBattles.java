@@ -15,7 +15,7 @@ public class GravelsExtendedBattles {
     public static final ArrayList<String> showdownFiles = new ArrayList<>(
             List.of("abilities.js","conditions.js", "items.js", "moves.js", "pokedex.js", "scripts.js"));
     public static final ArrayList<String> fangameTypechart = new ArrayList<>(
-            List.of("originaltypes/typechart.js"));
+            List.of("typechart2.js"));
     public static final ArrayList<String> gebTypechart = new ArrayList<>(
             List.of("typechart.js"));
     public static URL SHOW_DOWN_FOLDER = GravelsExtendedBattles.class.getResource("\\showdown");

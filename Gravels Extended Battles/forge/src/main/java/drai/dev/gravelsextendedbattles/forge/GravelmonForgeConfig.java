@@ -6,6 +6,7 @@ import java.util.*;
 
 public class GravelmonForgeConfig extends MidnightConfig {
     @Entry(name = "Banned Labels: ") public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
+    @Entry(name = "Original Fangame Typings: ") public static boolean enableFangameTypechart = false;
     /*
     The .json language file for your config class could look similar to this:
     {

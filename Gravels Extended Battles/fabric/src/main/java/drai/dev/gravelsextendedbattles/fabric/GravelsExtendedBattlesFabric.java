@@ -61,6 +61,15 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                     throw new RuntimeException(e);
                 }
             }
+
+            // Rename the typechart2.js file after loading
+            try {
+                String originalFilePath = GravelsExtendedBattlesFabric.MinecraftFolder + File.separator + "typechart2.js";
+                String renamedFilePath = GravelsExtendedBattlesFabric.MinecraftFolder + File.separator + "typechart.js";
+                renameFile(originalFilePath, renamedFilePath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             // If fangameTypechart is disabled, use showdownFiles instead
             for (String fileName : GravelsExtendedBattles.gebTypechart) {
@@ -69,13 +78,6 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }
-        }
-        for (String fileName : GravelsExtendedBattles.fangameTypechart) {
-            try {
-                exportResource(GravelsExtendedBattlesFabric.MinecraftFolder, fileName);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
         }
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, pokemonEntitySpawnEvent -> {
@@ -100,6 +102,12 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
             }
              return Unit.INSTANCE;
         });
+    }
+
+    private static void renameFile(String originalFilePath, String newFilePath) throws IOException {
+        Path source = Paths.get(originalFilePath);
+        Path destination = Paths.get(newFilePath);
+        Files.move(source, destination);
     }
 
     @NotNull
