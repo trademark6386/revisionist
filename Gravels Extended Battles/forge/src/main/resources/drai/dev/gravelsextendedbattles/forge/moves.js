@@ -214,20 +214,6 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
-  astralshoteldritch: {
-    num: 1150,
-    accuracy: 100,
-    basePower: 50,
-    category: "Special",
-    name: "Astral Shot Eldritch",
-    pp: 15,
-    priority: 1,
-    flags: { protect: 1, mirror: 1, speed: 1 },
-    secondary: null,
-    target: "normal",
-    type: "Eldritch",
-    contestType: "Beautiful"
-  },
   atomicpunch: {
     num: 972,
     accuracy: 95,
@@ -420,32 +406,6 @@ const Moves = {
     },
     target: "allAdjacent",
     type: "Cosmic",
-    contestType: "Beautiful"
-  },
-  bigbangeldritch: {
-    num: 1151,
-    accuracy: 100,
-    basePower: 105,
-    category: "Physical",
-    name: "Big Bang Eldritch",
-    pp: 5,
-    priority: 0,
-    flags: { protect: 1, mirror: 1 },
-    secondary: {
-      chance: 50,
-      onHit(target, source) {
-        const result = this.random(3);
-        if (result === 0) {
-          target.trySetStatus("brn", source);
-        } else if (result === 1) {
-          target.trySetStatus("par", source);
-        } else {
-          target.trySetStatus("frz", source);
-        }
-      }
-    },
-    target: "allAdjacent",
-    type: "Eldritch",
     contestType: "Beautiful"
   },
   blackout: {
@@ -756,6 +716,38 @@ const Moves = {
     zMove: { basePower: 170 },
     contestType: "Tough"
   },
+  channel: {
+    num: 1151,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Channel",
+    pp: 10,
+    priority: 0,
+    flags: { failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failinstruct: 1, failmimic: 1 },
+	onHit(target, source, effect) {
+      const ghostMoves = this.dex.moves.all().filter((move) =>
+      move.type === "Ghost" &&
+        (![2, 4].includes(this.gen) || !source.moves.includes(move.id)) &&
+        !move.realMove && !move.isZ && !move.isMax &&
+        (!move.isNonstandard || move.isNonstandard === "Unobtainable") &&
+        !effect.noMetronome.includes(move.name)
+      );
+      let randomGhostMove = "";
+      if (ghostMoves.length) {
+        ghostMoves.sort((a, b) => a.num - b.num);
+        randomGhostMove = this.sample(ghostMoves).id;
+      }
+      if (!randomGhostMove) 
+        return false;
+      source.side.lastSelectedMove = this.toID(randomGhostMove);
+      this.actions.useMove(randomGhostMove, target);
+    },
+    secondary: null,
+    target: "self",
+    type: "Ghost",
+    contestType: "Cute"
+  },
   chattersound: {
     num: 999,
     accuracy: 100,
@@ -889,23 +881,6 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
-  cometshowereldritch: {
-    num: 1152,
-    accuracy: 95,
-    basePower: 80,
-    category: "Physical",
-    name: "Comet Shower Eldritch",
-    pp: 10,
-    priority: 0,
-    flags: { protect: 1, mirror: 1 },
-    secondary: {
-      chance: 25,
-      volatileStatus: "flinch"
-    },
-    target: "allAdjacent",
-    type: "Eldritch",
-    contestType: "Cool"
-  },
   constructionblocks: {
     num: 1118,
     accuracy: true,
@@ -1003,23 +978,6 @@ const Moves = {
     },
     target: "any",
     type: "Cosmic",
-    contestType: "Cool"
-  },
-  cosmicrayeldritch: {
-    num: 1153,
-    accuracy: 100,
-    basePower: 95,
-    category: "Special",
-    name: "Cosmic Ray Eldritch",
-    pp: 10,
-    priority: 0,
-    flags: { protect: 1, pulse: 1, mirror: 1, distance: 1 },
-    secondary: {
-      chance: 15,
-      volatileStatus: "flinch"
-    },
-    target: "any",
-    type: "Eldritch",
     contestType: "Cool"
   },
   courtchange: {
@@ -1438,6 +1396,35 @@ const Moves = {
     target: "allAdjacent",
     type: "Psychic",
     contestType: "Cool"
+  },
+  demoralize: {
+    num: 1153,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Unobtainable",
+    name: "Demoralize",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onTryHit(target) {
+      if (target.getAbility().isPermanent || target.ability === "defeatist") {
+        return false;
+      }
+    },
+    onHit(pokemon) {
+      const oldAbility = pokemon.setAbility("defeatist");
+      if (oldAbility) {
+        this.add("-ability", pokemon, "Defeatist", "[from] move: Demoralize");
+        return;
+      }
+      return oldAbility;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Cute"
   },
   depthcharge: {
     num: 960,
@@ -2325,6 +2312,23 @@ const Moves = {
     zMove: { boost: { def: 1 } },
     contestType: "Clever",
   },
+  firecracker: {
+    num: 1186,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Firecracker",
+    pp: 10,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    self: {
+      volatileStatus: "followme"
+    },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    contestType: "Cool"
+  },
   fireworks: {
     num: 1067,
     accuracy: 100,
@@ -3015,6 +3019,35 @@ const Moves = {
     type: "Sound",
     zMove: { effect: "heal" },
     contestType: "Beautiful"
+  },
+  hitandrun: {
+    num: 1187,
+    accuracy: 90,
+    basePower: 65,
+    category: "Physical",
+    name: "Hit and Run",
+    pp: 10,
+    priority: -1,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+	onAfterHit(target, source, move) {
+      if (source.item || source.volatiles["gem"]) {
+        return;
+      }
+      const yourItem = target.takeItem(source);
+      if (!yourItem) {
+        return;
+      }
+      if (!this.singleEvent("TakeItem", yourItem, target.itemState, source, target, move, yourItem) || !source.setItem(yourItem)) {
+        target.item = yourItem.id;
+        return;
+      }
+      this.add("-item", source, yourItem, "[from] move: Hit and Run", "[of] " + target);
+    },
+    selfSwitch: true,
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Cute"
   },
   hivemind: {
     num: 1167,
@@ -3744,6 +3777,39 @@ const Moves = {
     type: "Wind",
     contestType: "Tough"
   },
+  parasiticfungi: {
+    num: 1188,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Parasitic Fungi",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Normal" || type === "Bug")
+        return 1;
+    },
+	volatileStatus: "parasiticfungi",
+    condition: {
+      duration: 5,
+	  noCopy: true,
+      onStart(pokemon) {
+        this.add("-start", pokemon, "Parasitic Fungi");
+      },
+      onResidualOrder: 13,
+      onResidual(pokemon) {
+        const residualDamage = (pokemon.hasType(["Normal", "Bug"])) ? pokemon.baseMaxhp / 8 : pokemon.baseMaxhp / 16;
+          this.damage(residualDamage, pokemon);
+      },
+      onEnd(pokemon) {
+        this.add("-end", pokemon, "Parasitic Fungi");
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Grass"
+  },
   pentascale: {
     num: 1050,
     accuracy: 100,
@@ -3826,6 +3892,27 @@ const Moves = {
     type: "Psychic",
     contestType: "Clever"
   },
+  pesticide: {
+    num: 1152,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Pesticide",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    onEffectiveness(typeMod, target, type) {
+      if (type === "Bug")
+        return 1;
+    },
+    secondary: {
+      chance: 10,
+      status: "psn"
+    },
+    target: "normal",
+    type: "Poison",
+    contestType: "Beautiful"
+  },
   phantomgrip: {
     num: 1079,
     accuracy: 100,
@@ -3883,6 +3970,22 @@ const Moves = {
     target: "normal",
     type: "Bug",
     contestType: "Tough"
+  },
+  pillowpummel: {
+    num: 1152,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Pillow Pummel",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      status: "slp"
+    },
+    target: "normal",
+    type: "Fairy"
   },
   poisonleaf: {
     num: 1145,
@@ -5419,6 +5522,44 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  stormforecast: {
+    num: 1150,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Storm Forecast",
+    pp: 10,
+    priority: 0,
+    flags: { allyanim: 1, futuremove: 1 },
+    ignoreImmunity: true,
+    onTry(source, target) {
+      if (!target.side.addSlotCondition(target, "futuremove"))
+        return false;
+      Object.assign(target.side.slotConditions[target.position]["futuremove"], {
+        duration: 3,
+        move: "stormforecast",
+        source,
+        moveData: {
+          id: "stormforecast",
+          name: "Storm Forecast",
+          accuracy: 100,
+          basePower: 120,
+          category: "Special",
+          priority: 0,
+          flags: { allyanim: 1, futuremove: 1 },
+          ignoreImmunity: false,
+          effectType: "Move",
+          type: "Electric"
+        }
+      });
+      this.add("-start", source, "move: Storm Forecast");
+      return this.NOT_FAIL;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Electric",
+    contestType: "Clever"
   },
   suckerpunch: {
     inherit: true,
