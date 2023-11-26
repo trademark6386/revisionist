@@ -95,6 +95,43 @@ const Conditions = {
       this.add("-weather", "none");
     }
   },
+  eclipse: {
+    name: "Eclipse",
+    effectType: "Weather",
+    duration: 5,
+    onModifyMove(move) {
+      // Increase secondary effect chances for Psychic, Ghost and Dark type moves
+      const boostedTypes = ["Psychic", "Ghost", "Dark"];
+      if (boostedTypes.includes(move.type) && move.secondaries) {
+        for (const secondary of move.secondaries) {
+          secondary.chance = Math.min(100, secondary.chance + 30);
+        }
+      }
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Eclipse", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Eclipse");
+      }
+    },
+    onFieldResidualOrder: 1,
+    onFieldResidual() {
+      // Inflict Nightmare damage on sleeping non-Psychic/Ghost/Dark types
+      this.eachEvent("Nightmare");
+    },
+	onTryAddVolatile(status, target) {
+      // Curse won't affect Psychic/Ghost/Dark/Cosmic types
+	  if (status.id === 'curse' && target.hasType(["Psychic", "Ghost", "Dark"])) {
+        return null;
+	  }
+    },
+	onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
   fallout: {
     name: "Fallout",
     effectType: "Weather",

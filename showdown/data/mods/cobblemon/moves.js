@@ -284,6 +284,10 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  aurorabeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   bansheesscream: {
     num: 996,
     accuracy: 80,
@@ -362,7 +366,7 @@ const Moves = {
   batteringram: {
     num: 916,
     accuracy: 100,
-    basePower: 80,
+    basePower: 75,
     category: "Physical",
     name: "Battering Ram",
     pp: 10,
@@ -376,6 +380,26 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Rock",
+    contestType: "Cool"
+  },
+  beguile: {
+    num: 1193,
+    accuracy: 100,
+    basePower: 60,
+    category: "Physical",
+    name: "Beguile",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+	onTryHit(target) {
+      if (target.volatiles['attract']) {
+        target.faint();
+		return null;
+      }
+	},
+	secondary: null,
+    target: "normal",
+    type: "Fairy",
     contestType: "Cool"
   },
   bide: {
@@ -486,6 +510,24 @@ const Moves = {
       }
     }
   },
+  bramblebash: {
+    num: 1198,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Bramble Bash",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    self: {
+      volatileStatus: "rage"
+    },
+    secondary: null,
+    target: "normal",
+    type: "Fighting",
+    contestType: "Tough"
+  },
   brace: {
     num: 902,
     accuracy: true,
@@ -557,6 +599,10 @@ const Moves = {
     target: "normal",
     type: "Psychic",
     contestType: "Beautiful"
+  },
+  bubblebeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   bugbomb: {
     num: 1053,
@@ -678,6 +724,23 @@ const Moves = {
     type: "Steel",
     contestType: "Cool"
   },
+  cataclysm: {
+    num: 1190,
+    accuracy: 100,
+    basePower: 200,
+    category: "Special",
+    name: "Cataclysm",
+    pp: 1,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Dark",
+    contestType: "Cool"
+  },
   causticbreath: {
     num: 903,
     accuracy: 100,
@@ -747,6 +810,10 @@ const Moves = {
     target: "self",
     type: "Ghost",
     contestType: "Cute"
+  },
+  chargebeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   chattersound: {
     num: 999,
@@ -909,6 +976,32 @@ const Moves = {
     zMove: { boost: { def: 1 } },
     contestType: "Cool"
   },
+  cookiecut: {
+    num: 1194,
+    accuracy: 100,
+    basePower: 10,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Cookie Cut",
+    pp: 5,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      self: {
+        boosts: {
+          atk: 1,
+          def: 1,
+          spa: 1,
+          spd: 1,
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
+  },
   coralbreak: {
     num: 973,
     accuracy: 95,
@@ -943,6 +1036,29 @@ const Moves = {
     type: "Poison",
     contestType: "Beautiful"
   },
+  corrupt: {
+    num: 1215,
+    accuracy: 85,
+    basePower: 0,
+    category: "Status",
+    name: "corrupt",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+	onHit(target) {
+        const stats = ['atk', 'def', 'spa', 'spd', 'spe'];
+        for (let i = 0; i < 2; i++) {
+            const randomStat = this.sample(stats);
+            stats.splice(stats.indexOf(randomStat), 1);
+            this.boost({ [randomStat]: -2 }, target, target, this.dex.getActiveMove('corrupt'));
+        }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Poison",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Cool"
+  },
   cosmicpowercosmic: {
     num: 1101,
     accuracy: true,
@@ -971,7 +1087,7 @@ const Moves = {
     name: "Cosmic Ray",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, pulse: 1, mirror: 1, distance: 1 },
+    flags: { protect: 1, pulse: 1, mirror: 1, distance: 1, beam: 1 },
     secondary: {
       chance: 15,
       volatileStatus: "flinch"
@@ -1159,6 +1275,10 @@ const Moves = {
     type: "Crystal",
     contestType: "Beautiful"
   },
+  cut: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, slicing: 1, hm: 1 }
+  },
   cymbalcrash: {
     num: 1119,
     accuracy: 95,
@@ -1175,6 +1295,27 @@ const Moves = {
     target: "normal",
     type: "Sound",
     contestType: "Cool"
+  },
+  darkbargain: {
+    num: 1191,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Dark Bargain",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1 },
+	volatileStatus: "curse",
+    boosts: {
+      spa: 2,
+      spe: 2,
+	  accuracy: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Dark",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Beautiful"
   },
   darkmatter: {
     num: 920,
@@ -1443,6 +1584,30 @@ const Moves = {
     type: "Water",
     contestType: "Cute"
   },
+  detox: {
+    num: 1213,
+    accuracy: 100,
+    basePower: 130,
+    category: "Special",
+    name: "Detox",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    onTry(source) {
+      return source.status === "psn" || source.status === "tox";
+    },
+	onHit(target, source, move) {
+      const success = source.cureStatus();
+      if (success) {
+        this.add('-clearstatus', source, source.status);
+      }
+      return success;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Poison",
+    contestType: "Cute"
+  },
   devastate: {
     num: 1133,
     accuracy: 85,
@@ -1544,6 +1709,49 @@ const Moves = {
     type: "Crystal",
     contestType: "Beautiful"
   },
+  dig: {
+    num: 91,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Dig",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, nosleeptalk: 1, noassist: 1, failinstruct: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    condition: {
+      duration: 2,
+      onImmunity(type, pokemon) {
+        if (type === "sandstorm" || type === "hail")
+          return false;
+      },
+      onInvulnerability(target, source, move) {
+        if (["earthquake", "magnitude", "earthmover"].includes(move.id)) {
+          return;
+        }
+        return false;
+      },
+      onSourceModifyDamage(damage, source, target, move) {
+        if (move.id === "earthquake" || move.id === "magnitude") {
+          return this.chainModify(2);
+        }
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ground",
+    contestType: "Tough"
+  },
   disarmingvoicesound: {
     num: 1002,
     accuracy: true,
@@ -1588,7 +1796,8 @@ const Moves = {
       allyanim: 1,
       nosleeptalk: 1,
       noassist: 1,
-      failinstruct: 1
+      failinstruct: 1,
+	  hm: 1
     },
     onTryMove(attacker, defender, move) {
       if (attacker.removeVolatile(move.id)) {
@@ -2036,6 +2245,24 @@ const Moves = {
     type: "Ground",
     contestType: "Cool"
   },
+  earthmover: {
+    num: 1216,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Earthmover",
+    pp: 15,
+    priority: 0,
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Ground")
+        return 1;
+    },
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Steel",
+    contestType: "Beautiful"
+  },
   echoedvoicesound: {
     num: 999,
     accuracy: 100,
@@ -2239,6 +2466,23 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  fangbarrage: {
+    num: 1207,
+    accuracy: 30,
+    basePower: 0,
+    category: "Physical",
+    name: "Fang Barrage",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    ohko: true,
+    secondary: null,
+    target: "normal",
+    type: "Poison",
+    zMove: { basePower: 180 },
+    maxMove: { basePower: 130 },
+    contestType: "Tough"
+  },
   feint: {
     inherit: true,
 	flags: { mirror: 1, noassist: 1, failcopycat: 1, speed: 1 }
@@ -2398,6 +2642,14 @@ const Moves = {
     type: "Fire",
     contestType: "Beautiful"
   },
+  flash: {
+    inherit: true,
+	flags: { protect: 1, reflectable: 1, mirror: 1, hm: 1 },
+	onModifyMove(move, pokemon) {
+      if (["sunnyday", "desolateland"].includes(pokemon.effectiveWeather()))
+        move.boosts = { accuracy: -2 };
+    }
+  },
   flashlight: {
     num: 1104,
     accuracy: 100,
@@ -2407,9 +2659,13 @@ const Moves = {
     name: "Flash Light",
     pp: 20,
     priority: 0,
-    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    flags: { protect: 1, reflectable: 1, mirror: 1, hm: 1 },
     boosts: {
       accuracy: -1
+    },
+	onModifyMove(move, pokemon) {
+      if (["sunnyday", "desolateland"].includes(pokemon.effectiveWeather()))
+        move.boosts = { accuracy: -2 };
     },
     secondary: null,
     target: "normal",
@@ -2495,6 +2751,10 @@ const Moves = {
     type: "Light",
     contestType: "Clever"
   },
+  fleurcannon: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   flop: {
     num: 1124,
     accuracy: 80,
@@ -2514,7 +2774,19 @@ const Moves = {
   },
   fly: {
     inherit: true,
-    condition: {
+    flags: {
+      contact: 1,
+      charge: 1,
+      protect: 1,
+      mirror: 1,
+      gravity: 1,
+      distance: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failinstruct: 1,
+	  hm: 1
+    },
+	condition: {
       duration: 2,
       onInvulnerability(target, source, move) {
         if (["gust", "gustwind", "tornado", "twister", "skyuppercut", "thunder", "hurricane", "hurricanewind", "smackdown", "thousandarrows"].includes(move.id)) {
@@ -2715,6 +2987,13 @@ const Moves = {
     type: "Steel",
     contestType: "Beautiful"
   },
+  geomancy: {
+    inherit: true,
+    onModifyMove(move, pokemon) {
+      if (["darkness", "eclipse"].includes(pokemon.effectiveWeather()))
+        move.boosts = { spa: 1, spd: 1, spe: 1 };
+    }
+  },
   geosphere: {
     num: 1069,
     accuracy: 100,
@@ -2740,6 +3019,22 @@ const Moves = {
     type: "Ground",
     zMove: { basePower: 180 },
     contestType: "Beautiful"
+  },
+  geosplinter: {
+    num: 1210,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Geosplinter",
+    pp: 5,
+    priority: 3,
+    flags: { snatch: 1 },
+    volatileStatus: "powertrick",
+    secondary: null,
+    target: "self",
+    type: "Rock",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Clever"
   },
   ghastlywail: {
     num: 1071,
@@ -2941,6 +3236,29 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Cute"
   },
+  growth: {
+    num: 74,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Growth",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    onModifyMove(move, pokemon) {
+      if (["sunnyday", "desolateland", "fallout"].includes(pokemon.effectiveWeather()))
+        move.boosts = { atk: 2, spa: 2 };
+    },
+    boosts: {
+      atk: 1,
+      spa: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Beautiful"
+  },
   guardianleaf: {
     num: 1141,
     accuracy: 95,
@@ -3020,6 +3338,23 @@ const Moves = {
     zMove: { effect: "heal" },
     contestType: "Beautiful"
   },
+  heavypunch: {
+    num: 1202,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Heavy Punch",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Normal",
+    contestType: "Cute"
+  },
   hitandrun: {
     num: 1187,
     accuracy: 90,
@@ -3064,6 +3399,13 @@ const Moves = {
     type: "Bug",
     contestType: "Beautiful"
   },
+  honeclaws: {
+    inherit: true,
+	onModifyMove(move, pokemon) {
+      if (["darkness"].includes(pokemon.effectiveWeather()))
+        move.boosts = { atk: 2, accuracy: 2 };
+    }
+  },
   howlsound: {
     num: 1004,
     accuracy: true,
@@ -3082,6 +3424,37 @@ const Moves = {
     zMove: { boost: { atk: 1 } },
     contestType: "Cool"
   },
+  hurricane: {
+    num: 542,
+    accuracy: 70,
+    basePower: 110,
+    category: "Special",
+    name: "Hurricane",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, distance: 1, wind: 1 },
+    onModifyMove(move, pokemon, target) {
+      switch (target?.effectiveWeather()) {
+        case "raindance":
+        case "primordialsea":
+		case "acidrain":
+		case "thunderstorm":
+          move.accuracy = true;
+          break;
+        case "sunnyday":
+        case "desolateland":
+          move.accuracy = 50;
+          break;
+      }
+    },
+    secondary: {
+      chance: 30,
+      volatileStatus: "confusion"
+    },
+    target: "any",
+    type: "Flying",
+    contestType: "Tough"
+  },
   hurricanewind: {
     num: 1089,
     accuracy: 70,
@@ -3095,6 +3468,7 @@ const Moves = {
       switch (target?.effectiveWeather()) {
         case "raindance":
         case "primordialsea":
+		case "acidrain":
           move.accuracy = true;
           break;
         case "sunnyday":
@@ -3110,6 +3484,10 @@ const Moves = {
     target: "any",
     type: "Wind",
     contestType: "Tough"
+  },
+  hyperbeam: {
+    inherit: true,
+	flags: { recharge: 1, protect: 1, mirror: 1, beam: 1 }
   },
   hypervoicesound: {
     num: 1005,
@@ -3142,9 +3520,38 @@ const Moves = {
     type: "Psychic",
     contestType: "Beautiful"
   },
+  icebeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   iceshard: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, speed: 1 }
+  },
+  impulse: {
+    num: 1214,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Impulse",
+    pp: 10,
+    priority: 0,
+	overrideOffensiveStat: "atk",
+    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+	onBasePower(basePower, attacker, defender, move) {
+      if (
+        defender.hasMove("attract") ||
+        defender.hasAbility("allure") ||
+        defender.hasAbility("cutecharm")
+      ) {
+        this.debug("Impulse power reduction");
+        return this.chainModify(0.5);
+      }
+    },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Normal",
+    contestType: "Tough"
   },
   infernalblade: {
     num: 983,
@@ -3235,6 +3642,73 @@ const Moves = {
     },
     target: "normal",
     type: "Crystal",
+    contestType: "Tough"
+  },
+  kindleseed: {
+    num: 1199,
+    accuracy: 90,
+    basePower: 60,
+    category: "Special",
+    name: "Kindleseed",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    volatileStatus: "leechseed",
+    onTryImmunity(target) {
+      return !target.hasType("Fire");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
+  },
+  knightsvow: {
+    num: 1195,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Unobtainable",
+    name: "Knight's Vow",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, distance: 1, bypasssub: 1 },
+	self: {
+      volatileStatus: "followme",
+	  sideCondition: "luckychant"
+    },
+    onHit(target, source) {
+      this.add("-activate", source, "move: Knight's Bow");
+      let success = false;
+      const allies = [...target.side.pokemon, ...target.side.allySide?.pokemon || []];
+      for (const ally of allies) {
+        if (ally !== source)
+          continue;
+        if (ally.cureStatus())
+          success = true;
+      }
+      return success;
+    },
+    target: "allyTeam",
+    type: "Fairy",
+    zMove: { effect: "heal" },
+    contestType: "Beautiful"
+  },
+  knucklefins: {
+    num: 1211,
+    accuracy: 90,
+    basePower: 90,
+    category: "Physical",
+    name: "Knucklefins",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      volatileStatus: "torment"
+    },
+    target: "normal",
+    type: "Water",
     contestType: "Tough"
   },
   landsliderush: {
@@ -3346,6 +3820,43 @@ const Moves = {
     zMove: { boost: { spd: 1 } },
     contestType: "Beautiful"
   },
+  lunarcannon: {
+    num: 1189,
+    accuracy: 100,
+    basePower: 105,
+    category: "Special",
+    name: "Lunar Cannon",
+    pp: 10,
+    priority: 0,
+    flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["darkness", "eclipse"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    onBasePower(basePower, pokemon, target) {
+      const weakWeathers = ["sunnyday", "desolateland"];
+      if (weakWeathers.includes(pokemon.effectiveWeather())) {
+        this.debug("weakened by weather");
+        return this.chainModify(0.5);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Cool"
+  },
   machpunch: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
@@ -3381,6 +3892,36 @@ const Moves = {
     target: "normal",
     type: "Water",
     contestType: "Cool"
+  },
+  meltdown: {
+    num: 1217,
+    accuracy: 100,
+    basePower: 250,
+    category: "Physical",
+    name: "MEltdown",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Poison",
+    contestType: "Beautiful"
+  },
+  meltdownnuclear: {
+    num: 1218,
+    accuracy: 100,
+    basePower: 250,
+    category: "Physical",
+    name: "Meltdown Nuclear",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Nuclear",
+    contestType: "Beautiful"
   },
   mesmersmoke: {
     num: 1077,
@@ -3431,6 +3972,10 @@ const Moves = {
     target: "normal",
     type: "Steel",
     contestType: "Tough"
+  },
+  meteorbeam: {
+    inherit: true,
+	flags: { charge: 1, protect: 1, mirror: 1, beam: 1 }
   },
   meteormashcosmic: {
     num: 1102,
@@ -3511,6 +4056,95 @@ const Moves = {
     type: "Psychic",
     contestType: "Cute"
   },
+  miresurge: {
+    num: 1203,
+    accuracy: 100,
+    basePower: 100,
+    category: "Special",
+    name: "Mire Surge",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Normal",
+    contestType: "Cool"
+  },
+  miresurgeslime: {
+    num: 1205,
+    accuracy: 100,
+    basePower: 100,
+    category: "Special",
+    name: "Mire Surge Slime",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Cool"
+  },
+  moongeistbeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
+  moonlight: {
+    num: 236,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Moonlight",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, heal: 1 },
+    onHit(pokemon) {
+      let factor = 0.5;
+      switch (pokemon.effectiveWeather()) {
+        case "sunnyday":
+		case "darkness":
+        case "desolateland":
+          factor = 0.667;
+          break;
+        case "raindance":
+        case "primordialsea":
+        case "sandstorm":
+        case "hail":
+        case "snow":
+		case "acidrain":
+		case "thunderstorm":
+          factor = 0.25;
+          break;
+		case "fallout":
+		case "shadowyaura":
+          factor = 0.125;
+          break;
+		case "eclipse":
+          factor = 0;
+          break;
+      }
+      const success = !!this.heal(this.modify(pokemon.maxhp, factor));
+      if (!success) {
+        this.add("-fail", pokemon, "heal");
+        return this.NOT_FAIL;
+      }
+      return success;
+    },
+    secondary: null,
+    target: "self",
+    type: "Fairy",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   moonrazer: {
     num: 1168,
     accuracy: 100,
@@ -3526,6 +4160,52 @@ const Moves = {
     },
     target: "normal",
     type: "Fairy"
+  },
+  morningsun: {
+    num: 234,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Morning Sun",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, heal: 1 },
+    onHit(pokemon) {
+      let factor = 0.5;
+      switch (pokemon.effectiveWeather()) {
+        case "sunnyday":
+        case "desolateland":
+          factor = 0.667;
+          break;
+        case "raindance":
+        case "primordialsea":
+        case "sandstorm":
+        case "hail":
+        case "snow":
+		case "acidrain":
+		case "thunderstorm":
+          factor = 0.25;
+          break;
+		case "fallout":
+		case "shadowyaura":
+          factor = 0.125;
+          break;
+		case "darkness":
+          factor = 0;
+          break;
+      }
+      const success = !!this.heal(this.modify(pokemon.maxhp, factor));
+      if (!success) {
+        this.add("-fail", pokemon, "heal");
+        return this.NOT_FAIL;
+      }
+      return success;
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
   },
   mortalspin: {
     num: 866,
@@ -3739,6 +4419,10 @@ const Moves = {
     type: "Water",
     contestType: "Beautiful"
   },
+  originpulse: {
+    inherit: true,
+	flags: { protect: 1, pulse: 1, mirror: 1, beam: 1 }
+  },
   overheadstrike: {
     num: 949,
     accuracy: 100,
@@ -3768,7 +4452,7 @@ const Moves = {
     name: "Ozone Beam",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, beam: 1 },
     secondary: {
       chance: 30,
       status: "psn"
@@ -3912,6 +4596,25 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Beautiful"
+  },
+  phantomforce: {
+    inherit: true,
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["darkness"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    }
   },
   phantomgrip: {
     num: 1079,
@@ -4084,6 +4787,10 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Tough"
   },
+  prismaticlaser: {
+    inherit: true,
+	flags: { recharge: 1, protect: 1, mirror: 1, beam: 1 }
+  },
   prismaticlaserlight: {
     num: 1111,
     accuracy: 100,
@@ -4093,7 +4800,7 @@ const Moves = {
     name: "Prismatic Laser Light",
     pp: 10,
     priority: 0,
-    flags: { recharge: 1, protect: 1, mirror: 1 },
+    flags: { recharge: 1, protect: 1, mirror: 1, beam: 1 },
 	onModifyType(move, pokemon, target) {
       const psychicTypeEffectiveness = target.runEffectiveness(move);
       move.type = "Light";
@@ -4123,7 +4830,7 @@ const Moves = {
     name: "Proton Beam",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, beam: 1 },
     self: {
       boosts: {
         spa: -2
@@ -4133,6 +4840,10 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Beautiful"
+  },
+  psybeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   psybolt: {
     num: 911,
@@ -4166,6 +4877,23 @@ const Moves = {
       }
     },
     target: "normal",
+    type: "Psychic",
+    contestType: "Cool"
+  },
+  psylight: {
+    num: 1209,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Psylight",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "confusion"
+    },
+    target: "allAdjacentFoes",
     type: "Psychic",
     contestType: "Cool"
   },
@@ -4579,6 +5307,14 @@ const Moves = {
     zMove: { boost: { def: 1 } },
     contestType: "Cool"
   },
+  rockclimb: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
+  },
+  rocksmash: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
+  },
   roundsound: {
     num: 1010,
     accuracy: 100,
@@ -4869,6 +5605,25 @@ const Moves = {
     type: "Shadow",
     contestType: "Beautiful"
   },
+  shadowforce: {
+    inherit: true,
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["darkness"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    }
+  },
   shadowhalf: {
     num: 1027,
     accuracy: 100,
@@ -5088,6 +5843,10 @@ const Moves = {
     type: "Light",
     contestType: "Beautiful"
   },
+  signalbeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   signalbeamlight: {
     num: 1109,
     accuracy: 100,
@@ -5097,7 +5856,7 @@ const Moves = {
     name: "Signal Beam Light",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, beam: 1 },
     secondary: {
       chance: 10,
       volatileStatus: "confusion"
@@ -5118,6 +5877,10 @@ const Moves = {
     target: "normal",
     type: "Bug",
     contestType: "Beautiful"
+  },
+  simplebeam: {
+    inherit: true,
+	flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1, beam: 1 }
   },
   singsound: {
     num: 1012,
@@ -5325,13 +6088,51 @@ const Moves = {
   },
   solarbeam: {
     inherit: true,
+	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
     onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "darkness"];
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm"];
       if (weakWeathers.includes(pokemon.effectiveWeather())) {
         this.debug("weakened by weather");
         return this.chainModify(0.5);
       }
     }
+  },
+  solarblade: {
+    num: 669,
+    accuracy: 100,
+    basePower: 125,
+    category: "Physical",
+    name: "Solar Blade",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, slicing: 1, nosleeptalk: 1, failinstruct: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["sunnyday", "desolateland"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    onBasePower(basePower, pokemon, target) {
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm"];
+      if (weakWeathers.includes(pokemon.effectiveWeather())) {
+        this.debug("weakened by weather");
+        return this.chainModify(0.5);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Grass",
+    contestType: "Cool"
   },
   sonicboomsound: {
     num: 1015,
@@ -5508,6 +6309,38 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
+  starstorm: {
+    num: 1196,
+    accuracy: 100,
+    basePower: 110,
+    category: "Special",
+    name: "Starstorm",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
+  },
+  starstormcosmic: {
+    num: 1197,
+    accuracy: 100,
+    basePower: 110,
+    category: "Special",
+    name: "Starstorm Cosmic",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
+  },
+  steelbeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   stonesurge: {
     num: 1179,
     accuracy: 95,
@@ -5560,6 +6393,10 @@ const Moves = {
     target: "normal",
     type: "Electric",
     contestType: "Clever"
+  },
+  strength: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
   },
   suckerpunch: {
     inherit: true,
@@ -5654,6 +6491,43 @@ const Moves = {
     type: "Digital",
     contestType: "Tough"
   },
+  surf: {
+    inherit: true,
+	flags: { cprotect: 1, mirror: 1, nonsky: 1, hm: 1 },
+	onBasePower(basePower, pokemon, target) {
+      const weakWeathers = ["darkness"];
+      if (weakWeathers.includes(pokemon.effectiveWeather())) {
+        this.debug("boost by weather");
+        return this.chainModify(1.5);
+      }
+    }
+  },
+  shadowforce: {
+    inherit: true,
+    onBasePower(basePower, pokemon, target) {
+      const weakWeathers = ["darkness"];
+      if (weakWeathers.includes(pokemon.effectiveWeather())) {
+        this.debug("weakened by weather");
+        return this.chainModify(1.5);
+      }
+    }
+  },
+  spectralsap: {
+    num: 1200,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Spectral Sap",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    stealsBoosts: true,
+    // Boost stealing implemented in scripts.js
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Cool"
+  },
   swiftcosmic: {
     num: 1099,
     accuracy: true,
@@ -5681,6 +6555,68 @@ const Moves = {
     target: "normal",
     type: "Dark",
     contestType: "Clever"
+  },
+  synthesis: {
+    num: 235,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Synthesis",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, heal: 1 },
+    onHit(pokemon) {
+      let factor = 0.5;
+      switch (pokemon.effectiveWeather()) {
+        case "sunnyday":
+        case "desolateland":
+          factor = 0.667;
+          break;
+        case "raindance":
+        case "primordialsea":
+        case "sandstorm":
+        case "hail":
+        case "snow":
+		case "acidrain":
+		case "thunderstorm":
+          factor = 0.25;
+          break;
+		case "fallout":
+		case "shadowyaura":
+          factor = 0.125;
+          break;
+		case "darkness":
+		case "eclipse":
+          factor = 0;
+          break;
+      }
+      const success = !!this.heal(this.modify(pokemon.maxhp, factor));
+      if (!success) {
+        this.add("-fail", pokemon, "heal");
+        return this.NOT_FAIL;
+      }
+      return success;
+    },
+    secondary: null,
+    target: "self",
+    type: "Grass",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
+  },
+  taiga: {
+    num: 1201,
+    accuracy: 95,
+    basePower: 120,
+    category: "Physical",
+    name: "Taiga",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Ice",
+    contestType: "Cool"
   },
   tailwindwind: {
     num: 1092,
@@ -5732,6 +6668,29 @@ const Moves = {
     },
     target: "normal",
     type: "Rock",
+    contestType: "Cool"
+  },
+  technoblast: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
+  tempest: {
+    num: 413,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Tempest",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+	onHit(target, source) {
+      // Clear weather conditions
+      this.field.clearWeather();
+      this.add("-fieldstart", "move: Tempest", "[of] " + source);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Flying",
     contestType: "Cool"
   },
   tendril: {
@@ -5791,6 +6750,7 @@ const Moves = {
       switch (target?.effectiveWeather()) {
         case "raindance":
         case "primordialsea":
+		case "acidrain":
 		case "thunderstorm":
           move.accuracy = true;
           break;
@@ -5896,6 +6856,37 @@ const Moves = {
     type: "Wind",
     contestType: "Beautiful"
   },
+  toxifume: {
+    num: 1208,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Toxifume",
+    pp: 5,
+    priority: 0,
+    flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1 },
+    onTryMove(attacker, defender, move) {
+        if (attacker.removeVolatile(move.id)) {
+            return;
+        }
+        this.add("-prepare", attacker, move.name);
+        if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+            return;
+        }
+        attacker.addVolatile("twoturnmove", defender);
+        // Apply the Special Attack boost on the first turn
+        this.boost({ spa: 1 }, attacker, attacker, move);
+        return null;
+    },
+    secondary: {
+      chance: 100,
+      status: "tox"
+    },
+    target: "normal",
+    type: "Poison",
+    contestType: "Beautiful",
+  },
   twirlenade: {
     num: 1182,
     accuracy: true,
@@ -5945,6 +6936,10 @@ const Moves = {
     type: "Dragon",
     contestType: "Cool"
   },
+  triattack: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
   trickshot: {
     num: 1087,
     accuracy: 90,
@@ -5961,6 +6956,10 @@ const Moves = {
     target: "normal",
     type: "Fairy",
     contestType: "Cool"
+  },
+  twinbeam: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   typhoon: {
     num: 945,
@@ -6059,6 +7058,10 @@ const Moves = {
     type: "Poison",
     contestType: "Cool"
   },
+  waterfall: {
+    inherit: true,
+	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
+  },
   watershuriken: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, speed: 1 }
@@ -6083,6 +7086,7 @@ const Moves = {
           move.type = "Ice";
           break;
 		case "darkness":
+		case "eclipse":
           move.type = "Dark";
           break;
 		case "acidrain":
@@ -6154,6 +7158,29 @@ const Moves = {
     type: "Bug",
     contestType: "Tough"
   },
+  weepywail: {
+    num: 1212,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Weepy Wail",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        spa: -1
+      }
+    },
+    target: "normal",
+    type: "Water",
+    contestType: "Cute"
+  },
+  whirlpool: {
+    inherit: true,
+	flags: { protect: 1, mirror: 1, hm: 1 }
+  },
   whirlwindwind: {
     num: 1091,
     accuracy: true,
@@ -6169,6 +7196,75 @@ const Moves = {
     type: "Wind",
     zMove: { boost: { spd: 1 } },
     contestType: "Clever"
+  },
+  wickedlash: {
+    num: 1192,
+    accuracy: 100,
+    basePower: 110,
+    category: "Physical",
+    name: "Wicked Lash",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, slicing: 1, nosleeptalk: 1, failinstruct: 1 },
+	critRatio: 2,
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["darkness", "eclipse"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Cool"
+  },
+  wildroar: {
+    num: 1204,
+    accuracy: 90,
+    basePower: 100,
+    category: "Special",
+    name: "Wild Roar",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        atk: -1
+      }
+    },
+    target: "normal",
+    type: "Normal",
+    contestType: "Cool"
+  },
+  wildroarsound: {
+    num: 1206,
+    accuracy: 90,
+    basePower: 100,
+    category: "Special",
+    name: "Wild Roar Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        atk: -1
+      }
+    },
+    target: "normal",
+    type: "Sound",
+    contestType: "Cool"
   },
   windshear: {
     num: 915,

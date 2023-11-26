@@ -111,6 +111,16 @@ const Tags = {
     desc: "Boosted 1.5x by Acceleration.",
     moveFilter: (move) => "speed" in move.flags
   },
+  lasers: {
+    name: "Lasers",
+    desc: "Boosted 1.5x by Laser Focus.",
+    moveFilter: (move) => "beam" in move.flags
+  },
+  hmmove: {
+    name: "HM Moves",
+    desc: "Boosted 1.5x by Specialist.",
+    moveFilter: (move) => "hm" in move.flags
+  },
   bypassprotect: {
     name: "Bypass Protect",
     desc: "Bypasses Protect, Detect, King's Shield, and Spiky Shield.",
