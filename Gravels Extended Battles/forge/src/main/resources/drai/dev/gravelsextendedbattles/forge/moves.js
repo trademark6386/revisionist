@@ -345,6 +345,23 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
+  aurorawave: {
+    num: 1280,
+    accuracy: 100,
+    basePower: 65,
+    category: "Special",
+    name: "Aurora Wave",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Beautiful"
+  },
   axekick: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
@@ -522,6 +539,35 @@ const Moves = {
     },
     target: "normal",
     type: "Ghost",
+    contestType: "Beautiful"
+  },
+  blastcannon: {
+    num: 1276,
+    accuracy: 100,
+    basePower: 100,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Blast Cannon",
+    pp: 15,
+    priority: 0,
+    flags: { bullet: 1, charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Steel",
     contestType: "Beautiful"
   },
   blazekick: {
@@ -857,6 +903,21 @@ const Moves = {
     type: "Dragon",
     contestType: "Tough"
   },
+  cavein: {
+    num: 1275,
+    accuracy: 85,
+    basePower: 90,
+    category: "Physical",
+    name: "Cave In",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [1, 4],
+    secondary: null,
+    target: "normal",
+    type: "Ground",
+    contestType: "Tough"
+  },
   chairdrop: {
     num: 955,
     accuracy: 95,
@@ -910,6 +971,23 @@ const Moves = {
   chargebeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
+  charminggnash: {
+    num: 1278,
+    accuracy: 100,
+    basePower: 60,
+    category: "Physical",
+    name: "Charming Gnash",
+    pp: 25,
+    priority: 0,
+    flags: { bite: 1, contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "attract"
+    },
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
   },
   chattersound: {
     num: 999,
@@ -1081,7 +1159,7 @@ const Moves = {
     name: "Cookie Cut",
     pp: 5,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: {
       chance: 100,
       self: {
@@ -1097,6 +1175,56 @@ const Moves = {
     target: "normal",
     type: "Fairy",
     contestType: "Tough"
+  },
+  copypaste: {
+    num: 1281,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Past",
+    name: "Copy-Paste",
+    pp: 1,
+    noPPBoosts: true,
+    priority: 0,
+    flags: {
+      bypasssub: 1,
+      allyanim: 1,
+      failencore: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failcopycat: 1,
+      failinstruct: 1,
+      failmimic: 1
+    },
+    onHit(target, source) {
+      const disallowedMoves = ["chatter", "sketch", "struggle"];
+      const move = target.lastMove;
+      if (source.transformed || !move || source.moves.includes(move.id))
+        return false;
+      if (disallowedMoves.includes(move.id) || move.isZ || move.isMax)
+        return false;
+      const sketchIndex = source.moves.indexOf("sketch");
+      if (sketchIndex < 0)
+        return false;
+      const sketchedMove = {
+        move: move.name,
+        id: move.id,
+        pp: move.pp,
+        maxpp: move.pp,
+        target: move.target,
+        disabled: false,
+        used: false
+      };
+      source.moveSlots[sketchIndex] = sketchedMove;
+      source.baseMoveSlots[sketchIndex] = sketchedMove;
+      this.add("-activate", source, "move: Copy-Paste", move.name);
+    },
+    noSketch: true,
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    zMove: { boost: { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 } },
+    contestType: "Clever"
   },
   coralbreak: {
     num: 973,
@@ -1514,7 +1642,7 @@ const Moves = {
     name: "Dark Roar",
     pp: 30,
     priority: 1,
-	flags: { protect: 1, mirror: 1, sound: 1 },
+	flags: { protect: 1, mirror: 1, sound: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Dark",
@@ -1541,7 +1669,7 @@ const Moves = {
         move.type = "Sound"
       }
     },
-    flags: { protect: 1, mirror: 1, sound: 1 },
+    flags: { protect: 1, mirror: 1, sound: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Dark",
@@ -2894,7 +3022,7 @@ const Moves = {
     name: "Firecracker",
     pp: 10,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1, speed: 1 },
     self: {
       volatileStatus: "followme"
     },
@@ -2911,7 +3039,7 @@ const Moves = {
     name: "Fire Kunai",
     pp: 10,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1, defrost: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, defrost: 1, speed: 1 },
     willCrit: true,
     secondary: null,
     target: "normal",
@@ -3149,6 +3277,24 @@ const Moves = {
     target: "normal",
     type: "Slime",
     contestType: "Cool"
+  },
+  flowerpower: {
+    num: 1279,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Flower Power",
+    pp: 20,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onEffectiveness(typeMod, target, type, move) {
+      return typeMod + this.dex.getEffectiveness("Fairy", type);
+    },
+    priority: 0,
+    secondary: null,
+    target: "normal",
+    type: "Grass",
+    zMove: { basePower: 170 },
+    contestType: "Tough"
   },
   fly: {
     inherit: true,
@@ -4037,6 +4183,23 @@ const Moves = {
     type: "Ice",
     contestType: "Clever"
   },
+  iceweave: {
+    num: 1274,
+    accuracy: 95,
+    basePower: 0,
+    category: "Status",
+    name: "Ice Weave",
+    pp: 40,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    boosts: {
+      spe: -2
+    },
+	secondary: null,
+    target: "allAdjacentFoes",
+    type: "Ice",
+    contestType: "Cute"
+  },
   infernalblade: {
     num: 983,
     accuracy: 95,
@@ -4426,6 +4589,21 @@ const Moves = {
     type: "Fairy",
     zMove: { boost: { spd: 1 } },
     contestType: "Cute"
+  },
+  magmablade: {
+    num: 1277,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Magma Blade",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    contestType: "Cool"
   },
   magmaring: {
     num: 1144,
@@ -5193,7 +5371,7 @@ const Moves = {
     name: "Perfect Glare",
     pp: 20,
     priority: 1,
-    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    flags: { protect: 1, reflectable: 1, mirror: 1, speed: 1 },
     status: "par",
     secondary: null,
     target: "normal",
@@ -7748,7 +7926,7 @@ const Moves = {
     name: "Thunderclap",
     pp: 30,
     priority: 1,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
     target: "normal",
     type: "Electric",
