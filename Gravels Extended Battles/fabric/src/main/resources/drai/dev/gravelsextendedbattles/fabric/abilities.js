@@ -412,6 +412,17 @@ const Abilities = {
     rating: 4,
     num: 385
   },
+  busybee: {
+    onModifyPriority(priority, pokemon, target, move) {
+      if (move?.type === "Bug") {
+        move.pranksterBoosted = true;
+        return priority + 1;
+      }
+    },
+    name: "Busy Bee",
+    rating: 4,
+    num: 419
+  },
   cashsplash: {
     onUpdate(pokemon) {
       if (pokemon.status === "brn") {
@@ -567,6 +578,16 @@ const Abilities = {
 	name: "Conditioning",
     rating: 4.5,
     num: 395
+  },
+  confident: {
+    onSourceAfterFaint(length, target, source, effect) {
+      if (effect && effect.effectType === "Move") {
+        this.boost({ spa: length }, source);
+      }
+    },
+    name: "Confident",
+    rating: 3,
+    num: 420
   },
   content: {
     onAfterMove(target, source, move) {
@@ -921,7 +942,7 @@ const Abilities = {
     onTryHeal(damage, target, source, effect) {
       if (source === target) {
         this.debug("Fruitrition boost");
-        return this.chainModify([3277, 4096]); // 3277/4096 is approximately 0.8, which is a 25% boost
+        return this.chainModify([3277, 4096]);
       }
     },
     name: "Fruitrition",
@@ -961,6 +982,17 @@ const Abilities = {
     name: "Hail Warning",
     rating: 4,
     num: 362
+  },
+  headache: {
+    onModifySpAPriority: 5,
+    onModifySpA(spa, pokemon) {
+      if (pokemon.volatileStatus === "confusion") {
+        return this.chainModify(2);
+      }
+    },
+    name: "Headache",
+    rating: 3.5,
+    num: 421
   },
   heliophobia: {
     onSourceBasePowerPriority: 17,
@@ -1095,6 +1127,17 @@ const Abilities = {
     rating: 3.5,
     num: 400
   },
+  irrelephant: {
+    onStart(pokemon) {
+      this.add("-ability", pokemon, "Irrelephant");
+    },
+    onModifyMove(move) {
+      move.ignoreAbility = true;
+    },
+    name: "Irrelephant",
+    rating: 3,
+    num: 415
+  },
   junglespirit: {
     onModifyMove(move) {
       move.stab = 2;
@@ -1171,16 +1214,57 @@ const Abilities = {
     rating: 5,
     num: 369
   },
-  mountaineer: {
-    onTryHit(target, source, move) {
-      if (move.type === "Rock") {
-        this.add('-immune', target, "[from] ability: Mountaineer");
-        return null;
+  majesticaura: {
+    onFoeTryMove(target, source, move) {
+      const targetAllExceptions = ["perishsong", "flowershield", "rototiller"];
+      if (move.target === "foeSide" || move.target === "all" && !targetAllExceptions.includes(move.id)) {
+        return;
+      }
+      const dazzlingHolder = this.effectState.target;
+      if ((source.isAlly(dazzlingHolder) || move.target === "all") && move.priority > 0.1) {
+        this.attrLastMove("[still]");
+        this.add("cant", dazzlingHolder, "ability: Majestic Aura", move, "[of] " + target);
+        return false;
       }
     },
-    name: "Mountaineer",
+    isBreakable: true,
+    name: "Majestic Aura",
+    rating: 2.5,
+    num: 414
+  },
+  icecleats: {
+    onImmunity(type, pokemon) {
+      if (type === "hail")
+        return false;
+    },
+	onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["hail", "snow"])) {
+        return this.chainModify(2);
+      }
+    },
+    name: "Ice Cleats",
     rating: 2,
     num: 409
+  },
+  naturaltoxin: {
+    onSourceModifyAtkPriority: 6,
+    onSourceModifyAtk(atk, attacker, defender, move) {
+      if (move.type === "Poison") {
+        this.debug("Natural Toxin weaken");
+        return this.chainModify(0.5);
+      }
+    },
+    onSourceModifySpAPriority: 5,
+    onSourceModifySpA(atk, attacker, defender, move) {
+      if (move.type === "Poison") {
+        this.debug("Natural Toxin weaken");
+        return this.chainModify(0.5);
+      }
+    },
+    isBreakable: true,
+    name: "Natural Toxin",
+    rating: 3.5,
+    num: 422
   },
   nefarious: {
     onModifyPriority(priority, pokemon, target, move) {
@@ -1322,6 +1406,17 @@ const Abilities = {
     rating: 0,
     num: 223
   },
+  prismguard: {
+    onDamagingHitOrder: 1,
+    onDamagingHit(damage, target, source, move) {
+      if (!move.flags.contact && move.category !== "Status") {
+        this.damage(source.baseMaxhp / 8, source, target);
+      }
+    },
+    name: "Prism Guard",
+    rating: 2.5,
+    num: 416
+  },
   psychocall: {
     onModifyAtkPriority: 5,
     onModifyAtk(atk, attacker, defender, move) {
@@ -1434,6 +1529,19 @@ const Abilities = {
     rating: 3,
     num: 383
   },
+  rosesthorns: {
+    onDamagingHit(damage, target, source, move) {
+      const side = source.isAlly(target) ? source.side.foe : source.side;
+      const toxicSpikes = side.sideConditions["toxicspikes"];
+      if (move.flags === "contact" && (!toxicSpikes || toxicSpikes.layers < 2 || this.randomChance(1, 2))) {
+        this.add("-activate", target, "ability: Rose's Thorns");
+        side.addSideCondition("toxicspikes", target);
+      }
+    },
+    name: "Rose's Thorns",
+    rating: 3.5,
+    num: 423
+  },
   sandman: {
     onDamagingHit(damage, target, source, move) {
       if (this.checkMoveMakesContact(move, source, target)) {
@@ -1445,6 +1553,25 @@ const Abilities = {
     name: "Sandman",
     rating: 1.5,
     num: 356
+  },
+  sandpit: {
+    onStart(pokemon) {
+      let activated = false;
+      for (const target of pokemon.adjacentFoes()) {
+        if (!activated) {
+          this.add("-ability", pokemon, "Intimidate", "boost");
+          activated = true;
+        }
+        if (target.isGrounded()) {
+          this.add("-immune", target);
+        } else {
+          this.boost({ spe: -1 }, target, pokemon, null, true);
+        }
+      }
+    },
+    name: "Sand PIt",
+    rating: 3.5,
+    num: 424
   },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
@@ -1590,6 +1717,16 @@ const Abilities = {
     rating: 3.5,
     num: 391
   },
+  spectraljaws: {
+    onModifyMove(move) {
+      if (move.flags["bite"]) {
+        move.category = "Special";
+      }
+    },
+    name: "Spectral Jaws",
+    rating: 3.5,
+    num: 417
+  },
   speedswap: {
     onStart(source) {
       if (this.field.isTerrain('trickroom')) {
@@ -1648,6 +1785,18 @@ const Abilities = {
     name: "Stormbringer",
     rating: 4,
     num: 342
+  },
+  striker: {
+    onBasePowerPriority: 19,
+    onBasePower(basePower, attacker, defender, move) {
+      if (move.flags["kick"]) {
+        this.debug("Striker boost");
+        return this.chainModify(1.5);
+      }
+    },
+    name: "Striker",
+    rating: 3.5,
+    num: 412
   },
   stubborn: {
     onDamage(damage, target, source, effect) {
@@ -1843,6 +1992,27 @@ const Abilities = {
     rating: 4,
     num: 354
   },
+  valiantshield: {
+    onStart(pokemon) {
+      this.boost({def: 1}, pokemon);
+	  this.add("-ability", pokemon, "Valiant Shield");
+    },
+    name: "Valiant Shield",
+    rating: 3.5,
+    num: 413
+  },
+  vampiric: {
+    onModifyMove(move) {
+      if (move.flags["contact"]) {
+        if (!move.drain) {
+          move.drain = [1, 8]; // Drains 1/8 of the damage dealt
+        }
+      }
+    },
+	name: "vampiric",
+	rating: 2,
+	num: 418
+  },
   visionary: {
     onModifyMovePriority: -5,
     onModifyMove(move) {
@@ -1892,6 +2062,19 @@ const Abilities = {
     name: "Wind Force",
     rating: 3,
     num: 330
+  },
+  windturbine: {
+    onStart(pokemon) {
+      const side = pokemon.side;
+      const tailwind = side.sideConditions["tailwind"];
+      if (!tailwind) {
+        this.add("-activate", pokemon, "ability: Wind Turbine");
+        side.addSideCondition("tailwind", pokemon);
+      }
+    },
+    name: "Wind Turbine",
+    rating: 4,
+    num: 425
   },
   xenoforce: {
     onModifyAtk(atk) {

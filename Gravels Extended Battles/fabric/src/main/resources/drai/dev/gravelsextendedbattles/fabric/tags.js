@@ -121,6 +121,11 @@ const Tags = {
     desc: "Boosted 1.5x by Specialist.",
     moveFilter: (move) => "hm" in move.flags
   },
+  kick: {
+    name: "Kicking Moves",
+    desc: "Boosted 1.5x by Striker.",
+    moveFilter: (move) => "kick" in move.flags
+  },
   bypassprotect: {
     name: "Bypass Protect",
     desc: "Bypasses Protect, Detect, King's Shield, and Spiky Shield.",

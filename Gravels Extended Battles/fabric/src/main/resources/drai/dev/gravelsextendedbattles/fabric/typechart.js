@@ -1012,7 +1012,8 @@ const TypeChart = {
   },
   water: {
     damageTaken: {
-      Bug: 0,
+      acidrain: 3,
+	  Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
