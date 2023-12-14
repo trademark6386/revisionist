@@ -519,6 +519,14 @@ const Abilities = {
     rating: 4,
     num: 333
   },
+  circusprops: {
+    onStart(source) {
+      this.field.setTerrain("trickroom");
+    },
+    name: "Circus Props",
+    rating: 4,
+    num: 429
+  },
   climatechange: {
     onStart(source) {
       const weathers = [
@@ -983,6 +991,19 @@ const Abilities = {
     rating: 4,
     num: 362
   },
+  hazysurge: {
+    onStart(pokemon) {
+      const side = pokemon.side;
+      const mist = side.sideConditions["mist"];
+      if (!mist) {
+        this.add("-activate", pokemon, "ability: Hazy Surge");
+        side.addSideCondition("mist", pokemon);
+      }
+    },
+    name: "Hazy Surge",
+    rating: 4,
+    num: 428
+  },
   headache: {
     onModifySpAPriority: 5,
     onModifySpA(spa, pokemon) {
@@ -1214,6 +1235,14 @@ const Abilities = {
     rating: 5,
     num: 369
   },
+  magicianshat: {
+    onStart(source) {
+      this.field.setTerrain("magicroom");
+    },
+    name: "Magician's Hat",
+    rating: 4,
+    num: 430
+  },
   majesticaura: {
     onFoeTryMove(target, source, move) {
       const targetAllExceptions = ["perishsong", "flowershield", "rototiller"];
@@ -1405,6 +1434,19 @@ const Abilities = {
     name: "Power of Alchemy",
     rating: 0,
     num: 223
+  },
+  prismatichue: {
+    onStart(pokemon) {
+      const side = pokemon.side;
+      const reflect = side.sideConditions["reflect"];
+      if (!reflect) {
+        this.add("-activate", pokemon, "ability: Prismatic Hue");
+        side.addSideCondition("reflect", pokemon);
+      }
+    },
+    name: "Prismatic Hue",
+    rating: 4,
+    num: 426
   },
   prismguard: {
     onDamagingHitOrder: 1,
@@ -2013,6 +2055,19 @@ const Abilities = {
 	rating: 2,
 	num: 418
   },
+  vibranthue: {
+    onStart(pokemon) {
+      const side = pokemon.side;
+      const lightscreen = side.sideConditions["lightscreen"];
+      if (!lightscreen) {
+        this.add("-activate", pokemon, "ability: Vibrant Hue");
+        side.addSideCondition("lightscreen", pokemon);
+      }
+    },
+    name: "Vibrant Hue",
+    rating: 4,
+    num: 427
+  },
   visionary: {
     onModifyMovePriority: -5,
     onModifyMove(move) {
@@ -2075,6 +2130,14 @@ const Abilities = {
     name: "Wind Turbine",
     rating: 4,
     num: 425
+  },
+  wizardstome: {
+    onStart(source) {
+      this.field.setTerrain("wonderroom");
+    },
+    name: "Wizard's Tome",
+    rating: 4,
+    num: 430
   },
   xenoforce: {
     onModifyAtk(atk) {

@@ -776,6 +776,8 @@
   "cobblemon.move.aurorawave.desc": "The user emits a myriad of mesmerizing waves of light. This may also leave the target confused.",
   "cobblemon.move.copypaste": "Copy-Paste",
   "cobblemon.move.copypaste.desc": "It enables the user to permanently learn the move last used by the target. Once used, Copy-Paste disappears.",
+  "cobblemon.move.pursuant": "Pursuant",
+  "cobblemon.move.pursuant.desc": "The user attacks everything around it by pursuing te target.",
   
   "cobblemon.battle.activate.magmaring": "%1$s became trapped in the fiery vortex!",
   "cobblemon.battle.activate.parasiticfungi": "%1$s became infected by the fungi!",
@@ -1068,6 +1070,18 @@
   "cobblemon.ability.sandpit.desc": "Lowers the opposing Pokemon's Speed stat. Becomes stronger during a Sandstorm.",
   "cobblemon.ability.windturbine": "Wind Turbine",
   "cobblemon.ability.windturbine.desc": "Creates a tailwind behind the User's team.",
+  "cobblemon.ability.prismatichue": "Prismatic Hue",
+  "cobblemon.ability.prismatichue.desc": "Summons reflect in front of the User's Team.",
+  "cobblemon.ability.vibranthue": "Vibrant Hue",
+  "cobblemon.ability.vibranthue.desc": "Summons Light Screen in front of the User's Team.",
+  "cobblemon.ability.hazysurge": "Hazy Surge",
+  "cobblemon.ability.hazysurge.desc": "Summons a wall of mist on top of the User's Team.",
+  "cobblemon.ability.circusprops": "Circus Props",
+  "cobblemon.ability.circusprops.desc": "The user sets up Trick Room when it enters the field.",
+  "cobblemon.ability.magicianshat": "Magician's Hat",
+  "cobblemon.ability.magicianshat.desc": "The user sets up Magic Room when it enters the field.",
+  "cobblemon.ability.wizardstome": "Wizard's Tome",
+  "cobblemon.ability.wizardstome.desc": "The user sets up Wonder Room when it enters the field.",
   
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   
