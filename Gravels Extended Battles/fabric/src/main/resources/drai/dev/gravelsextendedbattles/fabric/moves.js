@@ -6373,16 +6373,14 @@ const Moves = {
     condition: {
       duration: 5,
       onStart(side) {
-        this.add('-sidestart', side, 'move: Salt Therapy');
+        this.add("-sidestart", side, "move: Salt Therapy");
       },
       onResidualOrder: 6,
       onResidual(side) {
-        const target = this.effectState.target;
-        const heal = this.heal(target.baseMaxhp / 16);
-        this.add('-heal', target, target.getHealth, '[from] move: Salt Therapy', '[of] ' + target);
+        this.heal(pokemon.baseMaxhp / 12);
       },
       onSideEnd(side) {
-        this.add('-sideend', side, 'move: Salt Therapy');
+        this.add("-sideend", side, "move: Salt Therapy");
       },
     },
     secondary: null,
