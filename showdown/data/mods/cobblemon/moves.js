@@ -6372,12 +6372,12 @@ const Moves = {
     sideCondition: "salttherapy",
     condition: {
       duration: 5,
-      onStart(side) {
+      onSideStart(side) {
         this.add("-sidestart", side, "move: Salt Therapy");
       },
       onResidualOrder: 6,
       onResidual(side) {
-        this.heal(pokemon.baseMaxhp / 12);
+        this.heal(side.baseMaxhp / 12);
       },
       onSideEnd(side) {
         this.add("-sideend", side, "move: Salt Therapy");
