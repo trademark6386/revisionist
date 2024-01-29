@@ -68,7 +68,7 @@ const Conditions = {
     onWeatherModifyDamage(damage, attacker, defender, move) {
       if (defender.hasItem("utilityumbrella"))
         return;
-      if (move.type === "Ghost" || type === "Dark") {
+      if (move.type === "Ghost" || move.type === "Dark") {
         this.debug("darkness ghost boost");
         return this.chainModify(1.5);
       }
