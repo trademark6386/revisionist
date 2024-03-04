@@ -1723,7 +1723,7 @@ const Abilities = {
         return this.chainModify(1.5);
       }
     },
-    name: "Sharpness",
+    name: "Siege Drive",
     rating: 3.5,
     num: 384
   },
