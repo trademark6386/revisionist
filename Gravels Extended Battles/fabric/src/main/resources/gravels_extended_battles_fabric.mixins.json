@@ -4,12 +4,13 @@
   "package": "drai.dev.gravelsextendedbattles.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "TeraTypesMixin",
     "ElementalTypesMixin",
-    "TypeIconMixin",
-    "TypeWidgetMixin",
     "EvolutionMixin",
     "GiveAllPokemonMixin",
     "SpawnAllPokemonMixin",
+    "TypeIconMixin",
+    "TypeWidgetMixin",
     "VaryingModelRepositoryMixin"
   ],
   "client": [

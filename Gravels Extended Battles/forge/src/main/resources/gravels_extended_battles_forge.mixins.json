@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ElementalTypesMixin",
-    "TypeIconMixin",
-    "TypeWidgetMixin",
     "EvolutionMixin",
     "GiveAllPokemonMixin",
-    "SpawnAllPokemonMixin"
+    "SpawnAllPokemonMixin",
+    "TeraTypesAccessor",
+    "TeraTypesMixin",
+    "TypeIconMixin",
+    "TypeWidgetMixin"
   ],
   "client": [
   ],
