@@ -37,7 +37,7 @@ public class SpawnAllPokemonMixin {
                 }
                 if(isValid){
                     var pokemon = species.create(10);
-                    pokemon.sendOut(player.getServerWorld(),player.getPos(), (pokemonEntity) -> {
+                    pokemon.sendOut(player.getServerWorld(),player.getPos(),null, (pokemonEntity) -> {
                         pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
                     var regionalAspects = new ArrayList<String>(List.of("galarian", "whitestriped", "alolan", "paldean", "hisuian"));
                     var splitEvolutionRegionals = new ArrayList<String>(List.of("pikachu","cubone", "exeggcute", "koffing", "mimejr"));
@@ -46,7 +46,7 @@ public class SpawnAllPokemonMixin {
                             if(formData.getAspects().contains(aspect)&&!splitEvolutionRegionals.contains(species.getName().toLowerCase())){
                                 pokemon = species.create(10);
                                 pokemon.setAspects(new HashSet<>(List.of(aspect)));
-                                pokemon.sendOut(player.getServerWorld(),player.getPos(), (pokemonEntity) -> {
+                                pokemon.sendOut(player.getServerWorld(),player.getPos(), null, (pokemonEntity) -> {
                                     pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
                             }
                         }

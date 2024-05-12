@@ -2,15 +2,19 @@ package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.*;
 import com.cobblemon.mod.common.api.events.*;
+import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import kotlin.*;
 import org.apache.commons.io.*;
+import org.spongepowered.asm.mixin.*;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class GravelsExtendedBattles {
+
+    public static List<ElementalType> NEW_TYPES = new ArrayList<>();
     public static final String MOD_ID = "gravels_extended_battles";
     public static final ArrayList<String> showdownFiles = new ArrayList<>(
             List.of("abilities.js","conditions.js", "items.js", "moves.js", "pokedex.js", "scripts.js", "tags.js"));

@@ -79,8 +79,8 @@ public class GravelsExtendedBattlesForge {
             var pokemon = pokemonEntitySpawnEvent.getEntity().getPokemon();
             for (String label : bannedLabels) {
                 if(pokemon.hasLabels(label)){
-                    pokemonEntitySpawnEvent.getEntity().discard();
-                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
+//                    pokemonEntitySpawnEvent.getEntity().discard();
+//                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
                     pokemonEntitySpawnEvent.cancel();
                 }
             }

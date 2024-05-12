@@ -84,9 +84,7 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
             var pokemon = pokemonEntitySpawnEvent.getEntity().getPokemon();
             for (String label : bannedLabels) {
                 if(pokemon.hasLabels(label)){
-                    pokemonEntitySpawnEvent.getEntity().discard();
-                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
-                    //TODO uncomment this when the bug regarding spawn canceling is fixed.
+//                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
                     pokemonEntitySpawnEvent.cancel();
                 }
             }
