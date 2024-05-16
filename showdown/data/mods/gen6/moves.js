@@ -237,7 +237,7 @@ const Moves = {
   },
   rockblast: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   sheercold: {
     inherit: true,

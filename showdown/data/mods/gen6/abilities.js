@@ -80,6 +80,8 @@ const Abilities = {
         move.type = "Normal";
       }
     },
+    onBasePower() {
+    },
     rating: -1
   },
   parentalbond: {
@@ -151,7 +153,7 @@ const Abilities = {
   },
   zenmode: {
     inherit: true,
-    isPermanent: false
+    flags: { failroleplay: 1, noentrain: 1, notrace: 1 }
   }
 };
 //# sourceMappingURL=abilities.js.map

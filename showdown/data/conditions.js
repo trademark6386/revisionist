@@ -185,6 +185,8 @@ const Conditions = {
     onStart(target, source, sourceEffect) {
       if (sourceEffect?.id === "lockedmove") {
         this.add("-start", target, "confusion", "[fatigue]");
+      } else if (sourceEffect?.effectType === "Ability") {
+        this.add("-start", target, "confusion", "[from] ability: " + sourceEffect.name, "[of] " + source);
       } else {
         this.add("-start", target, "confusion");
       }
@@ -401,9 +403,6 @@ const Conditions = {
       }
       if (data.source.hasAbility("normalize") && this.gen >= 6) {
         data.moveData.type = "Normal";
-      }
-      if (data.source.hasAbility("adaptability") && this.gen >= 6) {
-        data.moveData.stab = 2;
       }
       const hitMove = new this.dex.Move(data.moveData);
       this.actions.trySpreadMoveHit([target], data.source, hitMove, true);
@@ -840,11 +839,9 @@ const Conditions = {
     onTrapPokemon(pokemon) {
       pokemon.trapped = true;
     },
-    // Override No Guard
-    onInvulnerabilityPriority: 2,
-    onInvulnerability(target, source, move) {
-      return false;
-    },
+    // Dodging moves is handled in BattleActions#hitStepInvulnerabilityEvent
+    // This is here for moves that manually call this event like Perish Song
+    onInvulnerability: false,
     onBeforeTurn(pokemon) {
       this.queue.cancelAction(pokemon);
     }

@@ -79,9 +79,10 @@ var TeamValidatorAsync = __toESM(require("./team-validator-async"));
  *
  * @license MIT
  */
+require("source-map-support").install();
 const nodeVersion = parseInt(process.versions.node);
-if (isNaN(nodeVersion) || nodeVersion < 14) {
-  throw new Error("We require Node.js version 14 or later; you're using " + process.version);
+if (isNaN(nodeVersion) || nodeVersion < 16) {
+  throw new Error("We require Node.js version 16 or later; you're using " + process.version);
 }
 function setupGlobals() {
   const ConfigLoader = require("./config-loader");
@@ -92,6 +93,7 @@ function setupGlobals() {
   void Monitor2.version().then((hash) => {
     global.__version.tree = hash;
   });
+  import_lib.Repl.cleanup();
   if (Config.watchconfig) {
     (0, import_lib.FS)("config/config.js").onModify(() => {
       try {

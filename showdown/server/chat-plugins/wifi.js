@@ -80,6 +80,7 @@ const gameidToGame = {
 class Giveaway extends Rooms.SimpleRoomGame {
   constructor(host, giver, room, ot, tid, ivs, prize, game = "SV", ball, extraInfo) {
     super(room);
+    this.gameid = "giveaway";
     this.gaNumber = room.nextGameNumber();
     this.host = host;
     this.giver = giver;
@@ -340,7 +341,7 @@ ${ivsStr}`;
   }
   generateWindow(rightSide) {
     const set = Giveaway.convertIVs(this.prize, this.ivs);
-    return /* @__PURE__ */ Chat.h("center", null, /* @__PURE__ */ Chat.h("h3", null, "It's ", this.game, " giveaway time!"), /* @__PURE__ */ Chat.h("small", null, "Giveaway started by ", this.host.name), /* @__PURE__ */ Chat.h("table", { style: { marginLeft: "auto", marginRight: "auto" } }, /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { colSpan: 2, style: { textAlign: "center" } }, /* @__PURE__ */ Chat.h("strong", null, "Giver:"), " ", this.giver.name, /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h("strong", null, "OT:"), " ", this.ot, ", ", /* @__PURE__ */ Chat.h("strong", null, "TID:"), " ", this.tid)), /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { style: { textAlign: "center", width: "45%" } }, /* @__PURE__ */ Chat.h("psicon", { item: this.ball }), " ", this.sprite, " ", /* @__PURE__ */ Chat.h("psicon", { item: this.ball }), /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h(Chat.JSX.FormatText, { isTrusted: true }, set)), /* @__PURE__ */ Chat.h("td", { style: { textAlign: "center", width: "45%" } }, rightSide)), !!this.extraInfo?.trim().length && /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { colSpan: 2, style: { textAlign: "center" } }, /* @__PURE__ */ Chat.h("strong", null, "Extra Information"), /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h(Chat.JSX.FormatText, { isTrusted: true }, this.extraInfo.trim().replace(/<br \/>/g, "\n"))))), /* @__PURE__ */ Chat.h("p", { style: { textAlign: "center", fontSize: "7pt", fontWeight: "bold" } }, /* @__PURE__ */ Chat.h("u", null, "Note:"), " You must have a Switch, Pok\xE9mon ", gameName[this.game], ", ", "and Nintendo Switch Online to receive the prize. ", "Do not join if you are currently unable to trade. Do not enter if you have already won this exact Pok\xE9mon, ", "unless it is explicitly allowed."));
+    return /* @__PURE__ */ Chat.h("center", null, /* @__PURE__ */ Chat.h("h3", null, "It's ", this.game, " giveaway time!"), /* @__PURE__ */ Chat.h("small", null, "Giveaway started by ", this.host.name), /* @__PURE__ */ Chat.h("table", { style: { marginLeft: "auto", marginRight: "auto" } }, /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { colSpan: 2, style: { textAlign: "center" } }, /* @__PURE__ */ Chat.h("strong", null, "Giver:"), " ", this.giver.name, /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h("strong", null, "OT:"), " ", this.ot, ", ", /* @__PURE__ */ Chat.h("strong", null, "TID:"), " ", this.tid)), /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { style: { textAlign: "center", width: "45%" } }, /* @__PURE__ */ Chat.h("psicon", { item: this.ball }), " ", this.sprite, " ", /* @__PURE__ */ Chat.h("psicon", { item: this.ball }), /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h(Chat.JSX.FormatText, { isTrusted: true }, set)), /* @__PURE__ */ Chat.h("td", { style: { textAlign: "center", width: "45%" } }, rightSide)), !!this.extraInfo?.trim().length && /* @__PURE__ */ Chat.h("tr", null, /* @__PURE__ */ Chat.h("td", { colSpan: 2, style: { textAlign: "center" } }, /* @__PURE__ */ Chat.h("strong", null, "Extra Information"), /* @__PURE__ */ Chat.h("br", null), /* @__PURE__ */ Chat.h(Chat.JSX.FormatText, { isTrusted: true }, this.extraInfo.trim().replace(/<br \/>/g, "\n"))))), /* @__PURE__ */ Chat.h("p", { style: { textAlign: "center", fontSize: "7pt", fontWeight: "bold" } }, /* @__PURE__ */ Chat.h("u", null, "Note:"), " You must have a Switch, Pok\xE9mon ", gameName[this.game], ", ", "and NSO to receive the prize. ", "Do not join if you are currently unable to trade. Do not enter if you have already won this exact Pok\xE9mon, ", "unless it is explicitly allowed."));
   }
 }
 class QuestionGiveaway extends Giveaway {
@@ -688,6 +689,7 @@ ${winnerNames}`);
 class GTS extends Rooms.SimpleRoomGame {
   constructor(room, giver, amount, summary, deposit, lookfor) {
     super(room, true);
+    this.gameid = "gts";
     this.gtsNumber = room.nextGameNumber();
     this.room = room;
     this.giver = giver;

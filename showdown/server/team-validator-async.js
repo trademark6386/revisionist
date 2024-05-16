@@ -41,6 +41,9 @@ class TeamValidatorAsync {
     let formatid = this.format.id;
     if (this.format.customRules)
       formatid += "@@@" + this.format.customRules.join(",");
+    if (team.length > 25 * 1024 - 6) {
+      return Promise.resolve("0Your team is over 25KB. Please use a smaller team.");
+    }
     return PM.query({ formatid, options, team });
   }
   static get(format) {
@@ -71,9 +74,9 @@ const PM = new import_process_manager.QueryProcessManager(module, (message) => {
   }
   const packedTeam = Teams.pack(parsedTeam);
   return "1" + packedTeam;
-});
+}, 2 * 60 * 1e3);
 if (!PM.isParentProcess) {
-  global.Config = require("./config-loader");
+  global.Config = require("./config-loader").Config;
   global.Monitor = {
     crashlog(error, source = "A team validator process", details = null) {
       const repr = JSON.stringify([error.name, error.message, source, details]);

@@ -385,7 +385,6 @@ const _ProcessManager = class {
     this.crashedProcesses = [];
     this.crashTime = 0;
     this.crashRespawnCount = 0;
-    this.module = module2;
     this.filename = module2.filename;
     this.basename = path.basename(module2.filename);
     this.isParentProcess = process.mainModule !== module2 || !process.send;
@@ -507,8 +506,9 @@ class QueryProcessManager extends ProcessManager {
     const timeout = setTimeout(() => {
       const debugInfo = process2.debug || "No debug information found.";
       process2.destroy();
+      this.spawnOne();
       throw new Error(
-        `A query originating in ${this.basename} took too long to complete; the process has been killed.
+        `A query originating in ${this.basename} took too long to complete; the process has been respawned.
 ${debugInfo}`
       );
     }, this.timeout);

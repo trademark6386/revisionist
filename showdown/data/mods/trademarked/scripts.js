@@ -86,7 +86,11 @@ const Scripts = {
         }
         this.runEvent("DisableMove", pokemon);
         for (const moveSlot of pokemon.moveSlots) {
-          this.singleEvent("DisableMove", this.dex.getActiveMove(moveSlot.id), null, pokemon);
+          const activeMove = this.dex.getActiveMove(moveSlot.id);
+          this.singleEvent("DisableMove", activeMove, null, pokemon);
+          if (activeMove.flags["cantusetwice"] && pokemon.lastMove?.id === moveSlot.id) {
+            pokemon.disableMove(pokemon.lastMove.id);
+          }
         }
         if (pokemon.getLastAttackedBy() && this.gen >= 7)
           pokemon.knownType = true;
@@ -203,6 +207,7 @@ const Scripts = {
       return {
         id: move.id,
         name: move.name,
+        flags: {},
         // Does not need activation message with this
         fullname: "ability: " + move.name,
         onStart(pokemon) {
@@ -223,7 +228,7 @@ const Scripts = {
     },
     transformInto(pokemon, effect) {
       const species = pokemon.species;
-      if (pokemon.fainted || this.illusion || pokemon.illusion || pokemon.volatiles["substitute"] && this.battle.gen >= 5 || pokemon.transformed && this.battle.gen >= 2 || this.transformed && this.battle.gen >= 5 || species.name === "Eternatus-Eternamax") {
+      if (pokemon.fainted || this.illusion || pokemon.illusion || pokemon.volatiles["substitute"] && this.battle.gen >= 5 || pokemon.transformed && this.battle.gen >= 2 || this.transformed && this.battle.gen >= 5 || species.name === "Eternatus-Eternamax" || ["Ogerpon", "Terapagos"].includes(species.baseSpecies) && (this.terastallized || pokemon.terastallized) || this.terastallized === "Stellar") {
         return false;
       }
       if (this.battle.dex.currentMod === "gen1stadium" && (species.name === "Ditto" || this.species.name === "Ditto" && pokemon.moves.includes("transform"))) {
@@ -245,7 +250,6 @@ const Scripts = {
           this.modifiedStats[statName] = pokemon.modifiedStats[statName];
       }
       this.moveSlots = [];
-      this.set.ivs = this.battle.gen >= 5 ? this.set.ivs : pokemon.set.ivs;
       this.hpType = this.battle.gen >= 5 ? this.hpType : pokemon.hpType;
       this.hpPower = this.battle.gen >= 5 ? this.hpPower : pokemon.hpPower;
       this.timesAttacked = pokemon.timesAttacked;
@@ -270,7 +274,7 @@ const Scripts = {
         this.boosts[boostName] = pokemon.boosts[boostName];
       }
       if (this.battle.gen >= 6) {
-        const volatilesToCopy = ["focusenergy", "gmaxchistrike", "laserfocus"];
+        const volatilesToCopy = ["dragoncheer", "focusenergy", "gmaxchistrike", "laserfocus"];
         for (const volatile of volatilesToCopy) {
           if (pokemon.volatiles[volatile]) {
             this.addVolatile(volatile);
@@ -308,6 +312,10 @@ const Scripts = {
           }
         }
       }
+      if (this.species.baseSpecies === "Ogerpon" && this.canTerastallize)
+        this.canTerastallize = false;
+      if (this.species.baseSpecies === "Terapagos" && this.canTerastallize)
+        this.canTerastallize = false;
       return true;
     }
   }

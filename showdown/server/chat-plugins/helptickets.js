@@ -139,23 +139,23 @@ function writeStats(line) {
 class HelpTicket extends Rooms.SimpleRoomGame {
   constructor(room, ticket) {
     super(room);
-    this.room = room;
-    this.room.settings.language = Users.get(ticket.creator)?.language || "english";
-    this.title = `Help Ticket - ${ticket.type}`;
     this.gameid = "helpticket";
     this.allowRenames = true;
-    this.ticket = ticket;
-    this.claimQueue = [];
     this.involvedStaff = /* @__PURE__ */ new Set();
-    this.createTime = Date.now();
-    this.activationTime = ticket.active ? this.createTime : 0;
     this.emptyRoom = false;
     this.firstClaimTime = 0;
     this.unclaimedTime = 0;
-    this.lastUnclaimedStart = ticket.active ? this.createTime : 0;
     this.closeTime = 0;
     this.resolution = "unknown";
     this.result = null;
+    this.room = room;
+    this.room.settings.language = Users.get(ticket.creator)?.language || "english";
+    this.title = `Help Ticket - ${ticket.type}`;
+    this.ticket = ticket;
+    this.claimQueue = [];
+    this.createTime = Date.now();
+    this.activationTime = ticket.active ? this.createTime : 0;
+    this.lastUnclaimedStart = ticket.active ? this.createTime : 0;
   }
   onJoin(user, connection) {
     if (!this.ticket.open)
@@ -272,7 +272,7 @@ class HelpTicket extends Rooms.SimpleRoomGame {
   forfeit(user) {
     if (!(user.id in this.playerTable))
       return;
-    this.removePlayer(user);
+    this.removePlayer(this.playerTable[user.id]);
     if (!this.ticket.open)
       return;
     this.room.modlog({ action: "TICKETABANDON", isGlobal: false, loggedBy: user.id });
@@ -291,7 +291,7 @@ class HelpTicket extends Rooms.SimpleRoomGame {
     this.room.update();
   }
   getButton() {
-    const color = this.ticket.claimed ? `` : this.ticket.offline ? `notifying subtle` : `notifying`;
+    const color = this.ticket.claimed ? `` : this.ticket.offline ? `alt-notifying` : `notifying`;
     const creator = this.ticket.claimed ? import_lib.Utils.html`${this.ticket.creator}` : import_lib.Utils.html`<strong>${this.ticket.creator}</strong>`;
     const user = Users.get(this.ticket.creator);
     let details = "";
@@ -420,9 +420,9 @@ class HelpTicket extends Rooms.SimpleRoomGame {
     }
     this.room.game = null;
     this.room = null;
-    for (const player of this.players) {
+    this.setEnded();
+    for (const player of this.players)
       player.destroy();
-    }
     this.players = null;
     this.playerTable = null;
   }
@@ -906,12 +906,10 @@ async function getBattleLog(battle, noReplay = false) {
     const data = JSON.parse(raw);
     if (data.log?.length) {
       const log = data.log.split("\n");
-      const players = {
-        p1: toID(data.p1),
-        p2: toID(data.p2),
-        p3: toID(data.p3),
-        p4: toID(data.p4)
-      };
+      const players = {};
+      for (const [i, id] of data.players.entries()) {
+        players[`p${i + 1}`] = toID(id);
+      }
       const chat = [];
       const mons = {};
       for (const line of log) {
@@ -939,7 +937,7 @@ async function getBattleLog(battle, noReplay = false) {
       }
       return {
         log: chat,
-        title: `${data.p1} vs ${data.p2}`,
+        title: `${players.p1} vs ${players.p2}`,
         url: `https://${Config.routes.replays}/${battle}`,
         players,
         pokemon: mons
@@ -1324,7 +1322,12 @@ const textTickets = {
         buf += `<button class="button" name="send" value="/modlog room=global,ip=${ip}">Modlog</button><br />`;
         if (ipPunishments) {
           const unlockCmd = staff.can("globalban") ? `/unlockip ${ip}` : `Can someone \`\`/unlockip ${ip}\`\` (${data.hostType} host)`;
-          buf += `<button class="button" name="send" value="/msgroom staff,${unlockCmd}">Unlock IP</button>`;
+          buf += `<button class="button" name="send" value="/msgroom staff,${unlockCmd}">Unlock IP</button><br />`;
+          const marksharedCmd = staff.can("globalban") ? `/markshared ${ip}, {owner}` : `Can someone \`\`/markshared ${ip}, {owner}\`\``;
+          buf += `<form data-submitsend="/msgroom staff,${marksharedCmd}">`;
+          buf += `<input name="owner" placeholder="School/Organization Name, City, Country" size="40" required />`;
+          buf += `<button class="button" type="submit">Mark as shared IP</button>`;
+          buf += `</form>`;
         }
         buf += `</details>`;
       }
@@ -1629,11 +1632,8 @@ const pages = {
             buf += `<p><Button>other</Button></p>`;
             break;
           case "password":
-            buf += `<p>Password resets are currently closed to regular users due to policy revamp and administrative backlog.</p>`;
-            buf += `<p>Users with a public room auth (Voice or higher) and Smogon badgeholders can still get their passwords reset `;
-            buf += `(see <a href="https://www.smogon.com/forums/threads/names-passwords-rooms-and-servers-contacting-upper-staff.3538721/#post-6227626">this post</a> for more informations).</p>`;
-            buf += `<p>To those who do not belong to those groups, we apologize for the temporary inconvenience.</p>`;
-            buf += `<p>Thanks for your understanding!</p>`;
+            buf += `<p>If you need your Pok\xE9mon Showdown password reset, you can fill out a <a href="https://www.smogon.com/forums/password-reset-form/">Password Reset Form</a>.</p>`;
+            buf += `<p>You will need to make a Smogon account to be able to fill out a form.`;
             break;
           case "roomhelp":
             buf += `<p>${this.tr`If you are a room driver or up in a public room, and you need help watching the chat, one or more global staff members would be happy to assist you!`}</p>`;
@@ -2139,8 +2139,6 @@ const commands = {
       return;
     const meta = this.pmTarget ? `-user-${this.pmTarget.id}` : this.room ? `-room-${this.room.roomid}` : "";
     if (this.broadcasting) {
-      if (room?.battle)
-        return this.errorReply(this.tr`This command cannot be broadcast in battles.`);
       return this.sendReplyBox(`<button name="joinRoom" value="view-help-request--report${meta}" class="button"><strong>${this.tr`Report someone`}</strong></button>`);
     }
     return this.parse(`/join view-help-request--report${meta}`);
@@ -2150,8 +2148,6 @@ const commands = {
       return;
     const meta = this.pmTarget ? `-user-${this.pmTarget.id}` : this.room ? `-room-${this.room.roomid}` : "";
     if (this.broadcasting) {
-      if (room?.battle)
-        return this.errorReply(this.tr`This command cannot be broadcast in battles.`);
       return this.sendReplyBox(`<button name="joinRoom" value="view-help-request--appeal${meta}" class="button"><strong>${this.tr`Appeal a punishment`}</strong></button>`);
     }
     return this.parse(`/join view-help-request--appeal${meta}`);
@@ -2653,6 +2649,7 @@ const commands = {
     },
     closehelp: [`/helpticket close [user] - Closes an open ticket. Requires: % @ &`],
     tb: "ban",
+    ticketban: "ban",
     async ban(target, room, user) {
       if (!target)
         return this.parse("/help helpticket ban");
@@ -2750,6 +2747,7 @@ Your ban will expire in a few days.`);
       return true;
     },
     banhelp: [`/helpticket ban [user], (reason) - Bans a user from creating tickets for 2 days. Requires: % @ &`],
+    unticketban: "unban",
     unban(target, room, user) {
       if (!target)
         return this.parse("/help helpticket unban");
@@ -2870,6 +2868,11 @@ Your ban will expire in a few days.`);
     publichelp: [
       `/helpticket public [user], [date] - Makes the ticket logs for the [user] on the [date] public to staff. Requires: &`
     ]
+  },
+  tb: "ticketban",
+  unticketban: "ticketban",
+  ticketban(target, room, user, connection, cmd) {
+    return this.parse(`/helpticket ${cmd} ${target}`);
   },
   helptickethelp: [
     `/helpticket create - Creates a new ticket, requesting help from global staff.`,

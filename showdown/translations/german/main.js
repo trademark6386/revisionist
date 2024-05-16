@@ -24,6 +24,8 @@ module.exports = __toCommonJS(main_exports);
 const translations = {
   name: "German",
   strings: {
+    "namelocked": "namensgesperrt",
+    "locked": "gesperrt",
     "autoconfirmed": "autoconfirmed",
     "trusted": "vertrauensw\xFCrdig",
     "Please follow the rules:": "Bitte befolgt die Regeln:",
@@ -152,8 +154,8 @@ const translations = {
     "You are already blocking challenges!": "Du blockierst bereits Herausforderungen!",
     "You are already available for challenges!": "Du bist bereits f\xFCr Herausforderungen verf\xFCgbar!",
     "You are available for challenges from now on.": "Du bist ab jetzt f\xFCr Herausforderungen verf\xFCgbar.",
-    "You are now blocking challenges, except from staff and ${rank}.": "",
-    "You are now blocking challenges, except from staff and ${status} users.": "",
+    "You are now blocking challenges, except from staff and ${rank}.": "Du blockierst nun Herausforderungen mit Ausnahme derjenigen vom Staff-Team und ${rank}.",
+    "You are now blocking challenges, except from staff and ${status} users.": "Du blockierst nun Herausforderungen mit Ausnahme derjenigen vom Staff-Team und ${status}-Nutzern.",
     "Staff FAQ": "Staff-FAQ",
     "You cannot broadcast all FAQs at once.": "Du kannst nicht s\xE4mtliche FAQs auf einmal anzeigen lassen.",
     "A user is autoconfirmed when they have won at least one rated battle and have been registered for one week or longer. In order to prevent spamming and trolling, most chatrooms only allow autoconfirmed users to chat. If you are not autoconfirmed, you can politely PM a staff member (staff have %, @, or # in front of their username) in the room you would like to chat and ask them to disable modchat. However, staff are not obligated to disable modchat.": "Ein Nutzer ist autoconfirmed, wenn dieser mindestens einen Rated-Kampf gewonnen hat und seit einer Woche oder l\xE4nger registriert ist. Um Spamming und Trolling zu unterbinden, erlauben die meisten R\xE4ume nur Nutzern zu schreiben, welche autoconfirmed sind. Falls du nicht autoconfirmed bist, kannst du ein Staff-Mitglied (Nutzer mit %, @, oder # vor ihren Namen) freundlich darum bitten, den moderierten Chat zu deaktivieren. Jedoch ist der Staff nicht dazu verpflichtet, dies zu tun.",
@@ -163,13 +165,14 @@ const translations = {
     "Common misconceptions about our RNG": "H\xE4ufige Missverst\xE4ndnisse \xFCber unser RNG-System",
     "To join a room tournament, click the <strong>Join!</strong> button or type the command <code>/tour join</code> in the room's chat. You can check if your team is legal for the tournament by clicking the <strong>Validate</strong> button once you've joined and selected a team. To battle your opponent in the tournament, click the <strong>Ready!</strong> button when it appears. There are two different types of room tournaments: elimination (if a user loses more than a certain number of times, they are eliminated) and round robin (all users play against each other, and the user with the most wins is the winner).": "Um einem Raum-Turnier beizutreten, klicke auf <strong>Join!</strong> oder gebe den Befehl <code>/tour join</code> in den Chat ein. Du kannst \xFCberpr\xFCfen, ob dein Team f\xFCr das Turnier legal ist, indem du auf <strong>Validate</strong> klickst, nachdem du dem Turnier beigetreten bist und ein Team ausgew\xE4hlt hast. Um deinen Gegner im Turnier herauszufordern, klicke auf <strong>Ready!</strong>, sobald es erscheint. Es gibt zwei verschiedene Arten von Raum-Turnieren: Elimination (falls ein Nutzer mehr als eine bestimmte Anzahl an Spielen verliert, ist er drau\xDFen) und Round Robin (jeder spielt gegen jeden und der Nutzer mit den meisten Siegen am Ende gewinnt das Turnier).",
     "Frequently Asked Questions": "H\xE4ufig gestellte Fragen",
+    "Invalid room.": "Ung\xFCltiger Raum.",
     "pages/faq": "pages/faq",
     "pages/ladderhelp": "pages/ladderhelp-de",
     "pages/rng": "pages/rng",
     "pages/staff": "pages/staff-de",
-    "- We log PMs so you can report them - staff can't look at them without permission unless there's a law enforcement reason.": "",
-    "- We log IPs to enforce bans and mutes.": "",
-    "- We use cookies to save your login info and teams, and for Google Analytics and AdSense.": "",
+    "- We log PMs so you can report them - staff can't look at them without permission unless there's a law enforcement reason.": "Wir speichern die Inhalte privater Nachrichten, damit du diese n\xF6tigenfalls melden kannst - das Staff-Team kann diese ohne Erlaubnis nicht einsehen, es sei denn, es gilt, ein Gesetz zu vollstrecken.",
+    "- We log IPs to enforce bans and mutes.": "Wir registrieren IP-Adressen, um Verbannungen und Stummschaltungen zu vollstrecken.",
+    "- We use cookies to save your login info and teams, and for Google Analytics and AdSense.": "Wir nutzen Cookies, um sowohl deine Login-Daten und Teams zu sichern als auch f\xFCr Google Analytics and AdSense.",
     '- For more information, you can read our <a href="https://${Config.routes.root}/privacy">full privacy policy.</a>': ""
   }
 };

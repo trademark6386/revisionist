@@ -157,7 +157,6 @@ class Mafia extends Rooms.RoomGame {
     this.playerCap = 20;
     this.allowRenames = false;
     this.started = false;
-    this.ended = false;
     this.theme = null;
     this.hostid = host.id;
     this.host = import_lib.Utils.escapeHTML(host.name);
@@ -880,6 +879,11 @@ class Mafia extends Rooms.RoomGame {
     [this.hasPlurality] = topVotes[0];
     return this.hasPlurality;
   }
+  removePlayer(player) {
+    delete this.playerTable[player.id];
+    player.updateHtmlRoom();
+    return super.removePlayer(player);
+  }
   eliminate(toEliminate, ability) {
     if (!(toEliminate in this.playerTable || toEliminate in this.dead))
       return;
@@ -892,10 +896,7 @@ class Mafia extends Rooms.RoomGame {
       if (this.requestedSub.includes(player2.id)) {
         this.requestedSub.splice(this.requestedSub.indexOf(player2.id), 1);
       }
-      delete this.playerTable[player2.id];
-      this.playerCount--;
-      player2.updateHtmlRoom();
-      player2.destroy();
+      this.removePlayer(player2);
       return;
     }
     if (toEliminate in this.playerTable) {
@@ -946,17 +947,15 @@ class Mafia extends Rooms.RoomGame {
       }
     }
     this.clearVotes(player.id);
-    delete this.playerTable[player.id];
     let subIndex = this.requestedSub.indexOf(player.id);
     if (subIndex !== -1)
       this.requestedSub.splice(subIndex, 1);
     subIndex = this.hostRequestedSub.indexOf(player.id);
     if (subIndex !== -1)
       this.hostRequestedSub.splice(subIndex, 1);
-    this.playerCount--;
     this.updateRoleString();
     this.updatePlayers();
-    player.updateHtmlRoom();
+    this.removePlayer(player);
   }
   revealRole(user, toReveal, revealAs) {
     if (!this.started) {
@@ -1626,7 +1625,7 @@ class Mafia extends Rooms.RoomGame {
     this.nextSub();
   }
   end() {
-    this.ended = true;
+    this.setEnded();
     this.sendHTML(this.roomWindow());
     this.updatePlayers();
     if (this.room.roomid === "mafia" && this.started) {

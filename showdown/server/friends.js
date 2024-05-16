@@ -34,6 +34,7 @@ __export(friends_exports, {
   MAX_FRIENDS: () => MAX_FRIENDS,
   MAX_REQUESTS: () => MAX_REQUESTS,
   PM: () => PM,
+  findFriendship: () => findFriendship,
   sendPM: () => sendPM
 });
 module.exports = __toCommonJS(friends_exports);
@@ -53,21 +54,16 @@ class FailureMessage extends Error {
   }
 }
 function sendPM(message, to, from = "&") {
-  const senderID = toID(to);
-  const receiverID = toID(from);
+  const senderID = toID(from);
+  const receiverID = toID(to);
   const sendingUser = Users.get(senderID);
   const receivingUser = Users.get(receiverID);
   const fromIdentity = sendingUser ? sendingUser.getIdentity() : ` ${senderID}`;
   const toIdentity = receivingUser ? receivingUser.getIdentity() : ` ${receiverID}`;
   if (from === "&") {
-    return sendingUser?.send(`|pm|&|${toIdentity}|${message}`);
+    return receivingUser?.send(`|pm|&|${toIdentity}|${message}`);
   }
-  if (sendingUser) {
-    sendingUser.send(`|pm|${fromIdentity}|${toIdentity}|${message}`);
-  }
-  if (receivingUser) {
-    receivingUser.send(`|pm|${fromIdentity}|${toIdentity}|${message}`);
-  }
+  receivingUser?.send(`|pm|${fromIdentity}|${toIdentity}|${message}`);
 }
 function canPM(sender, receiver) {
   if (!receiver || !receiver.settings.blockPMs)
@@ -125,7 +121,7 @@ class FriendsDatabase {
       transactions[k] = database.transaction(TRANSACTIONS[k]);
     }
     statements.expire.run();
-    return database;
+    return { database, statements };
   }
   async getFriends(userid) {
     return await this.all("get", [userid, MAX_FRIENDS]) || [];
@@ -143,11 +139,7 @@ class FriendsDatabase {
       sent.add(request.receiver);
     }
     const receivedResults = await this.all("getReceived", [user.id]) || [];
-    if (!Array.isArray(receivedResults)) {
-      Monitor.crashlog(new Error("Malformed results received"), "A friends process", {
-        user: user.id,
-        result: JSON.stringify(receivedResults)
-      });
+    if (!receivedResults) {
       return { received, sent };
     }
     for (const request of receivedResults) {
@@ -170,7 +162,7 @@ class FriendsDatabase {
   async query(input) {
     const process2 = PM.acquire();
     if (!process2 || !import_config_loader.Config.usesqlite) {
-      return { result: null };
+      return null;
     }
     const result = await process2.query(input);
     if (result.error) {
@@ -198,9 +190,9 @@ class FriendsDatabase {
     }
     const result = await this.transaction("send", [user.id, receiverID]);
     if (receiver) {
-      sendPM(`/raw <span class="username">${user.name}</span> sent you a friend request!`, receiver.id);
-      sendPM(buf, receiver.id);
-      sendPM(disclaimer, receiver.id);
+      sendPM(`/raw <span class="username">${user.name}</span> sent you a friend request!`, receiver.id, user.id);
+      sendPM(buf, receiver.id, user.id);
+      sendPM(disclaimer, receiver.id, user.id);
     }
     sendPM(
       `/nonotify You sent a friend request to ${receiver?.connected ? receiver.name : receiverID}!`,
@@ -250,6 +242,11 @@ class FriendsDatabase {
   setHideList(userid, setting) {
     const num = setting ? 1 : 0;
     return this.run("toggleList", [userid, num, num]);
+  }
+  async findFriendship(user1, user2) {
+    user1 = toID(user1);
+    user2 = toID(user2);
+    return !!(await this.get("findFriendship", { user1, user2 }))?.length;
   }
 }
 const statements = {};
@@ -344,6 +341,16 @@ const TRANSACTIONS = {
     return { result };
   }
 };
+function findFriendship(users) {
+  setup();
+  return !!statements.findFriendship.get({ user1: users[0], user2: users[1] });
+}
+const setup = () => {
+  if (!process.send)
+    throw new Error("You should not be using this function in the main process");
+  if (!Object.keys(statements).length)
+    FriendsDatabase.setupDatabase();
+};
 const PM = new import_lib.ProcessManager.QueryProcessManager(module, (query) => {
   const { type, statement, data } = query;
   const start = Date.now();
@@ -387,25 +394,27 @@ if (require.main === module) {
   if (import_config_loader.Config.usesqlite) {
     FriendsDatabase.setupDatabase();
   }
-  global.Monitor = {
-    crashlog(error, source = "A friends database process", details = null) {
-      const repr = JSON.stringify([error.name, error.message, source, details]);
-      process.send(`THROW
+  if (process.mainModule === module) {
+    global.Monitor = {
+      crashlog(error, source = "A friends database process", details = null) {
+        const repr = JSON.stringify([error.name, error.message, source, details]);
+        process.send(`THROW
 @!!@${repr}
 ${error.stack}`);
-    },
-    slow(message) {
-      process.send(`CALLBACK
+      },
+      slow(message) {
+        process.send(`CALLBACK
 SLOW
 ${message}`);
-    }
-  };
-  process.on("uncaughtException", (err) => {
-    if (import_config_loader.Config.crashguard) {
-      Monitor.crashlog(err, "A friends child process");
-    }
-  });
-  import_lib.Repl.start(`friends-${process.pid}`, (cmd) => eval(cmd));
+      }
+    };
+    process.on("uncaughtException", (err) => {
+      if (import_config_loader.Config.crashguard) {
+        Monitor.crashlog(err, "A friends child process");
+      }
+    });
+    import_lib.Repl.start(`friends-${process.pid}`, (cmd) => eval(cmd));
+  }
 } else if (!process.send) {
   PM.spawn(import_config_loader.Config.friendsprocesses || 1);
 }

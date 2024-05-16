@@ -166,7 +166,12 @@ const Abilities = {
       if (this.field.isWeather("sunnyday")) {
         return this.chainModify(1.5);
       }
-    }
+    },
+    flags: { breakable: 1 }
+  },
+  forecast: {
+    inherit: true,
+    flags: { notrace: 1 }
   },
   forewarn: {
     inherit: true,
@@ -420,7 +425,7 @@ const Abilities = {
         boosts[key] *= 2;
       }
     },
-    isBreakable: true,
+    flags: { breakable: 1 },
     name: "Simple",
     rating: 4,
     num: 86
@@ -524,7 +529,7 @@ const Abilities = {
         return this.chainModify(0.5);
       }
     },
-    isBreakable: true,
+    flags: { breakable: 1 },
     name: "Thick Fat",
     rating: 3.5,
     num: 47
@@ -557,7 +562,8 @@ const Abilities = {
       if (pokemon.setAbility(ability)) {
         this.add("-ability", pokemon, ability, "[from] ability: Trace", "[of] " + target);
       }
-    }
+    },
+    flags: { notrace: 1 }
   },
   unburden: {
     inherit: true,

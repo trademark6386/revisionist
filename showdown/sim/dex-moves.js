@@ -63,7 +63,6 @@ class DataMove extends import_dex_data.BasicEffect {
     this.spreadHit = data.spreadHit || false;
     this.forceSTAB = !!data.forceSTAB;
     this.noSketch = !!data.noSketch;
-    this.stab = data.stab || void 0;
     this.volatileStatus = typeof data.volatileStatus === "string" ? data.volatileStatus : void 0;
     if (this.category !== "Status" && !this.maxMove && this.id !== "struggle") {
       this.maxMove = { basePower: 1 };
@@ -201,7 +200,7 @@ class DexMoves {
       });
     }
     if (move.exists)
-      this.moveCache.set(id, move);
+      this.moveCache.set(id, this.dex.deepFreeze(move));
     return move;
   }
   all() {
@@ -211,7 +210,7 @@ class DexMoves {
     for (const id in this.dex.data.Moves) {
       moves.push(this.getByID(id));
     }
-    this.allCache = moves;
+    this.allCache = Object.freeze(moves);
     return this.allCache;
   }
 }

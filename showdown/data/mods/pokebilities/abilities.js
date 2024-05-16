@@ -27,7 +27,7 @@ const Abilities = {
     onDamagingHit(damage, target, source, move) {
       if (target.ability === "mummy") {
         const sourceAbility = source.getAbility();
-        if (sourceAbility.isPermanent || sourceAbility.id === "mummy") {
+        if (sourceAbility.flags["cantsuppress"] || sourceAbility.id === "mummy") {
           return;
         }
         if (this.checkMoveMakesContact(move, source, target, !source.isAlly(target))) {
@@ -37,7 +37,7 @@ const Abilities = {
           }
         }
       } else {
-        const possibleAbilities = [source.ability, ...source.m.innates || []].filter((val) => !this.dex.abilities.get(val).isPermanent && val !== "mummy");
+        const possibleAbilities = [source.ability, ...source.m.innates || []].filter((val) => !this.dex.abilities.get(val).flags["cantsuppress"] && val !== "mummy");
         if (!possibleAbilities.length)
           return;
         if (this.checkMoveMakesContact(move, source, target, !source.isAlly(target))) {
@@ -66,7 +66,7 @@ const Abilities = {
       pokemon.abilityState.ending = false;
       if (pokemon.m.innates) {
         for (const innate of pokemon.m.innates) {
-          if (this.dex.abilities.get(innate).isPermanent || innate === "neutralizinggas")
+          if (this.dex.abilities.get(innate).flags["cantsuppress"] || innate === "neutralizinggas")
             continue;
           pokemon.removeVolatile("ability:" + innate);
         }
@@ -81,7 +81,7 @@ const Abilities = {
         }
         if (target.m.innates) {
           for (const innate of target.m.innates) {
-            if (this.dex.abilities.get(innate).isPermanent)
+            if (this.dex.abilities.get(innate).flags["cantsuppress"])
               continue;
             target.removeVolatile("ability:" + innate);
           }
@@ -109,12 +109,6 @@ const Abilities = {
       }
     }
   },
-  poisontouch: {
-    inherit: true,
-    // Activate after Sheer Force to make interaction determistic. The ordering for this ability is
-    // an arbitary decision, but is modelled on Stench, which is reflective of on-cart behaviour.
-    onModifyMovePriority: -1
-  },
   powerofalchemy: {
     inherit: true,
     onAllyFaint(ally) {
@@ -125,22 +119,8 @@ const Abilities = {
       let possibleAbilities = [ally.ability];
       if (ally.m.innates)
         possibleAbilities.push(...ally.m.innates);
-      const additionalBannedAbilities = [
-        "noability",
-        "flowergift",
-        "forecast",
-        "hungerswitch",
-        "illusion",
-        "imposter",
-        "neutralizinggas",
-        "powerofalchemy",
-        "receiver",
-        "trace",
-        "wonderguard",
-        pokemon.ability,
-        ...pokemon.m.innates || []
-      ];
-      possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).isPermanent && !additionalBannedAbilities.includes(val));
+      const additionalBannedAbilities = [pokemon.ability, ...pokemon.m.innates || []];
+      possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).flags["noreceiver"] && !additionalBannedAbilities.includes(val));
       if (!possibleAbilities.length)
         return;
       const ability = this.dex.abilities.get(possibleAbilities[this.random(possibleAbilities.length)]);
@@ -163,22 +143,8 @@ const Abilities = {
       let possibleAbilities = [ally.ability];
       if (ally.m.innates)
         possibleAbilities.push(...ally.m.innates);
-      const additionalBannedAbilities = [
-        "noability",
-        "flowergift",
-        "forecast",
-        "hungerswitch",
-        "illusion",
-        "imposter",
-        "neutralizinggas",
-        "powerofalchemy",
-        "receiver",
-        "trace",
-        "wonderguard",
-        pokemon.ability,
-        ...pokemon.m.innates || []
-      ];
-      possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).isPermanent && !additionalBannedAbilities.includes(val));
+      const additionalBannedAbilities = [pokemon.ability, ...pokemon.m.innates || []];
+      possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).flags["noreceiver"] && !additionalBannedAbilities.includes(val));
       if (!possibleAbilities.length)
         return;
       const ability = this.dex.abilities.get(possibleAbilities[this.random(possibleAbilities.length)]);
@@ -209,23 +175,8 @@ const Abilities = {
         let possibleAbilities = [target.ability];
         if (target.m.innates)
           possibleAbilities.push(...target.m.innates);
-        const additionalBannedAbilities = [
-          // Zen Mode included here for compatability with Gen 5-6
-          "noability",
-          "flowergift",
-          "forecast",
-          "hungerswitch",
-          "illusion",
-          "imposter",
-          "neutralizinggas",
-          "powerofalchemy",
-          "receiver",
-          "trace",
-          "zenmode",
-          pokemon.ability,
-          ...pokemon.m.innates || []
-        ];
-        possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).isPermanent && !additionalBannedAbilities.includes(val));
+        const additionalBannedAbilities = [pokemon.ability, ...pokemon.m.innates || []];
+        possibleAbilities = possibleAbilities.filter((val) => !this.dex.abilities.get(val).flags["notrace"] && !additionalBannedAbilities.includes(val));
         if (!possibleAbilities.length) {
           possibleTargets.splice(rand, 1);
           continue;
@@ -246,11 +197,9 @@ const Abilities = {
     inherit: true,
     onDamagingHit(damage, target, source, move) {
       const isAbility = target.ability === "wanderingspirit";
-      const additionalBannedAbilities = ["hungerswitch", "illusion", "neutralizinggas", "wonderguard"];
       if (isAbility) {
-        if (source.getAbility().isPermanent || additionalBannedAbilities.includes(source.ability) || target.volatiles["dynamax"]) {
+        if (source.getAbility().flags["failskillswap"] || target.volatiles["dynamax"])
           return;
-        }
         if (this.checkMoveMakesContact(move, source, target)) {
           const sourceAbility = source.setAbility("wanderingspirit", target);
           if (!sourceAbility)
@@ -263,7 +212,7 @@ const Abilities = {
           target.setAbility(sourceAbility);
         }
       } else {
-        const possibleAbilities = [source.ability, ...source.m.innates || []].filter((val) => !this.dex.abilities.get(val).isPermanent && !additionalBannedAbilities.includes(val));
+        const possibleAbilities = [source.ability, ...source.m.innates || []].filter((val) => !this.dex.abilities.get(val).flags["failskillswap"]);
         if (!possibleAbilities.length || target.volatiles["dynamax"])
           return;
         if (move.flags["contact"]) {

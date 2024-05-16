@@ -64,7 +64,7 @@ const _LadderStore = class {
     try {
       const data = await (0, import_lib.FS)("config/ladders/" + this.formatid + ".tsv").readIfExists();
       const ladder = [];
-      for (const dataLine of data.split("\n")) {
+      for (const dataLine of data.split("\n").slice(1)) {
         const line = dataLine.trim();
         if (!line)
           continue;

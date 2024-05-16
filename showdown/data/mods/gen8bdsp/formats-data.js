@@ -527,7 +527,7 @@ const FormatsData = {
     tier: "LC"
   },
   jynx: {
-    tier: "NU",
+    tier: "NUBL",
     doublesTier: "DUU"
   },
   elekid: {
@@ -633,7 +633,7 @@ const FormatsData = {
     doublesTier: "DUU"
   },
   munchlax: {
-    tier: "NFE"
+    tier: "LC"
   },
   snorlax: {
     tier: "UU",
@@ -1270,7 +1270,7 @@ const FormatsData = {
     tier: "LC"
   },
   grumpig: {
-    tier: "PU",
+    tier: "PUBL",
     doublesTier: "DUU"
   },
   spinda: {

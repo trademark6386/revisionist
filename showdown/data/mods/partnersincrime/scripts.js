@@ -94,9 +94,19 @@ const Scripts = {
           moveSlot.disabled = false;
           moveSlot.disabledSource = "";
         }
+        if (pokemon.volatiles["encore"]) {
+          const encoredMove = pokemon.volatiles["encore"].move;
+          if (!pokemon.moves.includes(encoredMove)) {
+            pokemon.removeVolatile("encore");
+          }
+        }
         this.runEvent("DisableMove", pokemon);
         for (const moveSlot of pokemon.moveSlots) {
-          this.singleEvent("DisableMove", this.dex.getActiveMove(moveSlot.id), null, pokemon);
+          const activeMove = this.dex.getActiveMove(moveSlot.id);
+          this.singleEvent("DisableMove", activeMove, null, pokemon);
+          if (activeMove.flags["cantusetwice"] && pokemon.lastMove?.id === moveSlot.id) {
+            pokemon.disableMove(pokemon.lastMove.id);
+          }
         }
         if (pokemon.getLastAttackedBy() && this.gen >= 7)
           pokemon.knownType = true;
@@ -255,7 +265,7 @@ const Scripts = {
         ability = this.battle.dex.abilities.get(ability);
       const oldAbility = this.ability;
       if (!isFromFormeChange) {
-        if (ability.isPermanent || this.getAbility().isPermanent)
+        if (ability.flags["cantsuppress"] || this.getAbility().flags["cantsuppress"])
           return false;
       }
       if (!this.battle.runEvent("SetAbility", this, source, this.battle.effect, ability))
@@ -309,7 +319,7 @@ const Scripts = {
     },
     transformInto(pokemon, effect) {
       const species = pokemon.species;
-      if (pokemon.fainted || pokemon.illusion || pokemon.volatiles["substitute"] && this.battle.gen >= 5 || pokemon.transformed && this.battle.gen >= 2 || this.transformed && this.battle.gen >= 5 || species.name === "Eternatus-Eternamax") {
+      if (pokemon.fainted || this.illusion || pokemon.illusion || pokemon.volatiles["substitute"] && this.battle.gen >= 5 || pokemon.transformed && this.battle.gen >= 2 || this.transformed && this.battle.gen >= 5 || species.name === "Eternatus-Eternamax" || ["Ogerpon", "Terapagos"].includes(species.baseSpecies) && (this.terastallized || pokemon.terastallized)) {
         return false;
       }
       if (this.battle.dex.currentMod === "gen1stadium" && (species.name === "Ditto" || this.species.name === "Ditto" && pokemon.moves.includes("transform"))) {
@@ -319,7 +329,7 @@ const Scripts = {
         return false;
       this.transformed = true;
       this.weighthg = pokemon.weighthg;
-      const types = pokemon.getTypes(true);
+      const types = pokemon.getTypes(true, true);
       this.setType(pokemon.volatiles["roost"] ? pokemon.volatiles["roost"].typeWas : types, true);
       this.addedType = pokemon.addedType;
       this.knownType = this.isAlly(pokemon) && pokemon.knownType;
@@ -331,9 +341,9 @@ const Scripts = {
           this.modifiedStats[statName] = pokemon.modifiedStats[statName];
       }
       this.moveSlots = [];
-      this.set.ivs = this.battle.gen >= 5 ? this.set.ivs : pokemon.set.ivs;
       this.hpType = this.battle.gen >= 5 ? this.hpType : pokemon.hpType;
       this.hpPower = this.battle.gen >= 5 ? this.hpPower : pokemon.hpPower;
+      this.timesAttacked = pokemon.timesAttacked;
       for (const moveSlot of pokemon.moveSlots) {
         let moveName = moveSlot.move;
         if (!pokemon.m.curMoves.includes(moveSlot.id))
@@ -358,7 +368,7 @@ const Scripts = {
         this.boosts[boostName] = pokemon.boosts[boostName];
       }
       if (this.battle.gen >= 6) {
-        const volatilesToCopy = ["focusenergy", "gmaxchistrike", "laserfocus"];
+        const volatilesToCopy = ["dragoncheer", "focusenergy", "gmaxchistrike", "laserfocus"];
         for (const volatile of volatilesToCopy) {
           if (pokemon.volatiles[volatile]) {
             this.addVolatile(volatile);
@@ -374,8 +384,12 @@ const Scripts = {
       } else {
         this.battle.add("-transform", this, pokemon);
       }
+      if (this.terastallized) {
+        this.knownType = true;
+        this.apparentType = this.terastallized;
+      }
       if (this.battle.gen > 2)
-        this.setAbility(pokemon.ability, this, true);
+        this.setAbility(pokemon.ability, this, true, true);
       if (this.battle.gen === 4) {
         if (this.species.num === 487) {
           if (this.species.name === "Giratina" && this.item === "griseousorb") {
@@ -392,6 +406,10 @@ const Scripts = {
           }
         }
       }
+      if (this.species.baseSpecies === "Ogerpon" && this.canTerastallize)
+        this.canTerastallize = false;
+      if (this.species.baseSpecies === "Terapagos" && this.canTerastallize)
+        this.canTerastallize = false;
       return true;
     },
     deductPP(move, amount, target) {

@@ -66,7 +66,18 @@ function saveTours() {
 }
 function getTour(categoryID, id) {
   id = toID(id);
-  return tours?.[categoryID].tours.find((f) => f.id === id) || null;
+  if (!tours[categoryID])
+    return null;
+  const idx = tours[categoryID].tours.findIndex((f) => f.id === id) ?? -1;
+  const tour = tours[categoryID].tours[idx];
+  if (!tour) {
+    return null;
+  }
+  if (tour.ends && Date.now() > tour.ends) {
+    tours[categoryID].tours.splice(idx, 1);
+    return null;
+  }
+  return tour;
 }
 function checkWhitelisted(category, user) {
   return category ? tours[category].whitelist?.includes(user.id) : Object.values(tours).some((f) => f.whitelist?.includes(user.id));
@@ -90,14 +101,18 @@ const commands = {
       const targets = target.split("|");
       const isEdit = cmd === "edit";
       const tourID = isEdit ? toID(targets.shift()) : null;
+      console.log(targets);
       const [
         title,
         rawSection,
         url,
+        rawEnds,
         rawImg,
+        rawCredit,
+        rawArtistName,
         rawShort,
         rawDesc
-      ] = import_lib.Utils.splitFirst(targets.join("|"), "|", 5).map((f) => f.trim());
+      ] = import_lib.Utils.splitFirst(targets.join("|"), "|", 8).map((f) => f.trim());
       const sectionID = toID(rawSection);
       if (!toID(title)) {
         return this.popupReply(`Invalid title. Must have at least one alphanumeric character.`);
@@ -113,7 +128,14 @@ const commands = {
       if (!Chat.isLink(url)) {
         return this.popupReply(`Invalid info URL: "${url}"`);
       }
-      let image;
+      if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(rawEnds)) {
+        return this.popupReply(`Invalid ending date: ${rawEnds}.`);
+      }
+      const ends = new Date(rawEnds).getTime();
+      if (isNaN(ends)) {
+        return this.popupReply(`Invalid ending date: ${rawEnds}.`);
+      }
+      let image, artistCredit;
       if (rawImg) {
         if (!Chat.isLink(rawImg)) {
           return this.popupReply(`Invalid image URL: ${rawImg}`);
@@ -125,6 +147,16 @@ const commands = {
           return this.popupReply(`Invalid image URL: ${rawImg}`);
         }
       }
+      if (image && !(toID(rawCredit) && toID(rawArtistName))) {
+        return this.popupReply(`All images must have the artist named and a link to the profile of the user who created them.`);
+      }
+      if (rawCredit || rawArtistName) {
+        const artistUrl = Chat.linkRegex.exec(rawCredit)?.[0];
+        if (!artistUrl) {
+          return this.errorReply(`Invalid artist credit URL.`);
+        }
+        artistCredit = { url: artistUrl, name: rawArtistName.trim() };
+      }
       if (!rawShort?.length || !rawDesc?.length) {
         return this.popupReply(`Must provide both a short description and a full description.`);
       }
@@ -132,10 +164,12 @@ const commands = {
         title: import_lib.Utils.escapeHTML(title),
         url,
         image,
+        artistCredit,
         shortDesc: rawShort.replace(/&#13;&#10;/g, "\n"),
         desc: rawDesc.replace(/&#13;&#10;/g, "\n"),
         id: tourID || toID(title),
-        date: Date.now()
+        date: Date.now(),
+        ends
       };
       if (isEdit) {
         const index = section.tours.findIndex((t) => t.id === tour.id);
@@ -337,8 +371,16 @@ const pages = {
       buf += `<center><h2><a href="${tour.url}">${tour.title}</a></h2>`;
       if (tour.image) {
         buf += `<img src="${tour.image[0]}" width="${tour.image[1]}" height="${tour.image[2]}" />`;
+        if (tour.artistCredit) {
+          buf += `<br /><small>The creator of this image, ${tour.artistCredit.name}, `;
+          buf += `<a href="${tour.artistCredit.url}">can be found here.</a></small>`;
+        }
       }
-      buf += `</center><hr />`;
+      buf += `</center>`;
+      if (tour.ends) {
+        buf += `<br />Signups end: ${Chat.toTimestamp(new Date(tour.ends)).split(" ")[0]}`;
+      }
+      buf += `<hr />`;
       buf += import_lib.Utils.escapeHTML(tour.desc).replace(/\n/ig, "<br />");
       buf += `<br /><br /><a class="button notifying" href="${tour.url}">View information and signups</a>`;
       try {
@@ -365,6 +407,15 @@ const pages = {
         buf += `<img src="${category.icon[0]}" width="${category.icon[1]}" height="${category.icon[2]}" /><br />`;
       }
       buf += `</center>${category.desc}<hr />`;
+      let needsSave = false;
+      for (const [i, tour] of category.tours.entries()) {
+        if (tour.ends && tour.ends < Date.now()) {
+          category.tours.splice(i, 1);
+          needsSave = true;
+        }
+      }
+      if (needsSave)
+        saveTours();
       if (!category.tours.length) {
         buf += `<p>There are currently no tournaments in this section with open signups.</p>`;
         buf += `<p>Check back later for new tours.</p>`;
@@ -384,7 +435,7 @@ const pages = {
       let buf = `${refresh(this.pageid)}<br />`;
       this.title = "[Tournaments] Add";
       buf += `<center><h2>Add new tournament</h2></center><hr />`;
-      buf += `<form data-submitsend="/smogtours add {title}|{category}|{url}|{img}|{shortDesc}|{desc}">`;
+      buf += `<form data-submitsend="/smogtours add {title}|{category}|{url}|{enddate}|{img}|{credit}|{artist}|{shortDesc}|{desc}">`;
       let possibleCategory = Object.keys(tours)[0];
       for (const k in tours) {
         if (tours[k].whitelist?.includes(user.id)) {
@@ -398,7 +449,11 @@ const pages = {
       buf += keys.map((k) => `<option>${k}</option>`).join("");
       buf += `</select><br />`;
       buf += `Info link: <input name="url" /><br />`;
+      buf += `End date: <input type="date" name="enddate" value="${Chat.toTimestamp(new Date()).split(" ")[0]}" /><br />`;
       buf += `<abbr title="Max length and width: 300px">Image link</abbr> (optional): <input name="img" /><br />`;
+      buf += `Artist name (required if image provided): <input name="artist" /><br />`;
+      buf += `Image credit URL (required if image provided, must be a link to the creator's Smogon profile): `;
+      buf += `<input name="credit" /><br />`;
       buf += `Short description: <br /><textarea name="shortDesc" rows="6" cols="50"></textarea><br />`;
       buf += `Full description: <br /><textarea name="desc" rows="20" cols="50"></textarea><br />`;
       buf += `<button type="submit" class="button notifying">Create!</button></form>`;
@@ -418,10 +473,15 @@ const pages = {
       if (!tour)
         return error("edit", `Tour with ID "${tourID}" not found.`, user);
       let buf = `${refresh(this.pageid)}<br /><center><h2>Edit tournament "${tour.title}"</h2></center><hr />`;
-      buf += `<form data-submitsend="/smogtours edit ${tour.id}|{title}|${sectionID}|{url}|{img}|{shortDesc}|{desc}">`;
+      buf += `<form data-submitsend="/smogtours edit ${tour.id}|{title}|${sectionID}|{url}|{enddate}|{img}|{credit}|{artist}|{shortDesc}|{desc}">`;
       buf += `Title: <input name="title" value="${tour.title}"/><br />`;
       buf += `Info link: <input name="url" value="${tour.url}" /><br />`;
+      const curEndDay = Chat.toTimestamp(new Date(tour.ends || Date.now())).split(" ")[0];
+      buf += `End date: <input type="date" name="enddate" value="${curEndDay}" /><br />`;
       buf += `Image link (optional): <input name="img" value="${tour.image?.[0] || ""}" /><br />`;
+      buf += `Artist name (required if image provided): <input name="artist" value="${tour.artistCredit?.name}" /><br />`;
+      buf += `Image credit (required if image provided, must be a link to the creator's Smogon profile): `;
+      buf += `<input name="credit" value="${tour.artistCredit?.url || ""}"/><br />`;
       buf += `Short description: <br />`;
       buf += `<textarea name="shortDesc" rows="6" cols="50">${tour.shortDesc}</textarea><br />`;
       const desc = import_lib.Utils.escapeHTML(tour.desc).replace(/<br \/>/g, "&#10;");
@@ -443,6 +503,12 @@ const pages = {
         }
         const section = tours[cat];
         innerBuf += `<strong>${section.title}</strong>:<br />`;
+        for (const [i, tour] of section.tours.entries()) {
+          if (tour.ends && Date.now() > tour.ends) {
+            section.tours.splice(i, 1);
+            saveTours();
+          }
+        }
         innerBuf += section.tours.map(
           (t) => `&bull; <a href="/view-tournaments-edit-${cat}-${t.id}">${t.title}</a>`
         ).join("<br />") || "None active.";

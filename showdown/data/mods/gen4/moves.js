@@ -24,7 +24,7 @@ module.exports = __toCommonJS(moves_exports);
 const Moves = {
   acupressure: {
     inherit: true,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, metronome: 1 },
     onHit(target) {
       if (target.volatiles["substitute"]) {
         return false;
@@ -58,7 +58,7 @@ const Moves = {
   },
   aquaring: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1 },
     condition: {
       onStart(pokemon) {
         this.add("-start", pokemon, "Aqua Ring");
@@ -204,7 +204,7 @@ const Moves = {
   },
   conversion: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1 },
     onHit(target) {
       const possibleTypes = target.moveSlots.map((moveSlot) => {
         const move = this.dex.moves.get(moveSlot.id);
@@ -244,7 +244,7 @@ const Moves = {
   },
   curse: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1 },
     onModifyMove(move, source, target) {
       if (!source.hasType("Ghost")) {
         delete move.volatileStatus;
@@ -270,7 +270,7 @@ const Moves = {
   },
   defog: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   detect: {
     inherit: true,
@@ -298,7 +298,7 @@ const Moves = {
   disable: {
     inherit: true,
     accuracy: 80,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 },
     volatileStatus: "disable",
     condition: {
       durationCallback() {
@@ -357,7 +357,7 @@ const Moves = {
         name: "Doom Desire",
         basePower: 120,
         category: "Special",
-        flags: { futuremove: 1 },
+        flags: { metronome: 1, futuremove: 1 },
         willCrit: false,
         type: "???"
       };
@@ -373,7 +373,7 @@ const Moves = {
           basePower: 0,
           damage,
           category: "Special",
-          flags: { futuremove: 1 },
+          flags: { metronome: 1, futuremove: 1 },
           effectType: "Move",
           type: "???"
         }
@@ -399,7 +399,7 @@ const Moves = {
   },
   embargo: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1 },
     onTryHit(pokemon) {
       if (pokemon.ability === "multitype" || pokemon.item === "griseousorb") {
         return false;
@@ -420,7 +420,7 @@ const Moves = {
   },
   encore: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1, failencore: 1 },
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1, failencore: 1 },
     volatileStatus: "encore",
     condition: {
       durationCallback() {
@@ -536,7 +536,7 @@ const Moves = {
   },
   foresight: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   furycutter: {
     inherit: true,
@@ -566,7 +566,7 @@ const Moves = {
         name: "Future Sight",
         basePower: 80,
         category: "Special",
-        flags: { futuremove: 1 },
+        flags: { metronome: 1, futuremove: 1 },
         willCrit: false,
         type: "???"
       };
@@ -582,7 +582,7 @@ const Moves = {
           basePower: 0,
           damage,
           category: "Special",
-          flags: { futuremove: 1 },
+          flags: { metronome: 1, futuremove: 1 },
           effectType: "Move",
           type: "???"
         }
@@ -697,7 +697,7 @@ const Moves = {
   },
   healblock: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1 },
     condition: {
       duration: 5,
       durationCallback(target, source, effect) {
@@ -738,7 +738,7 @@ const Moves = {
   },
   healingwish: {
     inherit: true,
-    flags: { heal: 1 },
+    flags: { heal: 1, metronome: 1 },
     onAfterMove(pokemon) {
       pokemon.switchFlag = true;
     },
@@ -776,7 +776,7 @@ const Moves = {
   },
   imprison: {
     inherit: true,
-    flags: { bypasssub: 1 },
+    flags: { bypasssub: 1, metronome: 1 },
     onTryHit(pokemon) {
       for (const target of pokemon.foes()) {
         for (const move of pokemon.moves) {
@@ -906,7 +906,7 @@ const Moves = {
   },
   luckychant: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1 },
     condition: {
       duration: 5,
       onSideStart(side) {
@@ -921,7 +921,7 @@ const Moves = {
   },
   lunardance: {
     inherit: true,
-    flags: { heal: 1 },
+    flags: { heal: 1, metronome: 1 },
     onAfterMove(pokemon) {
       pokemon.switchFlag = true;
     },
@@ -973,7 +973,7 @@ const Moves = {
   },
   magnetrise: {
     inherit: true,
-    flags: { gravity: 1 },
+    flags: { gravity: 1, metronome: 1 },
     volatileStatus: "magnetrise",
     condition: {
       duration: 5,
@@ -1004,38 +1004,11 @@ const Moves = {
   },
   metalburst: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   metronome: {
     inherit: true,
-    flags: { noassist: 1, failcopycat: 1, nosleeptalk: 1, failmimic: 1 },
-    noMetronome: [
-      "Assist",
-      "Chatter",
-      "Copycat",
-      "Counter",
-      "Covet",
-      "Destiny Bond",
-      "Detect",
-      "Endure",
-      "Feint",
-      "Focus Punch",
-      "Follow Me",
-      "Helping Hand",
-      "Me First",
-      "Metronome",
-      "Mimic",
-      "Mirror Coat",
-      "Mirror Move",
-      "Protect",
-      "Sketch",
-      "Sleep Talk",
-      "Snatch",
-      "Struggle",
-      "Switcheroo",
-      "Thief",
-      "Trick"
-    ]
+    flags: { noassist: 1, failcopycat: 1, nosleeptalk: 1, failmimic: 1 }
   },
   mimic: {
     inherit: true,
@@ -1080,7 +1053,7 @@ const Moves = {
   },
   miracleeye: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   mirrormove: {
     inherit: true,
@@ -1207,16 +1180,18 @@ const Moves = {
       onStart(pokemon) {
         this.add("-start", pokemon, "move: Mud Sport");
       },
-      onBasePowerPriority: 3,
+      onAnyBasePowerPriority: 3,
       onAnyBasePower(basePower, user, target, move) {
-        if (move.type === "Electric")
+        if (move.type === "Electric") {
+          this.debug("mud sport weaken");
           return this.chainModify(0.5);
+        }
       }
     }
   },
   naturepower: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1 },
     onHit(pokemon) {
       this.actions.useMove("triattack", pokemon);
     }
@@ -1240,7 +1215,7 @@ const Moves = {
   },
   odorsleuth: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   outrage: {
     inherit: true,
@@ -1293,7 +1268,7 @@ const Moves = {
   },
   powertrick: {
     inherit: true,
-    flags: {}
+    flags: { metronome: 1 }
   },
   protect: {
     inherit: true,
@@ -1320,7 +1295,7 @@ const Moves = {
   },
   psychup: {
     inherit: true,
-    flags: { snatch: 1, bypasssub: 1 }
+    flags: { snatch: 1, bypasssub: 1, metronome: 1 }
   },
   pursuit: {
     inherit: true,
@@ -1371,7 +1346,7 @@ const Moves = {
   },
   recycle: {
     inherit: true,
-    flags: {}
+    flags: { metronome: 1 }
   },
   reflect: {
     inherit: true,
@@ -1426,7 +1401,7 @@ const Moves = {
   },
   roar: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1 }
   },
   rockblast: {
     inherit: true,
@@ -1437,8 +1412,7 @@ const Moves = {
     onTryHit(target, source) {
       if (target.ability === source.ability || source.hasItem("griseousorb"))
         return false;
-      const bannedTargetAbilities = ["multitype", "wonderguard"];
-      if (bannedTargetAbilities.includes(target.ability) || source.ability === "multitype") {
+      if (target.getAbility().flags["failroleplay"] || source.ability === "multitype") {
         return false;
       }
     }
@@ -1579,17 +1553,21 @@ const Moves = {
       }
     }
   },
+  snore: {
+    inherit: true,
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1 }
+  },
   spikes: {
     inherit: true,
-    flags: {}
+    flags: { metronome: 1, mustpressure: 1 }
   },
   spite: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   stealthrock: {
     inherit: true,
-    flags: {}
+    flags: { metronome: 1, mustpressure: 1 }
   },
   struggle: {
     inherit: true,
@@ -1646,7 +1624,7 @@ const Moves = {
           this.add("-activate", target, "Substitute", "[damage]");
         }
         if (move.recoil && damage) {
-          this.damage(this.actions.calcRecoilDamage(damage, move), source, target, "recoil");
+          this.damage(this.actions.calcRecoilDamage(damage, move, source), source, target, "recoil");
         }
         if (move.drain) {
           this.heal(Math.ceil(damage * move.drain[0] / move.drain[1]), source, target, "drain");
@@ -1728,7 +1706,7 @@ const Moves = {
   },
   taunt: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 },
     condition: {
       durationCallback() {
         return this.random(3, 6);
@@ -1766,7 +1744,7 @@ const Moves = {
   },
   torment: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   toxic: {
     inherit: true,
@@ -1774,7 +1752,7 @@ const Moves = {
   },
   toxicspikes: {
     inherit: true,
-    flags: {},
+    flags: { metronome: 1, mustpressure: 1 },
     condition: {
       // this is a side condition
       onSideStart(side) {
@@ -1805,7 +1783,7 @@ const Moves = {
   },
   transform: {
     inherit: true,
-    flags: { bypasssub: 1, failencore: 1 }
+    flags: { bypasssub: 1, metronome: 1, failencore: 1 }
   },
   trick: {
     inherit: true,
@@ -1889,10 +1867,12 @@ const Moves = {
       onStart(pokemon) {
         this.add("-start", pokemon, "move: Water Sport");
       },
-      onBasePowerPriority: 3,
+      onAnyBasePowerPriority: 3,
       onAnyBasePower(basePower, user, target, move) {
-        if (move.type === "Fire")
+        if (move.type === "Fire") {
+          this.debug("water sport weaken");
           return this.chainModify(0.5);
+        }
       }
     }
   },
@@ -1903,11 +1883,11 @@ const Moves = {
   },
   whirlwind: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   wish: {
     inherit: true,
-    flags: { heal: 1 },
+    flags: { heal: 1, metronome: 1 },
     slotCondition: "Wish",
     condition: {
       duration: 2,

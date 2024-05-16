@@ -54,9 +54,9 @@ const maxMistakes = 6;
 class Hangman extends Rooms.SimpleRoomGame {
   constructor(room, user, word, hint = "", gameOptions = {}) {
     super(room);
+    this.gameid = "hangman";
     this.checkChat = true;
     this.gameNumber = room.nextGameNumber();
-    this.gameid = "hangman";
     this.title = "Hangman";
     this.creator = user.id;
     this.word = word;

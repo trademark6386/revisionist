@@ -283,8 +283,8 @@ class TriviaPlayer extends Rooms.RoomGamePlayer {
 class Trivia extends Rooms.RoomGame {
   constructor(room, mode, categories, givesPoints, length, questions, creator, isRandomMode = false, isSubGame = false, isRandomCategory = false) {
     super(room, isSubGame);
-    this.isPaused = false;
     this.gameid = "trivia";
+    this.isPaused = false;
     this.title = "Trivia";
     this.allowRenames = true;
     this.playerCap = Number.MAX_SAFE_INTEGER;
@@ -448,13 +448,13 @@ class Trivia extends Rooms.RoomGame {
     for (const id of user.previousIDs) {
       this.kickedUsers.add(id);
     }
-    super.removePlayer(user);
+    this.removePlayer(this.playerTable[user.id]);
   }
   leave(user) {
     if (!this.playerTable[user.id]) {
       throw new Chat.ErrorMessage(this.room.tr`You are not a player in the current game.`);
     }
-    super.removePlayer(user);
+    this.removePlayer(this.playerTable[user.id]);
   }
   /**
    * Starts the question loop for a trivia game in its signup phase.
@@ -944,8 +944,8 @@ class TriumvirateModeTrivia extends Trivia {
 class Mastermind extends Rooms.SimpleRoomGame {
   constructor(room, numFinalists) {
     super(room);
-    this.leaderboard = /* @__PURE__ */ new Map();
     this.gameid = "mastermind";
+    this.leaderboard = /* @__PURE__ */ new Map();
     this.title = "Mastermind";
     this.allowRenames = true;
     this.playerCap = Number.MAX_SAFE_INTEGER;
@@ -1102,7 +1102,7 @@ class Mastermind extends Rooms.SimpleRoomGame {
     if (lbEntry) {
       this.leaderboard.set(user.id, { ...lbEntry, hasLeft: true });
     }
-    super.removePlayer(user);
+    this.removePlayer(this.playerTable[user.id]);
   }
   kick(toKick, kicker) {
     if (!this.playerTable[toKick.id]) {
@@ -1121,7 +1121,7 @@ class Mastermind extends Rooms.SimpleRoomGame {
         this.currentRound.end(kicker);
       }
     }
-    super.removePlayer(toKick);
+    this.removePlayer(this.playerTable[toKick.id]);
   }
 }
 class MastermindRound extends FirstModeTrivia {
@@ -1505,8 +1505,10 @@ const triviaCommands = {
       if (isAccepting)
         await database.addQuestions(submissions);
       await database.clearSubmissions();
-      this.modlog(`TRIVIAQUESTION`, null, `${isAccepting ? "added" : "removed"} all questions from the submission database.`);
-      return this.privateModAction(`${user.name} ${isAccepting ? " added " : " removed "} all questions from the submission database.`);
+      const questionText = submissions.map((q) => `"${q.question}"`).join(", ");
+      const message = `${isAccepting ? "added" : "removed"} all questions (${questionText}) from the submission database.`;
+      this.modlog(`TRIVIAQUESTION`, null, message);
+      return this.privateModAction(`${user.name} ${message}`);
     }
     if (/\d+(?:-\d+)?(?:, ?\d+(?:-\d+)?)*$/.test(target)) {
       const indices = target.split(",");
@@ -1544,8 +1546,10 @@ const triviaCommands = {
       } else {
         await database.deleteSubmissions(questions);
       }
-      this.modlog("TRIVIAQUESTION", null, `${isAccepting ? "added " : "removed "}submission number${indicesLen > 1 ? "s " : " "}${target}`);
-      return this.privateModAction(`${user.name} ${isAccepting ? "added " : "removed "}submission number${indicesLen > 1 ? "s " : " "}${target} from the submission database.`);
+      const questionText = questions.map((q) => `"${q}"`).join(", ");
+      const message = `${isAccepting ? "added " : "removed "}submission number${indicesLen > 1 ? "s " : " "}${target} (${questionText})`;
+      this.modlog("TRIVIAQUESTION", null, message);
+      return this.privateModAction(`${user.name} ${message} from the submission database.`);
     }
     this.errorReply(this.tr`'${target}' is an invalid argument. View /trivia help questions for more information.`);
   },
@@ -1761,12 +1765,19 @@ const triviaCommands = {
   ],
   cssearch: "search",
   casesensitivesearch: "search",
+  doublespacesearch: "search",
   async search(target, room, user, connection, cmd) {
     room = this.requireRoom("questionworkshop");
     this.checkCan("show", null, room);
-    if (!target.includes(","))
-      return this.errorReply(this.tr`No valid search arguments entered.`);
-    let [type, ...query] = target.split(",");
+    let type, query;
+    if (cmd === "doublespacesearch") {
+      query = ["  "];
+      type = target;
+    } else {
+      [type, ...query] = target.split(",");
+      if (!target.includes(","))
+        return this.errorReply(this.tr`No valid search arguments entered.`);
+    }
     type = toID(type);
     let options;
     if (/^q(?:uestion)?s?$/.test(type)) {
@@ -1778,7 +1789,9 @@ const triviaCommands = {
         this.tr`No valid search category was entered. Valid categories: submissions, subs, questions, qs`
       );
     }
-    const queryString = query.join(",").trim();
+    let queryString = query.join(",");
+    if (cmd !== "doublespacesearch")
+      queryString = queryString.trim();
     if (!queryString)
       return this.errorReply(this.tr`No valid search query was entered.`);
     const results = await database.searchQuestions(queryString, options);
@@ -1793,7 +1806,8 @@ const triviaCommands = {
   },
   searchhelp: [
     `/trivia search [type], [query] - Searches for questions based on their type and their query. This command is case-insensitive. Valid types: submissions, subs, questions, qs. Requires: + % @ * &`,
-    `/trivia casesensitivesearch [type], [query] - Like /trivia search, but is case sensitive (capital letters matter). Requires: + % @ * &`
+    `/trivia casesensitivesearch [type], [query] - Like /trivia search, but is case sensitive (capital letters matter). Requires: + % @ * &`,
+    `/trivia doublespacesearch [type] \u2014 Searches for questions with back-to-back space characters. Requires: + % @ * &`
   ],
   async moveusedevent(target, room, user) {
     room = this.requireRoom("questionworkshop");
@@ -2168,6 +2182,6 @@ const commands = {
   triviahelp: triviaCommands.triviahelp
 };
 process.nextTick(() => {
-  Chat.multiLinePattern.register("/trivia add ", "/trivia submit ");
+  Chat.multiLinePattern.register("/trivia add ", "/trivia submit ", "/trivia move ");
 });
 //# sourceMappingURL=trivia.js.map

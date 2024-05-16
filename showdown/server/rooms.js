@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,14 +15,6 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var rooms_exports = {};
 __export(rooms_exports, {
@@ -38,12 +28,13 @@ module.exports = __toCommonJS(rooms_exports);
 var import_lib = require("../lib");
 var import_room_settings = require("./chat-commands/room-settings");
 var import_room_battle = require("./room-battle");
+var import_room_battle_bestof = require("./room-battle-bestof");
 var import_room_game = require("./room-game");
 var import_room_minor_activity = require("./room-minor-activity");
 var import_roomlogs = require("./roomlogs");
-var crypto = __toESM(require("crypto"));
 var import_user_groups = require("./user-groups");
 var import_modlog = require("./modlog");
+var import_replays = require("./replays");
 /**
  * Rooms
  * Pokemon Showdown - http://pokemonshowdown.com/
@@ -547,14 +538,12 @@ ${staffIntro}`;
   getStaffIntroMessage(user) {
     if (!user.can("mute", null, this))
       return ``;
-    let message = ``;
+    const messages = [];
     if (this.settings.staffMessage) {
-      message += `
-|raw|<div class="infobox">(Staff intro:)<br /><div>` + this.settings.staffMessage.replace(/\n/g, "") + `</div>`;
+      messages.push(`|raw|<div class="infobox">(Staff intro:)<br /><div>` + this.settings.staffMessage.replace(/\n/g, "") + `</div>`);
     }
     if (this.pendingApprovals?.size) {
-      message += `
-|raw|<div class="infobox">`;
+      let message = `|raw|<div class="infobox">`;
       message += `<details open><summary>(Pending media requests: ${this.pendingApprovals.size})</summary>`;
       for (const [userid, entry] of this.pendingApprovals) {
         message += `<div class="infobox">`;
@@ -572,8 +561,12 @@ ${staffIntro}`;
         message += `<hr />`;
       }
       message += `</details></div>`;
+      messages.push(message);
     }
-    return message ? `|raw|${message}` : ``;
+    if (!this.settings.isPrivate && !this.settings.isPersonal && this.settings.modchat && this.settings.modchat !== "autoconfirmed") {
+      messages.push(`|raw|<div class="broadcast-red">Modchat currently set to ${this.settings.modchat}</div>`);
+    }
+    return messages.join("\n");
   }
   getSubRooms(includeSecret = false) {
     if (!this.subRooms)
@@ -582,7 +575,7 @@ ${staffIntro}`;
       (room) => includeSecret ? true : !room.settings.isPrivate && !room.settings.isPersonal
     );
   }
-  validateTitle(newTitle, newID) {
+  validateTitle(newTitle, newID, oldID) {
     if (!newID)
       newID = toID(newTitle);
     if (newTitle.includes(",") || newTitle.includes("|")) {
@@ -593,7 +586,7 @@ ${staffIntro}`;
     }
     if (newID.length > MAX_CHATROOM_ID_LENGTH)
       throw new Chat.ErrorMessage("The given room title is too long.");
-    if (Rooms.search(newTitle))
+    if (newID !== oldID && Rooms.search(newTitle))
       throw new Chat.ErrorMessage(`The room '${newTitle}' already exists.`);
   }
   setParent(room) {
@@ -703,13 +696,20 @@ ${staffIntro}`;
   rename(newTitle, newID, noAlias) {
     if (!newID)
       newID = toID(newTitle);
-    this.validateTitle(newTitle, newID);
+    const oldID = this.roomid;
+    this.validateTitle(newTitle, newID, oldID);
     if (this.type === "chat" && this.game) {
       throw new Chat.ErrorMessage(`Please finish your game (${this.game.title}) before renaming ${this.roomid}.`);
     }
-    const oldID = this.roomid;
     this.roomid = newID;
-    this.title = newTitle;
+    this.title = this.settings.title = newTitle;
+    this.saveSettings();
+    if (newID === oldID) {
+      for (const user of Object.values(this.users)) {
+        user.sendTo(this, `|title|${newTitle}`);
+      }
+      return;
+    }
     Rooms.rooms.delete(oldID);
     Rooms.rooms.set(newID, this);
     if (this.battle && oldID) {
@@ -746,7 +746,6 @@ ${staffIntro}`;
       this.settings.aliases = void 0;
     }
     this.game?.renameRoom(newID);
-    this.saveSettings();
     for (const user of Object.values(this.users)) {
       user.moveConnections(oldID, newID);
       user.send(`>${oldID}
@@ -762,7 +761,6 @@ ${staffIntro}`;
         subRoom.settings.parentid = newID;
       }
     }
-    this.settings.title = newTitle;
     this.saveSettings();
     Punishments.renameRoom(oldID, newID);
     void this.log.rename(newID);
@@ -781,6 +779,7 @@ ${staffIntro}`;
       return false;
     if (this.users[user.id])
       return false;
+    Chat.runHandlers("onBeforeRoomJoin", this, user, connection);
     if (user.named) {
       this.reportJoin("j", user.getIdentityWithStatus(this), user);
     }
@@ -790,7 +789,6 @@ ${staffIntro}`;
     this.users[user.id] = user;
     this.userCount++;
     this.checkAutoModchat(user);
-    this.minorActivity?.onConnect?.(user, connection);
     this.game?.onJoin?.(user, connection);
     Chat.runHandlers("onRoomJoin", this, user, connection);
     return true;
@@ -846,8 +844,7 @@ ${staffIntro}`;
     if (user.named) {
       this.reportJoin("l", user.getIdentity(this), user);
     }
-    if (this.game && this.game.onLeave)
-      this.game.onLeave(user);
+    this.game?.onLeave?.(user);
     this.runAutoModchat();
     return true;
   }
@@ -861,7 +858,7 @@ ${staffIntro}`;
         throw new Error(`Invalid time setting for automodchat (${import_lib.Utils.visualize(this.settings.autoModchat)})`);
       }
       if (this.modchatTimer)
-        clearTimeout(this.modchatTimer);
+        return;
       this.modchatTimer = setTimeout(() => {
         if (!this.settings.autoModchat)
           return;
@@ -877,6 +874,7 @@ ${staffIntro}`;
         });
         this.settings.autoModchat.active = oldSetting || true;
         this.saveSettings();
+        this.modchatTimer = null;
       }, time * 60 * 1e3);
     }
   }
@@ -898,9 +896,10 @@ ${staffIntro}`;
     }
   }
   destroy() {
-    if (this.battle && this.tour) {
-      if (!this.battle.ended)
-        this.tour.onBattleWin(this, "");
+    if (this.game) {
+      this.game.destroy();
+      this.game = null;
+      this.battle = null;
       this.tour = null;
     }
     for (const i in this.users) {
@@ -916,11 +915,6 @@ ${staffIntro}`;
       for (const alias of this.settings.aliases) {
         Rooms.aliases.delete(alias);
       }
-    }
-    if (this.game) {
-      this.game.destroy();
-      this.game = null;
-      this.battle = null;
     }
     this.active = false;
     this.update();
@@ -951,6 +945,7 @@ ${staffIntro}`;
 }
 class GlobalRoomState {
   constructor() {
+    this.battlesLoading = false;
     this.settingsList = [];
     try {
       this.settingsList = require((0, import_lib.FS)("config/chatrooms.json").path);
@@ -1034,125 +1029,111 @@ class GlobalRoomState {
     this.lastWrittenBattle = this.lastBattle;
     void this.loadBattles();
   }
+  async serializeBattleRoom(room) {
+    if (!room.battle || room.battle.ended)
+      return null;
+    room.battle.frozen = true;
+    const log = await room.battle.getLog();
+    const players = room.battle.players.map((p) => p.id).filter(Boolean);
+    if (!players.length || !log?.length)
+      return null;
+    return {
+      roomid: room.roomid,
+      inputLog: log.join("\n"),
+      players,
+      title: room.title,
+      rated: room.battle.rated,
+      timer: {
+        ...room.battle.timer.settings,
+        active: !!room.battle.timer.timer || false
+      }
+    };
+  }
+  deserializeBattleRoom(battle) {
+    const { inputLog, players, roomid, title, rated, timer } = battle;
+    const [, formatid] = roomid.split("-");
+    const room = Rooms.createBattle({
+      format: formatid,
+      inputLog,
+      roomid,
+      title,
+      rated: Number(rated),
+      players: [],
+      delayedTimer: timer.active
+    });
+    if (!room || !room.battle)
+      return false;
+    if (timer) {
+      Object.assign(room.battle.timer.settings, timer);
+    }
+    for (const [i, playerid] of players.entries()) {
+      room.auth.set(playerid, Users.PLAYER_SYMBOL);
+      const player = room.battle.players[i];
+      player.id = playerid;
+      room.battle.playerTable[playerid] = player;
+      player.hasTeam = true;
+      const user = Users.getExact(playerid);
+      player.name = user?.name || playerid;
+      user?.joinRoom(room);
+    }
+    return true;
+  }
   async saveBattles() {
     let count = 0;
-    if (!Config.usepostgres)
-      return 0;
-    const logDatabase = new import_lib.PostgresDatabase();
-    await logDatabase.ensureMigrated({
-      table: "stored_battles",
-      migrationsFolder: "databases/migrations/storedbattles",
-      baseSchemaFile: "databases/schemas/stored-battles.sql"
-    });
+    const out = (0, import_lib.FS)("logs/battles.jsonl.progress").createAppendStream();
     for (const room of Rooms.rooms.values()) {
       if (!room.battle || room.battle.ended)
         continue;
       room.battle.frozen = true;
-      const log = await room.battle.getLog();
-      const players = room.battle.options.players || [];
-      if (!players.length) {
-        for (const num of ["p1", "p2", "p3", "p4"]) {
-          if (room.battle[num]?.id) {
-            players.push(room.battle[num].id);
-          }
-        }
-      }
-      if (!players.length || !log?.length)
-        continue;
-      const timerData = {
-        ...room.battle.timer.settings,
-        active: !!room.battle.timer.timer || false
-      };
-      await logDatabase.query(
-        `INSERT INTO stored_battles (roomid, input_log, players, title, rated, timer) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (roomid) DO UPDATE SET input_log = EXCLUDED.input_log, players = EXCLUDED.players, title = EXCLUDED.title, rated = EXCLUDED.rated`,
-        [room.roomid, log.join("\n"), players, room.title, room.battle.rated, timerData]
-      );
       room.battle.timer.stop();
+      const b = await this.serializeBattleRoom(room);
+      if (!b)
+        continue;
+      await out.writeLine(JSON.stringify(b));
       count++;
     }
+    await out.writeEnd();
+    await (0, import_lib.FS)("logs/battles.jsonl.progress").rename("logs/battles.jsonl");
     return count;
   }
   async loadBattles() {
-    if (!Config.usepostgres)
-      return;
     this.battlesLoading = true;
     for (const u of Users.users.values()) {
       u.send(
         `|pm|&|${u.getIdentity()}|/uhtml restartmsg,<div class="broadcast-red"><b>Your battles are currently being restored.<br />Please be patient as they load.</div>`
       );
     }
-    const logDatabase = new import_lib.PostgresDatabase();
-    const query = `DELETE FROM stored_battles WHERE roomid IN (SELECT roomid FROM stored_battles LIMIT 1) RETURNING *`;
-    for await (const battle of logDatabase.stream(query)) {
-      const { input_log, players, roomid, title, rated, timer } = battle;
-      const [, formatid] = roomid.split("-");
-      const room = Rooms.createBattle({
-        format: formatid,
-        inputLog: input_log,
-        roomid,
-        title,
-        rated: Number(rated),
-        players,
-        delayedStart: true,
-        delayedTimer: timer.active,
-        restored: true
-      });
-      if (!room || !room.battle)
+    const startTime = Date.now();
+    let count = 0;
+    let input;
+    try {
+      const stream = (0, import_lib.FS)("logs/battles.jsonl").createReadStream();
+      await stream.fd;
+      input = stream.byLine();
+    } catch (e) {
+      return;
+    }
+    for await (const line of input) {
+      if (!line)
         continue;
-      room.battle.started = true;
-      room.battle.start();
-      if (timer) {
-        Object.assign(room.battle.timer.settings, timer);
-      }
-      for (const [i, p] of players.entries()) {
-        room.auth.set(p, Users.PLAYER_SYMBOL);
-        const player = room.battle.players[i];
-        player.id = p;
-        player.name = p;
-        const u = Users.getExact(p);
-        if (u) {
-          this.rejoinBattle(room, u, i);
-        }
-      }
+      if (this.deserializeBattleRoom(JSON.parse(line)))
+        count++;
     }
     for (const u of Users.users.values()) {
       u.send(`|pm|&|${u.getIdentity()}|/uhtmlchange restartmsg,`);
     }
-    delete this.battlesLoading;
+    await (0, import_lib.FS)("logs/battles.jsonl").unlinkIfExists();
+    Monitor.notice(`Loaded ${count} battles in ${Date.now() - startTime}ms`);
+    this.battlesLoading = false;
   }
-  rejoinBattle(room, user, idx) {
-    if (!room.battle)
-      return;
-    let player = room.battle.players[idx];
-    if (!player) {
-      player = room.battle.players[idx] = new Rooms.RoomBattlePlayer(
-        user,
-        room.battle,
-        idx + 1
-      );
-    }
-    player.id = user.id;
-    player.name = user.name;
-    room.battle.playerTable[user.id] = player;
-    user.joinRoom(room.roomid);
-    room.battle.onConnect(user);
-    if (room.battle.options.delayedTimer && !room.battle.timer.timer) {
-      room.battle.timer.start();
-    }
-    user.send(`|pm|&|${user.getIdentity()}|/uhtmlchange restartmsg,`);
-  }
-  joinOldBattles(user) {
+  rejoinGames(user) {
     for (const room of Rooms.rooms.values()) {
-      const battle = room.battle;
-      if (!battle)
+      const player = room.game && !room.game.ended && room.game.playerTable[user.id];
+      if (!player)
         continue;
-      const idx = battle.options.players?.indexOf(user.id);
-      if (battle.ended) {
-        continue;
-      }
-      if (typeof idx === "number" && idx > -1) {
-        this.rejoinBattle(room, user, idx);
-      }
+      user.games.add(room.roomid);
+      player.name = user.name;
+      user.joinRoom(room.roomid);
     }
   }
   modlog(entry, overrideID) {
@@ -1223,6 +1204,8 @@ class GlobalRoomState {
       const level = ruleTable.adjustLevel || ruleTable.adjustLevelDown || ruleTable.maxLevel;
       if (level === 50)
         displayCode |= 16;
+      if (format.bestOfDefault)
+        displayCode |= 64;
       this.formatList += "," + displayCode.toString(16);
     }
     return this.formatList;
@@ -1255,6 +1238,9 @@ class GlobalRoomState {
     Config.rankList = "|customgroups|" + JSON.stringify(rankList) + "\n";
     return Config.rankList;
   }
+  /**
+   * @param filter formatfilter, elofilter, usernamefilter
+   */
   getBattles(filter) {
     const rooms = [];
     const [formatFilter, eloFilterString, usernameFilter] = filter.split(",");
@@ -1369,10 +1355,17 @@ class GlobalRoomState {
       }
     }
     if (Config.reportbattles) {
-      const reportRoom = Rooms.get(Config.reportbattles === true ? "lobby" : Config.reportbattles);
-      if (reportRoom) {
-        const reportPlayers = players.map((p) => p.getIdentity()).join("|");
-        reportRoom.add(`|b|${room.roomid}|${reportPlayers}`).update();
+      if (typeof Config.reportbattles === "string") {
+        Config.reportbattles = [Config.reportbattles];
+      } else if (Config.reportbattles === true) {
+        Config.reportbattles = ["lobby"];
+      }
+      for (const roomid of Config.reportbattles) {
+        const reportRoom = Rooms.get(roomid);
+        if (reportRoom) {
+          const reportPlayers = players.map((p) => p.getIdentity()).join("|");
+          reportRoom.add(`|b|${room.roomid}|${reportPlayers}`).update();
+        }
       }
     }
     if (Config.logladderip && options.rated) {
@@ -1460,11 +1453,6 @@ class GlobalRoomState {
     if (Users.users.size > this.maxUsers) {
       this.maxUsers = Users.users.size;
       this.maxUsersDate = Date.now();
-    }
-    if (this.battlesLoading) {
-      connection.send(
-        `|pm|&|${user.getIdentity()}|/uhtml restartmsg,<div class="broadcast-red"><b>Your battles are currently being restored.<br />Please be patient as they load.</div>`
-      );
     }
   }
   startLockdown(err = null, slow = false) {
@@ -1624,10 +1612,10 @@ class GameRoom extends BasicRoom {
     this.format = options.format || "";
     this.tour = options.tour || null;
     this.setParent(options.parent || this.tour && this.tour.room || null);
-    this.p1 = options.p1?.user || null;
-    this.p2 = options.p2?.user || null;
-    this.p3 = options.p3?.user || null;
-    this.p4 = options.p4?.user || null;
+    this.p1 = options.players?.[0]?.user || null;
+    this.p2 = options.players?.[1]?.user || null;
+    this.p3 = options.players?.[2]?.user || null;
+    this.p4 = options.players?.[3]?.user || null;
     this.rated = options.rated === true ? 1 : options.rated || 0;
     this.battle = null;
     this.game = null;
@@ -1668,15 +1656,6 @@ ${this.log.broadcastBuffer.join("\n")}`);
       this.expireTimer = setTimeout(() => this.expire(), TIMEOUT_INACTIVE_DEALLOCATE);
     }
   }
-  sendPlayer(num, message) {
-    const player = this.getPlayer(num);
-    if (!player)
-      return false;
-    player.sendRoom(message);
-  }
-  getPlayer(num) {
-    return this.game["p" + (num + 1)];
-  }
   requestModchat(user) {
     if (!user) {
       this.modchatUser = "";
@@ -1690,32 +1669,17 @@ ${this.log.broadcastBuffer.join("\n")}`);
   }
   onConnect(user, connection) {
     this.sendUser(connection, "|init|battle\n|title|" + this.title + "\n" + this.getLogForUser(user));
-    if (this.game && this.game.onConnect)
-      this.game.onConnect(user, connection);
+    this.game?.onConnect?.(user, connection);
   }
   onJoin(user, connection) {
     if (!user)
       return false;
     if (this.users[user.id])
       return false;
+    Chat.runHandlers("onBeforeRoomJoin", this, user, connection);
     if (user.named) {
       this.reportJoin("j", user.getIdentityWithStatus(this), user);
     }
-    void (async () => {
-      if (this.battle) {
-        const player = this.battle.playerTable[user.id];
-        if (player && this.battle.players.every((curPlayer) => curPlayer.wantsOpenTeamSheets)) {
-          let buf = "|uhtml|ots|";
-          for (const curPlayer of this.battle.players) {
-            const team = await this.battle.getTeam(curPlayer.id);
-            if (!team)
-              continue;
-            buf += import_lib.Utils.html`<div class="infobox" style="margin-top:5px"><details><summary>Open Team Sheet for ${curPlayer.name}</summary>${Teams.export(team, { hideStats: true })}</details></div>`;
-          }
-          player.sendRoom(buf);
-        }
-      }
-    })();
     this.users[user.id] = user;
     this.userCount++;
     this.checkAutoModchat(user);
@@ -1743,33 +1707,68 @@ ${this.log.broadcastBuffer.join("\n")}`);
     let hideDetails = !format.id.includes("customgame");
     if (format.team && battle.ended)
       hideDetails = false;
-    const data = this.getLog(hideDetails ? 0 : -1);
-    const datahash = crypto.createHash("md5").update(data.replace(/[^(\x20-\x7F)]+/g, "")).digest("hex");
-    let rating = 0;
+    const log = this.getLog(hideDetails ? 0 : -1);
+    let rating;
     if (battle.ended && this.rated)
       rating = this.rated;
-    const { id, password } = this.getReplayData();
-    battle.replaySaved = true;
-    const [success] = await LoginServer.request("prepreplay", {
-      id,
-      loghash: datahash,
-      p1: battle.p1.name,
-      p2: battle.p2.name,
-      format: format.id,
-      rating,
-      hidden: options === "forpunishment" || this.unlistReplay ? "2" : this.settings.isPrivate || this.hideReplay ? "1" : "",
-      inputlog: battle.inputLog?.join("\n") || null
-    });
-    if (success?.errorip) {
-      connection.popup(`This server's request IP ${success.errorip} is not a registered server.`);
+    let { id, password } = this.getReplayData();
+    const silent = options === "forpunishment" || options === "silent" || options === "auto";
+    if (silent)
+      connection = void 0;
+    const isPrivate = this.settings.isPrivate || this.hideReplay;
+    const hidden = options === "forpunishment" || options === "auto" ? 10 : this.unlistReplay ? 2 : isPrivate ? 1 : 0;
+    if (isPrivate && hidden === 10) {
+      password = import_replays.Replays.generatePassword();
+    }
+    if (battle.replaySaved !== true && hidden === 10) {
+      battle.replaySaved = "auto";
+    } else {
+      battle.replaySaved = true;
+    }
+    if (import_replays.Replays.db) {
+      const idWithServer = Config.serverid === "showdown" ? id : `${Config.serverid}-${id}`;
+      try {
+        const fullid2 = await import_replays.Replays.add({
+          id: idWithServer,
+          log,
+          players: battle.players.map((p) => p.name),
+          format: format.name,
+          rating: rating || null,
+          private: hidden,
+          password,
+          inputlog: battle.inputLog?.join("\n") || null,
+          uploadtime: Math.trunc(Date.now() / 1e3)
+        });
+        const url2 = `https://${Config.routes.replays}/${fullid2}`;
+        connection?.popup(
+          `|html|<p>Your replay has been uploaded! It's available at:</p><p> <a class="no-panel-intercept" href="${url2}" target="_blank">${url2}</a> <copytext value="${url2}">Copy</copytext>`
+        );
+      } catch (e) {
+        connection?.popup(`Your replay could not be saved: ${e}`);
+        throw e;
+      }
       return;
     }
-    connection.send("|queryresponse|savereplay|" + JSON.stringify({
-      log: data,
+    const [result] = await LoginServer.request("addreplay", {
       id,
-      password,
-      silent: options === "forpunishment" || options === "silent"
-    }));
+      log,
+      players: battle.players.map((p) => p.name).join(","),
+      format: format.name,
+      rating,
+      // will probably do nothing
+      hidden,
+      inputlog: battle.inputLog?.join("\n") || void 0,
+      password
+    });
+    if (result?.errorip) {
+      connection?.popup(`This server's request IP ${result.errorip} is not a registered server.`);
+      return;
+    }
+    const fullid = result?.replayid;
+    const url = `https://${Config.routes.replays}/${fullid}`;
+    connection?.popup(
+      `|html|<p>Your replay has been uploaded! It's available at:</p><p> <a class="no-panel-intercept" href="${url}" target="_blank">${url}</a> <copytext value="${url}">Copy</copytext>`
+    );
   }
   getReplayData() {
     if (!this.roomid.endsWith("pw"))
@@ -1812,13 +1811,15 @@ const Rooms = {
     Rooms.rooms.set(roomid, room);
     return room;
   },
+  /**
+   * Can return null during lockdown, so make sure to handle that case.
+   * No need for UI; this function sends popups to users.
+   */
   createBattle(options) {
-    const players = [options.p1, options.p2, options.p3, options.p4].filter(Boolean).map((player) => player.user);
-    const gameType = Dex.formats.get(options.format).gameType;
-    if (gameType !== "multi" && gameType !== "freeforall") {
-      if (players.length > 2) {
-        throw new Error(`Four players were provided, but the format is a two-player format.`);
-      }
+    const players = options.players.map((player) => player.user);
+    const format = Dex.formats.get(options.format);
+    if (players.length > format.playerCount) {
+      throw new Error(`${players.length} players were provided, but the format is a ${format.playerCount}-player format.`);
     }
     if (new Set(players).size < players.length) {
       throw new Error(`Players can't battle themselves`);
@@ -1826,11 +1827,18 @@ const Rooms = {
     for (const user of players) {
       Ladders.cancelSearches(user);
     }
-    if (Rooms.global.lockdown === true) {
+    const isBestOf = Dex.formats.getRuleTable(format).valueRules.get("bestof");
+    if (Rooms.global.lockdown === "pre" && isBestOf && !options.isBestOfSubBattle) {
+      for (const user of players) {
+        user.popup(`The server will be restarting soon. Best-of-${isBestOf} battles cannot be started at this time.`);
+      }
+      return null;
+    }
+    if (Rooms.global.lockdown === true && !options.isBestOfSubBattle) {
       for (const user of players) {
         user.popup("The server is restarting. Battles will be available again in a few minutes.");
       }
-      return;
+      return null;
     }
     const p1Special = players.length ? players[0].battleSettings.special : void 0;
     let mismatch = `"${p1Special}"`;
@@ -1844,31 +1852,39 @@ const Rooms = {
       for (const user of players) {
         user.popup(`Your special battle settings don't match: ${mismatch}`);
       }
-      return;
+      return null;
     } else if (p1Special) {
       options.ratedMessage = p1Special;
     }
-    const roomid = options.roomid || Rooms.global.prepBattleRoom(options.format);
     options.rated = Math.max(+options.rated || 0, 0);
     const p1 = players[0];
     const p2 = players[1];
     const p1name = p1 ? p1.name : "Player 1";
     const p2name = p2 ? p2.name : "Player 2";
     let roomTitle;
-    if (gameType === "multi") {
+    let roomid = options.roomid;
+    if (format.gameType === "multi") {
       roomTitle = `Team ${p1name} vs. Team ${p2name}`;
-    } else if (gameType === "freeforall") {
+    } else if (format.gameType === "freeforall") {
       roomTitle = `${p1name} and friends`;
+    } else if (isBestOf && !options.isBestOfSubBattle) {
+      roomTitle = `${p1name} vs. ${p2name}`;
+      roomid || (roomid = `game-bestof${isBestOf}-${format.id}-${++Rooms.global.lastBattle}`);
     } else if (options.title) {
       roomTitle = options.title;
     } else {
       roomTitle = `${p1name} vs. ${p2name}`;
     }
+    roomid || (roomid = Rooms.global.prepBattleRoom(options.format));
     options.isPersonal = true;
     const room = Rooms.createGameRoom(roomid, roomTitle, options);
-    const battle = new Rooms.RoomBattle(room, options);
-    room.game = battle;
-    battle.checkPrivacySettings(options);
+    if (options.isBestOfSubBattle || !isBestOf) {
+      const battle = new Rooms.RoomBattle(room, options);
+      room.game = battle;
+      battle.checkPrivacySettings(options);
+    } else {
+      room.game = new import_room_battle_bestof.BestOfGame(room, options);
+    }
     for (const p of players) {
       if (p) {
         p.joinRoom(room);
@@ -1890,8 +1906,10 @@ const Rooms = {
   RETRY_AFTER_LOGIN,
   Roomlogs: import_roomlogs.Roomlogs,
   RoomBattle: import_room_battle.RoomBattle,
+  BestOfGame: import_room_battle_bestof.BestOfGame,
   RoomBattlePlayer: import_room_battle.RoomBattlePlayer,
   RoomBattleTimer: import_room_battle.RoomBattleTimer,
-  PM: import_room_battle.PM
+  PM: import_room_battle.PM,
+  Replays: import_replays.Replays
 };
 //# sourceMappingURL=rooms.js.map

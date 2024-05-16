@@ -186,7 +186,17 @@ const Moves = {
   },
   dive: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, nosleeptalk: 1, noassist: 1, failinstruct: 1 }
+    flags: {
+      contact: 1,
+      charge: 1,
+      protect: 1,
+      mirror: 1,
+      nonsky: 1,
+      metronome: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failinstruct: 1
+    }
   },
   dizzypunch: {
     inherit: true,
@@ -199,6 +209,10 @@ const Moves = {
   doubleslap: {
     inherit: true,
     isNonstandard: null
+  },
+  dragonhammer: {
+    inherit: true,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
   },
   dragonrage: {
     inherit: true,
@@ -536,7 +550,7 @@ const Moves = {
   },
   howl: {
     inherit: true,
-    flags: { snatch: 1 },
+    flags: { snatch: 1, metronome: 1 },
     boosts: {
       atk: 1
     },
@@ -682,79 +696,6 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  metronome: {
-    inherit: true,
-    noMetronome: [
-      "After You",
-      "Assist",
-      "Baneful Bunker",
-      "Beak Blast",
-      "Belch",
-      "Bestow",
-      "Celebrate",
-      "Chatter",
-      "Copycat",
-      "Counter",
-      "Covet",
-      "Crafty Shield",
-      "Destiny Bond",
-      "Detect",
-      "Diamond Storm",
-      "Dragon Ascent",
-      "Endure",
-      "Feint",
-      "Fleur Cannon",
-      "Focus Punch",
-      "Follow Me",
-      "Freeze Shock",
-      "Helping Hand",
-      "Hold Hands",
-      "Hyperspace Fury",
-      "Hyperspace Hole",
-      "Ice Burn",
-      "Instruct",
-      "King's Shield",
-      "Light of Ruin",
-      "Mat Block",
-      "Me First",
-      "Metronome",
-      "Mimic",
-      "Mind Blown",
-      "Mirror Coat",
-      "Mirror Move",
-      "Nature Power",
-      "Origin Pulse",
-      "Photon Geyser",
-      "Plasma Fists",
-      "Precipice Blades",
-      "Protect",
-      "Quash",
-      "Quick Guard",
-      "Rage Powder",
-      "Relic Song",
-      "Secret Sword",
-      "Shell Trap",
-      "Sketch",
-      "Sleep Talk",
-      "Snarl",
-      "Snatch",
-      "Snore",
-      "Spectral Thief",
-      "Spiky Shield",
-      "Spotlight",
-      "Steam Eruption",
-      "Struggle",
-      "Switcheroo",
-      "Techno Blast",
-      "Thief",
-      "Thousand Arrows",
-      "Thousand Waves",
-      "Transform",
-      "Trick",
-      "V-create",
-      "Wide Guard"
-    ]
-  },
   miracleeye: {
     inherit: true,
     isNonstandard: null
@@ -766,6 +707,10 @@ const Moves = {
   mirrorshot: {
     inherit: true,
     isNonstandard: null
+  },
+  moongeistbeam: {
+    inherit: true,
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   moonlight: {
     inherit: true,
@@ -831,6 +776,10 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
+  naturesmadness: {
+    inherit: true,
+    flags: { protect: 1, mirror: 1, metronome: 1 }
+  },
   needlearm: {
     inherit: true,
     isNonstandard: null
@@ -857,7 +806,7 @@ const Moves = {
   },
   pollenpuff: {
     inherit: true,
-    flags: { bullet: 1, protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, metronome: 1, bullet: 1 },
     onHit(target, source) {
       if (source.isAlly(target)) {
         if (!this.heal(Math.floor(target.baseMaxhp * 0.5))) {
@@ -1133,6 +1082,10 @@ const Moves = {
   subzeroslammer: {
     inherit: true,
     isNonstandard: null
+  },
+  sunsteelstrike: {
+    inherit: true,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
   },
   supersonicskystrike: {
     inherit: true,

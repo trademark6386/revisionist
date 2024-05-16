@@ -116,9 +116,8 @@ class Battle {
     this.formatData = { id: format.id };
     this.gameType = format.gameType || "singles";
     this.field = new import_field.Field(this);
-    const isFourPlayer = this.gameType === "multi" || this.gameType === "freeforall";
-    this.sides = Array(isFourPlayer ? 4 : 2).fill(null);
-    this.activePerHalf = this.gameType === "triples" ? 3 : isFourPlayer || this.gameType === "doubles" ? 2 : 1;
+    this.sides = Array(format.playerCount).fill(null);
+    this.activePerHalf = this.gameType === "triples" ? 3 : format.playerCount > 2 || this.gameType === "doubles" ? 2 : 1;
     this.prng = options.prng || new import_prng.PRNG(options.seed || void 0);
     this.prngSeed = this.prng.startingSeed.slice();
     this.rated = options.rated || !!options.rated;
@@ -614,8 +613,8 @@ class Battle {
       if (effect.effectType === "Status" && effectHolder.status !== effect.id) {
         continue;
       }
-      if (effect.effectType === "Ability" && effect.isBreakable !== false && this.suppressingAbility(effectHolder)) {
-        if (effect.isBreakable) {
+      if (effect.effectType === "Ability" && effect.flags["breakable"] && this.suppressingAbility(effectHolder)) {
+        if (effect.flags["breakable"]) {
           this.debug(eventid + " handler suppressed by Mold Breaker");
           continue;
         }
@@ -1319,7 +1318,11 @@ class Battle {
         }
         this.runEvent("DisableMove", pokemon);
         for (const moveSlot of pokemon.moveSlots) {
-          this.singleEvent("DisableMove", this.dex.getActiveMove(moveSlot.id), null, pokemon);
+          const activeMove = this.dex.getActiveMove(moveSlot.id);
+          this.singleEvent("DisableMove", activeMove, null, pokemon);
+          if (activeMove.flags["cantusetwice"] && pokemon.lastMove?.id === moveSlot.id) {
+            pokemon.disableMove(pokemon.lastMove.id);
+          }
         }
         if (pokemon.getLastAttackedBy() && this.gen >= 7)
           pokemon.knownType = true;
@@ -1433,15 +1436,11 @@ class Battle {
     if (this.gen <= 1) {
       const noProgressPossible = this.sides.every((side) => {
         const foeAllGhosts = side.foe.pokemon.every((pokemon) => pokemon.fainted || pokemon.hasType("Ghost"));
-        const foeAllTransform = side.foe.pokemon.every((pokemon) => pokemon.fainted || // true if transforming into this pokemon would lead to an endless battle
-        // Transform will fail (depleting PP) if used against Ditto in Stadium 1
-        (this.dex.currentMod !== "gen1stadium" || pokemon.species.id !== "ditto") && // there are some subtleties such as a Mew with only Transform and auto-fail moves,
+        const foeAllTransform = side.foe.pokemon.every((pokemon) => pokemon.fainted || (this.dex.currentMod !== "gen1stadium" || pokemon.species.id !== "ditto") && // there are some subtleties such as a Mew with only Transform and auto-fail moves,
         // but it's unlikely to come up in a real game so there's no need to handle it
         pokemon.moves.every((moveid) => moveid === "transform"));
         return side.pokemon.every((pokemon) => pokemon.fainted || // frozen pokemon can't thaw in gen 1 without outside help
-        pokemon.status === "frz" || // a pokemon can't lose PP if it Transforms into a pokemon with only Transform
-        pokemon.moves.every((moveid) => moveid === "transform") && foeAllTransform || // Struggle can't damage yourself if every foe is a Ghost
-        pokemon.moveSlots.every((slot) => slot.pp === 0) && foeAllGhosts);
+        pokemon.status === "frz" || pokemon.moves.every((moveid) => moveid === "transform") && foeAllTransform || pokemon.moveSlots.every((slot) => slot.pp === 0) && foeAllGhosts);
       });
       if (noProgressPossible) {
         this.add("-message", `This battle cannot progress. Endless Battle Clause activated!`);
@@ -1455,8 +1454,7 @@ class Battle {
       this.tie();
       return true;
     }
-    if (this.turn >= 500 && this.turn % 100 === 0 || // every 100 turns past turn 500,
-    this.turn >= 900 && this.turn % 10 === 0 || // every 10 turns past turn 900,
+    if (this.turn >= 500 && this.turn % 100 === 0 || this.turn >= 900 && this.turn % 10 === 0 || // every 10 turns past turn 900,
     this.turn >= 990) {
       const turnsLeft = 1e3 - this.turn;
       const turnsLeftText = turnsLeft === 1 ? `1 turn` : `${turnsLeft} turns`;
@@ -1710,7 +1708,7 @@ class Battle {
       if (targetDamage !== 0)
         targetDamage = this.clampIntRange(targetDamage, 1);
       if (this.gen <= 1) {
-        if (this.dex.currentMod === "gen1stadium" || !["recoil", "drain"].includes(effect.id) && effect.effectType !== "Status") {
+        if (this.dex.currentMod === "gen1stadium" || !["recoil", "drain", "leechseed"].includes(effect.id) && effect.effectType !== "Status") {
           this.lastDamage = targetDamage;
         }
       }
@@ -2225,7 +2223,7 @@ class Battle {
       case "start": {
         for (const side of this.sides) {
           if (side.pokemonLeft)
-            side.pokemonLeft = side.pokemon.length;
+            side.pokemonLeft = side.pokemon.filter((pk) => !pk.fainted).length;
         }
         this.add("start");
         for (const pokemon of this.getAllPokemon()) {
@@ -2479,7 +2477,7 @@ class Battle {
           switches[i] = false;
       } else if (switches[i]) {
         for (const pokemon of this.sides[i].active) {
-          if (pokemon.switchFlag && pokemon.switchFlag !== "revivalblessing" && !pokemon.skipBeforeSwitchOutEventFlag) {
+          if (pokemon.hp && pokemon.switchFlag && pokemon.switchFlag !== "revivalblessing" && !pokemon.skipBeforeSwitchOutEventFlag) {
             this.runEvent("BeforeSwitchOut", pokemon);
             pokemon.skipBeforeSwitchOutEventFlag = true;
             this.faintMessages();
@@ -2752,6 +2750,52 @@ class Battle {
     }
     team = this.teamGenerator.getTeam(options);
     return team;
+  }
+  showOpenTeamSheets(hideFromSpectators = false) {
+    if (this.turn !== 0)
+      return;
+    for (const side of this.sides) {
+      const team = side.pokemon.map((pokemon) => {
+        const set = pokemon.set;
+        const newSet = {
+          name: "",
+          species: set.species,
+          item: set.item,
+          ability: set.ability,
+          moves: set.moves,
+          nature: "",
+          gender: pokemon.gender,
+          evs: null,
+          ivs: null,
+          level: set.level
+        };
+        if (this.gen === 8)
+          newSet.gigantamax = set.gigantamax;
+        if (this.gen === 9)
+          newSet.teraType = set.teraType;
+        if (set.moves.some((m) => this.dex.moves.get(m).id === "hiddenpower"))
+          newSet.hpType = set.hpType;
+        if ((0, import_dex.toID)(set.species) === "zacian" && (0, import_dex.toID)(set.item) === "rustedsword" || (0, import_dex.toID)(set.species) === "zamazenta" && (0, import_dex.toID)(set.item) === "rustedshield") {
+          newSet.species = import_dex.Dex.species.get(set.species + "crowned").name;
+          const crowned = {
+            "Zacian-Crowned": "behemothblade",
+            "Zamazenta-Crowned": "behemothbash"
+          };
+          const ironHead = set.moves.map(import_dex.toID).indexOf("ironhead");
+          if (ironHead >= 0) {
+            newSet.moves[ironHead] = crowned[newSet.species];
+          }
+        }
+        return newSet;
+      });
+      if (hideFromSpectators) {
+        for (const s of this.sides) {
+          this.addSplit(s.id, ["showteam", side.id, import_teams.Teams.pack(team)]);
+        }
+      } else {
+        this.add("showteam", side.id, import_teams.Teams.pack(team));
+      }
+    }
   }
   setPlayer(slot, options) {
     let side;

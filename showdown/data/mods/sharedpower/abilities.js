@@ -38,7 +38,7 @@ const Abilities = {
         }
         if (target.m.abils?.length) {
           for (const key of target.m.abils) {
-            if (this.dex.abilities.get(key.slice(8)).isPermanent)
+            if (this.dex.abilities.get(key.slice(8)).flags["cantsuppress"])
               continue;
             target.removeVolatile(key);
           }
@@ -72,21 +72,9 @@ const Abilities = {
       if (!pokemon.isStarted || this.effectState.gaveUp)
         return;
       const isAbility = pokemon.ability === "trace";
-      const additionalBannedAbilities = [
-        // Zen Mode included here for compatability with Gen 5-6
-        "noability",
-        "flowergift",
-        "forecast",
-        "hungerswitch",
-        "illusion",
-        "imposter",
-        "neutralizinggas",
-        "powerofalchemy",
-        "receiver",
-        "trace",
-        "zenmode"
-      ];
-      const possibleTargets = pokemon.adjacentFoes().filter((target2) => !target2.getAbility().isPermanent && !additionalBannedAbilities.includes(target2.ability));
+      const possibleTargets = pokemon.adjacentFoes().filter(
+        (target2) => !target2.getAbility().flags["notrace"] && target2.ability !== "noability"
+      );
       if (!possibleTargets.length)
         return;
       const target = this.sample(possibleTargets);

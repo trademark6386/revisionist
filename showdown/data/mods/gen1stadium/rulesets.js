@@ -25,7 +25,7 @@ const Rulesets = {
   standard: {
     effectType: "ValidatorRule",
     name: "Standard",
-    ruleset: ["Obtainable", "Stadium Sleep Clause", "Freeze Clause Mod", "Species Clause", "OHKO Clause", "Evasion Moves Clause", "Exact HP Mod", "Cancel Mod"]
+    ruleset: ["Obtainable", "Stadium Sleep Clause", "Freeze Clause Mod", "Species Clause", "Nickname Clause", "OHKO Clause", "Evasion Moves Clause", "Exact HP Mod", "Cancel Mod"]
   }
 };
 //# sourceMappingURL=rulesets.js.map

@@ -150,6 +150,9 @@ class SQLDatabaseManager extends import_process_manager.QueryProcessManager {
     }
     return statement;
   }
+  registerFunction(key, cb) {
+    this.database.function(key, cb);
+  }
   extractStatement(query) {
     query.statement = query.statement.trim();
     const statement = query.noPrepare ? this.state.statements.get(query.statement) : this.cacheStatement(query.statement);
@@ -168,6 +171,9 @@ class SQLDatabaseManager extends import_process_manager.QueryProcessManager {
       this.loadExtensionFile(extension);
   }
   loadExtensionFile(extension) {
+    return this.handleExtensions(require("../" + extension));
+  }
+  handleExtensions(imports) {
     if (!this.database)
       return;
     const {
@@ -175,11 +181,13 @@ class SQLDatabaseManager extends import_process_manager.QueryProcessManager {
       transactions: storedTransactions,
       statements: storedStatements,
       onDatabaseStart
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-    } = require(`../${extension}`);
+    } = imports;
+    if (onDatabaseStart) {
+      onDatabaseStart.call(this, this.database);
+    }
     if (functions) {
       for (const k in functions) {
-        this.database.function(k, functions[k]);
+        this.registerFunction(k, functions[k]);
       }
     }
     if (storedTransactions) {
@@ -193,9 +201,6 @@ class SQLDatabaseManager extends import_process_manager.QueryProcessManager {
         const statement = this.database.prepare(storedStatements[k]);
         this.state.statements.set(statement.source, statement);
       }
-    }
-    if (onDatabaseStart) {
-      onDatabaseStart(this.database);
     }
   }
   async query(input) {

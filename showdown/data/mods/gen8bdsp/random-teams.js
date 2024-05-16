@@ -129,8 +129,7 @@ class RandomBDSPTeams extends import_random_teams.RandomGen8Teams {
     const defensiveStatTotal = species.baseStats.hp + species.baseStats.def + species.baseStats.spd;
     if (isLead && ability !== "Sturdy" && !moves.has("substitute") && !counter.get("drain") && !counter.get("recoil") && !counter.get("recovery") && (defensiveStatTotal <= 250 && counter.get("hazards") || defensiveStatTotal <= 210))
       return "Focus Sash";
-    if (counter.damagingMoves.size >= 3 && !counter.get("damage") && ability !== "Sturdy" && (species.baseStats.spe >= 90 || !moves.has("voltswitch")) && ["foulplay", "rapidspin", "substitute", "uturn"].every((m) => !moves.has(m)) && (counter.get("speedsetup") || // No Dynamax Buzzwole doesn't want Life Orb with Bulk Up + 3 attacks
-    counter.get("drain") && moves.has("roost") || moves.has("trickroom") || moves.has("psystrike") || species.baseStats.spe > 40 && defensiveStatTotal < 275))
+    if (counter.damagingMoves.size >= 3 && !counter.get("damage") && ability !== "Sturdy" && (species.baseStats.spe >= 90 || !moves.has("voltswitch")) && ["foulplay", "rapidspin", "substitute", "uturn"].every((m) => !moves.has(m)) && (counter.get("speedsetup") || counter.get("drain") && moves.has("roost") || moves.has("trickroom") || moves.has("psystrike") || species.baseStats.spe > 40 && defensiveStatTotal < 275))
       return "Life Orb";
     if (counter.damagingMoves.size >= 4 && !counter.get("Dragon") && !counter.get("Normal")) {
       return "Expert Belt";
@@ -393,8 +392,7 @@ class RandomBDSPTeams extends import_random_teams.RandomGen8Teams {
         return { cull: moves.has("rest") || moves.has("wish") || move.id === "synthesis" && moves.has("gigadrain") };
       case "roost":
         return {
-          cull: moves.has("throatchop") || // Special cases for Salamence, Dynaless Dragonite, and Scizor to help prevent sets with poor coverage or no setup.
-          moves.has("dualwingbeat") && (moves.has("outrage") || species.id === "scizor")
+          cull: moves.has("throatchop") || moves.has("dualwingbeat") && (moves.has("outrage") || species.id === "scizor")
         };
       case "reflect":
       case "lightscreen":
@@ -417,7 +415,7 @@ class RandomBDSPTeams extends import_random_teams.RandomGen8Teams {
     }
     return { cull: false };
   }
-  shouldCullAbility(ability, types, moves, abilities, counter, movePool, teamDetails, species, isDoubles) {
+  shouldCullAbility(ability, types, moves, abilities, counter, movePool, teamDetails, species, preferredType, role, isDoubles) {
     if ([
       "Flare Boost",
       "Hydration",
@@ -513,6 +511,8 @@ class RandomBDSPTeams extends import_random_teams.RandomGen8Teams {
         return species.id === "omastar" && (moves.has("spikes") || moves.has("stealthrock"));
       case "Sniper":
         return counter.get("Water") > 1 && !moves.has("focusenergy");
+      case "Solar Power":
+        return !teamDetails.sun || abilities.has("Harvest");
       case "Speed Boost":
         return moves.has("uturn");
       case "Sturdy":
@@ -541,11 +541,8 @@ class RandomBDSPTeams extends import_random_teams.RandomGen8Teams {
       case "Technician":
         return !counter.get("technician") || moves.has("tailslap") || abilities.has("Punk Rock");
       case "Tinted Lens":
-        return (
-          // For Butterfree
-          moves.has("hurricane") && abilities.has("Compound Eyes") || counter.get("Status") > 2 && !counter.setupType || // For Yanmega
-          moves.has("protect")
-        );
+        return moves.has("hurricane") && abilities.has("Compound Eyes") || counter.get("Status") > 2 && !counter.setupType || // For Yanmega
+        moves.has("protect");
       case "Unaware":
         return species.id === "bibarel";
       case "Unburden":

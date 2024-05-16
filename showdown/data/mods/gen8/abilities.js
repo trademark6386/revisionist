@@ -96,7 +96,7 @@ const Abilities = {
       if (effect?.effectType !== "Move") {
         return;
       }
-      if (source.species.id === "greninja" && source.hp && !source.transformed && source.side.foePokemonLeft()) {
+      if (source.species.id === "greninjabond" && source.hp && !source.transformed && source.side.foePokemonLeft()) {
         this.add("-activate", source, "ability: Battle Bond");
         source.formeChange("Greninja-Ash", this.effect, true);
       }
@@ -160,6 +160,24 @@ const Abilities = {
   },
   competitive: {
     inherit: true,
+    onAfterEachBoost(boost, target, source, effect) {
+      if (!source || target.isAlly(source)) {
+        if (effect.id === "stickyweb") {
+          this.hint("In Gen 8, Court Change Sticky Web counts as lowering your own Speed, and Competitive only affects stats lowered by foes.", true, source.side);
+        }
+        return;
+      }
+      let statsLowered = false;
+      let i;
+      for (i in boost) {
+        if (boost[i] < 0) {
+          statsLowered = true;
+        }
+      }
+      if (statsLowered) {
+        this.boost({ spa: 2 }, target, target, null, false, true);
+      }
+    },
     rating: 2.5
   },
   compoundeyes: {
@@ -219,6 +237,24 @@ const Abilities = {
   },
   defiant: {
     inherit: true,
+    onAfterEachBoost(boost, target, source, effect) {
+      if (!source || target.isAlly(source)) {
+        if (effect.id === "stickyweb") {
+          this.hint("In Gen 8, Court Change Sticky Web counts as lowering your own Speed, and Defiant only affects stats lowered by foes.", true, source.side);
+        }
+        return;
+      }
+      let statsLowered = false;
+      let i;
+      for (i in boost) {
+        if (boost[i] < 0) {
+          statsLowered = true;
+        }
+      }
+      if (statsLowered) {
+        this.boost({ atk: 2 }, target, target, null, false, true);
+      }
+    },
     rating: 2.5
   },
   deltastream: {
@@ -359,6 +395,7 @@ const Abilities = {
   },
   gulpmissile: {
     inherit: true,
+    flags: { failroleplay: 1, noreceiver: 1, noentrain: 1, notrace: 1, failskillswap: 1, cantsuppress: 1, notransform: 1 },
     rating: 2.5
   },
   guts: {
@@ -375,6 +412,17 @@ const Abilities = {
   },
   heatproof: {
     inherit: true,
+    onSourceModifyAtk() {
+    },
+    onSourceModifySpA() {
+    },
+    onSourceBasePowerPriority: 18,
+    onSourceBasePower(basePower, attacker, defender, move) {
+      if (move.type === "Fire") {
+        this.debug("Heatproof BP weaken");
+        return this.chainModify(0.5);
+      }
+    },
     rating: 2
   },
   heavymetal: {
@@ -419,6 +467,11 @@ const Abilities = {
   },
   illuminate: {
     inherit: true,
+    onTryBoost() {
+    },
+    onModifyMove() {
+    },
+    flags: {},
     rating: 0
   },
   illusion: {
@@ -570,7 +623,7 @@ const Abilities = {
   },
   mirrorarmor: {
     inherit: true,
-    rating: 2
+    rating: 2.5
   },
   mistysurge: {
     inherit: true,
@@ -1057,6 +1110,18 @@ const Abilities = {
   },
   transistor: {
     inherit: true,
+    onModifyAtk(atk, attacker, defender, move) {
+      if (move.type === "Electric") {
+        this.debug("Transistor boost");
+        return this.chainModify(1.5);
+      }
+    },
+    onModifySpA(atk, attacker, defender, move) {
+      if (move.type === "Electric") {
+        this.debug("Transistor boost");
+        return this.chainModify(1.5);
+      }
+    },
     rating: 3.5
   },
   triage: {
@@ -1133,6 +1198,7 @@ const Abilities = {
   },
   wonderguard: {
     inherit: true,
+    flags: { failroleplay: 1, noreceiver: 1, failskillswap: 1, breakable: 1 },
     rating: 5
   },
   wonderskin: {

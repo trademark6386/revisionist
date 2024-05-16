@@ -24,6 +24,7 @@ __export(utils_exports, {
   clearRequireCache: () => clearRequireCache,
   compare: () => compare,
   deepClone: () => deepClone,
+  deepFreeze: () => deepFreeze,
   escapeHTML: () => escapeHTML,
   escapeHTMLForceWrap: () => escapeHTMLForceWrap,
   escapeRegex: () => escapeRegex,
@@ -39,6 +40,7 @@ __export(utils_exports, {
   sortBy: () => sortBy,
   splitFirst: () => splitFirst,
   stripHTML: () => stripHTML,
+  uncacheModuleTree: () => uncacheModuleTree,
   visualize: () => visualize,
   waitUntil: () => waitUntil
 });
@@ -240,16 +242,27 @@ function clearRequireCache(options = {}) {
   const excludes = options?.exclude || [];
   excludes.push("/node_modules/");
   for (const path in require.cache) {
-    let skip = false;
-    for (const exclude of excludes) {
-      if (path.includes(exclude)) {
-        skip = true;
-        break;
-      }
-    }
-    if (!skip)
-      delete require.cache[path];
+    if (excludes.some((p) => path.includes(p)))
+      continue;
+    const mod = require.cache[path];
+    if (!mod)
+      continue;
+    uncacheModuleTree(mod, excludes);
+    delete require.cache[path];
   }
+}
+function uncacheModuleTree(mod, excludes, depth = 0) {
+  depth++;
+  if (depth >= 10)
+    return;
+  if (!mod.children || excludes.some((p) => mod.filename.includes(p)))
+    return;
+  for (const child of mod.children) {
+    if (excludes.some((p) => child.filename.includes(p)))
+      continue;
+    uncacheModuleTree(child, excludes, depth);
+  }
+  delete mod.children;
 }
 function deepClone(obj) {
   if (obj === null || typeof obj !== "object")
@@ -261,6 +274,21 @@ function deepClone(obj) {
     clone[key] = deepClone(obj[key]);
   }
   return clone;
+}
+function deepFreeze(obj) {
+  if (obj === null || typeof obj !== "object")
+    return obj;
+  if (Object.isFrozen(obj))
+    return obj;
+  Object.freeze(obj);
+  if (Array.isArray(obj)) {
+    for (const elem of obj)
+      deepFreeze(elem);
+  } else {
+    for (const elem of Object.values(obj))
+      deepFreeze(elem);
+  }
+  return obj;
 }
 function levenshtein(s, t, l) {
   const d = [];

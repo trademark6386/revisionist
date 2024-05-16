@@ -39,7 +39,7 @@ const EVASION_DETECTION_SUBSTITUTIONS = {
   d: ["d", "\u15EA", "D", "\u24D3", "\u24B9", "\u2202", "\u0110", "\u010F", "\u010E", "\u13B4", "\u1E0A", "\u13A0", "\u0256", "\uFF44", "\uFF24", "\u1D05", "\u{1F153}", "\u{1D41D}", "\u{1D403}", "\u{1D625}", "\u{1D60B}", "\u{1D659}", "\u{1D63F}", "\u{1D4B9}", "\u{1D4ED}", "\u{1D4D3}", "\u{1D555}", "\u200B", "\u{1D521}", "\u{1D589}", "\u{1D56F}", "\u{1F133}", "\u{1F173}", "\u{1D49F}", "\u0503", "\u{1D68D}", "\u{1D673}", "\u25D7", "\u217E"],
   e: ["e", "3", "\xE9", "\xEA", "E", "\u24D4", "\u24BA", "\u0454", "\u034F", "\u0246", "\u1EC7", "\u1EC6", "\u13CB", "\u03B5", "\u03A3", "\u1E15", "\u1E14", "\u13AC", "\u025B", "\u033E", "\uFF45", "\uFF25", "\u1D07", "\u01DD", "\u{1F154}", "\u{1D41E}", "\u{1D404}", "\u{1D626}", "\u{1D60C}", "\u{1D65A}", "\u{1D640}", "\u212F", "\u{1D4EE}", "\u{1D4D4}", "\u{1D556}", "\u{1D53B}", "\u{1D522}", "\u{1D507}", "\u{1D58A}", "\u{1D570}", "\u{1F134}", "\u{1F174}", "\u{1D452}", "\u{1D438}", "\u04BD", "\u{1D68E}", "\u{1D674}", "\u20AC", "\u0435", "\u0451", "\u{1D4EE}"],
   f: ["f", "\u15B4", "F", "\u24D5", "\u24BB", "\u20A3", "\u1E1F", "\u1E1E", "\u13A6", "\u0493", "\u0284", "\uFF46", "\uFF26", "\u025F", "\u{1F155}", "\u{1D41F}", "\u{1D405}", "\u{1D627}", "\u{1D60D}", "\u{1D65B}", "\u{1D641}", "\u{1D4BB}", "\u{1D4EF}", "\u{1D4D5}", "\u{1D557}", "\u{1D53C}", "\u{1D523}", "\u{1D508}", "\u{1D58B}", "\u{1D571}", "\u{1F135}", "\u{1F175}", "\u{1D439}", "\u03DD", "\u{1D68F}", "\u{1D675}", "\u03DC", "f"],
-  g: ["g", "q", "6", "9", "G", "\u24D6", "\u24BC", "\u034F", "\u20B2", "\u0121", "\u0120", "\u13B6", "\u03D1", "\u1E20", "\u0262", "\u033E", "\uFF47", "\uFF27", "\u0183", "\u{1F156}", "\u{1D420}", "\u{1D406}", "\u{1D628}", "\u{1D60E}", "\u{1D65C}", "\u{1D642}", "\u210A", "\u{1D4F0}", "\u{1D4D6}", "\u{1D558}", "\u{1D53D}", "\u{1D524}", "\u{1D509}", "\u{1D58C}", "\u{1D572}", "\u{1F136}", "\u{1F176}", "\u{1D454}", "\u{1D4A2}", "\u0260", "\u{1D690}", "\u{1D676}", "\u2761", "\u0581", "\u{1D676}", "\u{1D4F0}"],
+  g: ["g", "q", "6", "9", "G", "\u24D6", "\u24BC", "\u034F", "\u20B2", "\u0121", "\u0120", "\u13B6", "\u03D1", "\u1E20", "\u0262", "\u033E", "\uFF47", "\uFF27", "\u0183", "\u{1F156}", "\u{1D420}", "\u{1D406}", "\u{1D628}", "\u{1D60E}", "\u{1D65C}", "\u{1D642}", "\u210A", "\u{1D4F0}", "\u{1D4D6}", "\u{1D558}", "\u{1D53D}", "\u{1D524}", "\u{1D509}", "\u{1D58C}", "\u{1D572}", "\u{1F136}", "\u{1F176}", "\u{1D454}", "\u{1D4A2}", "\u0260", "\u{1D690}", "\u{1D676}", "\u2761", "\u0581", "\u{1D676}", "\u{1D4F0}", "\u050C"],
   h: [
     "h",
     "\u157C",
@@ -132,7 +132,7 @@ const EVASION_DETECTION_SUBSTITUTIONS = {
     "\u2654",
     "\u217F"
   ],
-  n: ["n", "\xF1", "\u144E", "N", "\u24DD", "\u24C3", "\u0438", "\u20A6", "\u0144", "\u0143", "\u13C1", "\u03C0", "\u220F", "\u1E46", "\u057C", "\uFF4E", "\uFF2E", "\u0274", "\u{1F15D}", "\u{1D427}", "\u{1D40D}", "\u{1D62F}", "\u{1D615}", "\u{1D663}", "\u{1D649}", "\u{1D4C3}", "\u{1D4F7}", "\u{1D4DD}", "\u{1D55F}", "\u{1D543}", "\u{1D52B}", "\u{1D50E}", "\u{1D593}", "\u{1D579}", "\u{1F13D}", "\u{1F17D}", "\u{1D4A9}", "\u0273", "\u{1D697}", "\u{1D67D}", "\u266B", "\u0578", "\u03B7", "\u{1D67D}", "\u019E", "\u{1D4F7}"],
+  n: ["n", "\xF1", "\u144E", "N", "\u24DD", "\u24C3", "\u0438", "\u20A6", "\u0144", "\u0143", "\u13C1", "\u03C0", "\u220F", "\u1E46", "\u057C", "\uFF4E", "\uFF2E", "\u0274", "\u{1F15D}", "\u{1D427}", "\u{1D40D}", "\u{1D62F}", "\u{1D615}", "\u{1D663}", "\u{1D649}", "\u{1D4C3}", "\u{1D4F7}", "\u{1D4DD}", "\u{1D55F}", "\u{1D543}", "\u{1D52B}", "\u{1D50E}", "\u{1D593}", "\u{1D579}", "\u{1F13D}", "\u{1F17D}", "\u{1D4A9}", "\u0273", "\u{1D697}", "\u{1D67D}", "\u266B", "\u0578", "\u03B7", "\u{1D67D}", "\u019E", "\u{1D4F7}", "\u039D"],
   o: ["o", "0", "\xF3", "\xF4", "\xF5", "\xFA", "O", "\u24DE", "\u24C4", "\u03C3", "\u034F", "\xD8", "\xF6", "\xD6", "\u13A7", "\u0398", "\u1E4F", "\u1E4E", "\u13BE", "\u0585", "\u033E", "\uFF4F", "\uFF2F", "\u1D0F", "\u{1F15E}", "\u{1D428}", "\u{1D40E}", "\u{1D630}", "\u{1D616}", "\u{1D664}", "\u{1D64A}", "\u2134", "\u{1D4F8}", "\u{1D4DE}", "\u{1D560}", "\u{1D544}", "\u{1D52C}", "\u{1D50F}", "\u{1D594}", "\u{1D57A}", "\u{1F13E}", "\u{1F17E}", "\u{1D45C}", "\u{1D4AA}", "\u{1D698}", "\u{1D67E}", "\u2299", "\u03BF"],
   p: ["p", "\u146D", "P", "\u24DF", "\u24C5", "\u03C1", "\u20B1", "\u1E57", "\u1E56", "\u13AE", "\u01A4", "\u13E2", "\u0584", "\uFF50", "\uFF30", "\u1D18", "\u{1F15F}", "\u{1D429}", "\u{1D40F}", "\u{1D631}", "\u{1D617}", "\u{1D665}", "\u{1D64B}", "\u{1D4C5}", "\u{1D4F9}", "\u{1D4DF}", "\u{1D561}", "\u2115", "\u{1D52D}", "\u{1D510}", "\u{1D595}", "\u{1D57B}", "\u{1F13F}", "\u{1F17F}", "\u{1D4AB}", "\u{1D699}", "\u{1D67F}", "\u0440"],
   q: [
@@ -234,6 +234,7 @@ const EVASION_DETECTION_SUBSTITUTIONS = {
 const filterWords = Chat.filterWords;
 const Filters = new class {
   constructor() {
+    this.EVASION_DETECTION_SUBSTITUTIONS = EVASION_DETECTION_SUBSTITUTIONS;
     this.EVASION_DETECTION_SUB_STRINGS = {};
     for (const letter in EVASION_DETECTION_SUBSTITUTIONS) {
       this.EVASION_DETECTION_SUB_STRINGS[letter] = `[${EVASION_DETECTION_SUBSTITUTIONS[letter].join("")}]`;
@@ -827,10 +828,13 @@ const commands = {
       const buf = [];
       for (const monitorName in Chat.monitors) {
         const monitor = Chat.monitors[monitorName];
-        if (!monitor.monitor)
-          continue;
         for (const line of Chat.filterWords[monitorName]) {
-          const ret = monitor.monitor.call(this, line, room, user, target, lcMessage, true);
+          let ret;
+          if (monitor.monitor) {
+            ret = monitor.monitor.call(this, line, room, user, target, lcMessage, true);
+          } else {
+            ret = line.regex.exec(target)?.[0];
+          }
           if (typeof ret === "string") {
             buf.push(`${monitorName}: ${ret}`);
             break;
@@ -848,24 +852,16 @@ const commands = {
         );
       }
     },
-    testhelp(target, room, user) {
-      this.checkCan("lock");
-      if (room && ["staff", "upperstaff"].includes(room.roomid))
-        this.runBroadcast(true);
-      const monitorNames = [...Object.keys(Chat.monitors).filter((x) => Chat.monitors[x].monitor)];
-      monitorNames.push(
-        ...Object.keys(Chat.monitors).filter((x) => Chat.monitors[x].monitor && x.includes("filter")).map((x) => x.replace("filter", ""))
-      );
-      this.sendReplyBox(
-        `<code>/filter test [monitor name] [test string]</code>:<br />Tests whether or not the provided test string would trigger the respective monitor.<br />All usable commands: <code>${monitorNames.sort().map((x) => `/filter test ${x}`).join("</code>, <code>")}</code><br />Can only be broadcast in Staff and Upper Staff. Requires: % @ &`
-      );
-    }
+    testhelp: [
+      `/filter test [test string] - Tests whether or not the provided test string would trigger any of the chat monitors.`,
+      `Requires: % @ &`
+    ]
   },
   filterhelp: [
     `/filter add list, word, reason[, optional public reason] - Adds a word to the given filter list. Requires: &`,
     `/filter remove list, words - Removes words from the given filter list. Requires: &`,
     `/filter view - Opens the list of filtered words. Requires: % @ &`,
-    `/filter test - Do "/help filter test" for more information. Requires: % @ &`,
+    `/filter test [test string] - Tests whether or not the provided test string would trigger any of the chat monitors. Requires: % @ &`,
     `You may use / instead of , in /filter add if you want to specify a reason that includes commas.`
   ],
   allowname(target, room, user) {

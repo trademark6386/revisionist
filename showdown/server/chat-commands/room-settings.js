@@ -164,7 +164,7 @@ const commands = {
     room.saveSettings();
   },
   modchathelp: [
-    `/modchat [off/autoconfirmed/trusted/+/%/@/*/player/#/&] - Set the level of moderated chat. Requires: % \u2606 for off/autoconfirmed/+ options, * @ # & for all the options`
+    `/modchat [off/autoconfirmed/trusted/+/%/@/*/player/#/&] - Set the level of moderated chat. Requires: % \u2606 for off/autoconfirmed/+/player options, * @ # & for all the options`
   ],
   automodchat(target, room, user) {
     room = this.requireRoom();
@@ -405,10 +405,13 @@ const commands = {
   permissions: {
     clear: "set",
     set(target, room, user) {
-      let [perm, rank] = this.splitOne(target);
+      const [perm, displayRank] = this.splitOne(target);
       room = this.requireRoom();
+      let rank = displayRank;
       if (rank === "default")
         rank = "";
+      if (rank === "all users")
+        rank = Users.Auth.defaultSymbol();
       if (!room.persist)
         return this.errorReply(`This room does not allow customizing permissions.`);
       if (!target || !perm)
@@ -417,7 +420,9 @@ const commands = {
         return this.errorReply(`${rank} is not a valid rank.`);
       }
       const validPerms = Users.Auth.supportedRoomPermissions(room);
-      if (!validPerms.some((p) => p === perm || p.startsWith(`${perm} `))) {
+      const sanitizedPerm = perm.replace("!", "/");
+      if (!validPerms.some((p) => // we need to check the raw permissions also because broadcast permissions are listed with the !
+      p === sanitizedPerm || p === perm || p.startsWith(`${sanitizedPerm} `) || p.startsWith(`${perm} `))) {
         return this.errorReply(`${perm} is not a valid room permission.`);
       }
       if (!room.auth.atLeast(user, "#")) {
@@ -428,7 +433,7 @@ const commands = {
       }
       const currentPermissions = room.settings.permissions || {};
       if (currentPermissions[perm] === (rank || void 0)) {
-        return this.errorReply(`${perm} is already set to ${rank || "default"}.`);
+        return this.errorReply(`${perm} is already set to ${displayRank || "default"}.`);
       }
       if (rank) {
         currentPermissions[perm] = rank;
@@ -439,11 +444,9 @@ const commands = {
           delete room.settings.permissions;
       }
       room.saveSettings();
-      if (!rank)
-        rank = `default`;
-      this.modlog(`SETPERMISSION`, null, `${perm}: ${rank}`);
+      this.modlog(`SETPERMISSION`, null, `${perm}: ${displayRank}`);
       this.refreshPage(`permissions-${room.roomid}`);
-      return this.privateModAction(`${user.name} set the required rank for ${perm} to ${rank}.`);
+      return this.privateModAction(`${user.name} set the required rank for ${perm} to ${displayRank}.`);
     },
     sethelp: [
       `/permissions set [command], [rank symbol] - sets the required permission to use the command [command] to [rank]. Requires: # &`,
@@ -457,18 +460,18 @@ const commands = {
     ""(target, room, user) {
       room = this.requireRoom();
       const allPermissions = Users.Auth.supportedRoomPermissions(room);
-      const permissionGroups = allPermissions.filter((perm) => !perm.startsWith("/"));
+      const permissionGroups = allPermissions.filter((perm) => !perm.startsWith("/") && !perm.startsWith("!"));
       const permissions = allPermissions.filter((perm) => {
         const handler = Chat.parseCommand(perm)?.handler;
         if (handler?.isPrivate && !user.can("lock"))
           return false;
-        return perm.startsWith("/") && !perm.includes(" ");
+        return (perm.startsWith("/") || perm.startsWith("!")) && !perm.includes(" ");
       });
-      const subPermissions = allPermissions.filter((perm) => perm.startsWith("/") && perm.includes(" ")).filter((perm) => {
+      const subPermissions = allPermissions.filter((perm) => (perm.startsWith("/") || perm.startsWith("!")) && perm.includes(" ")).filter((perm) => {
         const handler = Chat.parseCommand(perm)?.handler;
         if (handler?.isPrivate && !user.can("lock"))
           return false;
-        return perm.startsWith("/") && perm.includes(" ");
+        return (perm.startsWith("/") || perm.startsWith("!")) && perm.includes(" ");
       });
       const subPermissionsByNamespace = {};
       for (const perm of subPermissions) {
@@ -485,6 +488,7 @@ const commands = {
       buffer += `<p><strong>Group permissions:</strong> (will affect multiple commands or part of one command)<br />`;
       buffer += `<code>` + permissionGroups.join(`</code> <code>`) + `</code></p>`;
       buffer += `<p><details class="readmore"><summary><strong>Single-command permissions:</strong> (will affect one command)</summary>`;
+      buffer += `Permissions starting with <code>!</code> are for broadcasting the command, not using it.<br />`;
       buffer += `<code>` + permissions.join(`</code> <code>`) + `</code></details></p>`;
       buffer += `<p><details class="readmore"><summary><strong>Sub-commands:</strong> (will affect one sub-command, like /roomevents view)</summary>`;
       for (const subPerms of Object.values(subPermissionsByNamespace)) {
@@ -1012,14 +1016,14 @@ const commands = {
       if (target.includes(",") || target.includes("|") || target.includes("[") || target.includes("-")) {
         return this.errorReply("Room titles can't contain any of: ,|[-");
       }
-      target = `[G] ${target}`;
     } else {
       this.checkCan("makeroom");
     }
     const creatorID = room.roomid.split("-")[1];
     const id = isGroupchat ? `groupchat-${creatorID}-${toID(target)}` : void 0;
+    const title = isGroupchat ? `[G] ${target}` : target;
     const oldID = room.roomid;
-    room.rename(target, id);
+    room.rename(title, id);
     Chat.handleRoomRename(oldID, id || toID(target), room);
     this.modlog(`RENAME${isGroupchat ? "GROUPCHAT" : "ROOM"}`, null, `from ${oldTitle}`);
     const privacy = room.settings.isPrivate === true ? "Private" : !room.settings.isPrivate ? "Public" : `${room.settings.isPrivate.charAt(0).toUpperCase()}${room.settings.isPrivate.slice(1)}`;
@@ -1653,7 +1657,7 @@ const pages = {
     this.title = `[Permissions]`;
     const room = this.requireRoom();
     this.checkCan("mute", null, room);
-    const roomGroups = ["default", ...Config.groupsranking.slice(1)];
+    const roomGroups = ["default", "all users", ...Config.groupsranking.slice(1)];
     const permissions = room.settings.permissions || {};
     let buf = `<div class="pad"><h2>Command permissions for ${room.title}</h2>`;
     buf += `<div class="ladder"><table>`;

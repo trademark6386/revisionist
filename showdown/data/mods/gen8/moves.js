@@ -22,22 +22,10 @@ __export(moves_exports, {
 });
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
-  aeroblast: {
-    inherit: true,
-    isNonstandard: null
-  },
   allyswitch: {
     inherit: true,
-    stallingMove: false,
+    // Prevents setting the volatile used to check for Ally Switch failure
     onPrepareHit() {
-    },
-    onHit(pokemon) {
-      const newPosition = pokemon.position === 0 ? pokemon.side.active.length - 1 : 0;
-      if (!pokemon.side.active[newPosition])
-        return false;
-      if (pokemon.side.active[newPosition].fainted)
-        return false;
-      this.swapPosition(pokemon, newPosition, "[from] move: Ally Switch");
     }
   },
   anchorshot: {
@@ -52,10 +40,6 @@ const Moves = {
     inherit: true,
     flags: { failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failinstruct: 1 }
   },
-  aurawheel: {
-    inherit: true,
-    isNonstandard: null
-  },
   auroraveil: {
     inherit: true,
     onTry() {
@@ -65,6 +49,10 @@ const Moves = {
   autotomize: {
     inherit: true,
     isNonstandard: null
+  },
+  beakblast: {
+    inherit: true,
+    isNonstandard: "Past"
   },
   belch: {
     inherit: true,
@@ -77,19 +65,15 @@ const Moves = {
         move.accuracy = true;
     }
   },
-  blueflare: {
-    inherit: true,
-    isNonstandard: null
-  },
   boltbeak: {
     inherit: true,
     isNonstandard: null
   },
-  boltstrike: {
+  bonemerang: {
     inherit: true,
     isNonstandard: null
   },
-  bonemerang: {
+  burnup: {
     inherit: true,
     isNonstandard: null
   },
@@ -144,22 +128,6 @@ const Moves = {
       failmimic: 1
     }
   },
-  clangingscales: {
-    inherit: true,
-    isNonstandard: null
-  },
-  clangoroussoul: {
-    inherit: true,
-    isNonstandard: null
-  },
-  conversion: {
-    inherit: true,
-    isNonstandard: null
-  },
-  conversion2: {
-    inherit: true,
-    isNonstandard: null
-  },
   copycat: {
     inherit: true,
     flags: { failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failinstruct: 1 }
@@ -168,15 +136,11 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  cosmicpower: {
+  corrosivegas: {
     inherit: true,
     isNonstandard: null
   },
   craftyshield: {
-    inherit: true,
-    isNonstandard: null
-  },
-  crushgrip: {
     inherit: true,
     isNonstandard: null
   },
@@ -189,13 +153,14 @@ const Moves = {
     },
     target: "randomNormal"
   },
-  decorate: {
+  cut: {
     inherit: true,
     isNonstandard: null
   },
-  doomdesire: {
+  darkvoid: {
     inherit: true,
-    isNonstandard: null
+    isNonstandard: "Past",
+    noSketch: false
   },
   doubleironbash: {
     inherit: true,
@@ -203,7 +168,7 @@ const Moves = {
   },
   dragonhammer: {
     inherit: true,
-    isNonstandard: null
+    flags: { contact: 1, protect: 1, mirror: 1 }
   },
   dualchop: {
     inherit: true,
@@ -222,10 +187,6 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  floralhealing: {
-    inherit: true,
-    isNonstandard: null
-  },
   flowershield: {
     inherit: true,
     isNonstandard: null
@@ -240,7 +201,7 @@ const Moves = {
       if (!this.runEvent("ChargeMove", attacker, defender, move)) {
         return;
       }
-      if (this.gameType === "doubles" || this.gameType === "multi") {
+      if (this.sides.length > 2) {
         const animatedTarget = attacker.getMoveTargets(this.dex.getActiveMove("aerialace"), defender).targets[0];
         if (animatedTarget) {
           this.hint(`${move.name}'s animation targeted ${animatedTarget.name}`);
@@ -250,25 +211,9 @@ const Moves = {
       return null;
     }
   },
-  forestscurse: {
-    inherit: true,
-    isNonstandard: null
-  },
-  freezeshock: {
-    inherit: true,
-    isNonstandard: null
-  },
-  fusionbolt: {
-    inherit: true,
-    isNonstandard: null
-  },
-  fusionflare: {
-    inherit: true,
-    isNonstandard: null
-  },
   futuresight: {
     inherit: true,
-    flags: { futuremove: 1 }
+    flags: { metronome: 1, futuremove: 1 }
   },
   geargrind: {
     inherit: true,
@@ -286,10 +231,6 @@ const Moves = {
     inherit: true,
     basePower: 130
   },
-  glaciate: {
-    inherit: true,
-    isNonstandard: null
-  },
   grassyglide: {
     inherit: true,
     basePower: 70
@@ -306,29 +247,27 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  healbell: {
-    inherit: true,
-    isNonstandard: null
-  },
   heartswap: {
     inherit: true,
     isNonstandard: "Past"
   },
+  holdback: {
+    inherit: true,
+    isNonstandard: null
+  },
   holdhands: {
     inherit: true,
+    isNonstandard: null,
     flags: { bypasssub: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failinstruct: 1 }
   },
   hyperspacefury: {
     inherit: true,
-    isNonstandard: "Past"
+    isNonstandard: "Past",
+    noSketch: false
   },
   hyperspacehole: {
     inherit: true,
     isNonstandard: "Past"
-  },
-  iceburn: {
-    inherit: true,
-    isNonstandard: null
   },
   icehammer: {
     inherit: true,
@@ -364,7 +303,7 @@ const Moves = {
   },
   lusterpurge: {
     inherit: true,
-    isNonstandard: null
+    basePower: 70
   },
   magiccoat: {
     inherit: true,
@@ -493,11 +432,7 @@ const Moves = {
   },
   mistball: {
     inherit: true,
-    isNonstandard: null
-  },
-  moongeistbeam: {
-    inherit: true,
-    isNonstandard: null
+    basePower: 70
   },
   multiattack: {
     inherit: true,
@@ -528,10 +463,6 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  photongeyser: {
-    inherit: true,
-    isNonstandard: null
-  },
   plasmafists: {
     inherit: true,
     isNonstandard: null
@@ -540,9 +471,9 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  prismaticlaser: {
+  psychoboost: {
     inherit: true,
-    isNonstandard: null
+    isNonstandard: "Past"
   },
   psychoshift: {
     inherit: true,
@@ -572,17 +503,9 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  rockwrecker: {
-    inherit: true,
-    isNonstandard: null
-  },
   roost: {
     inherit: true,
     pp: 10
-  },
-  sacredfire: {
-    inherit: true,
-    isNonstandard: null
   },
   searingshot: {
     inherit: true,
@@ -591,6 +514,10 @@ const Moves = {
   secretsword: {
     inherit: true,
     isNonstandard: null
+  },
+  seedflare: {
+    inherit: true,
+    isNonstandard: "Past"
   },
   shadowbone: {
     inherit: true,
@@ -604,9 +531,9 @@ const Moves = {
     inherit: true,
     pp: 10
   },
-  simplebeam: {
+  sketch: {
     inherit: true,
-    isNonstandard: null
+    isNonstandard: "Past"
   },
   skullbash: {
     inherit: true,
@@ -628,19 +555,25 @@ const Moves = {
     inherit: true,
     pp: 10
   },
-  sparklingaria: {
-    inherit: true,
-    isNonstandard: null
-  },
   spectralthief: {
     inherit: true,
     isNonstandard: null
   },
-  stormthrow: {
+  stickyweb: {
     inherit: true,
-    isNonstandard: null
+    condition: {
+      onSideStart(side) {
+        this.add("-sidestart", side, "move: Sticky Web");
+      },
+      onEntryHazard(pokemon) {
+        if (!pokemon.isGrounded() || pokemon.hasItem("heavydutyboots"))
+          return;
+        this.add("-activate", pokemon, "move: Sticky Web");
+        this.boost({ spe: -1 }, pokemon, this.effectState.source, this.dex.getActiveMove("stickyweb"));
+      }
+    }
   },
-  strangesteam: {
+  stormthrow: {
     inherit: true,
     isNonstandard: null
   },
@@ -648,9 +581,9 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  sunsteelstrike: {
+  tailglow: {
     inherit: true,
-    isNonstandard: null
+    isNonstandard: "Past"
   },
   technoblast: {
     inherit: true,
@@ -664,15 +597,15 @@ const Moves = {
     inherit: true,
     isNonstandard: null
   },
-  topsyturvy: {
+  toxicthread: {
     inherit: true,
-    isNonstandard: null
+    isNonstandard: "Past"
   },
   trickortreat: {
     inherit: true,
     isNonstandard: null
   },
-  triplekick: {
+  vcreate: {
     inherit: true,
     isNonstandard: null
   },

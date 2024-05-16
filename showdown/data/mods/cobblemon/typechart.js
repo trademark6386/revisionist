@@ -53,6 +53,7 @@ const TypeChart = {
 	  Slime: 1,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 1
     },
@@ -88,6 +89,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 3,
       Steel: 1,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 3
     }
@@ -122,6 +124,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -157,6 +160,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 1,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -192,6 +196,7 @@ const TypeChart = {
 	  Slime: 1,
 	  Sound: 1,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -226,6 +231,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 2,
 	  Wind: 0
     },
@@ -261,6 +267,7 @@ const TypeChart = {
 	  Slime: 2,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -297,6 +304,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 2,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -332,6 +340,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 1,
       Steel: 1,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -366,6 +375,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 1,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -402,6 +412,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 2,
+	  Stellar: 0,
       Water: 1,
 	  Wind: 2
     },
@@ -437,6 +448,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 1,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -473,6 +485,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -509,6 +522,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 2,
 	  Wind: 0
     },
@@ -546,6 +560,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 1,
 	  Wind: 1
     },
@@ -583,6 +598,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 1,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -617,6 +633,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 1,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -651,6 +668,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -686,6 +704,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 1,
+	  Stellar: 0,
       Water: 1,
 	  Wind: 0
     }
@@ -720,6 +739,7 @@ const TypeChart = {
 	  Slime: 2,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -757,6 +777,7 @@ const TypeChart = {
 	  Slime: 2,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 1
     },
@@ -792,6 +813,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 1,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     },
@@ -827,6 +849,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 0
     }
@@ -862,6 +885,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 0,
       Steel: 1,
+	  Stellar: 0,
       Water: 1,
 	  Wind: 0
     },
@@ -898,6 +922,7 @@ const TypeChart = {
 	  Slime: 1,
 	  Sound: 1,
       Steel: 1,
+	  Stellar: 0,
       Water: 1,
 	  Wind: 1
     }
@@ -932,6 +957,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 2,
 	  Wind: 0
     }
@@ -966,6 +992,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 2,
 	  Wind: 1
     }
@@ -1005,10 +1032,46 @@ const TypeChart = {
 	  Slime: 2,
 	  Sound: 0,
       Steel: 2,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 2
     },
     inherit: true
+  },
+  stellar: {
+    damageTaken: {
+      Bug: 0,
+	  Cosmic: 0,
+	  Crystal: 0,
+      Dark: 0,
+	  Digital: 0,
+      Dragon: 0,
+	  Eldritch: 0,
+      Electric: 0,
+      Fairy: 0,
+      Fighting: 0,
+      Fire: 0,
+      Flying: 0,
+      Ghost: 0,
+      Grass: 0,
+      Ground: 0,
+      Ice: 0,
+	  light: 0,
+      Normal: 0,
+	  Nuclear: 0,
+	  Plastic: 0,
+      Poison: 0,
+      Psychic: 0,
+	  Questionmark: 0,
+      Rock: 0,
+	  Shadow: 0,
+	  Slime: 0,
+	  Sound: 0,
+      Steel: 0,
+      Stellar: 0,
+      Water: 0,
+	  Wind: 0
+    }
   },
   water: {
     damageTaken: {
@@ -1041,6 +1104,7 @@ const TypeChart = {
 	  Slime: 2,
 	  Sound: 0,
       Steel: 2,
+	  Stellar: 0,
       Water: 2,
 	  Wind: 0
     },
@@ -1076,6 +1140,7 @@ const TypeChart = {
 	  Slime: 0,
 	  Sound: 2,
       Steel: 0,
+	  Stellar: 0,
       Water: 0,
 	  Wind: 2
     }

@@ -74,6 +74,7 @@ const Abilities = {
     inherit: true,
     onTryHit() {
     },
+    flags: {},
     rating: 0.5
   },
   sapsipper: {

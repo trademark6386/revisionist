@@ -34,7 +34,6 @@ __export(random_teams_exports, {
 module.exports = __toCommonJS(random_teams_exports);
 var import_random_teams = __toESM(require("../gen2/random-teams"));
 var import_lib = require("../../../lib");
-var import_random_teams2 = require("../gen8/random-teams");
 class RandomGen1Teams extends import_random_teams.default {
   constructor() {
     super(...arguments);
@@ -47,7 +46,6 @@ class RandomGen1Teams extends import_random_teams.default {
     const randomN = this.randomNPokemon(this.maxTeamSize, this.forceMonotype);
     for (const pokemon of randomN) {
       const species = this.dex.species.get(pokemon);
-      const learnset = this.dex.species.getLearnset(species.id);
       const mbstmin = 1307;
       const stats = species.baseStats;
       let mbst = stats["hp"] * 2 + 30 + 63 + 100 + 10;
@@ -88,16 +86,7 @@ class RandomGen1Teams extends import_random_teams.default {
       ivs["spd"] = ivs["spa"];
       ivs["spe"] *= 2;
       const evs = { hp: 255, atk: 255, def: 255, spa: 255, spd: 255, spe: 255 };
-      const pool = [];
-      if (learnset) {
-        for (const move in learnset) {
-          if (this.dex.moves.get(move).gen !== 1)
-            continue;
-          if (learnset[move].some((learned) => learned.startsWith("1"))) {
-            pool.push(move);
-          }
-        }
-      }
+      const pool = [...this.dex.species.getMovePool(species.id)];
       team.push({
         name: species.baseSpecies,
         species: species.name,
@@ -125,40 +114,21 @@ class RandomGen1Teams extends import_random_teams.default {
     const typePool = this.dex.types.names();
     const type = this.forceMonotype || this.sample(typePool);
     const rejectedButNotInvalidPool = [];
-    const nuTiers = ["UU", "UUBL", "NFE", "LC", "NU"];
-    const uuTiers = ["NFE", "UU", "UUBL", "NU"];
     const typeCount = {};
-    const weaknessCount = { Electric: 0, Psychic: 0, Water: 0, Ice: 0, Ground: 0 };
-    let uberCount = 0;
-    let nuCount = 0;
-    const pokemonPool = this.getPokemonPool(type, pokemon, isMonotype);
+    const weaknessCount = { Electric: 0, Psychic: 0, Water: 0, Ice: 0, Ground: 0, Fire: 0 };
+    let numMaxLevelPokemon = 0;
+    const pokemonPool = Object.keys(this.getPokemonPool(type, pokemon, isMonotype, Object.keys(this.randomData))[0]);
     while (pokemonPool.length && pokemon.length < this.maxTeamSize) {
       const species = this.dex.species.get(this.sampleNoReplace(pokemonPool));
-      if (!species.exists || !this.randomData[species.id]?.moves)
+      if (!species.exists)
         continue;
       if (species.id === "ditto" && this.battleHasDitto)
         continue;
       const limitFactor = Math.round(this.maxTeamSize / 6) || 1;
-      const tier = species.tier;
-      switch (tier) {
-        case "LC":
-        case "NFE":
-          if (nuCount >= 4 * limitFactor || this.randomChance(1, 3))
-            continue;
-          break;
-        case "Uber":
-          if (uberCount >= 1 * limitFactor)
-            continue;
-          break;
-        default:
-          if (uuTiers.includes(tier) && pokemonPool.length > 1 && (nuCount >= 4 * limitFactor && this.randomChance(1, 2))) {
-            continue;
-          }
-      }
       let skip = false;
       if (!isMonotype && !this.forceMonotype) {
         for (const typeName of species.types) {
-          if (typeCount[typeName] >= 2 * limitFactor || typeCount[typeName] >= 1 * limitFactor && this.randomChance(1, 2) && pokemonPool.length > 1) {
+          if (typeCount[typeName] >= 2 * limitFactor) {
             skip = true;
             break;
           }
@@ -183,6 +153,10 @@ class RandomGen1Teams extends import_random_teams.default {
         rejectedButNotInvalidPool.push(species.id);
         continue;
       }
+      if (!this.adjustLevel && this.getLevel(species) === 100 && numMaxLevelPokemon >= limitFactor) {
+        rejectedButNotInvalidPool.push(species.id);
+        continue;
+      }
       pokemon.push(this.randomSet(species));
       for (const typeName of species.types) {
         if (typeCount[typeName]) {
@@ -194,11 +168,8 @@ class RandomGen1Teams extends import_random_teams.default {
       for (const weakness of pokemonWeaknesses) {
         weaknessCount[weakness]++;
       }
-      if (tier === "Uber") {
-        uberCount++;
-      } else if (nuTiers.includes(tier)) {
-        nuCount++;
-      }
+      if (this.getLevel(species) === 100)
+        numMaxLevelPokemon++;
       if (species.id === "ditto")
         this.battleHasDitto = true;
     }
@@ -211,29 +182,6 @@ class RandomGen1Teams extends import_random_teams.default {
     }
     return pokemon;
   }
-  shouldCullMove(move, types, moves, counter) {
-    switch (move.id) {
-      case "hydropump":
-        return { cull: moves.has("surf") };
-      case "surf":
-        return { cull: moves.has("hydropump") };
-      case "selfdestruct":
-        return { cull: moves.has("rest") };
-      case "rest":
-        return { cull: moves.has("selfdestruct") };
-      case "sharpen":
-      case "swordsdance":
-        return { cull: counter.get("Special") > counter.get("Physical") || !counter.get("Physical") || moves.has("growth") };
-      case "growth":
-        return { cull: counter.get("Special") < counter.get("Physical") || !counter.get("Special") || moves.has("swordsdance") };
-      case "poisonpowder":
-      case "stunspore":
-      case "sleeppowder":
-      case "toxic":
-        return { cull: counter.get("Status") > 1 };
-    }
-    return { cull: false };
-  }
   /**
    * Random set generation for Gen 1 Random Battles.
    */
@@ -244,10 +192,6 @@ class RandomGen1Teams extends import_random_teams.default {
     const data = this.randomData[species.id];
     const movePool = data.moves?.slice() || [];
     const moves = /* @__PURE__ */ new Set();
-    const types = new Set(species.types);
-    const counter = new import_random_teams2.MoveCounter();
-    const PhysicalSetup = ["swordsdance", "sharpen"];
-    const SpecialSetup = ["amnesia", "growth"];
     if (data.comboMoves && data.comboMoves.length <= this.maxMoveCount && this.randomChance(1, 2)) {
       for (const m of data.comboMoves)
         moves.add(m);
@@ -255,49 +199,20 @@ class RandomGen1Teams extends import_random_teams.default {
     if (moves.size < this.maxMoveCount && data.exclusiveMoves) {
       moves.add(this.sample(data.exclusiveMoves));
     }
-    if (moves.size < this.maxMoveCount && data.essentialMove) {
-      moves.add(data.essentialMove);
+    if (moves.size < this.maxMoveCount && data.essentialMoves) {
+      for (const moveid of data.essentialMoves) {
+        moves.add(moveid);
+        if (moves.size === this.maxMoveCount)
+          break;
+      }
     }
     while (moves.size < this.maxMoveCount && movePool.length) {
       while (moves.size < this.maxMoveCount && movePool.length) {
         const moveid = this.sampleNoReplace(movePool);
         moves.add(moveid);
       }
-      if (movePool.length) {
-        for (const setMoveid of moves) {
-          const move = this.dex.moves.get(setMoveid);
-          const moveid = move.id;
-          if (!move.damage && !move.damageCallback)
-            counter.add(move.category);
-          if (PhysicalSetup.includes(moveid))
-            counter.add("physicalsetup");
-          if (SpecialSetup.includes(moveid))
-            counter.add("specialsetup");
-        }
-        for (const moveid of moves) {
-          if (moveid === data.essentialMove)
-            continue;
-          const move = this.dex.moves.get(moveid);
-          if ((!data.essentialMove || moveid !== data.essentialMove) && this.shouldCullMove(move, types, moves, counter).cull) {
-            moves.delete(moveid);
-            break;
-          }
-          counter.add(move.category);
-        }
-      }
     }
-    const levelScale = {
-      LC: 88,
-      NFE: 80,
-      PU: 77,
-      NU: 77,
-      NUBL: 76,
-      UU: 74,
-      UUBL: 71,
-      OU: 68,
-      Uber: 65
-    };
-    const level = this.adjustLevel || data.level || levelScale[species.tier] || 80;
+    const level = this.getLevel(species);
     const evs = { hp: 255, atk: 255, def: 255, spa: 255, spd: 255, spe: 255 };
     const ivs = { hp: 30, atk: 30, def: 30, spa: 30, spd: 30, spe: 30 };
     if (moves.has("substitute")) {
@@ -308,10 +223,22 @@ class RandomGen1Teams extends import_random_teams.default {
         evs.hp -= 4;
       }
     }
+    const noAttackStatMoves = [...moves].every((m) => {
+      const move = this.dex.moves.get(m);
+      if (move.damageCallback || move.damage)
+        return true;
+      return move.category !== "Physical";
+    });
+    if (noAttackStatMoves && !moves.has("mimic") && !moves.has("transform")) {
+      evs.atk = 0;
+      ivs.atk = 2;
+    }
+    const shuffledMoves = Array.from(moves);
+    this.prng.shuffle(shuffledMoves);
     return {
       name: species.name,
       species: species.name,
-      moves: Array.from(moves),
+      moves: shuffledMoves,
       ability: "No Ability",
       evs,
       ivs,

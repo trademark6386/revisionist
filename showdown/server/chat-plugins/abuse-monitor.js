@@ -382,8 +382,8 @@ async function lock(user, room, reason, isWeek) {
   }
   room.add(`|c|&|/raw ${DISCLAIMER}`).update();
   room.hideText(affected.map((f) => f.id), void 0, true);
-  let message = `|popup||html|${user.name} has locked you from talking in chats, battles, and PMing regular users`;
-  message += ` ${isWeek ? "for two days" : "for a week"}`;
+  let message = `|popup||html|Artemis has locked you from talking in chats, battles, and PMing regular users`;
+  message += ` ${!isWeek ? "for two days" : "for a week"}`;
   message += `
 
 Reason: ${reason}`;
@@ -1434,10 +1434,8 @@ const commands = {
         "SELECT * FROM perspective_stats WHERE result = 0 AND timestamp > ? AND timestamp < ?",
         [timeNum, timeNum + 24 * 60 * 60 * 1e3]
       );
-      logs = logs.filter((log) => (
-        // proofing against node's stupid date lib
-        Chat.toTimestamp(new Date(log.timestamp)).split(" ")[0] === target
-      ));
+      logs = logs.filter((log) => // proofing against node's stupid date lib
+      Chat.toTimestamp(new Date(log.timestamp)).split(" ")[0] === target);
       if (!logs.length) {
         return this.errorReply(`No logs found for that date.`);
       }
@@ -1730,6 +1728,7 @@ const commands = {
       `/am respawn - Respawns abuse monitor processes. Requires: whitelist &`,
       `/am logs [count][, userid] - View logs of recent matches by the abuse monitor. `,
       `If a userid is given, searches only logs from that userid. Requires: whitelist &`,
+      `/am edithistory [user] - Clear specific abuse monitor hit(s) for a user. Requires: @ &`,
       `/am userclear [user] - Clear all logged abuse monitor hits for a user. Requires: whitelist &`,
       `/am deletelog [number] - Deletes a abuse monitor log matching the row ID [number] given. Requires: whitelist &`,
       `/am editspecial [type], [percent], [score] - Sets a special case for the abuse monitor. Requires: whitelist &`,

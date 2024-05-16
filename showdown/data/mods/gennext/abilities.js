@@ -692,7 +692,7 @@ const Abilities = {
   },
   adaptability: {
     inherit: true,
-    onModifyMove(move) {
+    onModifySTAB() {
     },
     onBasePower(power, attacker, defender, move) {
       if (!attacker.hasType(move.type)) {

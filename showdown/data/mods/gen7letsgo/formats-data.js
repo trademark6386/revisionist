@@ -29,7 +29,7 @@ const FormatsData = {
     tier: "NFE"
   },
   venusaur: {
-    tier: "UU",
+    tier: "OU",
     doublesTier: "DOU"
   },
   venusaurmega: {
@@ -188,7 +188,7 @@ const FormatsData = {
     tier: "LC"
   },
   clefable: {
-    tier: "UU",
+    tier: "OU",
     doublesTier: "DOU"
   },
   vulpix: {
@@ -268,7 +268,7 @@ const FormatsData = {
     doublesTier: "DOU"
   },
   persianalola: {
-    tier: "OU",
+    tier: "UU",
     doublesTier: "DOU"
   },
   psyduck: {
@@ -313,7 +313,7 @@ const FormatsData = {
     doublesTier: "DOU"
   },
   alakazammega: {
-    tier: "OU",
+    tier: "Uber",
     doublesTier: "DOU"
   },
   machop: {
@@ -515,7 +515,7 @@ const FormatsData = {
     doublesTier: "DOU"
   },
   chansey: {
-    tier: "OU",
+    tier: "UU",
     doublesTier: "DOU"
   },
   tangela: {
@@ -611,11 +611,11 @@ const FormatsData = {
     doublesTier: "DOU"
   },
   vaporeon: {
-    tier: "UU",
+    tier: "OU",
     doublesTier: "DOU"
   },
   jolteon: {
-    tier: "UU",
+    tier: "OU",
     doublesTier: "DOU"
   },
   flareon: {
@@ -671,7 +671,7 @@ const FormatsData = {
     tier: "NFE"
   },
   dragonite: {
-    tier: "OU",
+    tier: "UU",
     doublesTier: "DOU"
   },
   mewtwo: {

@@ -24,7 +24,7 @@ module.exports = __toCommonJS(moves_exports);
 const Moves = {
   absorb: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   acidarmor: {
     inherit: true,
@@ -101,11 +101,11 @@ const Moves = {
   },
   block: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, metronome: 1 }
   },
   bounce: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1, nosleeptalk: 1 }
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1, metronome: 1, nosleeptalk: 1 }
   },
   bubble: {
     inherit: true,
@@ -113,7 +113,7 @@ const Moves = {
   },
   bugbuzz: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   camouflage: {
     inherit: true,
@@ -197,11 +197,11 @@ const Moves = {
   },
   dig: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, nosleeptalk: 1 }
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, metronome: 1, nosleeptalk: 1 }
   },
   dive: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, nosleeptalk: 1 }
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, nonsky: 1, metronome: 1, nosleeptalk: 1 }
   },
   dracometeor: {
     inherit: true,
@@ -213,15 +213,15 @@ const Moves = {
   },
   drainpunch: {
     inherit: true,
-    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 }
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1, metronome: 1 }
   },
   dreameater: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   echoedvoice: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   electroball: {
     inherit: true,
@@ -246,7 +246,7 @@ const Moves = {
   },
   finalgambit: {
     inherit: true,
-    flags: { contact: 1, protect: 1 }
+    flags: { contact: 1, protect: 1, metronome: 1 }
   },
   fireblast: {
     inherit: true,
@@ -269,7 +269,7 @@ const Moves = {
   },
   fly: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1 }
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1, metronome: 1 }
   },
   followme: {
     inherit: true,
@@ -312,7 +312,7 @@ const Moves = {
           basePower: 100,
           category: "Special",
           priority: 0,
-          flags: { futuremove: 1 },
+          flags: { metronome: 1, futuremove: 1 },
           ignoreImmunity: false,
           effectType: "Move",
           type: "Psychic"
@@ -324,7 +324,7 @@ const Moves = {
   },
   gigadrain: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   glare: {
     inherit: true,
@@ -332,7 +332,7 @@ const Moves = {
   },
   grasswhistle: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   grasspledge: {
     inherit: true,
@@ -347,7 +347,7 @@ const Moves = {
   },
   growl: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   growth: {
     inherit: true,
@@ -369,7 +369,7 @@ const Moves = {
   },
   healbell: {
     inherit: true,
-    flags: { snatch: 1, sound: 1 },
+    flags: { snatch: 1, sound: 1, metronome: 1 },
     onHit(target, source) {
       this.add("-activate", source, "move: Heal Bell");
       const allies = [...target.side.pokemon, ...target.side.allySide?.pokemon || []];
@@ -467,7 +467,7 @@ const Moves = {
   },
   hornleech: {
     inherit: true,
-    flags: { contact: 1, protect: 1, mirror: 1 }
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
   },
   hurricane: {
     inherit: true,
@@ -479,7 +479,7 @@ const Moves = {
   },
   hypervoice: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   icebeam: {
     inherit: true,
@@ -507,7 +507,7 @@ const Moves = {
   },
   leechlife: {
     inherit: true,
-    flags: { contact: 1, protect: 1, mirror: 1 }
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
   },
   lick: {
     inherit: true,
@@ -557,15 +557,15 @@ const Moves = {
   },
   meanlook: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, metronome: 1 }
   },
   megadrain: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   metalsound: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   meteormash: {
     inherit: true,
@@ -589,19 +589,9 @@ const Moves = {
     type: "Normal"
   },
   mudsport: {
-    num: 300,
-    accuracy: true,
-    basePower: 0,
-    category: "Status",
-    name: "Mud Sport",
-    pp: 15,
-    priority: 0,
-    flags: {},
+    inherit: true,
+    pseudoWeather: void 0,
     volatileStatus: "mudsport",
-    onTryHitField(target, source) {
-      if (source.volatiles["mudsport"])
-        return false;
-    },
     condition: {
       noCopy: true,
       onStart(pokemon) {
@@ -609,13 +599,12 @@ const Moves = {
       },
       onAnyBasePowerPriority: 1,
       onAnyBasePower(basePower, user, target, move) {
-        if (move.type === "Electric")
+        if (move.type === "Electric") {
+          this.debug("mud sport weaken");
           return this.chainModify([1352, 4096]);
+        }
       }
-    },
-    secondary: null,
-    target: "all",
-    type: "Ground"
+    }
   },
   muddywater: {
     inherit: true,
@@ -636,7 +625,7 @@ const Moves = {
   },
   perishsong: {
     inherit: true,
-    flags: { sound: 1, distance: 1 }
+    flags: { sound: 1, distance: 1, metronome: 1 }
   },
   pinmissile: {
     inherit: true,
@@ -753,7 +742,7 @@ const Moves = {
   roar: {
     inherit: true,
     accuracy: 100,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1 }
   },
   rocktomb: {
     inherit: true,
@@ -763,7 +752,7 @@ const Moves = {
   },
   round: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   sacredsword: {
     inherit: true,
@@ -775,7 +764,7 @@ const Moves = {
   },
   screech: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   secretpower: {
     inherit: true,
@@ -788,11 +777,11 @@ const Moves = {
   },
   shadowforce: {
     inherit: true,
-    flags: { contact: 1, charge: 1, mirror: 1, nosleeptalk: 1 }
+    flags: { contact: 1, charge: 1, mirror: 1, metronome: 1, nosleeptalk: 1 }
   },
   sing: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   skillswap: {
     inherit: true,
@@ -814,7 +803,7 @@ const Moves = {
   },
   skydrop: {
     inherit: true,
-    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1, nosleeptalk: 1 },
+    flags: { contact: 1, charge: 1, protect: 1, mirror: 1, gravity: 1, distance: 1, metronome: 1, nosleeptalk: 1 },
     onTryHit(target, source, move) {
       if (target.fainted)
         return false;
@@ -928,7 +917,7 @@ const Moves = {
           this.add("-activate", target, "Substitute", "[damage]");
         }
         if (move.recoil && damage) {
-          this.damage(this.actions.calcRecoilDamage(damage, move), source, target, "recoil");
+          this.damage(this.actions.calcRecoilDamage(damage, move, source), source, target, "recoil");
         }
         if (move.drain) {
           this.heal(Math.ceil(damage * move.drain[0] / move.drain[1]), source, target, "drain");
@@ -948,7 +937,7 @@ const Moves = {
   },
   supersonic: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, metronome: 1 }
   },
   surf: {
     inherit: true,
@@ -1001,7 +990,7 @@ const Moves = {
   },
   uproar: {
     inherit: true,
-    flags: { protect: 1, mirror: 1, sound: 1, nosleeptalk: 1 }
+    flags: { protect: 1, mirror: 1, sound: 1, metronome: 1, nosleeptalk: 1 }
   },
   vinewhip: {
     inherit: true,
@@ -1024,19 +1013,9 @@ const Moves = {
     }
   },
   watersport: {
-    num: 346,
-    accuracy: true,
-    basePower: 0,
-    category: "Status",
-    name: "Water Sport",
-    pp: 15,
-    priority: 0,
-    flags: {},
+    inherit: true,
+    pseudoWeather: void 0,
     volatileStatus: "watersport",
-    onTryHitField(target, source) {
-      if (source.volatiles["watersport"])
-        return false;
-    },
     condition: {
       noCopy: true,
       onStart(pokemon) {
@@ -1044,18 +1023,17 @@ const Moves = {
       },
       onAnyBasePowerPriority: 1,
       onAnyBasePower(basePower, user, target, move) {
-        if (move.type === "Fire")
+        if (move.type === "Fire") {
+          this.debug("water sport weaken");
           return this.chainModify([1352, 4096]);
+        }
       }
-    },
-    secondary: null,
-    target: "all",
-    type: "Water"
+    }
   },
   whirlwind: {
     inherit: true,
     accuracy: 100,
-    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   wideguard: {
     inherit: true,

@@ -73,7 +73,7 @@ ${battleStream.rawInputLog.join("\n")}
   async runGame(format, battleStream) {
     const streams = BattleStreams.getPlayerStreams(battleStream);
     const spec = { formatid: format, seed: this.prng.seed };
-    const is4P = import__.Dex.formats.get(format).gameType === "multi";
+    const is4P = import__.Dex.formats.get(format).playerCount > 2;
     const p1spec = this.getPlayerSpec("Bot 1", this.p1options);
     const p2spec = this.getPlayerSpec("Bot 2", this.p2options);
     let p3spec, p4spec;

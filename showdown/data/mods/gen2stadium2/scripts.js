@@ -229,7 +229,7 @@ const Scripts = {
         this.battle.runEvent("AfterMoveSecondary", target, pokemon, move);
       }
       if (move.recoil && move.totalDamage && (pokemon.side.pokemonLeft > 1 || target.side.pokemonLeft > 1 || target.hp)) {
-        this.battle.damage(this.calcRecoilDamage(move.totalDamage, move), pokemon, target, "recoil");
+        this.battle.damage(this.calcRecoilDamage(move.totalDamage, move, pokemon), pokemon, target, "recoil");
       }
       return damage;
     },

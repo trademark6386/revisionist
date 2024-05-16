@@ -54,8 +54,7 @@ const commands = {
     return this.sendReplyBox(`${Chat.getReadmoreBlock(quote)}${attribution}`);
   },
   randquotehelp: [`/randquote [showauthor] - Show a random quote from the room. Add 'showauthor' to see who added it and when.`],
-  addquote: "quote",
-  quote(target, room, user) {
+  addquote(target, room, user) {
     room = this.requireRoom();
     if (!room.persist) {
       return this.errorReply("This command is unavailable in temporary rooms.");
@@ -63,7 +62,7 @@ const commands = {
     target = target.trim();
     this.checkCan("mute", null, room);
     if (!target) {
-      return this.parse(`/help quote`);
+      return this.parse(`/help addquote`);
     }
     if (!quotes[room.roomid])
       quotes[room.roomid] = [];
@@ -87,7 +86,7 @@ const commands = {
     this.privateModAction(`${user.name} added a new quote: "${collapsedQuote}".`);
     return this.modlog(`ADDQUOTE`, null, collapsedQuote);
   },
-  quotehelp: [`/quote [quote] - Adds [quote] to the room's quotes. Requires: % @ # &`],
+  addquotehelp: [`/addquote [quote] - Adds [quote] to the room's quotes. Requires: % @ # &`],
   removequote(target, room, user) {
     room = this.requireRoom();
     this.checkCan("mute", null, room);
@@ -115,7 +114,7 @@ const commands = {
     if (!roomQuotes?.length)
       return this.errorReply(`This room has no quotes.`);
     const [num, showAuthor] = import_lib.Utils.splitFirst(target, ",");
-    const index = parseInt(num) - 1;
+    const index = num === "last" ? roomQuotes.length - 1 : parseInt(num) - 1;
     if (isNaN(index)) {
       return this.errorReply(`Invalid index.`);
     }
@@ -140,7 +139,19 @@ const commands = {
       return this.errorReply(`Invalid room.`);
     this.parse(`/join view-quotes-${targetRoom.roomid}`);
   },
-  quoteshelp: [`/quotes [room] - Shows all quotes for [room]. Defaults the room the command is used in.`]
+  quoteshelp: [`/quotes [room] - Shows all quotes for [room]. Defaults the room the command is used in.`],
+  quote() {
+    this.sendReply(`/quote as a method of adding quotes has been deprecated. Use /addquote instead.`);
+    return this.parse(`/help quote`);
+  },
+  quotehelp: [
+    "/randquote [showauthor] - Show a random quote from the room. Add 'showauthor' to see who added it and when.",
+    "/removequote [index] - Removes the quote from the room's quotes. Requires: % @ # &",
+    "/viewquote [index][, params] - View the quote from the room's quotes.",
+    "If 'showauthor' is used for the [params] argument, it shows who added the quote and when.",
+    "Requires: % @ # &",
+    "/quotes [room] - Shows all quotes for [room]. Defaults the room the command is used in."
+  ]
 };
 const pages = {
   quotes(args, user) {

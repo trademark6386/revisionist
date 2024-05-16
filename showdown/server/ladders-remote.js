@@ -146,7 +146,6 @@ class LadderStore {
   }
   /**
    * Calculates Elo based on a match result
-   *
    */
   calculateElo(oldElo, score, foeElo) {
     let K = 50;

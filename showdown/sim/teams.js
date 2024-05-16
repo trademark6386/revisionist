@@ -360,7 +360,7 @@ const Teams = new class Teams2 {
     }
     return out;
   }
-  parseExportedTeamLine(line, isFirstLine, set) {
+  parseExportedTeamLine(line, isFirstLine, set, aggressive) {
     if (isFirstLine) {
       let item;
       [line, item] = line.split(" @ ");
@@ -387,10 +387,10 @@ const Teams = new class Teams2 {
       }
     } else if (line.startsWith("Trait: ")) {
       line = line.slice(7);
-      set.ability = line;
+      set.ability = aggressive ? (0, import_dex.toID)(line) : line;
     } else if (line.startsWith("Ability: ")) {
       line = line.slice(9);
-      set.ability = line;
+      set.ability = aggressive ? (0, import_dex.toID)(line) : line;
     } else if (line === "Shiny: Yes") {
       set.shiny = true;
     } else if (line.startsWith("Level: ")) {
@@ -401,13 +401,13 @@ const Teams = new class Teams2 {
       set.happiness = +line;
     } else if (line.startsWith("Pokeball: ")) {
       line = line.slice(10);
-      set.pokeball = line;
+      set.pokeball = aggressive ? (0, import_dex.toID)(line) : line;
     } else if (line.startsWith("Hidden Power: ")) {
       line = line.slice(14);
-      set.hpType = line;
+      set.hpType = aggressive ? (0, import_dex.toID)(line) : line;
     } else if (line.startsWith("Tera Type: ")) {
       line = line.slice(11);
-      set.teraType = line;
+      set.teraType = aggressive ? line.replace(/[^a-zA-Z0-9]/g, "") : line;
     } else if (line === "Gigantamax: Yes") {
       set.gigantamax = true;
     } else if (line.startsWith("EVs: ")) {
@@ -444,7 +444,7 @@ const Teams = new class Teams2 {
         return;
       line = line.substr(0, natureIndex);
       if (line !== "undefined")
-        set.nature = line;
+        set.nature = aggressive ? (0, import_dex.toID)(line) : line;
     } else if (line.startsWith("-") || line.startsWith("~")) {
       line = line.slice(line.charAt(1) === " " ? 2 : 1);
       if (line.startsWith("Hidden Power [")) {
@@ -465,19 +465,20 @@ const Teams = new class Teams2 {
     }
   }
   /** Accepts a team in any format (JSON, packed, or exported) */
-  import(buffer) {
+  import(buffer, aggressive) {
+    const sanitize = aggressive ? import_dex.toID : import_dex.Dex.getName;
     if (buffer.startsWith("[")) {
       try {
         const team = JSON.parse(buffer);
         if (!Array.isArray(team))
           throw new Error(`Team should be an Array but isn't`);
         for (const set of team) {
-          set.name = import_dex.Dex.getName(set.name);
-          set.species = import_dex.Dex.getName(set.species);
-          set.item = import_dex.Dex.getName(set.item);
-          set.ability = import_dex.Dex.getName(set.ability);
-          set.gender = import_dex.Dex.getName(set.gender);
-          set.nature = import_dex.Dex.getName(set.nature);
+          set.name = sanitize(set.name);
+          set.species = sanitize(set.species);
+          set.item = sanitize(set.item);
+          set.ability = sanitize(set.ability);
+          set.gender = sanitize(set.gender);
+          set.nature = sanitize(set.nature);
           const evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
           if (set.evs) {
             for (const statid in evs) {
@@ -497,7 +498,7 @@ const Teams = new class Teams2 {
           if (!Array.isArray(set.moves)) {
             set.moves = [];
           } else {
-            set.moves = set.moves.map(import_dex.Dex.getName);
+            set.moves = set.moves.map(sanitize);
           }
         }
         return team;
@@ -533,9 +534,9 @@ const Teams = new class Teams2 {
           moves: []
         };
         sets.push(curSet);
-        this.parseExportedTeamLine(line, true, curSet);
+        this.parseExportedTeamLine(line, true, curSet, aggressive);
       } else {
-        this.parseExportedTeamLine(line, false, curSet);
+        this.parseExportedTeamLine(line, false, curSet, aggressive);
       }
     }
     return sets;
@@ -544,6 +545,8 @@ const Teams = new class Teams2 {
     let TeamGenerator;
     if ((0, import_dex.toID)(format).includes("gen9computergeneratedteams")) {
       TeamGenerator = require(import_dex.Dex.forFormat(format).dataDir + "/cg-teams").default;
+    } else if ((0, import_dex.toID)(format).includes("gen7randomdoublesbattle")) {
+      TeamGenerator = require(import_dex.Dex.forFormat(format).dataDir + "/random-doubles-teams").default;
     } else {
       TeamGenerator = require(import_dex.Dex.forFormat(format).dataDir + "/random-teams").default;
     }

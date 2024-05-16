@@ -121,7 +121,7 @@ class RandomLetsGoTeams extends import_random_teams.RandomGen8Teams {
       forme = species.battleOnly;
     }
     const data = this.randomData[species.id];
-    const movePool = (data.moves || Object.keys(this.dex.species.getLearnset(species.id))).slice();
+    const movePool = [...data.moves || this.dex.species.getMovePool(species.id)];
     const types = new Set(species.types);
     const moves = /* @__PURE__ */ new Set();
     let counter;

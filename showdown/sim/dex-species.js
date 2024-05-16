@@ -82,6 +82,7 @@ class Species extends import_dex_data.BasicEffect {
     this.cannotDynamax = !!data.cannotDynamax;
     this.battleOnly = data.battleOnly || (this.isMega ? this.baseSpecies : void 0);
     this.changesFrom = data.changesFrom || (this.battleOnly !== this.baseSpecies ? this.battleOnly : this.baseSpecies);
+    this.pokemonGoData = data.pokemonGoData || void 0;
     if (Array.isArray(data.changesFrom))
       this.changesFrom = data.changesFrom[0];
     if (!this.gen && this.num >= 1) {
@@ -112,13 +113,14 @@ class Species extends import_dex_data.BasicEffect {
   }
 }
 class Learnset {
-  constructor(data) {
+  constructor(data, species) {
     this.exists = true;
     this.effectType = "Learnset";
     this.learnset = data.learnset || void 0;
     this.eventOnly = !!data.eventOnly;
     this.eventData = data.eventData || void 0;
     this.encounters = data.encounters || void 0;
+    this.species = species;
   }
 }
 class DexSpecies {
@@ -172,7 +174,7 @@ class DexSpecies {
           }
         }
       }
-      this.speciesCache.set(id, species);
+      this.speciesCache.set(id, this.dex.deepFreeze(species));
       return species;
     }
     if (!this.dex.data.Pokedex.hasOwnProperty(id)) {
@@ -279,8 +281,10 @@ class DexSpecies {
       species.canHatch = species.canHatch || !["Ditto", "Undiscovered"].includes(species.eggGroups[0]) && !species.prevo && species.name !== "Manaphy";
       if (this.dex.gen === 1)
         species.bst -= species.baseStats.spd;
-      if (this.dex.gen < 5)
+      if (this.dex.gen < 5) {
+        species.abilities = this.dex.deepClone(species.abilities);
         delete species.abilities["H"];
+      }
       if (this.dex.gen === 3 && this.dex.abilities.get(species.abilities["1"]).gen === 4)
         delete species.abilities["1"];
     } else {
@@ -295,22 +299,120 @@ class DexSpecies {
       });
     }
     if (species.exists)
-      this.speciesCache.set(id, species);
+      this.speciesCache.set(id, this.dex.deepFreeze(species));
     return species;
   }
-  getLearnset(id) {
-    return this.getLearnsetData(id).learnset;
+  /**
+   * @param id the ID of the species the move pool belongs to
+   * @param isNatDex
+   * @returns a Set of IDs of the full valid movepool of the given species for the current generation/mod.
+   * Note that inter-move incompatibilities, such as those from exclusive events, are not considered and all moves are
+   * lumped together. However, Necturna and Necturine's Sketchable moves are omitted from this pool, as their fundamental
+   * incompatibility with each other is essential to the nature of those species.
+   */
+  getMovePool(id, isNatDex = false) {
+    let eggMovesOnly = false;
+    let maxGen = this.dex.gen;
+    const movePool = /* @__PURE__ */ new Set();
+    for (const { species, learnset } of this.getFullLearnset(id)) {
+      for (const moveid in learnset) {
+        if (eggMovesOnly) {
+          if (learnset[moveid].some((source) => source.startsWith("9E"))) {
+            movePool.add(moveid);
+          }
+        } else if (maxGen >= 9) {
+          if (isNatDex || learnset[moveid].some((source) => source.startsWith("9"))) {
+            movePool.add(moveid);
+          }
+        } else {
+          if (learnset[moveid].some((source) => parseInt(source.charAt(0)) <= maxGen)) {
+            movePool.add(moveid);
+          }
+        }
+        if (moveid === "sketch" && movePool.has("sketch")) {
+          if (species.isNonstandard === "CAP") {
+            continue;
+          }
+          const sketchables = this.dex.moves.all().filter((m) => !m.noSketch && !m.isNonstandard);
+          for (const move of sketchables) {
+            movePool.add(move.id);
+          }
+          break;
+        }
+      }
+      if (species.evoRegion) {
+        if (this.dex.gen >= 9)
+          eggMovesOnly = true;
+        if (this.dex.gen === 8 && species.evoRegion === "Alola")
+          maxGen = 7;
+      }
+    }
+    return movePool;
   }
+  getFullLearnset(id) {
+    const originalSpecies = this.get(id);
+    let species = originalSpecies;
+    const out = [];
+    const alreadyChecked = {};
+    while (species?.name && !alreadyChecked[species.id]) {
+      alreadyChecked[species.id] = true;
+      const learnset = this.getLearnsetData(species.id);
+      if (learnset.learnset) {
+        out.push(learnset);
+        species = this.learnsetParent(species);
+        continue;
+      }
+      if ((species.changesFrom || species.baseSpecies) !== species.name) {
+        species = this.get(species.changesFrom || species.baseSpecies);
+        continue;
+      }
+      if (species.isNonstandard) {
+        return out;
+      }
+      if (species.prevo && this.getLearnsetData((0, import_dex_data.toID)(species.prevo)).learnset) {
+        species = this.get((0, import_dex_data.toID)(species.prevo));
+        continue;
+      }
+      throw new Error(`Species with no learnset data: ${species.id}`);
+    }
+    return out;
+  }
+  learnsetParent(species) {
+    if (["Gastrodon", "Pumpkaboo", "Sinistea", "Tatsugiri"].includes(species.baseSpecies) && species.forme) {
+      return this.get(species.baseSpecies);
+    } else if (species.name === "Lycanroc-Dusk") {
+      return this.get("Rockruff-Dusk");
+    } else if (species.name === "Greninja-Bond") {
+      return null;
+    } else if (species.prevo) {
+      species = this.get(species.prevo);
+      if (species.gen > Math.max(2, this.dex.gen))
+        return null;
+      return species;
+    } else if (species.changesFrom && species.baseSpecies !== "Kyurem") {
+      return this.get(species.changesFrom);
+    }
+    return null;
+  }
+  /**
+   * Gets the raw learnset data for the species.
+   *
+   * In practice, if you're trying to figure out what moves a pokemon learns,
+   * you probably want to `getFullLearnset` or `getMovePool` instead.
+   */
   getLearnsetData(id) {
     let learnsetData = this.learnsetCache.get(id);
     if (learnsetData)
       return learnsetData;
     if (!this.dex.data.Learnsets.hasOwnProperty(id)) {
-      return new Learnset({ exists: false });
+      return new Learnset({ exists: false }, this.get(id));
     }
-    learnsetData = new Learnset(this.dex.data.Learnsets[id]);
-    this.learnsetCache.set(id, learnsetData);
+    learnsetData = new Learnset(this.dex.data.Learnsets[id], this.get(id));
+    this.learnsetCache.set(id, this.dex.deepFreeze(learnsetData));
     return learnsetData;
+  }
+  getPokemonGoData(id) {
+    return this.dex.data.PokemonGoData[id];
   }
   all() {
     if (this.allCache)
@@ -319,7 +421,7 @@ class DexSpecies {
     for (const id in this.dex.data.Pokedex) {
       species.push(this.getByID(id));
     }
-    this.allCache = species;
+    this.allCache = Object.freeze(species);
     return this.allCache;
   }
 }

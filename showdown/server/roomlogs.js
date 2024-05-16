@@ -178,12 +178,16 @@ class Roomlog {
   attributedUhtmlchange(user, name, message) {
     const start = `/uhtmlchange ${name},`;
     const fullMessage = this.withTimestamp(`|c|${user.getIdentity()}|${start}${message}`);
+    let matched = false;
     for (const [i, line] of this.log.entries()) {
       if (this.parseChatLine(line)?.message.startsWith(start)) {
         this.log[i] = fullMessage;
+        matched = true;
         break;
       }
     }
+    if (!matched)
+      this.log.push(fullMessage);
     this.broadcastBuffer.push(fullMessage);
   }
   parseChatLine(line) {

@@ -264,7 +264,7 @@ class Elimination {
         throw new Error(`Unexpected ${error} from setMatchResult([${found.match.join(", ")}], ${found.result})`);
       }
     }
-    user.unlinkUser();
+    user.game.setPlayerUser(user, null);
   }
   getAvailableMatches() {
     if (!this.isBracketFrozen)
@@ -309,7 +309,7 @@ class Elimination {
     if (loser.losses === this.maxSubtrees) {
       loser.isEliminated = true;
       loser.sendRoom(`|tournament|update|{"isJoined":false}`);
-      loser.unlinkUser();
+      loser.game.setPlayerUser(loser, null);
     }
     if (targetNode.parent) {
       const parent = targetNode.parent;

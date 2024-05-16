@@ -54,48 +54,50 @@ class RoomGamePlayer {
       user.updateSearch();
     }
   }
-  unlinkUser() {
-    if (!this.id)
-      return;
-    const user = Users.getExact(this.id);
-    if (user && !this.game.isSubGame) {
-      user.games.delete(this.game.roomid);
-      user.updateSearch();
-    }
-    this.id = "";
-  }
   destroy() {
-    this.unlinkUser();
+    this.game = null;
   }
   toString() {
     return this.id;
   }
+  getUser() {
+    return this.id ? Users.getExact(this.id) : null;
+  }
   send(data) {
-    const user = Users.getExact(this.id);
-    if (user)
-      user.send(data);
+    this.getUser()?.send(data);
   }
   sendRoom(data) {
-    const user = Users.getExact(this.id);
-    if (user)
-      user.sendTo(this.game.roomid, data);
+    this.getUser()?.sendTo(this.game.roomid, data);
   }
 }
 class RoomGame {
   constructor(room, isSubGame = false) {
-    /** Does `/guess` or `/choose` require the user to be able to talk? */
-    this.checkChat = false;
-    this.roomid = room.roomid;
-    this.room = room;
-    this.gameid = "game";
     this.title = "Game";
     this.allowRenames = false;
-    this.isSubGame = isSubGame;
+    /**
+     * userid:player table.
+     *
+     * Does not contain userless players: use this.players for the full list.
+     *
+     * Do not iterate. You usually want to iterate `game.players` instead.
+     *
+     * Do not modify directly. You usually want `game.addPlayer` or
+     * `game.removePlayer` instead.
+     *
+     * Not a source of truth. Should be kept in sync with
+     * `Object.fromEntries(this.players.filter(p => p.id).map(p => [p.id, p]))`
+     */
     this.playerTable = /* @__PURE__ */ Object.create(null);
     this.players = [];
     this.playerCount = 0;
     this.playerCap = 0;
+    /** should only be set by setEnded */
     this.ended = false;
+    /** Does `/guess` or `/choose` require the user to be able to talk? */
+    this.checkChat = false;
+    this.roomid = room.roomid;
+    this.room = room;
+    this.isSubGame = isSubGame;
     if (this.isSubGame) {
       this.room.subGame = this;
     } else {
@@ -103,6 +105,7 @@ class RoomGame {
     }
   }
   destroy() {
+    this.setEnded();
     if (this.isSubGame) {
       this.room.subGame = null;
     } else {
@@ -134,39 +137,57 @@ class RoomGame {
     }
     return player;
   }
-  updatePlayer(player, user) {
+  updatePlayer(player, userOrName) {
     if (!this.allowRenames)
+      return;
+    this.setPlayerUser(player, userOrName);
+  }
+  setPlayerUser(player, userOrName) {
+    if (this.ended)
+      return;
+    if (player.id === toID(userOrName))
       return;
     if (player.id) {
       delete this.playerTable[player.id];
+      const user = Users.getExact(player.id);
+      if (user) {
+        user.games.delete(this.roomid);
+        user.updateSearch();
+      }
     }
-    if (user) {
-      player.id = user.id;
-      player.name = user.name;
+    if (userOrName) {
+      const { name, id } = typeof userOrName === "string" ? { name: userOrName, id: toID(userOrName) } : userOrName;
+      player.id = id;
+      player.name = name;
       this.playerTable[player.id] = player;
-      this.room.auth.set(user.id, Users.PLAYER_SYMBOL);
+      if (this.room.roomid.startsWith("battle-") || this.room.roomid.startsWith("game-")) {
+        this.room.auth.set(id, Users.PLAYER_SYMBOL);
+      }
+      const user = typeof userOrName === "string" ? Users.getExact(id) : userOrName;
+      if (user) {
+        user.games.add(this.roomid);
+        user.updateSearch();
+      }
     } else {
-      player.unlinkUser();
+      player.id = "";
     }
   }
   removePlayer(player) {
-    if (player instanceof Users.User) {
-      player = this.playerTable[player.id];
-      if (!player)
-        throw new Error("Player not found");
-    }
-    if (!this.allowRenames)
-      return false;
+    this.setPlayerUser(player, null);
     const playerIndex = this.players.indexOf(player);
     if (playerIndex < 0)
       return false;
-    if (player.id)
-      delete this.playerTable[player.id];
     this.players.splice(playerIndex, 1);
     player.destroy();
     this.playerCount--;
     return true;
   }
+  /**
+   * Like `setPlayerUser`, but bypasses some unnecessary game list updates if
+   * the user renamed directly from the old userid.
+   *
+   * `this.playerTable[oldUserid]` mnust exist or this will crash.
+   */
   renamePlayer(user, oldUserid) {
     if (user.id === oldUserid) {
       this.playerTable[user.id].name = user.name;
@@ -177,9 +198,29 @@ class RoomGame {
       delete this.playerTable[oldUserid];
     }
   }
+  /**
+   * This is purely for cleanup, suitable for calling from `destroy()`.
+   * You should make a different function, call it `end` or something,
+   * to end a game properly. See BestOfGame for an example of an `end`
+   * function.
+   */
+  setEnded() {
+    if (this.ended)
+      return;
+    this.ended = true;
+    if (this.isSubGame)
+      return;
+    for (const player of this.players) {
+      const user = player.getUser();
+      if (user) {
+        user.games.delete(this.roomid);
+        user.updateSearch();
+      }
+    }
+  }
   renameRoom(roomid) {
     for (const player of this.players) {
-      const user = Users.get(player.id);
+      const user = player.getUser();
       user?.games.delete(this.roomid);
       user?.games.add(roomid);
     }
@@ -205,8 +246,7 @@ class RoomGame {
    * place in.
    */
   removeBannedUser(user) {
-    if (this.forfeit)
-      this.forfeit(user);
+    this.forfeit?.(user, " lost by being banned.");
   }
   /**
    * Called when a user in the game is renamed. `isJoining` is true
@@ -242,6 +282,10 @@ class RoomGame {
    * is updated in some way (such as by changing user or renaming).
    * If you don't want this behavior, override onUpdateConnection
    * and/or onRename.
+   *
+   * This means that by default, it's called twice: once when
+   * connected to the server (as guest1763 or whatever), and once
+   * when logged in.
    */
   onConnect(user, connection) {
   }
@@ -271,6 +315,11 @@ class RoomGame {
    * Do not try to use this to block messages, use onChatMessage for that.
    */
   onLogMessage(message, user) {
+  }
+  /**
+   * Called when a game's timer needs to be started. Used mainly for tours.
+   */
+  startTimer() {
   }
 }
 class SimpleRoomGame extends RoomGame {

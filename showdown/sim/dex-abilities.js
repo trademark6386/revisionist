@@ -29,6 +29,7 @@ class Ability extends import_dex_data.BasicEffect {
     this.fullname = `ability: ${this.name}`;
     this.effectType = "Ability";
     this.suppressWeather = !!data.suppressWeather;
+    this.flags = data.flags || {};
     this.rating = data.rating || 0;
     if (!this.gen) {
       if (this.num >= 268) {
@@ -92,7 +93,7 @@ class DexAbilities {
       });
     }
     if (ability.exists)
-      this.abilityCache.set(id, ability);
+      this.abilityCache.set(id, this.dex.deepFreeze(ability));
     return ability;
   }
   all() {

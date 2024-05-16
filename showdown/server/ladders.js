@@ -112,7 +112,7 @@ class Ladder extends LadderStore {
     if (isRated && !Ladders.disabled) {
       const uid = user.id;
       [valResult, rating] = await Promise.all([
-        TeamValidatorAsync.get(this.formatid).validateTeam(team, { removeNicknames }),
+        TeamValidatorAsync.get(this.formatid).validateTeam(team, { removeNicknames, user: uid }),
         this.getRating(uid)
       ]);
       if (uid !== user.id) {
@@ -126,7 +126,7 @@ class Ladder extends LadderStore {
         rating = 1;
       }
       const validator = TeamValidatorAsync.get(this.formatid);
-      valResult = await validator.validateTeam(team, { removeNicknames });
+      valResult = await validator.validateTeam(team, { removeNicknames, user: user.id });
     }
     if (!valResult.startsWith("1")) {
       connection.popup(
@@ -206,6 +206,7 @@ You must be autoconfirmed to challenge them.`
     Ladders.challenges.add(new import_ladders_challenges.BattleChallenge(user.id, targetUser.id, ready));
     Ladders.challenges.send(user.id, targetUser.id, `/log ${user.name} wants to battle!`);
     user.lastChallenge = Date.now();
+    Chat.runHandlers("onChallenge", user, targetUser, ready.formatid);
     return true;
   }
   static async acceptChallenge(connection, chall) {
@@ -364,7 +365,7 @@ You must be autoconfirmed to challenge them.`
     let formatTable = Ladders.searches.get(formatid);
     if (!formatTable) {
       formatTable = {
-        numPlayers: ["multi", "freeforall"].includes(Dex.formats.get(formatid).gameType) ? 4 : 2,
+        playerCount: Dex.formats.get(formatid).playerCount,
         searches: /* @__PURE__ */ new Map()
       };
       Ladders.searches.set(formatid, formatTable);
@@ -382,7 +383,7 @@ You must be autoconfirmed to challenge them.`
       if (matched) {
         matches.push(search);
       }
-      if (matches.length >= formatTable.numPlayers) {
+      if (matches.length >= formatTable.playerCount) {
         for (const matchedSearch of matches)
           formatTable.searches.delete(matchedSearch.userid);
         Ladder.match(matches);
@@ -399,7 +400,7 @@ You must be autoconfirmed to challenge them.`
    */
   static periodicMatch() {
     for (const [formatid, formatTable] of Ladders.searches) {
-      if (formatTable.numPlayers > 2)
+      if (formatTable.playerCount > 2)
         continue;
       const matchmaker = Ladders(formatid);
       let longest = null;
@@ -455,13 +456,10 @@ You must be autoconfirmed to challenge them.`
       return void 0;
     }
     const format = Dex.formats.get(formatid);
-    const delayedStart = ["multi", "freeforall"].includes(format.gameType) && players.length === 2 ? "multi" : false;
+    const delayedStart = format.playerCount > players.length ? "multi" : false;
     return Rooms.createBattle({
       format: formatid,
-      p1: players[0],
-      p2: players[1],
-      p3: players[2],
-      p4: players[3],
+      players,
       rated: minRating,
       challengeType: readies[0].challengeType,
       delayedStart

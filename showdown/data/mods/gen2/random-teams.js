@@ -33,10 +33,20 @@ __export(random_teams_exports, {
 });
 module.exports = __toCommonJS(random_teams_exports);
 var import_random_teams = __toESM(require("../gen3/random-teams"));
+const NO_STAB = [
+  "explosion",
+  "icywind",
+  "machpunch",
+  "pursuit",
+  "quickattack",
+  "reversal",
+  "selfdestruct"
+];
 class RandomGen2Teams extends import_random_teams.default {
   constructor(format, prng) {
     super(format, prng);
     this.randomData = require("./random-data.json");
+    this.noStab = NO_STAB;
     this.moveEnforcementCheckers = {
       Electric: (movePool, moves, abilities, types, counter) => !counter.get("Electric"),
       Fire: (movePool, moves, abilities, types, counter) => !counter.get("Fire"),
@@ -44,7 +54,7 @@ class RandomGen2Teams extends import_random_teams.default {
       Ground: (movePool, moves, abilities, types, counter) => !counter.get("Ground"),
       Ice: (movePool, moves, abilities, types, counter) => !counter.get("Ice"),
       Normal: (movePool, moves, abilities, types, counter) => !counter.get("Normal") && counter.setupType === "Physical",
-      Psychic: (movePool, moves, abilities, types, counter) => !counter.get("Psychic") && types.has("Grass"),
+      Psychic: (movePool, moves, abilities, types, counter) => !counter.get("Psychic") && (types.has("Grass") || types.has("Ice")),
       Rock: (movePool, moves, abilities, types, counter, species) => !counter.get("Rock") && species.baseStats.atk > 60,
       Water: (movePool, moves, abilities, types, counter) => !counter.get("Water")
     };
@@ -58,13 +68,14 @@ class RandomGen2Teams extends import_random_teams.default {
       case "screech":
       case "swordsdance":
         return {
-          cull: counter.setupType !== "Physical" || counter.get("physicalsetup") > 1 || (!counter.get("Physical") || counter.damagingMoves.size < 2 && !moves.has("batonpass") && !moves.has("sleeptalk")),
+          cull: counter.setupType !== "Physical" || counter.get("physicalsetup") > 1 || (!counter.get("Physical") || counter.damagingMoves.size < 2 && !moves.has("batonpass") && !moves.has("sleeptalk")) || move.id === "bellydrum" && moves.has("sleeptalk"),
           isSetup: true
         };
       case "batonpass":
-        return { cull: !counter.setupType && !counter.get("speedsetup") && !moves.has("meanlook") };
+        return { cull: !counter.setupType && !counter.get("speedsetup") && !moves.has("meanlook") && !moves.has("spiderweb") };
       case "meanlook":
-        return { cull: movePool.includes("perishsong") };
+      case "spiderweb":
+        return { cull: movePool.includes("perishsong") || movePool.includes("batonpass") };
       case "nightmare":
         return { cull: !moves.has("lovelykiss") && !moves.has("sleeppowder") };
       case "swagger":
@@ -74,9 +85,6 @@ class RandomGen2Teams extends import_random_teams.default {
         return { cull: !!counter.setupType };
       case "haze":
         return { cull: !!counter.setupType || restTalk };
-      case "reflect":
-      case "lightscreen":
-        return { cull: !!counter.setupType || moves.has("rest") };
       case "doubleedge":
         return { cull: moves.has("bodyslam") || moves.has("return") };
       case "explosion":
@@ -98,8 +106,6 @@ class RandomGen2Teams extends import_random_teams.default {
         return { cull: moves.has("swordsdance") && movePool.includes("sludgebomb") };
       case "icebeam":
         return { cull: moves.has("dragonbreath") };
-      case "seismictoss":
-        return { cull: moves.has("rest") || moves.has("sleeptalk") };
       case "destinybond":
         return { cull: moves.has("explosion") };
       case "pursuit":
@@ -108,7 +114,6 @@ class RandomGen2Teams extends import_random_teams.default {
         return { cull: moves.has("rest") || moves.has("substitute") };
       case "irontail":
         return { cull: types.has("Ground") && movePool.includes("earthquake") };
-      case "confuseray":
       case "encore":
       case "roar":
       case "whirlwind":
@@ -130,7 +135,7 @@ class RandomGen2Teams extends import_random_teams.default {
     }
     return { cull: false };
   }
-  getItem(ability, types, moves, counter, species) {
+  getItem(ability, types, moves, counter, teamDetails, species) {
     if (species.name === "Ditto")
       return "Metal Powder";
     if (species.name === "Farfetch\u2019d")
@@ -145,7 +150,7 @@ class RandomGen2Teams extends import_random_teams.default {
       return "";
     if (moves.has("rest") && !moves.has("sleeptalk"))
       return "Mint Berry";
-    if ((moves.has("bellydrum") || moves.has("swordsdance")) && species.baseStats.spe >= 60 && !types.has("Ground") && !moves.has("sleeptalk") && !moves.has("substitute") && this.randomChance(1, 2)) {
+    if ((moves.has("bellydrum") || moves.has("swordsdance")) && species.baseStats.spe >= 60 && !types.includes("Ground") && !moves.has("sleeptalk") && !moves.has("substitute") && this.randomChance(1, 2)) {
       return "Miracle Berry";
     }
     return "Leftovers";
@@ -153,7 +158,7 @@ class RandomGen2Teams extends import_random_teams.default {
   randomSet(species, teamDetails = {}) {
     species = this.dex.species.get(species);
     const data = this.randomData[species.id];
-    const movePool = (data.moves || Object.keys(this.dex.species.getLearnset(species.id))).slice();
+    const movePool = [...data.moves || this.dex.species.getMovePool(species.id)];
     const rejectedPool = [];
     const moves = /* @__PURE__ */ new Set();
     let ivs = { hp: 30, atk: 30, def: 30, spa: 30, spd: 30, spe: 30 };
@@ -193,14 +198,9 @@ class RandomGen2Teams extends import_random_teams.default {
           cull = true;
         }
         const moveIsRejectable = (move.category !== "Status" || !move.flags.heal) && // These moves cannot be rejected in favor of a forced move
-        !["batonpass", "sleeptalk", "spikes", "sunnyday"].includes(move.id) && (move.category === "Status" || !types.has(move.type) || move.basePower && move.basePower < 40);
+        !["batonpass", "sleeptalk", "spikes", "spore", "sunnyday"].includes(move.id) && (move.category === "Status" || !types.has(move.type) || move.basePower && move.basePower < 40);
         if (!cull && !isSetup && moveIsRejectable && (counter.setupType || !move.stallingMove)) {
-          if (
-            // Pokemon should usually have at least one STAB move
-            !counter.get("stab") && !counter.get("damage") && !types.has("Ghost") && counter.get("physicalpool") + counter.get("specialpool") > 0 || (movePool.includes("megahorn") || movePool.includes("softboiled") && moves.has("present")) || // Rest + Sleep Talk should be selected together
-            (moves.has("rest") && movePool.includes("sleeptalk") || moves.has("sleeptalk") && movePool.includes("rest")) || // Sunny Day + Solar Beam should be selected together
-            (moves.has("sunnyday") && movePool.includes("solarbeam") || moves.has("solarbeam") && movePool.includes("sunnyday")) || ["milkdrink", "recover", "spore"].some((m) => movePool.includes(m))
-          ) {
+          if (!counter.get("stab") && !counter.get("damage") && !types.has("Ghost") && counter.get("physicalpool") + counter.get("specialpool") > 0 || (movePool.includes("megahorn") || movePool.includes("softboiled") && moves.has("present")) || (moves.has("rest") && movePool.includes("sleeptalk") || moves.has("sleeptalk") && movePool.includes("rest")) || (moves.has("sunnyday") && movePool.includes("solarbeam") || moves.has("solarbeam") && movePool.includes("sunnyday")) || ["milkdrink", "recover", "spikes", "spore"].some((m) => movePool.includes(m))) {
             cull = true;
           } else {
             for (const type of types) {
@@ -255,15 +255,7 @@ class RandomGen2Teams extends import_random_teams.default {
       if (ivs.def === 28 || ivs.def === 24)
         ivs.hp -= 8;
     }
-    const levelScale = {
-      NU: 73,
-      NUBL: 71,
-      UU: 69,
-      UUBL: 67,
-      OU: 65,
-      Uber: 61
-    };
-    const level = this.adjustLevel || data.level || levelScale[species.tier] || 80;
+    const level = this.getLevel(species);
     return {
       name: species.name,
       species: species.name,
@@ -271,7 +263,7 @@ class RandomGen2Teams extends import_random_teams.default {
       ability: "No Ability",
       evs: { hp: 255, atk: 255, def: 255, spa: 255, spd: 255, spe: 255 },
       ivs,
-      item: this.getItem("None", types, moves, counter, species),
+      item: this.getItem("None", species.types, moves, counter, teamDetails, species),
       level,
       // No shiny chance because Gen 2 shinies have bad IVs
       shiny: false,

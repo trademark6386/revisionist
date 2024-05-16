@@ -89,19 +89,21 @@ const commands = {
         target = split.join(",");
       }
     }
+    const defaultFormat = this.extractFormat(room?.settings.defaultFormat || room?.battle?.format);
     if (!target.includes("mod=")) {
-      const dex = this.extractFormat(room?.settings.defaultFormat || room?.battle?.format).dex;
+      const dex = defaultFormat.dex;
       if (dex)
         target += `, mod=${dex.currentMod}`;
     }
-    if (cmd2 === "nds")
+    if (cmd2 === "nds" || defaultFormat.format && Dex.formats.getRuleTable(defaultFormat.format).has("standardnatdex")) {
       target += ", natdex";
+    }
     const response = await runSearch({
       target,
       cmd: "dexsearch",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast())
       return;
     if (response.error) {
@@ -122,7 +124,7 @@ const commands = {
   },
   dexsearchhelp() {
     this.sendReply(
-      `|html| <details class="readmore"><summary><code>/dexsearch [parameter], [parameter], [parameter], ...</code>: searches for Pok\xE9mon that fulfill the selected criteria<br/>Search categories are: type, tier, color, moves, ability, gen, resists, weak, recovery, zrecovery, priority, stat, weight, height, egg group, pivot.<br/>Valid colors are: green, red, blue, white, brown, yellow, purple, pink, gray and black.<br/>Valid tiers are: Uber/OU/UUBL/UU/RUBL/RU/NUBL/NU/PUBL/PU/ZU/NFE/LC/CAP/CAP NFE/CAP LC.<br/>Valid doubles tiers are: DUber/DOU/DBL/DUU/DNU.</summary>Types can be searched for by either having the type precede <code>type</code> or just using the type itself as a parameter; e.g., both <code>fire type</code> and <code>fire</code> show all Fire types; however, using <code>psychic</code> as a parameter will show all Pok\xE9mon that learn the move Psychic and not Psychic types.<br/><code>resists</code> followed by a type or move will show Pok\xE9mon that resist that typing or move (e.g. <code>resists normal</code>).<br/><code>weak</code> followed by a type or move will show Pok\xE9mon that are weak to that typing or move (e.g. <code>weak fire</code>).<br/><code>asc</code> or <code>desc</code> following a stat will show the Pok\xE9mon in ascending or descending order of that stat respectively (e.g. <code>speed asc</code>).<br/>Inequality ranges use the characters <code>>=</code> for <code>\u2265</code> and <code><=</code> for <code>\u2264</code>; e.g., <code>hp <= 95</code> searches all Pok\xE9mon with HP less than or equal to 95.<br/>Parameters can be excluded through the use of <code>!</code>; e.g., <code>!water type</code> excludes all Water types.<br/>The parameter <code>mega</code> can be added to search for Mega Evolutions only, the parameter <code>gmax</code> can be added to search for Pok\xE9mon capable of Gigantamaxing only, and the parameter <code>Fully Evolved</code> (or <code>FE</code>) can be added to search for fully-evolved Pok\xE9mon.<br/><code>Alola</code>, <code>Galar</code>, <code>Therian</code>, <code>Totem</code>, or <code>Primal</code> can be used as parameters to search for those formes.<br/>Parameters separated with <code>|</code> will be searched as alternatives for each other; e.g., <code>trick | switcheroo</code> searches for all Pok\xE9mon that learn either Trick or Switcheroo.<br/>You can search for info in a specific generation by appending the generation to ds or by using the <code>maxgen</code> keyword; e.g. <code>/ds1 normal</code> or <code>/ds normal, maxgen1</code> searches for all Pok\xE9mon that were Normal type in Generation I.<br/>You can search for info in a specific mod by using <code>mod=[mod name]</code>; e.g. <code>/nds mod=ssb, protean</code>. All valid mod names are: <code>${dexesHelp}</code><br />By default, <code>/dexsearch</code> will search only Pok\xE9mon obtainable in the current generation. Add the parameter <code>unreleased</code> to include unreleased Pok\xE9mon. Add the parameter <code>natdex</code> (or use the command <code>/nds</code>) to include all past Pok\xE9mon.<br/>Searching for a Pok\xE9mon with both egg group and type parameters can be differentiated by adding the suffix <code>group</code> onto the egg group parameter; e.g., seaching for <code>grass, grass group</code> will show all Grass types in the Grass egg group.<br/>The parameter <code>monotype</code> will only show Pok\xE9mon that are single-typed.<br/>The order of the parameters does not matter.<br/>`
+      `|html| <details class="readmore"><summary><code>/dexsearch [parameter], [parameter], [parameter], ...</code>: searches for Pok\xE9mon that fulfill the selected criteria<br/>Search categories are: type, tier, color, moves, ability, gen, resists, weak, recovery, zrecovery, priority, stat, weight, height, egg group, pivot.<br/>Valid colors are: green, red, blue, white, brown, yellow, purple, pink, gray and black.<br/>Valid tiers are: Uber/OU/UUBL/UU/RUBL/RU/NUBL/NU/PUBL/PU/ZUBL/ZU/NFE/LC/CAP/CAP NFE/CAP LC.<br/>Valid doubles tiers are: DUber/DOU/DBL/DUU/DNU.</summary>Types can be searched for by either having the type precede <code>type</code> or just using the type itself as a parameter; e.g., both <code>fire type</code> and <code>fire</code> show all Fire types; however, using <code>psychic</code> as a parameter will show all Pok\xE9mon that learn the move Psychic and not Psychic types.<br/><code>resists</code> followed by a type or move will show Pok\xE9mon that resist that typing or move (e.g. <code>resists normal</code>).<br/><code>weak</code> followed by a type or move will show Pok\xE9mon that are weak to that typing or move (e.g. <code>weak fire</code>).<br/><code>asc</code> or <code>desc</code> following a stat will show the Pok\xE9mon in ascending or descending order of that stat respectively (e.g. <code>speed asc</code>).<br/>Inequality ranges use the characters <code>>=</code> for <code>\u2265</code> and <code><=</code> for <code>\u2264</code>; e.g., <code>hp <= 95</code> searches all Pok\xE9mon with HP less than or equal to 95.<br/>Parameters can be excluded through the use of <code>!</code>; e.g., <code>!water type</code> excludes all Water types.<br/>The parameter <code>mega</code> can be added to search for Mega Evolutions only, the parameter <code>gmax</code> can be added to search for Pok\xE9mon capable of Gigantamaxing only, and the parameter <code>Fully Evolved</code> (or <code>FE</code>) can be added to search for fully-evolved Pok\xE9mon.<br/><code>Alola</code>, <code>Galar</code>, <code>Therian</code>, <code>Totem</code>, or <code>Primal</code> can be used as parameters to search for those formes.<br/>Parameters separated with <code>|</code> will be searched as alternatives for each other; e.g., <code>trick | switcheroo</code> searches for all Pok\xE9mon that learn either Trick or Switcheroo.<br/>You can search for info in a specific generation by appending the generation to ds or by using the <code>maxgen</code> keyword; e.g. <code>/ds1 normal</code> or <code>/ds normal, maxgen1</code> searches for all Pok\xE9mon that were Normal type in Generation I.<br/>You can search for info in a specific mod by using <code>mod=[mod name]</code>; e.g. <code>/nds mod=ssb, protean</code>. All valid mod names are: <code>${dexesHelp}</code><br />By default, <code>/dexsearch</code> will search only Pok\xE9mon obtainable in the current generation. Add the parameter <code>unreleased</code> to include unreleased Pok\xE9mon. Add the parameter <code>natdex</code> (or use the command <code>/nds</code>) to include all past Pok\xE9mon.<br/>Searching for a Pok\xE9mon with both egg group and type parameters can be differentiated by adding the suffix <code>group</code> onto the egg group parameter; e.g., seaching for <code>grass, grass group</code> will show all Grass types in the Grass egg group.<br/>The parameter <code>monotype</code> will only show Pok\xE9mon that are single-typed.<br/>The order of the parameters does not matter.<br/>`
     );
   },
   rollmove: "randommove",
@@ -151,12 +153,18 @@ const commands = {
     }
     if (!qty)
       targetsBuffer.push("random1");
+    const defaultFormat = this.extractFormat(room?.settings.defaultFormat || room?.battle?.format);
+    if (!target.includes("mod=")) {
+      const dex = defaultFormat.dex;
+      if (dex)
+        targetsBuffer.push(`mod=${dex.currentMod}`);
+    }
     const response = await runSearch({
       target: targetsBuffer.join(","),
       cmd: "randmove",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast(true))
       return;
     if (response.error) {
@@ -206,12 +214,18 @@ const commands = {
     }
     if (!qty)
       targetsBuffer.push("random1");
+    const defaultFormat = this.extractFormat(room?.settings.defaultFormat || room?.battle?.format);
+    if (!target.includes("mod=")) {
+      const dex = defaultFormat.dex;
+      if (dex)
+        targetsBuffer.push(`mod=${dex.currentMod}`);
+    }
     const response = await runSearch({
       target: targetsBuffer.join(","),
       cmd: "randpoke",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast(true))
       return;
     if (response.error) {
@@ -234,6 +248,60 @@ const commands = {
     `/randompokemon - Generates random Pok\xE9mon based on given search conditions.`,
     `/randompokemon uses the same parameters as /dexsearch (see '/help ds').`,
     `Adding a number as a parameter returns that many random Pok\xE9mon, e.g., '/randpoke 6' returns 6 random Pok\xE9mon.`
+  ],
+  randability: "randomability",
+  async randomability(target, room, user, connection, cmd2, message) {
+    this.checkBroadcast(true);
+    target = target.slice(0, 300);
+    const targets = target.split(",");
+    const targetsBuffer = [];
+    let qty;
+    for (const arg of targets) {
+      if (!arg)
+        continue;
+      const num = Number(arg);
+      if (Number.isInteger(num)) {
+        if (qty)
+          throw new import_chat.Chat.ErrorMessage("Only specify the number of abilities once.");
+        qty = num;
+        if (qty < 1 || MAX_RANDOM_RESULTS < qty) {
+          throw new import_chat.Chat.ErrorMessage(`Number of random abilities must be between 1 and ${MAX_RANDOM_RESULTS}.`);
+        }
+        targetsBuffer.push(`random${qty}`);
+      } else {
+        targetsBuffer.push(arg);
+      }
+    }
+    if (!qty)
+      targetsBuffer.push("random1");
+    const response = await runSearch({
+      target: targetsBuffer.join(","),
+      cmd: "randability",
+      canAll: !this.broadcastMessage || checkCanAll(room),
+      message: this.broadcastMessage ? "" : message
+    });
+    if (!response.error && !this.runBroadcast(true))
+      return;
+    if (response.error) {
+      throw new import_chat.Chat.ErrorMessage(response.error);
+    } else if (response.reply) {
+      this.sendReplyBox(response.reply);
+    } else if (response.dt) {
+      import_chat.Chat.commands.data.call(
+        this,
+        response.dt,
+        room,
+        user,
+        connection,
+        "dt",
+        this.broadcastMessage ? "" : message
+      );
+    }
+  },
+  randomabilityhelp: [
+    `/randability - Generates random Pok\xE9mon ability based on given search conditions.`,
+    `/randability uses the same parameters as /abilitysearch (see '/help ds').`,
+    `Adding a number as a parameter returns that many random Pok\xE9mon abilities, e.g., '/randabilitiy 6' returns 6 random abilities.`
   ],
   ms: "movesearch",
   ms1: "movesearch",
@@ -275,7 +343,7 @@ const commands = {
       cmd: "movesearch",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast())
       return;
     if (response.error) {
@@ -296,7 +364,7 @@ const commands = {
   },
   movesearchhelp() {
     this.sendReplyBox(
-      `<code>/movesearch [parameter], [parameter], [parameter], ...</code>: searches for moves that fulfill the selected criteria.<br/><br/>Search categories are: type, category, gen, contest condition, flag, status inflicted, type boosted, Pok\xE9mon targeted, and numeric range for base power, pp, priority, and accuracy.<br/><br/><details class="readmore"><summary>Parameter Options</summary>- Types can be followed by <code> type</code> for clarity; e.g. <code>dragon type</code>.<br/>- Stat boosts must be preceded with <code>boosts </code>, and stat-lowering moves with <code>lowers </code>; e.g., <code>boosts attack</code> searches for moves that boost the Attack stat of either Pok\xE9mon.<br/>- Z-stat boosts must be preceded with <code>zboosts </code>; e.g. <code>zboosts accuracy</code> searches for all Status moves with Z-Effects that boost the user's accuracy. Moves that have a Z-Effect of fully restoring the user's health can be searched for with <code>zrecovery</code>.<br/>- <code>zmove</code>, <code>max</code>, or <code>gmax</code> as parameters will search for Z-Moves, Max Moves, and G-Max Moves respectively.<br/>- Move targets must be preceded with <code>targets </code>; e.g. <code>targets user</code> searches for moves that target the user.<br/>- Valid move targets are: one ally, user or ally, one adjacent opponent, all Pokemon, all adjacent Pokemon, all adjacent opponents, user and allies, user's side, user's team, any Pokemon, opponent's side, one adjacent Pokemon, random adjacent Pokemon, scripted, and user.<br/>- Valid flags are: allyanim, bypasssub (bypasses Substitute), bite, bullet, charge, contact, dance, defrost, distance (can target any Pokemon in Triples), failcopycat, failencore, failinstruct, failmefirst, failmimic, futuremove, gravity, heal, highcrit, instruct, mefirst, mimic, mirror (reflected by Mirror Move), mustpressure, multihit, noassist, nonsky, noparentalbond, nosleeptalk, ohko, pivot, pledgecombo, powder, priority, protect, pulse, punch, recharge, recovery, reflectable, secondary, slicing, snatch, sound, and wind.<br/>- <code>protection</code> as a parameter will search protection moves like Protect, Detect, etc.<br/>- A search that includes <code>!protect</code> will show all moves that bypass protection.<br/></details><br/><details class="readmore"><summary>Parameter Filters</summary>- Inequality ranges use the characters <code>></code> and <code><</code>.<br/>- Parameters can be excluded through the use of <code>!</code>; e.g. <code>!water type</code> excludes all Water-type moves.<br/>- <code>asc</code> or <code>desc</code> following a move property will arrange the names in ascending or descending order of that property, respectively; e.g., <code>basepower asc</code> will arrange moves in ascending order of their base powers.<br/>- Parameters separated with <code>|</code> will be searched as alternatives for each other; e.g. <code>fire | water</code> searches for all moves that are either Fire type or Water type.<br/>- If a Pok\xE9mon is included as a parameter, only moves from its movepool will be included in the search.<br/>- You can search for info in a specific generation by appending the generation to ms; e.g. <code>/ms1 normal</code> searches for all moves that were Normal type in Generation I.<br/>- You can search for info in a specific mod by using <code>mod=[mod name]</code>; e.g. <code>/nms mod=ssb, dark, bp=100</code>. All valid mod names are: <code>${dexesHelp}</code><br />- <code>/ms</code> will search all non-dexited moves (clickable in that game); you can include dexited moves by using <code>/nms</code> or by adding <code>natdex</code> as a parameter.<br/>- The order of the parameters does not matter.</details>`
+      `<code>/movesearch [parameter], [parameter], [parameter], ...</code>: searches for moves that fulfill the selected criteria.<br/><br/>Search categories are: type, category, gen, contest condition, flag, status inflicted, type boosted, Pok\xE9mon targeted, and numeric range for base power, pp, priority, and accuracy.<br/><br/><details class="readmore"><summary>Parameter Options</summary>- Types can be followed by <code> type</code> for clarity; e.g. <code>dragon type</code>.<br/>- Stat boosts must be preceded with <code>boosts </code>, and stat-lowering moves with <code>lowers </code>; e.g., <code>boosts attack</code> searches for moves that boost the Attack stat of either Pok\xE9mon.<br/>- Z-stat boosts must be preceded with <code>zboosts </code>; e.g. <code>zboosts accuracy</code> searches for all Status moves with Z-Effects that boost the user's accuracy. Moves that have a Z-Effect of fully restoring the user's health can be searched for with <code>zrecovery</code>.<br/>- <code>zmove</code>, <code>max</code>, or <code>gmax</code> as parameters will search for Z-Moves, Max Moves, and G-Max Moves respectively.<br/>- Move targets must be preceded with <code>targets </code>; e.g. <code>targets user</code> searches for moves that target the user.<br/>- Valid move targets are: one ally, user or ally, one adjacent opponent, all Pokemon, all adjacent Pokemon, all adjacent opponents, user and allies, user's side, user's team, any Pokemon, opponent's side, one adjacent Pokemon, random adjacent Pokemon, scripted, and user.<br/>- Valid flags are: allyanim, bypasssub (bypasses Substitute), bite, bullet, cantusetwice, charge, contact, dance, defrost, distance (can target any Pokemon in Triples), failcopycat, failencore, failinstruct, failmefirst, failmimic, futuremove, gravity, heal, highcrit, instruct, metronome, mimic, mirror (reflected by Mirror Move), mustpressure, multihit, noassist, nonsky, noparentalbond, nosleeptalk, ohko, pivot, pledgecombo, powder, priority, protect, pulse, punch, recharge, recovery, reflectable, secondary, slicing, snatch, sound, and wind.<br/>- <code>protection</code> as a parameter will search protection moves like Protect, Detect, etc.<br/>- A search that includes <code>!protect</code> will show all moves that bypass protection.<br/></details><br/><details class="readmore"><summary>Parameter Filters</summary>- Inequality ranges use the characters <code>></code> and <code><</code>.<br/>- Parameters can be excluded through the use of <code>!</code>; e.g. <code>!water type</code> excludes all Water-type moves.<br/>- <code>asc</code> or <code>desc</code> following a move property will arrange the names in ascending or descending order of that property, respectively; e.g., <code>basepower asc</code> will arrange moves in ascending order of their base powers.<br/>- Parameters separated with <code>|</code> will be searched as alternatives for each other; e.g. <code>fire | water</code> searches for all moves that are either Fire type or Water type.<br/>- If a Pok\xE9mon is included as a parameter, only moves from its movepool will be included in the search.<br/>- You can search for info in a specific generation by appending the generation to ms; e.g. <code>/ms1 normal</code> searches for all moves that were Normal type in Generation I.<br/>- You can search for info in a specific mod by using <code>mod=[mod name]</code>; e.g. <code>/nms mod=ssb, dark, bp=100</code>. All valid mod names are: <code>${dexesHelp}</code><br />- <code>/ms</code> will search all non-dexited moves (clickable in that game); you can include dexited moves by using <code>/nms</code> or by adding <code>natdex</code> as a parameter.<br/>- The order of the parameters does not matter.</details>`
     );
   },
   isearch: "itemsearch",
@@ -315,13 +383,13 @@ const commands = {
     target = target.slice(0, 300);
     const targetGen = parseInt(cmd2[cmd2.length - 1]);
     if (targetGen)
-      target += ` maxgen${targetGen}`;
+      target = `maxgen${targetGen} ${target}`;
     const response = await runSearch({
       target,
       cmd: "itemsearch",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast())
       return;
     if (response.error) {
@@ -345,6 +413,60 @@ const commands = {
       `<code>/itemsearch [item description]</code>: finds items that match the given keywords.<br/>This command accepts natural language. (tip: fewer words tend to work better)<br/>The <code>gen</code> keyword can be used to search for items introduced in a given generation; e.g., <code>/is gen4</code> searches for items introduced in Generation 4.<br/>To search for items within a generation, append the generation to <code>/is</code> or use the <code>maxgen</code> keyword; e.g., <code>/is4 Water-type</code> or <code>/is maxgen4 Water-type</code> searches for items whose Generation 4 description includes "Water-type".<br/>Searches with <code>fling</code> in them will find items with the specified Fling behavior.<br/>Searches with <code>natural gift</code> in them will find items with the specified Natural Gift behavior.`
     );
   },
+  randitem: "randomitem",
+  async randomitem(target, room, user, connection, cmd2, message) {
+    this.checkBroadcast(true);
+    target = target.slice(0, 300);
+    const targets = target.split(",");
+    const targetsBuffer = [];
+    let qty;
+    for (const arg of targets) {
+      if (!arg)
+        continue;
+      const num = Number(arg);
+      if (Number.isInteger(num)) {
+        if (qty)
+          throw new import_chat.Chat.ErrorMessage("Only specify the number of items once.");
+        qty = num;
+        if (qty < 1 || MAX_RANDOM_RESULTS < qty) {
+          throw new import_chat.Chat.ErrorMessage(`Number of random items must be between 1 and ${MAX_RANDOM_RESULTS}.`);
+        }
+        targetsBuffer.push(`random${qty}`);
+      } else {
+        targetsBuffer.push(arg);
+      }
+    }
+    if (!qty)
+      targetsBuffer.push("random1");
+    const response = await runSearch({
+      target: targetsBuffer.join(","),
+      cmd: "randitem",
+      canAll: !this.broadcastMessage || checkCanAll(room),
+      message: this.broadcastMessage ? "" : message
+    });
+    if (!response.error && !this.runBroadcast(true))
+      return;
+    if (response.error) {
+      throw new import_chat.Chat.ErrorMessage(response.error);
+    } else if (response.reply) {
+      this.sendReplyBox(response.reply);
+    } else if (response.dt) {
+      import_chat.Chat.commands.data.call(
+        this,
+        response.dt,
+        room,
+        user,
+        connection,
+        "dt",
+        this.broadcastMessage ? "" : message
+      );
+    }
+  },
+  randomitemhelp: [
+    `/randitem - Generates random items based on given search conditions.`,
+    `/randitem uses the same parameters as /itemsearch (see '/help ds').`,
+    `Adding a number as a parameter returns that many random items, e.g., '/randitem 6' returns 6 random items.`
+  ],
   asearch: "abilitysearch",
   as: "abilitysearch",
   as3: "abilitysearch",
@@ -366,7 +488,7 @@ const commands = {
       cmd: "abilitysearch",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: this.broadcastMessage ? "" : message
-    });
+    }, user);
     if (!response.error && !this.runBroadcast())
       return;
     if (response.error) {
@@ -400,12 +522,13 @@ const commands = {
   bw2learn: "learn",
   oraslearn: "learn",
   usumlearn: "learn",
+  sslearn: "learn",
   async learn(target, room, user, connection, cmd2, message) {
     if (!target)
       return this.parse("/help learn");
     if (target.length > 300)
       throw new import_chat.Chat.ErrorMessage(`Query too long.`);
-    const GENS = { rby: 1, gsc: 2, adv: 3, dpp: 4, bw2: 5, oras: 6, usum: 7 };
+    const GENS = { rby: 1, gsc: 2, adv: 3, dpp: 4, bw2: 5, oras: 6, usum: 7, ss: 8 };
     const cmdGen = GENS[cmd2.slice(0, -5)];
     if (cmdGen)
       target = `gen${cmdGen}, ${target}`;
@@ -419,7 +542,7 @@ const commands = {
       cmd: "learn",
       canAll: !this.broadcastMessage || checkCanAll(room),
       message: formatid
-    });
+    }, user);
     if (!response.error && !this.runBroadcast())
       return;
     if (response.error) {
@@ -435,7 +558,60 @@ const commands = {
     `A value of 'min source gen [number]' indicates that trading (or Pok\xE9mon Bank) from generations before [number] is not allowed.`,
     `/learn5 displays how the Pok\xE9mon can learn the given moves at level 5, if it can at all.`,
     `/learnall displays all of the possible fathers for egg moves.`,
-    `/learn can also be prefixed by a generation acronym (e.g.: /dpplearn) to indicate which generation is used. Valid options are: rby gsc adv dpp bw2 oras usum`
+    `/learn can also be prefixed by a generation acronym (e.g.: /dpplearn) to indicate which generation is used. Valid options are: rby gsc adv dpp bw2 oras usum ss`
+  ],
+  randtype: "randomtype",
+  async randomtype(target, room, user, connection, cmd2, message) {
+    this.checkBroadcast(true);
+    target = target.slice(0, 300);
+    const targets = target.split(",");
+    const targetsBuffer = [];
+    let qty;
+    for (const arg of targets) {
+      if (!arg)
+        continue;
+      const num = Number(arg);
+      if (Number.isInteger(num)) {
+        if (qty)
+          throw new import_chat.Chat.ErrorMessage("Only specify the number of types once.");
+        qty = num;
+        if (qty < 1 || MAX_RANDOM_RESULTS < qty) {
+          throw new import_chat.Chat.ErrorMessage(`Number of random types must be between 1 and ${MAX_RANDOM_RESULTS}.`);
+        }
+        targetsBuffer.push(`random${qty}`);
+      } else {
+        targetsBuffer.push(arg);
+      }
+    }
+    if (!qty)
+      targetsBuffer.push("random1");
+    const response = await runSearch({
+      target: targetsBuffer.join(","),
+      cmd: "randtype",
+      canAll: !this.broadcastMessage || checkCanAll(room),
+      message: this.broadcastMessage ? "" : message
+    });
+    if (!response.error && !this.runBroadcast(true))
+      return;
+    if (response.error) {
+      throw new import_chat.Chat.ErrorMessage(response.error);
+    } else if (response.reply) {
+      this.sendReplyBox(response.reply);
+    } else if (response.dt) {
+      import_chat.Chat.commands.data.call(
+        this,
+        response.dt,
+        room,
+        user,
+        connection,
+        "dt",
+        this.broadcastMessage ? "" : message
+      );
+    }
+  },
+  randomtypehelp: [
+    `/randtype - Generates random types based on given search conditions.`,
+    `Adding a number as a parameter returns that many random items, e.g., '/randtype 6' returns 6 random types.`
   ]
 };
 function getMod(target) {
@@ -473,7 +649,8 @@ function runDexsearch(target, cmd2, canAll, message, isTest) {
     nu: "NU",
     publ: "PUBL",
     pu: "PU",
-    zu: "(PU)",
+    zubl: "ZUBL",
+    zu: "ZU",
     nfe: "NFE",
     lc: "LC",
     cap: "CAP",
@@ -1020,7 +1197,7 @@ function runDexsearch(target, cmd2, canAll, message, isTest) {
         let tier = dex[mon].tier;
         if (nationalSearch)
           tier = dex[mon].natDexTier;
-        if (tier.startsWith("(") && tier !== "(PU)")
+        if (tier.startsWith("("))
           tier = tier.slice(1, -1);
         if (alts.tiers[tier])
           continue;
@@ -1169,9 +1346,13 @@ function runDexsearch(target, cmd2, canAll, message, isTest) {
         continue;
       const format = Object.entries(Dex.data.Rulesets).find(([a, f]) => f.mod === usedMod);
       const formatStr = format ? format[1].name : "gen9ou";
-      const validator = import_team_validator.TeamValidator.get(
-        `${formatStr}${nationalSearch && !Dex.formats.getRuleTable(Dex.formats.get(formatStr)).has("standardnatdex") ? "@@@standardnatdex" : ""}`
-      );
+      const ruleTable = Dex.formats.getRuleTable(Dex.formats.get(formatStr));
+      const additionalRules = [];
+      if (nationalSearch && !ruleTable.has("standardnatdex"))
+        additionalRules.push("standardnatdex");
+      if (nationalSearch && ruleTable.valueRules.has("minsourcegen"))
+        additionalRules.push("!!minsourcegen=3");
+      const validator = import_team_validator.TeamValidator.get(`${formatStr}${additionalRules.length ? `@@@${additionalRules.join(",")}` : ""}`);
       const pokemonSource = validator.allSources();
       for (const move of Object.keys(alts.moves).map((x) => mod.moves.get(x))) {
         if (move.gen <= mod.gen && !validator.checkCanLearn(move, dex[mon], pokemonSource) === alts.moves[move.id]) {
@@ -1207,9 +1388,13 @@ function runDexsearch(target, cmd2, canAll, message, isTest) {
   for (const mon of Object.keys(dex).sort()) {
     if (singleTypeSearch !== null && dex[mon].types.length === 1 !== singleTypeSearch)
       continue;
-    const isRegionalForm = ["Alola", "Galar", "Hisui", "Paldea"].includes(dex[mon].forme) && dex[mon].name !== "Pikachu-Alola";
+    const isRegionalForm = (["Alola", "Galar", "Hisui"].includes(dex[mon].forme) || dex[mon].forme.startsWith("Paldea")) && dex[mon].baseSpecies !== "Pikachu";
+    const maskForm = dex[mon].baseSpecies === "Ogerpon" && !dex[mon].forme.endsWith("Tera");
     const allowGmax = gmaxSearch || tierSearch;
-    if (!isRegionalForm && dex[mon].baseSpecies && results.includes(dex[mon].baseSpecies) && getSortValue(mon) === getSortValue(dex[mon].baseSpecies))
+    if (!isRegionalForm && !maskForm && dex[mon].baseSpecies && results.includes(dex[mon].baseSpecies) && getSortValue(mon) === getSortValue(dex[mon].baseSpecies))
+      continue;
+    const teraFormeChangesFrom = dex[mon].forme.endsWith("Tera") ? !Array.isArray(dex[mon].battleOnly) ? dex[mon].battleOnly : null : null;
+    if (teraFormeChangesFrom && results.includes(teraFormeChangesFrom) && getSortValue(mon) === getSortValue(teraFormeChangesFrom))
       continue;
     if (dex[mon].isNonstandard === "Gigantamax" && !allowGmax)
       continue;
@@ -1276,6 +1461,7 @@ function runMovesearch(target, cmd2, canAll, message, isTest) {
     "bypasssub",
     "bite",
     "bullet",
+    "cantusetwice",
     "charge",
     "contact",
     "dance",
@@ -1289,6 +1475,7 @@ function runMovesearch(target, cmd2, canAll, message, isTest) {
     "futuremove",
     "gravity",
     "heal",
+    "metronome",
     "mirror",
     "mustpressure",
     "noassist",
@@ -1436,7 +1623,7 @@ function runMovesearch(target, cmd2, canAll, message, isTest) {
         target = "defrost";
       if (target === "slices" || target === "slice")
         target = "slicing";
-      if (target === "sheerforce")
+      if (toID(target) === "sheerforce")
         target = "secondary";
       if (target === "bounceable" || toID(target) === "magiccoat" || toID(target) === "magicbounce")
         target = "reflectable";
@@ -1784,46 +1971,10 @@ function runMovesearch(target, cmd2, canAll, message, isTest) {
       error: "No search parameters other than 'all' were found. Try '/help movesearch' for more information on this command."
     };
   }
-  const getFullLearnsetOfPokemon = (species, natDex) => {
-    let usedSpecies = import_lib.Utils.deepClone(species);
-    let usedSpeciesLearnset = import_lib.Utils.deepClone(mod.species.getLearnset(usedSpecies.id));
-    if (!usedSpeciesLearnset) {
-      usedSpecies = import_lib.Utils.deepClone(mod.species.get(usedSpecies.baseSpecies));
-      usedSpeciesLearnset = import_lib.Utils.deepClone(mod.species.getLearnset(usedSpecies.id) || {});
-    }
-    const lsetData = /* @__PURE__ */ new Set();
-    for (const move in usedSpeciesLearnset) {
-      const learnset = mod.species.getLearnset(usedSpecies.id);
-      if (!learnset)
-        break;
-      const sources = learnset[move];
-      for (const learned of sources) {
-        const sourceGen = parseInt(learned.charAt(0));
-        if (sourceGen <= mod.gen && (mod.gen < 9 || sourceGen >= 9 || natDex))
-          lsetData.add(move);
-      }
-    }
-    while (usedSpecies.prevo) {
-      usedSpecies = import_lib.Utils.deepClone(mod.species.get(usedSpecies.prevo));
-      usedSpeciesLearnset = import_lib.Utils.deepClone(mod.species.getLearnset(usedSpecies.id));
-      for (const move in usedSpeciesLearnset) {
-        const learnset = mod.species.getLearnset(usedSpecies.id);
-        if (!learnset)
-          break;
-        const sources = learnset[move];
-        for (const learned of sources) {
-          const sourceGen = parseInt(learned.charAt(0));
-          if (sourceGen <= mod.gen && (mod.gen < 9 || sourceGen === 9 || natDex))
-            lsetData.add(move);
-        }
-      }
-    }
-    return lsetData;
-  };
   const validMoves = new Set(Object.keys(mod.data.Moves));
   for (const mon of targetMons) {
     const species = mod.species.get(mon.name);
-    const lsetData = getFullLearnsetOfPokemon(species, !!nationalSearch);
+    const lsetData = mod.species.getMovePool(species.id, !!nationalSearch);
     if (mon.shouldBeExcluded) {
       for (const move of lsetData) {
         validMoves.delete(move);
@@ -1840,7 +1991,7 @@ function runMovesearch(target, cmd2, canAll, message, isTest) {
   for (const moveid of validMoves) {
     const move = mod.moves.get(moveid);
     if (move.gen <= mod.gen) {
-      if (!nationalSearch && move.isNonstandard && move.isNonstandard !== "Gigantamax" || nationalSearch && move.isNonstandard && !["Gigantamax", "Past"].includes(move.isNonstandard)) {
+      if (!nationalSearch && move.isNonstandard && move.isNonstandard !== "Gigantamax" || nationalSearch && move.isNonstandard && !["Gigantamax", "Past", "Unobtainable"].includes(move.isNonstandard)) {
         continue;
       } else {
         dex[moveid] = move;
@@ -2117,15 +2268,24 @@ function runItemsearch(target, cmd2, canAll, message) {
   let showAll = false;
   let maxGen = 0;
   let gen = 0;
-  target = target.trim();
-  const lastCommaIndex = target.lastIndexOf(",");
-  const lastArgumentSubstr = target.substr(lastCommaIndex + 1).trim();
-  if (lastArgumentSubstr === "all") {
+  let randomOutput = 0;
+  const targetSplit = target.split(",");
+  if (targetSplit[targetSplit.length - 1].trim() === "all") {
     if (!canAll)
       return { error: "A search ending in ', all' cannot be broadcast." };
     showAll = true;
-    target = target.substr(0, lastCommaIndex);
+    targetSplit.pop();
   }
+  const sanitizedTargets = [];
+  for (const index of targetSplit.keys()) {
+    const localTarget = targetSplit[index].trim();
+    if (localTarget.startsWith("random") && cmd2 === "randitem") {
+      randomOutput = parseInt(localTarget.substr(6));
+    } else {
+      sanitizedTargets.push(localTarget);
+    }
+  }
+  target = sanitizedTargets.join(",");
   target = target.toLowerCase().replace("-", " ").replace(/[^a-z0-9.\s/]/g, "");
   const rawSearch = target.replace(/(max ?)?gen \d/g, (match) => toID(match)).split(" ");
   const searchedWords = [];
@@ -2241,7 +2401,7 @@ function runItemsearch(target, cmd2, canAll, message) {
       continue;
     searchedWords.push(newWord);
   }
-  if (searchedWords.length === 0 && !gen && !maxGen) {
+  if (searchedWords.length === 0 && !gen && !maxGen && randomOutput === 0) {
     return { error: "No distinguishing words were used. Try a more specific search." };
   }
   const dex = maxGen ? Dex.mod("gen" + maxGen) : Dex;
@@ -2381,6 +2541,25 @@ function runItemsearch(target, cmd2, canAll, message) {
     }
   }
   let resultsStr = message === "" ? message : `<span style="color:#999999;">${escapeHTML(message)}:</span><br />`;
+  if (randomOutput !== 0) {
+    const randomItems = [];
+    if (foundItems.length === 0) {
+      for (let i = 0; i < randomOutput; i++) {
+        randomItems.push(dex.items.all()[Math.floor(Math.random() * dex.items.all().length)]);
+      }
+    } else {
+      if (foundItems.length < randomOutput) {
+        randomOutput = foundItems.length;
+      }
+      for (let i = 0; i < randomOutput; i++) {
+        randomItems.push(foundItems[Math.floor(Math.random() * foundItems.length)]);
+      }
+    }
+    resultsStr += randomItems.map(
+      (result) => `<a href="//${Config.routes.dex}/items/${toID(result)}" target="_blank" class="subtle" style="white-space:nowrap"><psicon item="${result}" style="vertical-align:-7px" />${result}</a>`
+    ).join(", ");
+    return { reply: resultsStr };
+  }
   if (foundItems.length > 0) {
     foundItems.sort();
     let notShown = 0;
@@ -2403,15 +2582,24 @@ function runAbilitysearch(target, cmd2, canAll, message) {
   let showAll = false;
   let maxGen = 0;
   let gen = 0;
-  target = target.trim();
-  const lastCommaIndex = target.lastIndexOf(",");
-  const lastArgumentSubstr = target.substr(lastCommaIndex + 1).trim();
-  if (lastArgumentSubstr === "all") {
+  let randomOutput = 0;
+  const targetSplit = target.split(",");
+  if (targetSplit[targetSplit.length - 1].trim() === "all") {
     if (!canAll)
       return { error: "A search ending in ', all' cannot be broadcast." };
     showAll = true;
-    target = target.substr(0, lastCommaIndex);
+    targetSplit.pop();
   }
+  const sanitizedTargets = [];
+  for (const index of targetSplit.keys()) {
+    const localTarget = targetSplit[index].trim();
+    if (localTarget.startsWith("random") && cmd2 === "randability") {
+      randomOutput = parseInt(localTarget.substr(6));
+    } else {
+      sanitizedTargets.push(localTarget);
+    }
+  }
+  target = sanitizedTargets.join(",");
   target = target.toLowerCase().replace("-", " ").replace(/[^a-z0-9.\s/]/g, "");
   const rawSearch = target.replace(/(max ?)?gen \d/g, (match) => toID(match)).split(" ");
   const searchedWords = [];
@@ -2511,7 +2699,7 @@ function runAbilitysearch(target, cmd2, canAll, message) {
       continue;
     searchedWords.push(newWord);
   }
-  if (searchedWords.length === 0 && !gen && !maxGen) {
+  if (searchedWords.length === 0 && !gen && !maxGen && randomOutput === 0) {
     return { error: "No distinguishing words were used. Try a more specific search." };
   }
   let bestMatched = 0;
@@ -2550,6 +2738,25 @@ function runAbilitysearch(target, cmd2, canAll, message) {
   if (foundAbilities.length === 1)
     return { dt: foundAbilities[0] };
   let resultsStr = message === "" ? message : `<span style="color:#999999;">${escapeHTML(message)}:</span><br />`;
+  if (randomOutput !== 0) {
+    const randomAbilities = [];
+    if (foundAbilities.length === 0) {
+      for (let i = 0; i < randomOutput; i++) {
+        randomAbilities.push(Dex.abilities.all()[Math.floor(Math.random() * Dex.abilities.all().length)]);
+      }
+    } else {
+      if (foundAbilities.length < randomOutput) {
+        randomOutput = foundAbilities.length;
+      }
+      for (let i = 0; i < randomOutput; i++) {
+        randomAbilities.push(foundAbilities[Math.floor(Math.random() * foundAbilities.length)]);
+      }
+    }
+    resultsStr += randomAbilities.map(
+      (result) => `<a href="//${Config.routes.dex}/abilities/${toID(result)}" target="_blank" class="subtle" style="white-space:nowrap">${result}</a>`
+    ).join(", ");
+    return { reply: resultsStr };
+  }
   if (foundAbilities.length > 0) {
     foundAbilities.sort();
     let notShown = 0;
@@ -2607,12 +2814,14 @@ function runLearn(target, cmd2, canAll, formatid) {
     if (!dex)
       return { error: `"${formatid}" is not a supported format.` };
     gen = dex.gen;
-    format = new Dex.Format({ mod: formatid });
     formatName = `Gen ${gen}`;
+    format = new Dex.Format({ mod: formatid });
+    const ruleTable = dex.formats.getRuleTable(format);
     if (minSourceGen) {
       formatName += ` (Min Source Gen = ${minSourceGen})`;
-      const ruleTable = dex.formats.getRuleTable(format);
       ruleTable.minSourceGen = minSourceGen;
+    } else if (gen >= 9) {
+      ruleTable.minSourceGen = gen;
     }
   } else {
     gen = Dex.forFormat(format).gen;
@@ -2746,8 +2955,44 @@ function runLearn(target, cmd2, canAll, formatid) {
   }
   return { reply: buffer };
 }
-function runSearch(query) {
-  return PM.query(query);
+function runSearch(query, user) {
+  if (user) {
+    if (user.lastCommand.startsWith("/datasearch ")) {
+      throw new import_chat.Chat.ErrorMessage(
+        `You already have a datasearch query pending. Wait until it's complete before running another.`
+      );
+    }
+    user.lastCommand = `/datasearch ${query.cmd}`;
+  }
+  return PM.query(query).finally(() => {
+    if (user) {
+      user.lastCommand = "";
+    }
+  });
+}
+function runRandtype(target, cmd2, canAll, message) {
+  const icon = {};
+  for (const type of Dex.types.names()) {
+    icon[type] = `<img src="https://${Config.routes.client}/sprites/types/${type}.png" width="32" height="14">`;
+  }
+  let randomOutput = 0;
+  target = target.trim();
+  const targetSplit = target.split(",");
+  for (const index of targetSplit.keys()) {
+    const local_target = targetSplit[index].trim();
+    if (local_target.startsWith("random") && cmd2 === "randtype") {
+      randomOutput = parseInt(local_target.substr(6));
+    }
+  }
+  const randTypes = [];
+  for (let i = 0; i < randomOutput; i++) {
+    randTypes.push(Dex.types.names()[Math.floor(Math.random() * Dex.types.names().length)]);
+  }
+  let resultsStr = message === "" ? message : `<span style="color:#999999;">${escapeHTML(message)}:</span><br />`;
+  resultsStr += randTypes.map(
+    (type) => icon[type]
+  ).join(" ");
+  return { reply: resultsStr };
 }
 const PM = new import_lib.ProcessManager.QueryProcessManager(module, (query) => {
   try {
@@ -2761,12 +3006,16 @@ const PM = new import_lib.ProcessManager.QueryProcessManager(module, (query) => 
       case "randmove":
       case "movesearch":
         return runMovesearch(query.target, query.cmd, query.canAll, query.message, false);
+      case "randitem":
       case "itemsearch":
         return runItemsearch(query.target, query.cmd, query.canAll, query.message);
+      case "randability":
       case "abilitysearch":
         return runAbilitysearch(query.target, query.cmd, query.canAll, query.message);
       case "learn":
         return runLearn(query.target, query.cmd, query.canAll, query.message);
+      case "randtype":
+        return runRandtype(query.target, query.cmd, query.canAll, query.message);
       default:
         throw new Error(`Unrecognized Dexsearch command "${query.cmd}"`);
     }

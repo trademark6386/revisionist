@@ -147,17 +147,6 @@ const ssbSets = {
     nature: "Timid",
     shiny: true
   },
-  Andrew: {
-    species: "Spectrier",
-    ability: "Neutralizing Gas",
-    item: "Choice Specs",
-    gender: "M",
-    moves: ["Moongeist Beam", "Pollen Puff", "Trick"],
-    signatureMove: "Whammer Jammer",
-    evs: { hp: 4, spa: 252, spe: 252 },
-    ivs: { atk: 0 },
-    nature: "Timid"
-  },
   Annika: {
     species: "Mewtwo",
     ability: "Overprotective",
@@ -896,7 +885,7 @@ const ssbSets = {
     nature: "Calm",
     shiny: true
   },
-  Nol: {
+  Theia: {
     species: "Litwick",
     ability: "Burning Soul",
     item: "Spooky Plate",
@@ -1101,16 +1090,6 @@ const ssbSets = {
     evs: { spa: 252, spd: 4, spe: 252 },
     nature: "Timid",
     shiny: true
-  },
-  Rach: {
-    species: "Spinda",
-    ability: "BURN IT DOWN!",
-    item: "Leftovers",
-    gender: "F",
-    moves: ["Extreme Speed", "Recover", "Knock Off"],
-    signatureMove: "Spinda Wheel",
-    evs: { hp: 252, atk: 4, def: 252 },
-    nature: "Impish"
   },
   Rage: {
     species: "Espeon",

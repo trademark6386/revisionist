@@ -58,18 +58,26 @@ const TIERS = /* @__PURE__ */ new Set([
   "battlespotsingles",
   "battlespotdoubles",
   "battlestadiumsingles",
+  // UGH
+  "battlestadiumsinglesseries2",
+  "battlestadiumsinglesregulationc",
+  //
   "vgc2016",
   "vgc2017",
   "vgc2018",
   "vgc2019ultraseries",
   "vgc2020",
+  "vgc2023regulatione",
+  "vgc",
   "1v1",
   "anythinggoes",
   "nationaldexag",
+  "almostanyability",
   "balancedhackmons",
   "letsgoou",
   "monotype",
-  "purehackmons"
+  "purehackmons",
+  "nationaldexmonotype"
 ]);
 const FORMATS = /* @__PURE__ */ new Map();
 const VALIDATORS = /* @__PURE__ */ new Map();
@@ -157,18 +165,20 @@ function toGen(dex, name) {
     return 7;
   if (!pokemon.exists || pokemon.isNonstandard && pokemon.isNonstandard !== "CAP")
     return void 0;
+  if (pokemon.gen)
+    return pokemon.gen;
   const n = pokemon.num;
   if (n > 905)
     return 9;
   if (n > 810)
     return 8;
-  if (n > 721 || n <= -23 && n >= -28 || n <= -120 && n >= -126)
+  if (n > 721)
     return 7;
-  if (n > 649 || n <= -8 && n >= -22 || n <= -106 && n >= -110)
+  if (n > 649)
     return 6;
-  if (n > 493 || n <= -12 && n >= -17 || n <= -111 && n >= -115)
+  if (n > 493)
     return 5;
-  if (n > 386 || n <= -1 && n >= -11 || n <= -101 && n >= -104 || n <= -116 && n >= -119)
+  if (n > 386)
     return 4;
   if (n > 251)
     return 3;
@@ -377,7 +387,10 @@ const SMOGON = {
   vgc16: "vgc2016",
   vgc17: "vgc2017",
   vgc18: "vgc2018",
-  vgc19: "vgc2019ultraseries"
+  vgc19: "vgc2019ultraseries",
+  vgc24regulatione: "vgc2023regulatione",
+  // bssseries1: 'battlestadiumsinglesseries1', // ?
+  bssseries2: "battlestadiumsinglesseries2"
 };
 const getAnalysis = retrying(async (u) => {
   try {
@@ -400,7 +413,10 @@ async function getAnalysesByFormat(pokemon, gen) {
     }
     const analysesByFormat = /* @__PURE__ */ new Map();
     for (const [tier, analyses] of analysesByTier.entries()) {
-      const t = (0, import_dex.toID)(tier);
+      let t = (0, import_dex.toID)(tier);
+      if (gen === 9 && t === "battlestadiumsingles") {
+        t = "battlestadiumsinglesregulationc";
+      }
       const f = FORMATS.get(`gen${gen}${SMOGON[t] || t}`);
       if (f)
         analysesByFormat.set(f.format, analyses);

@@ -71,10 +71,13 @@ class RandomPOTDTeams extends import_random_teams.RandomTeams {
     const typeComboCount = {};
     const typeWeaknesses = {};
     const teamDetails = {};
-    const [pokemonPool, baseSpeciesPool] = this.getPokemonPool(type, pokemon, isMonotype, isDoubles);
-    if (baseSpeciesPool.includes(potd.baseSpecies)) {
-      this.fastPop(baseSpeciesPool, baseSpeciesPool.indexOf(potd.baseSpecies));
-    }
+    const pokemonList = isDoubles ? Object.keys(this.randomDoublesSets) : Object.keys(this.randomSets);
+    const [pokemonPool, baseSpeciesPool] = this.getPokemonPool(
+      type,
+      pokemon,
+      isMonotype,
+      pokemonList.filter((m) => this.dex.species.get(m).baseSpecies !== potd.baseSpecies)
+    );
     for (const typeName of potd.types) {
       typeCount[typeName] = 1;
     }
@@ -86,14 +89,10 @@ class RandomPOTDTeams extends import_random_teams.RandomTeams {
     }
     while (baseSpeciesPool.length && pokemon.length < this.maxTeamSize) {
       const baseSpecies = this.sampleNoReplace(baseSpeciesPool);
-      const currentSpeciesPool = [];
-      for (const poke of pokemonPool) {
-        const species2 = this.dex.species.get(poke);
-        if (species2.baseSpecies === baseSpecies)
-          currentSpeciesPool.push(species2);
-      }
-      let species = this.sample(currentSpeciesPool);
+      let species = this.dex.species.get(this.sample(pokemonPool[baseSpecies]));
       if (!species.exists)
+        continue;
+      if (baseFormes[species.baseSpecies])
         continue;
       if (species.baseSpecies === "Zoroark" && pokemon.length >= this.maxTeamSize - 1)
         continue;

@@ -104,6 +104,7 @@ const translations = {
     "${user.name} hid the replay of this battle.": "${user.name} ocultou o replay desta batalha.",
     "You can only do this in battle rooms.": "Voc\xEA s\xF3 pode fazer isso em sala de batalhas.",
     "You can only add a Player to unrated battles.": "Voc\xEA s\xF3 pode adicionar um jogador em batalhas que n\xE3o valham pontos.",
+    'Player must be set to "p1" or "p2", not "${target}".': 'Jogadores devem estar classificados como "p1" ou "p2", n\xE3o "${target}".',
     "User ${name} not found.": "Usu\xE1rio ${name} n\xE3o encontrado.",
     "This room already has a player in slot ${target}.": "Esta sala j\xE1 tem um jogador na posi\xE7\xE3o ${target}.",
     "${targetUser.name} is already a player in this battle.": "${targetUser.name} j\xE1 \xE9 um jogador nesta batalha.",

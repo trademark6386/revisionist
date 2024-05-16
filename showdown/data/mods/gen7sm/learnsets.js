@@ -51859,7 +51859,7 @@ const Learnsets = {
       workup: ["7M"]
     }
   },
-  greninjaash: {
+  greninjabond: {
     inherit: true,
     learnset: {
       acrobatics: ["7M"],

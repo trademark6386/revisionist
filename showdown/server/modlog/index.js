@@ -94,7 +94,8 @@ const PUNISHMENTS = [
   "GIVEAWAYUNBAN",
   "TOUR BAN",
   "TOUR UNBAN",
-  "UNNAMELOCK"
+  "UNNAMELOCK",
+  "PERMABLACKLIST"
 ];
 class Modlog {
   constructor(databasePath, options) {

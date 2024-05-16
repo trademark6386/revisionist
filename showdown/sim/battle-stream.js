@@ -243,6 +243,9 @@ ${this.battle.inputLog.join("\n")}`);
         this.push(`requesteddata
 ${team}`);
         break;
+      case "show-openteamsheets":
+        this.battle.showOpenTeamSheets(this.battle.rated === true);
+        break;
       case "version":
       case "version-origin":
         break;

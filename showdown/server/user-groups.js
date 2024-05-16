@@ -29,6 +29,7 @@ __export(user_groups_exports, {
 });
 module.exports = __toCommonJS(user_groups_exports);
 var import_fs = require("../lib/fs");
+var import_dex_data = require("../sim/dex-data");
 const SECTIONLEADER_SYMBOL = "\xA7";
 const PLAYER_SYMBOL = "\u2606";
 const HOST_SYMBOL = "\u2605";
@@ -160,7 +161,7 @@ const _Auth = class extends Map {
     }
     return group;
   }
-  static hasPermission(user, permission, target, room, cmd) {
+  static hasPermission(user, permission, target, room, cmd, cmdToken) {
     if (user.hasSysopAccess())
       return true;
     const auth = room ? room.auth : Users.globalAuth;
@@ -168,7 +169,7 @@ const _Auth = class extends Map {
     let targetSymbol;
     if (!target) {
       targetSymbol = null;
-    } else if (typeof target === "string" && !toID(target)) {
+    } else if (typeof target === "string" && !(0, import_dex_data.toID)(target)) {
       targetSymbol = target;
     } else {
       targetSymbol = auth.get(target);
@@ -180,8 +181,7 @@ const _Auth = class extends Map {
     if (group["root"])
       return true;
     if (room?.settings.section && room.settings.section === Users.globalAuth.sectionLeaders.get(user.id) && // Global drivers who are SLs should get room mod powers too
-    Users.globalAuth.atLeast(user, SECTIONLEADER_SYMBOL) && // But dont override ranks above moderator such as room owner
-    _Auth.getGroup("@").rank > group.rank) {
+    Users.globalAuth.atLeast(user, SECTIONLEADER_SYMBOL) && _Auth.getGroup("@").rank > group.rank) {
       group = _Auth.getGroup("@");
     }
     let jurisdiction = group[permission];
@@ -192,17 +192,22 @@ const _Auth = class extends Map {
     if (roomPermissions) {
       let foundSpecificPermission = false;
       if (cmd) {
+        if (!cmdToken)
+          cmdToken = `/`;
         const namespace = cmd.slice(0, cmd.indexOf(" "));
-        if (roomPermissions[`/${cmd}`]) {
-          if (!auth.atLeast(user, roomPermissions[`/${cmd}`]))
+        if (roomPermissions[`${cmdToken}${cmd}`]) {
+          if (!auth.atLeast(user, roomPermissions[`${cmdToken}${cmd}`]))
             return false;
           jurisdiction = "u";
           foundSpecificPermission = true;
-        } else if (roomPermissions[`/${namespace}`]) {
-          if (!auth.atLeast(user, roomPermissions[`/${namespace}`]))
+        } else if (roomPermissions[`${cmdToken}${namespace}`]) {
+          if (!auth.atLeast(user, roomPermissions[`${cmdToken}${namespace}`]))
             return false;
           jurisdiction = "u";
           foundSpecificPermission = true;
+        }
+        if (foundSpecificPermission && targetSymbol === Users.Auth.defaultSymbol()) {
+          jurisdiction += Users.Auth.defaultSymbol();
         }
       }
       if (!foundSpecificPermission && roomPermissions[permission]) {
@@ -217,13 +222,15 @@ const _Auth = class extends Map {
     return _Auth.getGroup(symbol).rank >= _Auth.getGroup(symbol2).rank;
   }
   static supportedRoomPermissions(room = null) {
-    const handlers = Chat.allCommands().filter((c) => c.hasRoomPermissions);
     const commands = [];
-    for (const handler of handlers) {
-      commands.push(`/${handler.fullCmd}`);
+    for (const handler of Chat.allCommands()) {
+      if (!handler.hasRoomPermissions && !handler.broadcastable)
+        continue;
+      const cmdPrefix = handler.hasRoomPermissions ? "/" : "!";
+      commands.push(`${cmdPrefix}${handler.fullCmd}`);
       if (handler.aliases.length) {
         for (const alias of handler.aliases) {
-          commands.push(`/${handler.fullCmd.replace(handler.cmd, alias)}`);
+          commands.push(`${cmdPrefix}${handler.fullCmd.replace(handler.cmd, alias)}`);
         }
       }
     }
@@ -367,7 +374,7 @@ class GlobalAuth extends Auth {
       if (!row)
         continue;
       const [name, symbol, sectionid] = row.split(",");
-      const id = toID(name);
+      const id = (0, import_dex_data.toID)(name);
       if (!id) {
         Monitor.warn("Dropping malformed usergroups line (missing ID):");
         Monitor.warn(row);

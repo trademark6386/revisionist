@@ -40,6 +40,7 @@ var import_friends = require("./friends");
 var import_lib = require("../lib");
 var Artemis = __toESM(require("./artemis"));
 var import_sim = require("../sim");
+var import_private_messages = require("./private-messages");
 var pathModule = __toESM(require("path"));
 var JSX = __toESM(require("./chat-jsx"));
 var import_chat_formatter = require("./chat-formatter");
@@ -501,12 +502,10 @@ class CommandContext extends MessageContext {
           return this.errorReply(`${this.pmTarget.name} is blocking room invites.`);
         }
       }
-      Chat.sendPM(message, this.user, this.pmTarget);
+      Chat.PrivateMessages.send(message, this.user, this.pmTarget);
     } else if (this.room) {
       this.room.add(`|c|${this.user.getIdentity(this.room)}|${message}`);
-      if (this.room.game && this.room.game.onLogMessage) {
-        this.room.game.onLogMessage(message, this.user);
-      }
+      this.room.game?.onLogMessage?.(message, this.user);
     } else {
       this.connection.popup(`Your message could not be sent:
 
@@ -594,9 +593,7 @@ It needs to be sent to a user or room.`);
     return this.checkBanwords(room.parent, message);
   }
   checkGameFilter() {
-    if (!this.room?.game || !this.room.game.onChatMessage)
-      return;
-    return this.room.game.onChatMessage(this.message, this.user);
+    return this.room?.game?.onChatMessage?.(this.message, this.user);
   }
   pmTransform(originalMessage, sender, receiver) {
     if (!sender) {
@@ -691,12 +688,18 @@ It needs to be sent to a user or room.`);
   }
   /** like privateModAction, but also notify Staff room */
   privateGlobalModAction(msg) {
+    if (this.room && !this.room.roomid.endsWith("staff")) {
+      msg = msg.replace(IPTools.ipRegex, "<IP>");
+    }
     this.privateModAction(msg);
     if (this.room?.roomid !== "staff") {
       Rooms.get("staff")?.addByUser(this.user, `${this.room ? `<<${this.room.roomid}>>` : `<PM:${this.pmTarget}>`} ${msg}`).update();
     }
   }
   addGlobalModAction(msg) {
+    if (this.room && !this.room.roomid.endsWith("staff")) {
+      msg = msg.replace(IPTools.ipRegex, "<IP>");
+    }
     this.addModAction(msg);
     if (this.room?.roomid !== "staff") {
       Rooms.get("staff")?.addByUser(this.user, `${this.room ? `<<${this.room.roomid}>>` : `<PM:${this.pmTarget}>`} ${msg}`).update();
@@ -812,13 +815,13 @@ It needs to be sent to a user or room.`);
     return Chat.statusfilter(status, this.user);
   }
   checkCan(permission, target = null, room = null) {
-    if (!Users.Auth.hasPermission(this.user, permission, target, room, this.fullCmd)) {
+    if (!Users.Auth.hasPermission(this.user, permission, target, room, this.fullCmd, this.cmdToken)) {
       throw new Chat.ErrorMessage(`${this.cmdToken}${this.fullCmd} - Access denied.`);
     }
   }
   privatelyCheckCan(permission, target = null, room = null) {
     this.handler.isPrivate = true;
-    if (Users.Auth.hasPermission(this.user, permission, target, room, this.fullCmd)) {
+    if (Users.Auth.hasPermission(this.user, permission, target, room, this.fullCmd, this.cmdToken)) {
       return true;
     }
     this.commandDoesNotExist();
@@ -842,8 +845,10 @@ It needs to be sent to a user or room.`);
       this.errorReply(`You cannot broadcast this command's information while locked.`);
       throw new Chat.ErrorMessage(`To see it for yourself, use: /${this.message.slice(1)}`);
     }
-    if (this.room && !this.user.can("show", null, this.room)) {
-      this.errorReply(`You need to be voiced to broadcast this command's information.`);
+    if (this.room && !this.user.can("show", null, this.room, this.cmd, this.cmdToken)) {
+      const perm = this.room.settings.permissions?.[`!${this.cmd}`];
+      const atLeast = perm ? `at least rank ${perm}` : "voiced";
+      this.errorReply(`You need to be ${atLeast} to broadcast this command's information.`);
       throw new Chat.ErrorMessage(`To see it for yourself, use: /${this.message.slice(1)}`);
     }
     if (!this.room && !this.pmTarget) {
@@ -923,9 +928,13 @@ It needs to be sent to a user or room.`);
         }
         if (room.settings.modchat && !room.auth.atLeast(user, room.settings.modchat)) {
           if (room.settings.modchat === "autoconfirmed") {
-            throw new Chat.ErrorMessage(
-              this.tr`Because moderated chat is set, your account must be at least one week old and you must have won at least one ladder game to speak in this room.`
+            this.errorReply(
+              this.tr`Moderated chat is set. To speak in this room, your account must be autoconfirmed, which means being registered for at least one week and winning at least one rated game (any game started through the 'Battle!' button).`
             );
+            if (!user.registered) {
+              this.sendReply(this.tr`|html|You may register in the <button name="openOptions"><i class="fa fa-cog"></i> Options</button> menu.`);
+            }
+            throw new Chat.Interruption();
           }
           if (room.settings.modchat === "trusted") {
             throw new Chat.ErrorMessage(
@@ -1311,6 +1320,7 @@ const Chat = new class {
     this.MAX_TIMEOUT_DURATION = 2147483647;
     this.Friends = new import_friends.FriendsDatabase();
     this.PM = import_friends.PM;
+    this.PrivateMessages = import_private_messages.PrivateMessages;
     this.multiLinePattern = new PatternTester();
     this.destroyHandlers = [Artemis.destroy];
     this.crqHandlers = {};
@@ -1345,7 +1355,7 @@ const Chat = new class {
      */
     this.database = (0, import_lib.SQL)(module, {
       file: "Config" in global && Config.nofswriting ? ":memory:" : PLUGIN_DATABASE_PATH,
-      processes: global.Config?.chatdbprocesses || 1
+      processes: global.Config?.chatdbprocesses
     });
     this.databaseReadyPromise = null;
     this.MessageContext = MessageContext;
@@ -1538,7 +1548,7 @@ const Chat = new class {
     return translated;
   }
   async prepareDatabase() {
-    if (!import_friends.PM.isParentProcess)
+    if (process.send)
       return;
     if (!Config.usesqlite)
       return;
@@ -1568,7 +1578,10 @@ const Chat = new class {
     for (const { file } of migrationsToRun) {
       await this.database.runFile(pathModule.resolve(migrationsFolder, file));
     }
-    Chat.destroyHandlers.push(() => void Chat.database?.destroy());
+    Chat.destroyHandlers.push(
+      () => void Chat.database?.destroy(),
+      () => Chat.PrivateMessages.destroy()
+    );
   }
   /**
    * Command parser
@@ -1627,16 +1640,6 @@ const Chat = new class {
       return;
     const logMessage = `[slow command] ${timeUsed}ms - ${context.user.name} (${context.connection.ip}): <${context.room ? context.room.roomid : context.pmTarget ? `PM:${context.pmTarget?.name}` : "CMD"}> ${context.message.replace(/\n/ig, " ")}`;
     Monitor.slow(logMessage);
-  }
-  sendPM(message, user, pmTarget, onlyRecipient = null) {
-    const buf = `|pm|${user.getIdentity()}|${pmTarget.getIdentity()}|${message}`;
-    if (onlyRecipient)
-      return onlyRecipient.send(buf);
-    user.send(buf);
-    if (pmTarget !== user)
-      pmTarget.send(buf);
-    pmTarget.lastPM = user.id;
-    user.lastPM = pmTarget.id;
   }
   getPluginName(file) {
     const nameWithExt = pathModule.relative(__dirname, file).replace(/^chat-(?:commands|plugins)./, "");
@@ -2287,6 +2290,7 @@ const Chat = new class {
 }();
 Chat.escapeHTML = import_lib.Utils.escapeHTML;
 Chat.splitFirst = import_lib.Utils.splitFirst;
+Chat.sendPM = Chat.PrivateMessages.send.bind(Chat.PrivateMessages);
 CommandContext.prototype.can = CommandContext.prototype.checkCan;
 CommandContext.prototype.canTalk = CommandContext.prototype.checkChat;
 CommandContext.prototype.canBroadcast = CommandContext.prototype.checkBroadcast;

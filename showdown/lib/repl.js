@@ -90,40 +90,49 @@ const Repl = new class {
     };
   }
   /**
+   * Delete old sockets in the REPL directory (presumably from a crashed
+   * previous launch of PS).
+   *
+   * Does everything synchronously, so that the directory is guaranteed
+   * clean and ready for new REPL sockets by the time this function returns.
+   */
+  cleanup() {
+    const config = typeof Config !== "undefined" ? Config : {};
+    if (!config.repl)
+      return;
+    const directory = path.dirname(
+      path.resolve(import_fs.FS.ROOT_PATH, config.replsocketprefix || "logs/repl", "app")
+    );
+    let files;
+    try {
+      files = fs.readdirSync(directory);
+    } catch {
+    }
+    if (files) {
+      for (const file of files) {
+        const pathname = path.resolve(directory, file);
+        const stat = fs.statSync(pathname);
+        if (!stat.isSocket())
+          continue;
+        const socket = net.connect(pathname, () => {
+          socket.end();
+          socket.destroy();
+        }).on("error", () => {
+          fs.unlinkSync(pathname);
+        });
+      }
+    }
+  }
+  /**
    * Starts a REPL server, using a UNIX socket for IPC. The eval function
    * parametre is passed in because there is no other way to access a file's
    * non-global context.
    */
   start(filename, evalFunction) {
     const config = typeof Config !== "undefined" ? Config : {};
-    if (config.repl !== void 0 && !config.repl)
+    if (!config.repl)
       return;
     Repl.setupListeners(filename);
-    if (filename === "app") {
-      const directory = path.dirname(
-        path.resolve(import_fs.FS.ROOT_PATH, config.replsocketprefix || "logs/repl", "app")
-      );
-      let files;
-      try {
-        files = fs.readdirSync(directory);
-      } catch {
-      }
-      if (files) {
-        for (const file of files) {
-          const pathname2 = path.resolve(directory, file);
-          const stat = fs.statSync(pathname2);
-          if (!stat.isSocket())
-            continue;
-          const socket = net.connect(pathname2, () => {
-            socket.end();
-            socket.destroy();
-          }).on("error", () => {
-            fs.unlink(pathname2, () => {
-            });
-          });
-        }
-      }
-    }
     const server = net.createServer((socket) => {
       repl.start({
         input: socket,

@@ -497,7 +497,7 @@ const Scripts = {
         this.battle.add("-hitcount", targets[0], hit - 1);
       }
       if (move.recoil && move.totalDamage) {
-        this.battle.damage(this.calcRecoilDamage(move.totalDamage, move), pokemon, pokemon, "recoil");
+        this.battle.damage(this.calcRecoilDamage(move.totalDamage, move, pokemon), pokemon, pokemon, "recoil");
       }
       if (move.struggleRecoil) {
         let recoilDamage;

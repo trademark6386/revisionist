@@ -99,9 +99,7 @@ const LogReader = new class {
     let atLeastOne = false;
     for (const roomid of list) {
       const room = Rooms.get(roomid);
-      const forceShow = room && // you are authed in the room
-      (room.auth.has(user.id) && user.can("mute", null, room) || // you are staff and currently in the room
-      isStaff && user.inRooms.has(room.roomid));
+      const forceShow = room && (room.auth.has(user.id) && user.can("mute", null, room) || isStaff && user.inRooms.has(room.roomid));
       if (!isUpperStaff && !forceShow) {
         if (!isStaff)
           continue;
@@ -555,22 +553,18 @@ class Searcher {
       buf += LogViewer.error(`Logs for month '${month}' do not exist on room ${roomid}.`);
       return buf;
     } else if (user) {
-      let total = 0;
-      for (const day in results) {
-        if (isNaN(results[day][user]))
-          continue;
-        total += results[day][user];
-      }
-      buf += `<br />Total linecount: ${total}<hr />`;
-      buf += "<ol>";
+      buf += "<hr /><ol>";
       const sortedDays = import_lib.Utils.sortBy(Object.keys(results), (day) => ({ reverse: day }));
+      let total = 0;
       for (const day of sortedDays) {
         const dayResults = results[day][user];
         if (isNaN(dayResults))
           continue;
+        total += dayResults;
         buf += `<li>[<a roomid="view-chatlog-${roomid}--${day}">${day}</a>]: `;
         buf += `${import_chat.Chat.count(dayResults, "lines")}</li>`;
       }
+      buf = buf.replace("{total}", `${total}`);
     } else {
       buf += "<hr /><ol>";
       const totalResults = {};
@@ -696,7 +690,11 @@ class Searcher {
   async activityStats(room, month) {
     const days = (await (0, import_lib.FS)(`logs/chat/${room}/${month}`).readdir()).map((f) => f.slice(0, -4));
     const stats = [];
+    const today = import_chat.Chat.toTimestamp(new Date()).split(" ")[0];
     for (const day of days) {
+      if (day === today) {
+        continue;
+      }
       const curStats = await this.dayStats(room, day);
       if (!curStats)
         continue;
@@ -730,7 +728,7 @@ class Searcher {
     return { average: collected, days: stats };
   }
   async dayStats(room, day) {
-    const cached = this.roomstatsCache.get(day);
+    const cached = this.roomstatsCache.get(room + "-" + day);
     if (cached)
       return cached;
     const results = {
@@ -795,7 +793,7 @@ class Searcher {
     results.linesPerUser = results.totalLines / Object.keys(results.users).length || 0;
     results.averagePresent = results.averagePresent / userstatCount;
     if (day !== LogReader.today()) {
-      this.roomstatsCache.set(day, results);
+      this.roomstatsCache.set(room + "-" + day, results);
     }
     return results;
   }
@@ -1448,11 +1446,14 @@ const pages = {
 const commands = {
   chatlogs: "chatlog",
   cl: "chatlog",
+  roomlog: "chatlog",
+  rl: "chatlog",
+  roomlogs: "chatlog",
   chatlog(target, room, user) {
     const [tarRoom, ...opts] = target.split(",");
     const targetRoom = tarRoom ? Rooms.search(tarRoom) : room;
     const roomid = targetRoom ? targetRoom.roomid : target;
-    return this.parse(`/join view-chatlog-${roomid}--today${opts ? `--${opts.join("--")}` : ""}`);
+    return this.parse(`/join view-chatlog-${roomid}--today${opts ? `--${opts.map(toID).join("--")}` : ""}`);
   },
   chatloghelp() {
     const strings = [
@@ -1500,7 +1501,7 @@ const commands = {
     );
   },
   searchlogshelp() {
-    const buffer = `<details class="readmore"><summary><code>/searchlogs [arguments]</code>: searches logs in the current room using the <code>[arguments]</code>.</summary>A room can be specified using the argument <code>room=[roomid]</code>. Defaults to the room it is used in.<br />A limit can be specified using the argument <code>limit=[number less than or equal to 3000]</code>. Defaults to 500.<br />A date can be specified in ISO (YYYY-MM-DD) format using the argument <code>date=[month]</code> (for example, <code>date: 2020-05</code>). Defaults to searching all logs.<br />If you provide a user argument in the form <code>user=username</code>, it will search for messages (that match the other arguments) only from that user.<br />All other arguments will be considered part of the search (if more than one argument is specified, it searches for lines containing all terms).<br />Requires: % @ # &</div>`;
+    const buffer = `<details class="readmore"><summary><code>/searchlogs [arguments]</code>: searches logs in the current room using the <code>[arguments]</code>.</summary>A room can be specified using the argument <code>room=[roomid]</code>. Defaults to the room it is used in.<br />A limit can be specified using the argument <code>limit=[number less than or equal to 3000]</code>. Defaults to 500.<br />A date can be specified in ISO (YYYY-MM-DD) format using the argument <code>date=[month]</code> (for example, <code>date: 2020-05</code>). Defaults to searching all logs.<br />If you provide a user argument in the form <code>user=username</code>, it will search for messages (that match the other arguments) only from that user.<br />All other arguments will be considered part of the search (if more than one argument is specified, it searches for lines containing all terms).<br />Requires: &</div>`;
     return this.sendReplyBox(buffer);
   },
   topusers: "linecount",
@@ -1723,7 +1724,7 @@ const commands = {
     return this.parse(`/join view-roominfo-${room}${date ? `--${date}` : ""}`);
   },
   roomactivityhelp: [
-    `/roomactibity [room][, date] - View room activity logs for the given room.`,
+    `/roomactivity [room][, date] - View room activity logs for the given room.`,
     `If a date is provided, it searches for logs from that date. Otherwise, it searches the current month.`,
     `Requires: &`
   ]

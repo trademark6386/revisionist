@@ -47,7 +47,7 @@ const translations = {
     "Quiz": "\u30AF\u30A4\u30BA",
     "Poll": "\u6295\u7968",
     "Submit": "\u63D0\u51FA",
-    "ended": "\u304C\u7D42\u4E86\u3057\u307E\u3057\u305F",
+    "ended": "\u7D42\u4E86",
     "votes": "\u7968",
     "delete": "\u524A\u9664",
     "Poll too long.": "\u6295\u7968\u304C\u9577\u3059\u304E\u307E\u3059\u3002",

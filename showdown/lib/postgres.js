@@ -42,6 +42,9 @@ class PostgresDatabase {
       this.pool = null;
     }
   }
+  destroy() {
+    return this.pool.end();
+  }
   async query(statement, values) {
     if (!this.pool) {
       throw new Error(`Attempting to use postgres without 'pg' installed`);

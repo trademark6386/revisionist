@@ -50,7 +50,7 @@ const Scripts = {
           break;
         }
       }
-      return !!(this.battle.gen >= 5 && !this.isActive || (this.volatiles["gastroacid"] || neutralizinggas && (this.ability !== "neutralizinggas" || this.m.abils?.includes("ability:neutralizinggas"))) && !this.getAbility().isPermanent);
+      return !!(this.battle.gen >= 5 && !this.isActive || (this.volatiles["gastroacid"] || neutralizinggas && (this.ability !== "neutralizinggas" || this.m.abils?.includes("ability:neutralizinggas"))) && !this.getAbility().flags["cantsuppress"]);
     }
   }
 };

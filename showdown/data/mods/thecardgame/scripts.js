@@ -54,7 +54,21 @@ const Scripts = {
       }
       if (item.naturalGift) {
         const type = item.naturalGift.type.replace(/(Ghost|Fairy)/g, "Psychic").replace(/Bug/g, "Grass").replace(/Ice/g, "Water").replace(/(Rock|Ground)/g, "Fighting").replace(/Flying/g, "Normal").replace(/Poison/g, "Dark");
-        this.modData("Items", id).naturalGift.type = type;
+        const overriddenBerries = [
+          "chartiberry",
+          "cobaberry",
+          "kasibberry",
+          "kebiaberry",
+          "roseliberry",
+          "shucaberry",
+          "tangaberry",
+          "yacheberry"
+        ];
+        if (overriddenBerries.includes(id)) {
+          this.modData("Items", id).naturalGift = { ...item.naturalGift, type };
+        } else {
+          this.modData("Items", id).naturalGift.type = type;
+        }
       }
     }
   },

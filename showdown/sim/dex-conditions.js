@@ -58,6 +58,8 @@ class DexConditions {
       condition = { ...ability, id: "ability:" + ability.id };
     } else if (this.dex.data.Rulesets.hasOwnProperty(id)) {
       condition = this.dex.formats.get(id);
+      this.conditionCache.set(id, condition);
+      return condition;
     } else if (this.dex.data.Conditions.hasOwnProperty(id)) {
       condition = new Condition({ name: id, ...this.dex.data.Conditions[id] });
     } else if (this.dex.data.Moves.hasOwnProperty(id) && (found = this.dex.data.Moves[id]).condition || this.dex.data.Abilities.hasOwnProperty(id) && (found = this.dex.data.Abilities[id]).condition || this.dex.data.Items.hasOwnProperty(id) && (found = this.dex.data.Items[id]).condition) {
@@ -69,7 +71,7 @@ class DexConditions {
     } else {
       condition = new Condition({ name: id, exists: false });
     }
-    this.conditionCache.set(id, condition);
+    this.conditionCache.set(id, this.dex.deepFreeze(condition));
     return condition;
   }
 }

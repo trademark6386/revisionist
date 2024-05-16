@@ -458,7 +458,7 @@ To look up auth for a user, use /userauth ${target}`;
     `/sectionleaders - Shows the current room sections and their section leaders.`
   ],
   async autojoin(target, room, user, connection) {
-    const targets = target.split(",");
+    const targets = target.split(",").filter(Boolean);
     if (targets.length > 16 || connection.inRooms.size > 1) {
       return connection.popup("To prevent DoS attacks, you can only use /autojoin for 16 or fewer rooms, when you haven't joined any rooms yet. Please use /join for each room separately.");
     }
@@ -533,7 +533,7 @@ To look up auth for a user, use /userauth ${target}`;
     if (room?.settings.isPersonal && !user.can("warn")) {
       return this.errorReply("Warning is unavailable in group chats.");
     }
-    const globalWarn = !room || ["staff", "adminlog"].includes(room.roomid) || room.roomid.startsWith("help-") || room.battle && !room.parent;
+    const globalWarn = !room || ["staff", "adminlog"].includes(room.roomid) || room.roomid.startsWith("help-") || room.battle && (!room.parent || room.parent.type !== "chat");
     const { targetUser, inputUsername, targetUsername, rest: reason } = this.splitUser(target);
     const targetID = toID(targetUsername);
     const { privateReason, publicReason } = this.parseSpoiler(reason);
@@ -550,7 +550,7 @@ To look up auth for a user, use /userauth ${target}`;
         `${targetID} was warned by ${user.name} while offline.${publicReason ? ` (${publicReason})` : ``}`
       );
       this.globalModlog("WARN OFFLINE", targetUser || targetID, privateReason);
-      Punishments.offlineWarns.set(targetID, reason);
+      Punishments.offlineWarns.set(targetID, publicReason);
       if (saveReplay)
         this.parse("/savereplay forpunishment");
       return;
@@ -766,7 +766,7 @@ To look up auth for a user, use /userauth ${target}`;
         `|modal||html|<p>${import_lib.Utils.escapeHTML(user.name)} has banned you from the room ${room.roomid} ${room.subRooms ? ` and its subrooms` : ``}${week ? " for a week" : ""}.</p>${publicReason ? `<p>Reason: ${import_lib.Utils.escapeHTML(publicReason)}</p>` : ``}<p>To appeal the ban, PM the staff member that banned you${room.persist ? ` or a room owner. </p><p><button name="send" value="/roomauth ${room.roomid}">List Room Staff</button></p>` : `.</p>`}`
       );
     }
-    this.addModAction(`${name} was banned ${week ? " for a week" : ""} from ${room.title} by ${user.name}.${publicReason ? ` (${publicReason})` : ``}`);
+    this.addModAction(`${name} was banned${week ? " for a week" : ""} from ${room.title} by ${user.name}.${publicReason ? ` (${publicReason})` : ``}`);
     const time = week ? Date.now() + 7 * 24 * 60 * 60 * 1e3 : null;
     const affected = Punishments.roomBan(room, targetUser, time, null, privateReason);
     if (!room.settings.isPrivate && room.persist) {
@@ -1294,11 +1294,7 @@ Your ban will expire in a few days.`
     const time = year ? Date.now() + 365 * 24 * 60 * 60 * 1e3 : null;
     const type = cmd.includes("name") ? "NAMELOCK" : "LOCK";
     Punishments.punishRange(ip, reason, time, type);
-    if (year) {
-      this.addGlobalModAction(`${user.name} year-${type.toLowerCase()}ed the ${ipDesc}: ${reason}`);
-    } else {
-      this.addGlobalModAction(`${user.name} hour-${type.toLowerCase()}ed the ${ipDesc}: ${reason}`);
-    }
+    this.addGlobalModAction(`${user.name} ${year ? "year" : "hour"}-${type.toLowerCase()}ed the ${ipDesc}: ${reason}`);
     this.globalModlog(
       `${year ? "YEAR" : "RANGE"}${type}`,
       null,
@@ -1986,6 +1982,9 @@ Your ban will expire in a few days.`
   bl: "blacklist",
   forceblacklist: "blacklist",
   forcebl: "blacklist",
+  permanentblacklist: "blacklist",
+  permablacklist: "blacklist",
+  permabl: "blacklist",
   blacklist(target, room, user, connection, cmd) {
     room = this.requireRoom();
     if (!target)
@@ -2032,8 +2031,12 @@ Your ban will expire in a few days.`
         `|modal||html|<p>${import_lib.Utils.escapeHTML(user.name)} has blacklisted you from the room ${room.roomid}${room.subRooms ? ` and its subrooms` : ""}. Reason: ${import_lib.Utils.escapeHTML(reason)}</p><p>To appeal the ban, PM the staff member that blacklisted you${room.persist ? ` or a room owner. </p><p><button name="send" value="/roomauth ${room.roomid}">List Room Staff</button></p>` : `.</p>`}`
       );
     }
-    this.privateModAction(`${name} was blacklisted from ${room.title} by ${user.name}.${reason ? ` (${reason})` : ""}`);
-    const affected = Punishments.roomBlacklist(room, targetUser, null, null, reason);
+    const expireTime = cmd.includes("perma") ? Date.now() + 10 * 365 * 24 * 60 * 60 * 1e3 : null;
+    const action = expireTime ? "PERMABLACKLIST" : "BLACKLIST";
+    this.privateModAction(
+      `${name} was blacklisted from ${room.title} by ${user.name}${expireTime ? " for ten years" : ""}.${reason ? ` (${reason})` : ""}`
+    );
+    const affected = Punishments.roomBlacklist(room, targetUser, expireTime, null, reason);
     if (!room.settings.isPrivate && room.persist) {
       const acAccount = targetUser.autoconfirmed !== userid && targetUser.autoconfirmed;
       let displayMessage = "";
@@ -2046,14 +2049,15 @@ Your ban will expire in a few days.`
       }
     }
     if (!room.settings.isPrivate && room.persist) {
-      this.globalModlog("BLACKLIST", targetUser, reason);
+      this.globalModlog(action, targetUser, reason);
     } else {
-      this.modlog("BLACKLIST", targetUser, reason);
+      this.modlog(action, targetUser, reason);
     }
     return true;
   },
   blacklisthelp: [
     `/blacklist [username], [reason] - Blacklists the user from the room you are in for a year. Requires: # &`,
+    `/permablacklist OR /permabl - blacklist a user for 10 years. Requires: # &`,
     `/unblacklist [username] - Unblacklists the user from the room you are in. Requires: # &`,
     `/showblacklist OR /showbl - show a list of blacklisted users in the room. Requires: % @ # &`,
     `/expiringblacklists OR /expiringbls - show a list of blacklisted users from the room whose blacklists are expiring in 3 months or less. Requires: % @ # &`
@@ -2201,6 +2205,7 @@ For future groupchat misuse, lock the creator, it will take away their trusted s
   },
   ungroupchatbanhelp: [`/ungroupchatban [user] - Allows a groupchatbanned user to use groupchats again. Requires: % @ &`],
   nameblacklist: "blacklistname",
+  permablacklistname: "blacklistname",
   blacklistname(target, room, user) {
     room = this.requireRoom();
     if (!target)
@@ -2215,35 +2220,36 @@ For future groupchat misuse, lock the creator, it will take away their trusted s
       return this.errorReply("Usage: /blacklistname name1, name2, ... | reason");
     }
     const targets = targetStr.split(",").map((s) => toID(s));
-    const duplicates = targets.filter((userid) => (
-      // can be asserted, room should always exist
-      Punishments.roomUserids.nestedGetByType(room.roomid, userid, "BLACKLIST")
-    ));
+    const duplicates = targets.filter((userid) => // can be asserted, room should always exist
+    Punishments.roomUserids.nestedGetByType(room.roomid, userid, "BLACKLIST"));
     if (duplicates.length) {
       return this.errorReply(`[${duplicates.join(", ")}] ${Chat.plural(duplicates, "are", "is")} already blacklisted.`);
     }
+    const expireTime = this.cmd.includes("perma") ? Date.now() + 10 * 365 * 24 * 60 * 60 * 1e3 : null;
+    const action = expireTime ? "PERMANAMEBLACKLIST" : "NAMEBLACKLIST";
     for (const userid of targets) {
       if (!userid)
         return this.errorReply(`User '${userid}' is not a valid userid.`);
       if (!Users.Auth.hasPermission(user, "ban", room.auth.get(userid), room)) {
         return this.errorReply(`/blacklistname - Access denied: ${userid} is of equal or higher authority than you.`);
       }
-      Punishments.roomBlacklist(room, userid, null, null, reason);
+      Punishments.roomBlacklist(room, userid, expireTime, null, reason);
       const trusted = Users.isTrusted(userid);
       if (trusted && room.settings.isPrivate !== true) {
         Monitor.log(`[CrisisMonitor] Trusted user ${userid}${trusted !== userid ? ` (${trusted})` : ``} was nameblacklisted from ${room.roomid} by ${user.name}, and should probably be demoted.`);
       }
       if (!room.settings.isPrivate && room.persist) {
-        this.globalModlog("NAMEBLACKLIST", userid, reason);
+        this.globalModlog(action, userid, reason);
       }
     }
     this.privateModAction(
-      `${targets.join(", ")}${Chat.plural(targets, " were", " was")} nameblacklisted from ${room.title} by ${user.name}.`
+      `${targets.join(", ")}${Chat.plural(targets, " were", " was")} nameblacklisted from ${room.title} by ${user.name}${expireTime ? " for ten years" : ""}.`
     );
     return true;
   },
   blacklistnamehelp: [
-    `/blacklistname OR /nameblacklist [name1, name2, etc.] | reason - Blacklists all name(s) from the room you are in for a year. Requires: # &`
+    `/blacklistname OR /nameblacklist [name1, name2, etc.] | reason - Blacklists all name(s) from the room you are in for a year. Requires: # &`,
+    `/permablacklistname [name1, name2, etc.] | reason - Blacklists all name(s) from the room you are in for 10 years. Requires: # &`
   ],
   unab: "unblacklist",
   unblacklist(target, room, user) {

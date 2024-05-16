@@ -173,7 +173,7 @@ const Conditions = {
     onStart(target) {
       target.removeVolatile("mustrecharge");
     },
-    onBeforeMovePriority: 4,
+    onBeforeMovePriority: 8,
     onBeforeMove(pokemon) {
       if (!this.runEvent("Flinch", pokemon)) {
         return;
@@ -196,7 +196,7 @@ const Conditions = {
   partiallytrapped: {
     name: "partiallytrapped",
     duration: 2,
-    onBeforeMovePriority: 4,
+    onBeforeMovePriority: 9,
     onBeforeMove(pokemon) {
       this.add("cant", pokemon, "partiallytrapped");
       return false;
@@ -225,6 +225,7 @@ const Conditions = {
   mustrecharge: {
     inherit: true,
     duration: 0,
+    onBeforeMovePriority: 7,
     onStart() {
     }
   },

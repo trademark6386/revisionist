@@ -292,6 +292,7 @@ class Format extends import_dex_data.BasicEffect {
     this.ruleTable = null;
     this.onBegin = data.onBegin || void 0;
     this.noLog = !!data.noLog;
+    this.playerCount = this.gameType === "multi" || this.gameType === "freeforall" ? 4 : 2;
   }
 }
 function mergeFormatLists(main, custom) {
@@ -381,6 +382,8 @@ class DexFormats {
         format.searchShow = true;
       if (format.tournamentShow === void 0)
         format.tournamentShow = true;
+      if (format.bestOfDefault === void 0)
+        format.bestOfDefault = false;
       if (format.mod === void 0)
         format.mod = "gen9";
       if (!this.dex.dexes[format.mod])
@@ -468,6 +471,9 @@ class DexFormats {
   getRuleTable(format, depth = 1, repeals) {
     if (format.ruleTable && !repeals)
       return format.ruleTable;
+    if (format.name.length > 50) {
+      throw new Error(`Format "${format.name}" has a name longer than 50 characters`);
+    }
     if (depth === 1) {
       const dex = this.dex.mod(format.mod);
       if (dex !== this.dex) {

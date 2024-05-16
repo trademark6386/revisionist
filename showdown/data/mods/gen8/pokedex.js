@@ -38,6 +38,22 @@ const Pokedex = {
     inherit: true,
     abilities: { 0: "Inner Focus", 1: "Keen Eye", H: "Poison Touch" }
   },
+  shiftry: {
+    inherit: true,
+    abilities: { 0: "Chlorophyll", 1: "Early Bird", H: "Pickpocket" }
+  },
+  piplup: {
+    inherit: true,
+    abilities: { 0: "Torrent", H: "Defiant" }
+  },
+  prinplup: {
+    inherit: true,
+    abilities: { 0: "Torrent", H: "Defiant" }
+  },
+  empoleon: {
+    inherit: true,
+    abilities: { 0: "Torrent", H: "Defiant" }
+  },
   gallade: {
     inherit: true,
     abilities: { 0: "Steadfast", H: "Justified" }
@@ -67,6 +83,10 @@ const Pokedex = {
     abilities: { 0: "Shield Dust", 1: "Compound Eyes" },
     prevo: void 0,
     evoLevel: void 0
+  },
+  vivillonpokeball: {
+    inherit: true,
+    abilities: { 0: "Shield Dust", 1: "Compound Eyes" }
   },
   sliggoohisui: {
     inherit: true,

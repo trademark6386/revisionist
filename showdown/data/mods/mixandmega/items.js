@@ -112,6 +112,13 @@ const Items = {
     inherit: true,
     isNonstandard: null
   },
+  cornerstonemask: {
+    inherit: true,
+    onBasePower(basePower, user, target, move) {
+      return this.chainModify([4915, 4096]);
+    },
+    onTakeItem: false
+  },
   diancite: {
     inherit: true,
     isNonstandard: null
@@ -148,6 +155,13 @@ const Items = {
   gyaradosite: {
     inherit: true,
     isNonstandard: null
+  },
+  hearthflamemask: {
+    inherit: true,
+    onBasePower(basePower, user, target, move) {
+      return this.chainModify([4915, 4096]);
+    },
+    onTakeItem: false
   },
   heracronite: {
     inherit: true,
@@ -251,13 +265,11 @@ const Items = {
   },
   rustedshield: {
     inherit: true,
-    onTakeItem: false,
-    isNonstandard: null
+    onTakeItem: false
   },
   rustedsword: {
     inherit: true,
-    onTakeItem: false,
-    isNonstandard: null
+    onTakeItem: false
   },
   sablenite: {
     inherit: true,
@@ -305,6 +317,13 @@ const Items = {
       if (["Poison", "Flying"].includes(move.type)) {
         return this.chainModify([4915, 4096]);
       }
+    },
+    onTakeItem: false
+  },
+  wellspringmask: {
+    inherit: true,
+    onBasePower(basePower, user, target, move) {
+      return this.chainModify([4915, 4096]);
     },
     onTakeItem: false
   }

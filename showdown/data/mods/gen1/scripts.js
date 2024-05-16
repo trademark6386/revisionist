@@ -772,7 +772,8 @@ const Scripts = {
         damage += Math.floor(damage / 2);
       }
       for (const targetType of target.types) {
-        const typeMod = this.battle.dex.getEffectiveness(type, targetType);
+        let typeMod = this.battle.dex.getEffectiveness(type, targetType);
+        typeMod = this.battle.runEvent("Effectiveness", this.battle, targetType, move, typeMod);
         if (typeMod > 0) {
           damage *= 20;
           damage = Math.floor(damage / 10);

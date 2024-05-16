@@ -60203,7 +60203,7 @@ const Learnsets = {
       { generation: 6, level: 100, isHidden: true, moves: ["hydrocannon", "gunkshot", "matblock", "happyhour"], pokeball: "cherishball" }
     ]
   },
-  greninjaash: {
+  greninjabond: {
     learnset: {
       acrobatics: ["7M"],
       aerialace: ["7M", "7S0"],

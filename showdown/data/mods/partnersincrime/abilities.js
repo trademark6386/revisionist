@@ -41,7 +41,7 @@ const Abilities = {
           this.add("-end", target, "Slow Start", "[silent]");
         }
         if (target.m.innate) {
-          if (!this.dex.abilities.get(target.m.innate.slice(8)).isPermanent) {
+          if (!this.dex.abilities.get(target.m.innate.slice(8)).flags["cantsuppress"]) {
             target.removeVolatile(target.m.innate);
           }
         }
@@ -55,12 +55,12 @@ const Abilities = {
       const sortedActive = this.getAllActive();
       this.speedSort(sortedActive);
       for (const pokemon of sortedActive) {
-        if (pokemon !== source) {
-          this.singleEvent("Start", pokemon.getAbility(), pokemon.abilityState, pokemon);
-        }
         if (pokemon.m.innate) {
           if (!pokemon.volatiles[pokemon.m.innate])
             pokemon.addVolatile(pokemon.m.innate, pokemon);
+        }
+        if (pokemon !== source) {
+          this.singleEvent("Start", pokemon.getAbility(), pokemon.abilityState, pokemon);
         }
       }
     }
@@ -71,21 +71,9 @@ const Abilities = {
       if (!pokemon.isStarted || this.effectState.gaveUp)
         return;
       const isAbility = pokemon.ability === "trace";
-      const additionalBannedAbilities = [
-        // Zen Mode included here for compatability with Gen 5-6
-        "noability",
-        "flowergift",
-        "forecast",
-        "hungerswitch",
-        "illusion",
-        "imposter",
-        "neutralizinggas",
-        "powerofalchemy",
-        "receiver",
-        "trace",
-        "zenmode"
-      ];
-      const possibleTargets = pokemon.adjacentFoes().filter((target2) => !target2.getAbility().isPermanent && !additionalBannedAbilities.includes(target2.ability));
+      const possibleTargets = pokemon.adjacentFoes().filter(
+        (target2) => !target2.getAbility().flags["notrace"] && target2.ability !== "noability"
+      );
       if (!possibleTargets.length)
         return;
       const target = this.sample(possibleTargets);

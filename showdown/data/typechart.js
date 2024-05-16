@@ -41,6 +41,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 1,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { atk: 30, def: 30, spd: 30 },
@@ -66,6 +67,7 @@ const TypeChart = {
       Psychic: 3,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: {}
@@ -89,6 +91,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 2
     },
     HPivs: { atk: 30 },
@@ -114,6 +117,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 2,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { spa: 30 },
@@ -138,6 +142,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 1,
+      Stellar: 0,
       Water: 0
     }
   },
@@ -160,6 +165,7 @@ const TypeChart = {
       Psychic: 1,
       Rock: 2,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { def: 30, spa: 30, spd: 30, spe: 30 },
@@ -185,6 +191,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 1,
       Steel: 2,
+      Stellar: 0,
       Water: 1
     },
     HPivs: { atk: 30, spa: 30, spe: 30 },
@@ -209,6 +216,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 1,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { hp: 30, atk: 30, def: 30, spa: 30, spd: 30 },
@@ -234,6 +242,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { def: 30, spd: 30 },
@@ -259,6 +268,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 2
     },
     HPivs: { atk: 30, spa: 30 },
@@ -284,6 +294,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 2,
       Steel: 0,
+      Stellar: 0,
       Water: 1
     },
     HPivs: { spa: 30, spd: 30 },
@@ -310,6 +321,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 1,
       Steel: 1,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { atk: 30, def: 30 },
@@ -334,6 +346,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     }
   },
@@ -358,6 +371,7 @@ const TypeChart = {
       Psychic: 1,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { def: 30, spa: 30, spd: 30 },
@@ -382,6 +396,7 @@ const TypeChart = {
       Psychic: 2,
       Rock: 0,
       Steel: 0,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { atk: 30, spe: 30 },
@@ -407,6 +422,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 1,
+      Stellar: 0,
       Water: 1
     },
     HPivs: { def: 30, spd: 30, spe: 30 },
@@ -434,10 +450,34 @@ const TypeChart = {
       Psychic: 2,
       Rock: 2,
       Steel: 2,
+      Stellar: 0,
       Water: 0
     },
     HPivs: { spd: 30 },
     HPdvs: { atk: 13 }
+  },
+  stellar: {
+    damageTaken: {
+      Bug: 0,
+      Dark: 0,
+      Dragon: 0,
+      Electric: 0,
+      Fairy: 0,
+      Fighting: 0,
+      Fire: 0,
+      Flying: 0,
+      Ghost: 0,
+      Grass: 0,
+      Ground: 0,
+      Ice: 0,
+      Normal: 0,
+      Poison: 0,
+      Psychic: 0,
+      Rock: 0,
+      Steel: 0,
+      Stellar: 0,
+      Water: 0
+    }
   },
   water: {
     damageTaken: {
@@ -458,6 +498,7 @@ const TypeChart = {
       Psychic: 0,
       Rock: 0,
       Steel: 2,
+      Stellar: 0,
       Water: 2
     },
     HPivs: { atk: 30, def: 30, spa: 30 },

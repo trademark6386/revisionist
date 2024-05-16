@@ -280,6 +280,7 @@ class ScavengerHunt extends Rooms.RoomGame {
   // for purposes of adding new temporary properties for the purpose of twists.
   constructor(room, staffHost, hosts, gameType, questions, mod) {
     super(room);
+    this.gameid = "scavengerhunt";
     this.checkChat = true;
     this.allowRenames = true;
     this.gameType = gameType;
@@ -297,7 +298,6 @@ class ScavengerHunt extends Rooms.RoomGame {
     this.staffHostId = staffHost.id;
     this.staffHostName = staffHost.name;
     this.cacheUserIps(staffHost);
-    this.gameid = "scavengerhunt";
     this.title = "Scavenger Hunt";
     this.scavGame = true;
     if (this.room.scavgame) {
@@ -398,7 +398,7 @@ class ScavengerHunt extends Rooms.RoomGame {
       return user.sendTo(this.room, "You have already completed this scavenger hunt.");
     this.runEvent("Leave", player);
     this.joinedIps = this.joinedIps.filter((ip) => !player.joinIps.includes(ip));
-    this.removePlayer(user);
+    this.removePlayer(player);
     this.leftHunt[user.id] = 1;
     user.sendTo(this.room, "You have left the scavenger hunt.");
   }
@@ -727,8 +727,7 @@ class ScavengerHunt extends Rooms.RoomGame {
     const player = this.playerTable[userid];
     if (player.completed)
       return true;
-    player.destroy();
-    delete this.playerTable[userid];
+    this.removePlayer(player);
     return true;
   }
   onUpdateConnection() {

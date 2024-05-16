@@ -53,7 +53,7 @@ const Rulesets = {
   standard: {
     effectType: "ValidatorRule",
     name: "Standard",
-    ruleset: ["Obtainable", "Sleep Clause Mod", "Freeze Clause Mod", "Species Clause", "OHKO Clause", "Evasion Items Clause", "Evasion Moves Clause", "Endless battle Clause", "HP Percentage Mod", "Cancel Mod"],
+    ruleset: ["Obtainable", "Sleep Clause Mod", "Freeze Clause Mod", "Species Clause", "Nickname Clause", "OHKO Clause", "Evasion Items Clause", "Evasion Moves Clause", "Endless battle Clause", "HP Percentage Mod", "Cancel Mod"],
     banlist: [
       "Hypnosis + Mean Look",
       "Hypnosis + Spider Web",
@@ -67,9 +67,9 @@ const Rulesets = {
       "Spore + Spider Web"
     ]
   },
-  nintendocup2000movelegality: {
+  nc2000movelegality: {
     effectType: "ValidatorRule",
-    name: "Nintendo Cup 2000 Move Legality",
+    name: "NC 2000 Move Legality",
     desc: "Prevents Pok\xE9mon from having moves that would only be obtainable in Pok\xE9mon Crystal.",
     onValidateSet(set) {
       const illegalCombos = {
@@ -101,33 +101,27 @@ const Rulesets = {
         magneton: { triattack: "L" },
         cloyster: { spikes: "L" }
       };
+      const moveSources = Object.fromEntries(
+        set.moves.map((move) => [this.toID(move), []])
+      );
+      const species = this.dex.species.get(set.species);
+      for (const { learnset } of this.dex.species.getFullLearnset(species.id)) {
+        for (const moveid in moveSources) {
+          moveSources[moveid].push(...learnset[moveid] || []);
+        }
+      }
       const notUsableAsTM = ["icebeam", "flamethrower", "thunderbolt"];
-      const species = this.dex.species.get(set.species || set.name);
-      const learnsetData = { ...this.dex.data.Learnsets[species.id]?.learnset || {} };
       const legalityList = illegalCombos[species.id];
       const problems = [];
-      let prevo = species.prevo;
-      while (prevo) {
-        const prevoSpecies = this.dex.species.get(prevo);
-        const prevoLsetData = this.dex.data.Learnsets[prevoSpecies.id]?.learnset || {};
-        for (const moveid in prevoLsetData) {
-          if (!(moveid in learnsetData)) {
-            learnsetData[moveid] = prevoLsetData[moveid];
-          } else {
-            learnsetData[moveid].push(...prevoLsetData[moveid]);
-          }
-        }
-        prevo = prevoSpecies.prevo;
-      }
       for (const moveid of set.moves.map(this.toID)) {
-        if (!learnsetData[moveid])
+        if (!moveSources[moveid])
           continue;
         if (legalityList) {
-          const list = learnsetData[moveid].filter((x) => !x.includes(legalityList[moveid]));
+          const list = moveSources[moveid].filter((x) => !x.includes(legalityList[moveid]));
           if (!list.length) {
             switch (legalityList[moveid]) {
               case "L":
-                const levels = new Set(learnsetData[moveid].filter((x) => x.includes(legalityList[moveid])).map((x) => x.slice(2)));
+                const levels = new Set(moveSources[moveid].filter((x) => x.includes(legalityList[moveid])).map((x) => x.slice(2)));
                 problems.push(
                   `${species.name} can't learn ${this.dex.moves.get(moveid).name}.`,
                   `(It learns ${this.dex.moves.get(moveid).name} in Pok\xE9mon Crystal at the following levels: ${[...levels].join(", ")})`
@@ -149,7 +143,7 @@ const Rulesets = {
           }
         }
         for (const id of notUsableAsTM) {
-          if (moveid === id && learnsetData[id] && !learnsetData[id].filter((x) => !x.includes("2T")).length) {
+          if (moveid === id && moveSources[id] && !moveSources[id].filter((x) => !x.includes("2T")).length) {
             problems.push(`${species.name} can't learn ${this.dex.moves.get(id).name}.`);
           }
         }

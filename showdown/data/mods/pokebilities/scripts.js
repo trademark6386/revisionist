@@ -42,7 +42,7 @@ const Scripts = {
           break;
         }
       }
-      return !!(this.battle.gen >= 5 && !this.isActive || (this.volatiles["gastroacid"] || neutralizinggas && (this.ability !== "neutralizinggas" || this.m.innates?.some((k) => k === "neutralizinggas"))) && !this.getAbility().isPermanent);
+      return !!(this.battle.gen >= 5 && !this.isActive || (this.volatiles["gastroacid"] || neutralizinggas && (this.ability !== "neutralizinggas" || this.m.innates?.some((k) => k === "neutralizinggas"))) && !this.getAbility().flags["cantsuppress"]);
     },
     hasAbility(ability) {
       if (this.ignoringAbility())
@@ -169,6 +169,7 @@ const Scripts = {
         this.details = species.name + (this.level === 100 ? "" : ", L" + this.level) + (this.gender === "" ? "" : ", " + this.gender) + (this.set.shiny ? ", shiny" : "");
         this.battle.add("detailschange", this, (this.illusion || this).details);
         if (source.effectType === "Item") {
+          this.canTerastallize = null;
           if (source.zMove) {
             this.battle.add("-burst", this, apparentSpecies, species.requiredItem);
             this.moveThisTurnResult = true;

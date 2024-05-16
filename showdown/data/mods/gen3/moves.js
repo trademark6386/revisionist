@@ -37,7 +37,11 @@ const Moves = {
   },
   ancientpower: {
     inherit: true,
-    flags: { contact: 1, protect: 1, mirror: 1 }
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
+  },
+  assist: {
+    inherit: true,
+    flags: { metronome: 1, noassist: 1, nosleeptalk: 1 }
   },
   astonish: {
     inherit: true,
@@ -213,7 +217,7 @@ const Moves = {
   disable: {
     inherit: true,
     accuracy: 55,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+    flags: { protect: 1, mirror: 1, bypasssub: 1, metronome: 1 },
     volatileStatus: "disable",
     condition: {
       durationCallback() {
@@ -271,7 +275,7 @@ const Moves = {
         name: "Doom Desire",
         basePower: 120,
         category: "Physical",
-        flags: {},
+        flags: { metronome: 1, futuremove: 1 },
         willCrit: false,
         type: "???"
       };
@@ -287,7 +291,7 @@ const Moves = {
           basePower: 0,
           damage,
           category: "Physical",
-          flags: { futuremove: 1 },
+          flags: { metronome: 1, futuremove: 1 },
           effectType: "Move",
           type: "???"
         }
@@ -346,11 +350,11 @@ const Moves = {
   },
   fakeout: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   feintattack: {
     inherit: true,
-    flags: { protect: 1, mirror: 1 }
+    flags: { protect: 1, mirror: 1, metronome: 1 }
   },
   flash: {
     inherit: true,
@@ -484,6 +488,7 @@ const Moves = {
   },
   mirrormove: {
     inherit: true,
+    flags: { metronome: 1, failencore: 1, nosleeptalk: 1, noassist: 1 },
     onTryHit() {
     },
     onHit(pokemon) {
@@ -548,7 +553,7 @@ const Moves = {
   },
   overheat: {
     inherit: true,
-    flags: { contact: 1, protect: 1, mirror: 1 }
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 }
   },
   petaldance: {
     inherit: true,
@@ -634,7 +639,7 @@ const Moves = {
   },
   taunt: {
     inherit: true,
-    flags: { protect: 1, bypasssub: 1 },
+    flags: { protect: 1, bypasssub: 1, metronome: 1 },
     condition: {
       duration: 2,
       onStart(target) {
@@ -662,11 +667,11 @@ const Moves = {
   },
   teeterdance: {
     inherit: true,
-    flags: { protect: 1 }
+    flags: { protect: 1, metronome: 1 }
   },
   tickle: {
     inherit: true,
-    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1 }
+    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1, metronome: 1 }
   },
   uproar: {
     inherit: true,
