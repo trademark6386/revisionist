@@ -27,7 +27,7 @@ const Conditions = {
     effectType: "Weather",
     duration: 5,
     durationCallback(source, effect) {
-      if (source?.hasItem("damprock")) {
+      if (source?.hasItem("foulrock")) {
         return 8;
       }
       return 5;
@@ -65,7 +65,13 @@ const Conditions = {
     name: "Darkness",
     effectType: "Weather",
     duration: 5,
-    onWeatherModifyDamage(damage, attacker, defender, move) {
+    durationCallback(source, effect) {
+      if (source?.hasItem("darkrock")) {
+        return 8;
+      }
+      return 5;
+    },
+	onWeatherModifyDamage(damage, attacker, defender, move) {
       if (defender.hasItem("utilityumbrella"))
         return;
       if (move.type === "Ghost" || move.type === "Dark") {
