@@ -61,6 +61,23 @@ const Items = {
     gen: 9,
     isNonstandard: "Past"
   }
+  corruptedseed: {
+    name: "Corrupted Seed",
+    spritenum: 513,
+    fling: {
+      basePower: 30
+    },
+    onSourceTryHeal(damage, target, source, effect) {
+      this.debug("Heal is occurring: " + target + " <- " + source + " :: " + effect.id);
+      const canOoze = ["drain", "leechseed", "strengthsap"];
+      if (canOoze.includes(effect.id)) {
+        this.damage(damage);
+        return 0;
+      }
+    },
+    num: 513,
+    gen: 2
+  },
   darkrock: {
     name: "Dark Rock",
     spritenum: 510,
@@ -92,6 +109,31 @@ const Items = {
       basePower: 60
     },
     num: 505,
+    gen: 4
+  },
+  hafliberry: {
+    name: "Hafli Berry",
+    spritenum: 514,
+    isBerry: true,
+    naturalGift: {
+      basePower: 60,
+      type: "Nuclear"
+    },
+    onSourceModifyDamage(damage, source, target, move) {
+      if (move.type === "Nuclear" && target.getMoveHitData(move).typeMod > 0) {
+        const hitSub = target.volatiles["substitute"] && !move.flags["bypasssub"] && !(move.infiltrates && this.gen >= 6);
+        if (hitSub)
+          return;
+        if (target.eatItem()) {
+          this.debug("-50% reduction");
+          this.add("-enditem", target, this.effect, "[weaken]");
+          return this.chainModify(0.5);
+        }
+      }
+    },
+    onEat() {
+    },
+    num: 514,
     gen: 4
   },
   iceshard: {
@@ -145,6 +187,36 @@ const Items = {
     num: 501,
     gen: 9,
     isNonstandard: "Past"
+  },
+  mossshard: {
+    name: "Moss Shard",
+    spritenum: 515,
+    fling: {
+      basePower: 30
+    },
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move && move.type === "Grass") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    num: 515,
+    gen: 2
+  },
+  prettyribbon: {
+    name: "Pretty Ribbon",
+    spritenum: 516,
+    fling: {
+      basePower: 30
+    },
+    onBasePowerPriority: 15,
+    onBasePower(basePower, user, target, move) {
+      if (move && move.type === "Fairy") {
+        return this.chainModify([4915, 4096]);
+      }
+    },
+    num: 516,
+    gen: 2
   },
   raggedpebble: {
     name: "Ragged Pebble",
