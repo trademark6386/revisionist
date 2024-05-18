@@ -795,6 +795,20 @@ const Moves = {
     type: "Bug",
     contestType: "Beautiful"
   },
+  buggnaw: {
+    num: 1283,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Bug Gnaw",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    contestType: "Tough"
+  },
   bugnoise: {
     num: 1130,
     accuracy: 90,
@@ -2787,6 +2801,20 @@ const Moves = {
     type: "Steel",
     contestType: "Tough"
   },
+  engorge: {
+    num: 1284,
+    accuracy: 90,
+    basePower: 100,
+    category: "Special",
+    name: "Engorge",
+    pp: 35,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    contestType: "Tough"
+  },
   engulf: {
     num: 962,
     accuracy: 100,
@@ -4200,20 +4228,6 @@ const Moves = {
     type: "Ice",
     contestType: "Cute"
   },
-  pursuant: {
-    num: 1282,
-    accuracy: 100,
-    basePower: 125,
-    category: "Physical",
-    name: "Pursuant",
-    pp: 15,
-    priority: 0,
-    flags: { protect: 1, mirror: 1, bypasssub: 1 },
-    secondary: null,
-    target: "allAdjacent",
-    type: "Normal",
-    contestType: "Tough"
-  },
   infernalblade: {
     num: 983,
     accuracy: 95,
@@ -5574,6 +5588,28 @@ const Moves = {
     target: "normal",
     type: "Fairy"
   },
+  plague: {
+    num: 1285,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Plague",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      if (target.getTypes().join() === "Bug" || !target.setType("Bug")) {
+        this.add("-fail", target);
+        return null;
+      }
+      this.add("-start", target, "typechange", "Bug");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Cute"
+  },
   poisonleaf: {
     num: 1145,
     accuracy: 100,
@@ -5725,6 +5761,25 @@ const Moves = {
     type: "Psychic",
     contestType: "Cool"
   },
+  probepunch: {
+    num: 1286,
+    accuracy: 90,
+    basePower: 90,
+    category: "Physical",
+    name: "Probe Punch",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Bug",
+    contestType: "Beautiful"
+  },
   protonbeam: {
     num: 990,
     accuracy: 90,
@@ -5835,6 +5890,20 @@ const Moves = {
     },
     target: "normal",
     type: "Fighting",
+    contestType: "Tough"
+  },
+  pursuant: {
+    num: 1282,
+    accuracy: 100,
+    basePower: 125,
+    category: "Physical",
+    name: "Pursuant",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Normal",
     contestType: "Tough"
   },
   quantumleap: {
@@ -6188,6 +6257,30 @@ const Moves = {
     type: "Psychic",
     zMove: { boost: { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 } },
     contestType: "Clever"
+  },
+  reprisal: {
+    num: 1287,
+    accuracy: 100,
+    basePower: 60,
+    basePowerCallback(pokemon, target, move) {
+      const damagedByTarget = pokemon.attackedBy.some(
+        (p) => p.source === target && p.damage > 0 && p.thisTurn
+      );
+      if (damagedByTarget) {
+        this.debug("BP doubled for getting hit by " + target);
+        return move.basePower * 2;
+      }
+      return move.basePower;
+    },
+    category: "Special",
+    name: "Reprisal",
+    pp: 10,
+    priority: -4,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    contestType: "Beautiful"
   },
   revup: {
     num: 1250,
