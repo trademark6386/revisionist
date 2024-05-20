@@ -44,6 +44,21 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
+  acesplay: {
+    num: 1297,
+    accuracy: 100,
+    basePower: 95,
+    category: "Speecial",
+    name: "Ace's Play",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    overrideOffensivePokemon: "target",
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Clever"
+  },
   achillesheel: {
     num: 967,
     accuracy: true,
@@ -524,6 +539,25 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
+  blackhole: {
+    num: 1288,
+    accuracy: 90,
+    basePower: 130,
+    category: "Special",
+    name: "Black Hole",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Beautiful"
+  },
   blackout: {
     num: 1158,
     accuracy: 85,
@@ -803,7 +837,7 @@ const Moves = {
     name: "Bug Gnaw",
     pp: 35,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
     secondary: null,
     target: "normal",
     type: "Bug",
@@ -1046,6 +1080,25 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Dark"
+  },
+  chomper: {
+    num: 1301,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Chomper",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Dragon",
+    contestType: "Tough"
   },
   cinderbreath: {
     num: 931,
@@ -2533,6 +2586,21 @@ const Moves = {
     type: "Dark",
     contestType: "Clever"
   },
+  drajectile: {
+    num: 1291,
+    accuracy: 80,
+    basePower: 100,
+    category: "Physical",
+    name: "Drajectile",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Dragon",
+    contestType: "Cool"
+  },
   drakonvoice: {
     num: 923,
     accuracy: 85,
@@ -2749,6 +2817,23 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  electrobash: {
+    num: 1295,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Amp Claw",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      status: "par"
+    },
+    target: "normal",
+    type: "Electric",
+    contestType: "Cool"
+  },
   electroburst: {
     num: 1165,
     accuracy: 90,
@@ -2809,7 +2894,7 @@ const Moves = {
     name: "Engorge",
     pp: 35,
     priority: 0,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1 },
     secondary: null,
     target: "normal",
     type: "Bug",
@@ -2856,6 +2941,21 @@ const Moves = {
     target: "normal",
     type: "Ghost",
     contestType: "Cool"
+  },
+  exsanguinate: {
+    num: 1289,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Exsanguinate",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1, bite: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Clever"
   },
   expunge: {
     num: 976,
@@ -4579,6 +4679,26 @@ const Moves = {
     type: "Dark",
     contestType: "Cool"
   },
+  lusterbloom: {
+    num: 1296,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Luster Bloom",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        accuracy: -1
+      }
+    },
+    target: "normal",
+    type: "Electric",
+    contestType: "Beautiful"
+  },
   machpunch: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
@@ -4942,6 +5062,21 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
+  moonimpact: {
+    num: 1298,
+    accuracy: 80,
+    basePower: 150,
+    category: "Physical",
+    name: "Moon Impact",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
+  },
   moonlight: {
     num: 236,
     accuracy: true,
@@ -5116,6 +5251,27 @@ const Moves = {
     target: "normal",
     type: "Rock"
   },
+  mowdown: {
+    num: 1290,
+    accuracy: 90,
+    basePower: 80,
+    category: "Physical",
+    name: "Mow Down",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Grass")
+        return 1;
+    },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Dark",
+    contestType: "Tough"
+  },
   mudslide: {
     num: 908,
     accuracy: 95,
@@ -5134,6 +5290,20 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Ground",
     contestType: "Cute"
+  },
+  mysticchant: {
+    num: 1299,
+    accuracy: true,
+    basePower: 60,
+    category: "Special",
+    name: "Mystic Chant",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Beautiful"
   },
   nailflick: {
     num: 1044,
@@ -5769,7 +5939,7 @@ const Moves = {
     name: "Probe Punch",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1 },
     secondary: {
       chance: 10,
       boosts: {
@@ -6276,7 +6446,7 @@ const Moves = {
     name: "Reprisal",
     pp: 10,
     priority: -4,
-    flags: { protect: 1, mirror: 1, metronome: 1 },
+    flags: { protect: 1, mirror: 1 },
     secondary: null,
     target: "normal",
     type: "Bug",
@@ -6418,6 +6588,27 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  royalbreath: {
+    num: 1292,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Royal Breath",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      self: {
+        boosts: {
+          spa: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Dragon",
+    contestType: "Beautiful"
+  },
   rubblerush: {
     num: 1173,
     accuracy: 80,
@@ -6480,6 +6671,20 @@ const Moves = {
     target: "allySide",
     type: "Rock",
     contestType: "Beautiful",
+  },
+  saurtooth: {
+    num: 1293,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Saurtooth",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Dragon",
+    contestType: "Tough"
   },
   scorchedashes: {
     num: 1227,
@@ -7278,6 +7483,22 @@ const Moves = {
     target: "normal",
     type: "Grass",
     contestType: "Cool"
+  },
+  somnismog: {
+    num: 1300,
+    accuracy: 60,
+    basePower: 0,
+    category: "Status",
+    name: "Somnismog",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    status: "slp",
+    secondary: null,
+    target: "normal",
+    type: "Psychic",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Clever"
   },
   sonicboomsound: {
     num: 1015,
@@ -8706,6 +8927,26 @@ const Moves = {
     target: "normal",
     type: "Cosmic",
     contestType: "Beautiful"
+  },
+  zenithbreak: {
+    num: 1294,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Zenith Break",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        atk: -1,
+        def: -1
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Dragon",
+    contestType: "Tough"
   },
   zippyzap: {
     inherit: true,
