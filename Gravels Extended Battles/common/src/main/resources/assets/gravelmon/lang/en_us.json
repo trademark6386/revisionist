@@ -818,6 +818,8 @@
   "cobblemon.move.somnismog.desc": "The user employs a mysterious gas spell to put the target into a deep sleep.",
   "cobblemon.move.chomper": "Chomp",
   "cobblemon.move.chomper.desc": "The user opens its chomper and chomps on the target. This may also lower the target’s Defense stat.",
+  "cobblemon.move.fairyrush": "Fairy Rush",
+  "cobblemon.move.fairyrush.desc": "The target rushes at the opponent with its magical energy. This may also make the target flinch.",
   
   "cobblemon.battle.activate.magmaring": "%1$s became trapped in the fiery vortex!",
   "cobblemon.battle.activate.parasiticfungi": "%1$s became infected by the fungi!",
