@@ -836,6 +836,9 @@
   "cobblemon.battle.weather.fallout.start": "A toxic fallout has set in!",
   "cobblemon.battle.weather.fallout.upkeep": "The toxic fallout rages.",
   "cobblemon.battle.weather.fallout.end": "The  land decontaminated.",
+  "cobblemon.battle.weather.fog.start": "It started to fog up!",
+  "cobblemon.battle.weather.fog.upkeep": "The fog continues on.",
+  "cobblemon.battle.weather.fog.end": "The  fog dissipated.",
   "cobblemon.battle.weather.thunderstorm.start": "A thunderstorm started!",
   "cobblemon.battle.weather.thunderstorm.upkeep": "The thunderstorm is raging.",
   "cobblemon.battle.weather.thunderstorm.end": "The  thunderstorm subsided.",
@@ -1124,6 +1127,10 @@
   "cobblemon.ability.magicianshat.desc": "The user sets up Magic Room when it enters the field.",
   "cobblemon.ability.wizardstome": "Wizard's Tome",
   "cobblemon.ability.wizardstome.desc": "The user sets up Wonder Room when it enters the field.",
+  "cobblemon.ability.condensation": "Condensation",
+  "cobblemon.ability.condensation.desc": "The user fills the area with fog.",
+  "cobblemon.ability.ancientbody": "Ancient Body",
+  "cobblemon.ability.ancientbody.desc": "The user is considered Rock-Type, in addition to its other types.",
   
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   

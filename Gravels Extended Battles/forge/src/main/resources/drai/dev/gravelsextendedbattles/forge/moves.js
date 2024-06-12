@@ -5009,6 +5009,62 @@ const Moves = {
     type: "Psychic",
     contestType: "Clever"
   },
+  minimize: {
+    num: 107,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Minimize",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1, metronome: 1 },
+    volatileStatus: "minimize",
+    condition: {
+      noCopy: true,
+      onRestart: () => null,
+      onSourceModifyDamage(damage, source, target, move) {
+        const boostedMoves = [
+          "fairyrush",
+		  "stomp",
+          "steamroller",
+          "bodyslam",
+          "flyingpress",
+          "dragonrush",
+          "heatcrash",
+          "heavyslam",
+          "maliciousmoonsault"
+        ];
+        if (boostedMoves.includes(move.id)) {
+          return this.chainModify(2);
+        }
+      },
+      onAccuracy(accuracy, target, source, move) {
+        const boostedMoves = [
+          "fairyrush",
+		  "stomp",
+          "steamroller",
+          "bodyslam",
+          "flyingpress",
+          "dragonrush",
+          "heatcrash",
+          "heavyslam",
+          "maliciousmoonsault"
+        ];
+        if (boostedMoves.includes(move.id)) {
+          return true;
+        }
+        return accuracy;
+      }
+    },
+    boosts: {
+      evasion: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cute"
+  },
   miraclewill: {
     num: 964,
     accuracy: 100,
@@ -5118,6 +5174,7 @@ const Moves = {
         case "snow":
 		case "acidrain":
 		case "thunderstorm":
+		case "fog":
           factor = 0.25;
           break;
 		case "fallout":
@@ -5180,6 +5237,7 @@ const Moves = {
         case "snow":
 		case "acidrain":
 		case "thunderstorm":
+		case "fog":
           factor = 0.25;
           break;
 		case "fallout":
@@ -7457,7 +7515,7 @@ const Moves = {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
     onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm"];
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog"];
       if (weakWeathers.includes(pokemon.effectiveWeather())) {
         this.debug("weakened by weather");
         return this.chainModify(0.5);
@@ -7490,7 +7548,7 @@ const Moves = {
       return null;
     },
     onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm"];
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog"];
       if (weakWeathers.includes(pokemon.effectiveWeather())) {
         this.debug("weakened by weather");
         return this.chainModify(0.5);
@@ -8079,6 +8137,7 @@ const Moves = {
         case "snow":
 		case "acidrain":
 		case "thunderstorm":
+		case "fog":
           factor = 0.25;
           break;
 		case "fallout":

@@ -184,6 +184,39 @@ const Conditions = {
       this.add("-weather", "none");
     }
   },
+  fog: {
+    name: "Fog",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("weatherballoon")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Fog", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Fog");
+      }
+    },
+	onModifyMove(move, attacker, defender) {
+      // Allow Normal-type moves to hit Ghost-type Pokémon
+      if (move.type === "Normal" && defender.hasType("Ghost")) {
+        move.ignoreImmunity = true;
+      }
+      // Apply 10% accuracy debuff to non-Normal-type moves
+      if (move.type !== "Normal") {
+        move.accuracy *= 0.9;
+      }
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
   hail: {
     name: "Hail",
     effectType: "Weather",
