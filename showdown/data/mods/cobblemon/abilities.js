@@ -599,16 +599,16 @@ const Abilities = {
   climatechange: {
     onStart(source) {
       const weathers = [
-        "raindance", "sunnyday",
-        "sandstorm", "hail", "snow",
-        "acidrain", "darkness", "fallout", "shadowyaura", "thunderstorm",
-		"battleaura", "cursedwinds", "duststorm", "dragonforce", "fairydust",
-		"fog", "magnetosphere", "pheromones", "pollenstorm", "psychicfield",
-		"smog"
+        "acidrain", "battleaura", "cursedwinds", "darkness", "duststorm",
+        "dragonforce", "eclipse", "fairydust", "fallout", "fog",
+        "hail", "magnetosphere", "pheromones", "pollenstorm", "psychicfield",
+        "raindance", "sandstorm", "shadowyaura", "smog", "snow",
+        "sunnyday", "thunderstorm"
       ];
-	  const randomWeather = this.sample(weathers);
-	  this.field.setWeather(randomWeather);
-    },
+      const randomWeather = this.sample(weathers);
+      this.field.setWeather(randomWeather);
+      this.add(`-weather`, randomWeather, `[from] ability: Climate Change`, `[of] ${source}`);
+	},
 	onImmunity(type, pokemon) {
       if (type === "sandstorm" || type === "hail" || type === "acidrain" || type === "fallout" || type === "shadowyaura" || type === "cursedwinds" || type === "smog")
         return false;
