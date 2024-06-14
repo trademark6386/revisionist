@@ -229,7 +229,7 @@ const Abilities = {
     },
 	onBasePowerPriority: 23,
     onBasePower(basePower, attacker, defender, move) {
-      if (move.tyoe === "Rock"]) {
+      if (move.type === "Rock") {
         this.debug("Ancient Body boost");
         return this.chainModify([4915, 4096]);
       }
@@ -248,6 +248,14 @@ const Abilities = {
     name: "Ancient Body",
     rating: 3.5,
     num: 432
+  },
+  arcanum: {
+    onStart(source) {
+      this.field.setWeather("dragonforce");
+    },
+    name: "Arcanum",
+    rating: 4,
+    num: 442
   },
   athenian: {
     onModifySpAPriority: 5,
@@ -373,6 +381,19 @@ const Abilities = {
 	name: "Bloodthirst",
 	rating: 2,
 	num: 353
+  },
+  bloomspring: {
+    onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "pollenstorm") {
+        this.heal(target.baseMaxhp / 16);
+      }
+    },
+    flags: {},
+    name: "Bloomspring",
+    rating: 1.5,
+    num: 436
   },
   blubberdefense: {
     onSourceModifyDamage(damage, source, target, move) {
@@ -556,6 +577,17 @@ const Abilities = {
     rating: 4,
     num: 333
   },
+  chlorophyll: {
+    onModifySpe(spe, pokemon) {
+      if (["sunnyday", "desolateland", "pollenstorm"].includes(pokemon.effectiveWeather())) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Chlorophyll",
+    rating: 3,
+    num: 34
+  },
   circusprops: {
     onStart(source) {
       this.field.setTerrain("trickroom");
@@ -569,13 +601,16 @@ const Abilities = {
       const weathers = [
         "raindance", "sunnyday",
         "sandstorm", "hail", "snow",
-        "acidrain", "darkness", "fallout", "shadowyaura", "thunderstorm"
+        "acidrain", "darkness", "fallout", "shadowyaura", "thunderstorm",
+		"battleaura", "cursedwinds", "duststorm", "dragonforce", "fairydust",
+		"fog", "magnetosphere", "pheromones", "pollenstorm", "psychicfield",
+		"smog"
       ];
 	  const randomWeather = this.sample(weathers);
 	  this.field.setWeather(randomWeather);
     },
 	onImmunity(type, pokemon) {
-      if (type === "sandstorm" || type === "hail" || type === "acidrain" || type === "fallout" || type === "shadowyaura")
+      if (type === "sandstorm" || type === "hail" || type === "acidrain" || type === "fallout" || type === "shadowyaura" || type === "cursedwinds" || type === "smog")
         return false;
     },
     name: "climatechange",
@@ -641,6 +676,14 @@ const Abilities = {
     name: "Confident",
     rating: 3,
     num: 420
+  },
+  contamination: {
+    onStart(source) {
+      this.field.setWeather("smog");
+    },
+    name: "Contamination",
+    rating: 4,
+    num: 437
   },
   content: {
     onAfterMove(target, source, move) {
@@ -780,6 +823,14 @@ const Abilities = {
     rating: 4,
     num: 359
   },
+  dustdevil: {
+    onStart(source) {
+      this.field.setWeather("duststorm");
+    },
+    name: "Dust Devil",
+    rating: 4,
+    num: 433
+  },
   eccentric: {
     onModifySpAPriority: 5,
     onModifySpA(spa) {
@@ -909,6 +960,46 @@ const Abilities = {
     rating: 3.5,
     num: 355
   },
+  flowergift: {
+    onStart(pokemon) {
+      this.singleEvent("WeatherChange", this.effect, this.effectState, pokemon);
+    },
+    onWeatherChange(pokemon) {
+      if (!pokemon.isActive || pokemon.baseSpecies.baseSpecies !== "Cherrim" || pokemon.transformed)
+        return;
+      if (!pokemon.hp)
+        return;
+      if (["sunnyday", "desolateland", "pollenstorm"].includes(pokemon.effectiveWeather())) {
+        if (pokemon.species.id !== "cherrimsunshine") {
+          pokemon.formeChange("Cherrim-Sunshine", this.effect, false, "[msg]");
+        }
+      } else {
+        if (pokemon.species.id === "cherrimsunshine") {
+          pokemon.formeChange("Cherrim", this.effect, false, "[msg]");
+        }
+      }
+    },
+    onAllyModifyAtkPriority: 3,
+    onAllyModifyAtk(atk, pokemon) {
+      if (this.effectState.target.baseSpecies.baseSpecies !== "Cherrim")
+        return;
+      if (["sunnyday", "desolateland", "pollenstorm"].includes(pokemon.effectiveWeather())) {
+        return this.chainModify(1.5);
+      }
+    },
+    onAllyModifySpDPriority: 4,
+    onAllyModifySpD(spd, pokemon) {
+      if (this.effectState.target.baseSpecies.baseSpecies !== "Cherrim")
+        return;
+      if (["sunnyday", "desolateland", "pollenstorm"].includes(pokemon.effectiveWeather())) {
+        return this.chainModify(1.5);
+      }
+    },
+    flags: { failroleplay: 1, noreceiver: 1, noentrain: 1, notrace: 1, breakable: 1 },
+    name: "Flower Gift",
+    rating: 1,
+    num: 122
+  },
   fossilize: {
     onModifyTypePriority: -1,
     onModifyType(move, pokemon) {
@@ -1028,6 +1119,17 @@ const Abilities = {
     rating: 4,
     num: 378
   },
+  grasspelt: {
+    onModifyDefPriority: 6,
+    onModifyDef(pokemon) {
+      if (this.field.isTerrain("grassyterrain") || this.field.isWeather("pollenstorm"))
+        return this.chainModify(1.5);
+    },
+    flags: { breakable: 1 },
+    name: "Grass Pelt",
+    rating: 0.5,
+    num: 179
+  },
   hailwarning: {
     onStart(source) {
       this.field.setWeather("hail");
@@ -1035,6 +1137,31 @@ const Abilities = {
     name: "Hail Warning",
     rating: 4,
     num: 362
+  },
+  harvest: {
+    onResidualOrder: 28,
+    onResidualSubOrder: 2,
+    onResidual(pokemon) {
+      if (this.field.isWeather(["sunnyday", "desolateland", "pollenstorm"]) || this.randomChance(1, 2)) {
+        if (pokemon.hp && !pokemon.item && this.dex.items.get(pokemon.lastItem).isBerry) {
+          pokemon.setItem(pokemon.lastItem);
+          pokemon.lastItem = "";
+          this.add("-item", pokemon, pokemon.getItem(), "[from] ability: Harvest");
+        }
+      }
+    },
+    flags: {},
+    name: "Harvest",
+    rating: 2.5,
+    num: 139
+  },
+  hayfever: {
+    onStart(source) {
+      this.field.setWeather("pollenstorm");
+    },
+    name: "Hay Fever",
+    rating: 4,
+    num: 434
   },
   hazysurge: {
     onStart(pokemon) {
@@ -1115,6 +1242,14 @@ const Abilities = {
     name: "Ice Slick",
     rating: 3,
     num: 399
+  },
+  incantation: {
+    onStart(source) {
+      this.field.setWeather("fairydust");
+    },
+    name: "Incantation",
+    rating: 4,
+    num: 438
   },
   insatiable: {
     onBasePowerPriority: 8,
@@ -1245,6 +1380,26 @@ const Abilities = {
     name: "Lead Skin",
     rating: 2,
     num: 337
+  },
+  leafguard: {
+    onSetStatus(status, target, source, effect) {
+      if (["sunnyday", "desolateland", "pollenstorm"].includes(target.effectiveWeather())) {
+        if (effect?.status) {
+          this.add("-immune", target, "[from] ability: Leaf Guard");
+        }
+        return false;
+      }
+    },
+    onTryAddVolatile(status, target) {
+      if (status.id === "yawn" && ["sunnyday", "desolateland", "pollenstorm"].includes(target.effectiveWeather())) {
+        this.add("-immune", target, "[from] ability: Leaf Guard");
+        return null;
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Leaf Guard",
+    rating: 0.5,
+    num: 102
   },
   levinskin: {
     onTryHit(target, source, move) {
@@ -1629,6 +1784,25 @@ const Abilities = {
     rating: 3.5,
     num: 423
   },
+  sandforce: {
+    onBasePowerPriority: 21,
+    onBasePower(basePower, attacker, defender, move) {
+      if (this.field.isWeather(["sandstorm", "duststorm"])) {
+        if (move.type === "Rock" || move.type === "Ground" || move.type === "Steel") {
+          this.debug("Sand Force boost");
+          return this.chainModify([5325, 4096]);
+        }
+      }
+    },
+    onImmunity(type, pokemon) {
+      if (type === "sandstorm")
+        return false;
+    },
+    flags: {},
+    name: "Sand Force",
+    rating: 2,
+    num: 159
+  },
   sandman: {
     onDamagingHit(damage, target, source, move) {
       if (this.checkMoveMakesContact(move, source, target)) {
@@ -1660,6 +1834,40 @@ const Abilities = {
     rating: 3.5,
     num: 424
   },
+  sandrush: {
+    onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["sandstorm", "duststorm"])) {
+        return this.chainModify(2);
+      }
+    },
+    onImmunity(type, pokemon) {
+      if (type === "sandstorm")
+        return false;
+    },
+    flags: {},
+    name: "Sand Rush",
+    rating: 3,
+    num: 146
+  },
+  sandveil: {
+    onImmunity(type, pokemon) {
+      if (type === "sandstorm")
+        return false;
+    },
+    onModifyAccuracyPriority: -1,
+    onModifyAccuracy(accuracy) {
+      if (typeof accuracy !== "number")
+        return;
+      if (this.field.isWeather(["sandstorm", "sandstorm"])) {
+        this.debug("Sand Veil - decreasing accuracy");
+        return this.chainModify([3277, 4096]);
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Sand Veil",
+    rating: 1.5,
+    num: 8
+  },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
       if (effect && effect.effectType === "Move") {
@@ -1680,6 +1888,14 @@ const Abilities = {
 	name: "Scarecrow",
 	rating: 2,
     num: 357
+  },
+  secretion: {
+    onStart(source) {
+      this.field.setWeather("pheromones");
+    },
+    name: "secretion",
+    rating: 4,
+    num: 437
   },
   selfsufficient: {
     onResidualOrder: 5,
@@ -1865,6 +2081,22 @@ const Abilities = {
     rating: 3.5,
     num: 341
   },
+  standoff: {
+    onStart(source) {
+      this.field.setWeather("battleaura");
+    },
+    name: "Stand Off",
+    rating: 4,
+    num: 439
+  },
+  seance: {
+    onStart(source) {
+      this.field.setWeather("cursedwinds");
+    },
+    name: "Seance",
+    rating: 4,
+    num: 440
+  },
   stormbringer: {
     onStart(source) {
       this.field.setWeather("thunderstorm");
@@ -2042,6 +2274,14 @@ const Abilities = {
     rating: 2.5,
     num: 36
   },
+  transcendence: {
+    onStart(source) {
+      this.field.setWeather("psychicfield");
+    },
+    name: "Transcendence",
+    rating: 4,
+    num: 441
+  },
   unstable: {
     onPrepareHit(source, target, move) {
       if (this.effectState.unstable)
@@ -2140,6 +2380,23 @@ const Abilities = {
     name: "Voice Tuning",
     rating: 4,
     num: 361
+  },
+  warpmist: {
+    onTryHit(target, source, move) {
+      if (target !== source && move.ignoreImmunity !== true) {
+        this.add("-immune", target, "[from] ability: Warp Mist");
+        return null;
+      }
+    },
+	onModifyAtk(atk, attacker) {
+      if (this.field.isWeather("fog")) {
+        this.debug("Warp Mist fog boost");
+        return this.chainModify(1.2);
+      }
+    },
+    name: "Warp Mist",
+    rating: 4,
+    num: 435
   },
   windforce: {
     onTryHitPriority: 1,

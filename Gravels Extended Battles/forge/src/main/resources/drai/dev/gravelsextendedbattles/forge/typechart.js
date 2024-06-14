@@ -131,7 +131,8 @@ const TypeChart = {
   },
   dark: {
     damageTaken: {
-      prankster: 3,
+      cursedwinds: 3,
+	  prankster: 3,
       Bug: 1,
 	  Cosmic: 0,
 	  Crystal: 0,
@@ -239,7 +240,8 @@ const TypeChart = {
   },
   eldritch: {
     damageTaken: {
-      Bug: 0,
+      cursedwinds: 3,
+	  Bug: 0,
 	  Cosmic: 1,
 	  Crystal: 0,
       Dark: 0,
@@ -456,7 +458,8 @@ const TypeChart = {
   },
   ghost: {
     damageTaken: {
-      trapped: 3,
+      cursedwinds: 3,
+	  trapped: 3,
       Bug: 2,
 	  Cosmic: 0,
 	  Crystal: 0,
@@ -640,7 +643,8 @@ const TypeChart = {
   },
   normal: {
     damageTaken: {
-      Bug: 0,
+      cursedwinds: 3,
+	  Bug: 0,
 	  Cosmic: 0,
 	  Crystal: 0,
       Dark: 0,
@@ -1003,6 +1007,7 @@ const TypeChart = {
       tox: 3,
 	  acidrain: 3,
       fallout: 3,
+	  hail: 3,
 	  sandstorm: 3,
       Bug: 2,
 	  Cosmic: 0,

@@ -333,6 +333,87 @@ const Moves = {
     type: "Nuclear",
     contestType: "Beautiful"
   },
+  attackorder: {
+    num: 454,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Attack Order",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    critRatio: 2,
+    secondary: null,
+	onHit(target, source) {
+        if (this.field.isWeather("pheromones")) {
+            if (!target.volatiles["partiallytrapped"]) {
+                target.addVolatile("partiallytrapped", source);
+                this.add("-activate", target, "move: Attack Order", "[of] " + source);
+            }
+        }
+    },
+    target: "normal",
+    type: "Bug",
+    contestType: "Clever"
+  },
+  attract: {
+    num: 213,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Attract",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1, metronome: 1 },
+    volatileStatus: "attract",
+    condition: {
+      noCopy: true,
+      // doesn't get copied by Baton Pass
+      onStart(pokemon, source, effect) {
+        const isPheromonesActive = this.field.isWeather("pheromones");
+        if (!isPheromonesActive && !((pokemon.gender === "M" && source.gender === "F") || (pokemon.gender === "F" && source.gender === "M"))) {
+          this.debug("incompatible gender");
+          return false;
+        }
+        if (!this.runEvent("Attract", pokemon, source)) {
+          this.debug("Attract event failed");
+          return false;
+        }
+        if (effect.name === "Cute Charm") {
+          this.add("-start", pokemon, "Attract", "[from] ability: Cute Charm", "[of] " + source);
+        } else if (effect.name === "Destiny Knot") {
+          this.add("-start", pokemon, "Attract", "[from] item: Destiny Knot", "[of] " + source);
+        } else {
+          this.add("-start", pokemon, "Attract");
+        }
+      },
+      onUpdate(pokemon) {
+        if (this.effectState.source && !this.effectState.source.isActive && pokemon.volatiles["attract"]) {
+          this.debug("Removing Attract volatile on " + pokemon);
+          pokemon.removeVolatile("attract");
+        }
+      },
+      onBeforeMovePriority: 2,
+      onBeforeMove(pokemon, target, move) {
+        this.add("-activate", pokemon, "move: Attract", "[of] " + this.effectState.source);
+        if (this.randomChance(1, 2)) {
+          this.add("cant", pokemon, "Attract");
+          return false;
+        }
+      },
+      onEnd(pokemon) {
+        this.add("-end", pokemon, "Attract", "[silent]");
+      }
+    },
+    onTryImmunity(target, source) {
+      return target.gender === "M" && source.gender === "F" || target.gender === "F" && source.gender === "M" || this.field.isWeather("pheromones");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Normal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cute"
+  },
   audacity: {
     num: 1155,
     accuracy: true,
@@ -1791,6 +1872,13 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
   },
+  defendorder: {
+    inherit: true,
+	onModifyMove(move, pokemon) {
+      if (["pheromones"].includes(pokemon.effectiveWeather()))
+        move.boosts = { def: 2, spd: 2 };
+    }
+  },
   defog: {
     num: 432,
     accuracy: true,
@@ -2942,6 +3030,29 @@ const Moves = {
     type: "Ghost",
     contestType: "Cool"
   },
+  eternalhex: {
+    num: 1305,
+    accuracy: 100,
+    basePower: 60,
+    category: "Physical",
+    name: "Eternal Hex",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        atk: -1,
+		def: -1,
+		spa: -1,
+		spd: -1,
+		spe: -1
+      }
+    },
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Tough"
+  },
   exsanguinate: {
     num: 1289,
     accuracy: 100,
@@ -3695,9 +3806,14 @@ const Moves = {
   geomancy: {
     inherit: true,
     onModifyMove(move, pokemon) {
-      if (["darkness", "eclipse"].includes(pokemon.effectiveWeather()))
+      const weather = pokemon.effectiveWeather();
+      if (["darkness", "eclipse"].includes(weather)) {
         move.boosts = { spa: 1, spd: 1, spe: 1 };
-    }
+      }
+      if (weather === "fairydust") {
+        move.boosts = { spa: 3, spd: 3, spe: 3 };
+      }
+    },
   },
   geosphere: {
     num: 1069,
@@ -4081,6 +4197,34 @@ const Moves = {
     type: "Sound",
     zMove: { effect: "heal" },
     contestType: "Beautiful"
+  },
+  healorder: {
+    num: 456,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    isNonstandard: "Past",
+    name: "Heal Order",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1, heal: 1, metronome: 1 },
+    onHit(pokemon) {
+      let factor = 0.5;
+      if (this.field.isWeather(["Pheromones"])) {
+        factor = 0.667;
+      }
+      const success = !!this.heal(this.modify(pokemon.maxhp, factor));
+      if (!success) {
+        this.add("-fail", pokemon, "heal");
+        return this.NOT_FAIL;
+      }
+      return success;
+    },
+    secondary: null,
+    target: "self",
+    type: "Bug",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
   },
   heavypunch: {
     num: 1202,
@@ -4904,6 +5048,25 @@ const Moves = {
     type: "Nuclear",
     contestType: "Beautiful"
   },
+  mentalanguish: {
+    num: 1304,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "Mental Anguish",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spa: -1
+      }
+    },
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Clever"
+  },
   mesmersmoke: {
     num: 1077,
     accuracy: 70,
@@ -5165,6 +5328,8 @@ const Moves = {
         case "sunnyday":
 		case "darkness":
         case "desolateland":
+		case "pollenstorm":
+		case "fairydust":
           factor = 0.667;
           break;
         case "raindance":
@@ -5175,10 +5340,13 @@ const Moves = {
 		case "acidrain":
 		case "thunderstorm":
 		case "fog":
+		case "duststorm":
+		case "cursedwinds":
           factor = 0.25;
           break;
 		case "fallout":
 		case "shadowyaura":
+		case "smog":
           factor = 0.125;
           break;
 		case "eclipse":
@@ -5228,6 +5396,8 @@ const Moves = {
       switch (pokemon.effectiveWeather()) {
         case "sunnyday":
         case "desolateland":
+		case "pollenstorm":
+		case "fairydust":
           factor = 0.667;
           break;
         case "raindance":
@@ -5238,10 +5408,13 @@ const Moves = {
 		case "acidrain":
 		case "thunderstorm":
 		case "fog":
+		case "duststorm":
+		case "cursedwinds":
           factor = 0.25;
           break;
 		case "fallout":
 		case "shadowyaura":
+		case "smog":
           factor = 0.125;
           break;
 		case "darkness":
@@ -5747,7 +5920,7 @@ const Moves = {
         return;
       }
       this.add("-prepare", attacker, move.name);
-      if (["darkness"].includes(attacker.effectiveWeather())) {
+      if (["darkness", "cursedwinds"].includes(attacker.effectiveWeather())) {
         this.attrLastMove("[still]");
         this.addMove("-anim", attacker, move.name, defender);
         return;
@@ -6663,6 +6836,23 @@ const Moves = {
     type: "Sound",
     contestType: "Beautiful"
   },
+  rottingsparks: {
+    num: 1303,
+    accuracy: 90,
+    basePower: 25,
+    category: "Special",
+    name: "Rotting Sparks",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
   royalbreath: {
     num: 1292,
     accuracy: 100,
@@ -7244,6 +7434,33 @@ const Moves = {
     type: "Light",
     contestType: "Beautiful"
   },
+  shoreup: {
+    num: 659,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Shore Up",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1, heal: 1, metronome: 1 },
+    onHit(pokemon) {
+      let factor = 0.5;
+      if (this.field.isWeather(["sandstorm", "duststorm"])) {
+        factor = 0.667;
+      }
+      const success = !!this.heal(this.modify(pokemon.maxhp, factor));
+      if (!success) {
+        this.add("-fail", pokemon, "heal");
+        return this.NOT_FAIL;
+      }
+      return success;
+    },
+    secondary: null,
+    target: "self",
+    type: "Ground",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   signalbeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
@@ -7515,7 +7732,7 @@ const Moves = {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
     onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog"];
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog", "duststorm", "cursedwinds"];
       if (weakWeathers.includes(pokemon.effectiveWeather())) {
         this.debug("weakened by weather");
         return this.chainModify(0.5);
@@ -7548,7 +7765,7 @@ const Moves = {
       return null;
     },
     onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog"];
+      const weakWeathers = ["raindance", "primordialsea", "sandstorm", "hail", "snow", "acidrain", "darkness", "eclipse", "fallout", "thunderstorm", "fog", "duststorm", "cursedwinds"];
       if (weakWeathers.includes(pokemon.effectiveWeather())) {
         this.debug("weakened by weather");
         return this.chainModify(0.5);
@@ -8128,6 +8345,8 @@ const Moves = {
       switch (pokemon.effectiveWeather()) {
         case "sunnyday":
         case "desolateland":
+		case "pollenstorm":
+		case "fairydust":
           factor = 0.667;
           break;
         case "raindance":
@@ -8138,10 +8357,13 @@ const Moves = {
 		case "acidrain":
 		case "thunderstorm":
 		case "fog":
+		case "duststorm":
+		case "cursedwinds":
           factor = 0.25;
           break;
 		case "fallout":
 		case "shadowyaura":
+		case "smog":
           factor = 0.125;
           break;
 		case "darkness":
@@ -8745,10 +8967,22 @@ const Moves = {
         case "primordialsea":
           move.type = "Water";
           break;
-        case "sandstorm":
+		case "pollenstorm":
+          move.type = "Grass";
+          break;
+		case "duststorm":
+          move.type = "Ground";
+          break;
+        case "pheromones":
+          move.type = "Bug";
+          break;
+		case "sandstorm":
           move.type = "Rock";
           break;
-        case "hail":
+        case "battleaura":
+          move.type = "Fighting";
+          break;
+		case "hail":
         case "snow":
           move.type = "Ice";
           break;
@@ -8756,8 +8990,24 @@ const Moves = {
 		case "eclipse":
           move.type = "Dark";
           break;
+		case "cursedwinds":
+          move.type = "Ghost";
+          break;
+		case "psychicfield":
+          move.type = "Psychic";
+          break;
 		case "acidrain":
+		case "smog":
           move.type = "Poison";
+          break;
+		case "dragonforce":
+          move.type = "Dragon";
+          break;
+		case "magnetosphere":
+          move.type = "Steel";
+          break;
+		case "fairydust":
+          move.type = "Fairy";
           break;
 		case "fallout":
           move.type = "Nuclear";
@@ -8780,7 +9030,10 @@ const Moves = {
         case "primordialsea":
           move.basePower *= 2;
           break;
-        case "sandstorm":
+        case "duststorm":
+          move.basePower *= 2;
+          break;
+		case "sandstorm":
           move.basePower *= 2;
           break;
         case "hail":

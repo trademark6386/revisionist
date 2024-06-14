@@ -61,6 +61,93 @@ const Conditions = {
       this.add("-weather", "none");
     }
   },
+  battleaura: {
+    name: "Battle Aura",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("energychannelizer")) {
+        return 8;
+      }
+      return 5;
+    },
+    onModifyCritRatio(critRatio) {
+      return critRatio + 1;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "BattleAura", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "BattleAura");
+      }
+    },
+	onModifyMove(move, attacker, defender) {
+      // Allow Fighting-type moves to hit Ghost-type Pokémon
+      if (move.type === "Fighting" && defender.hasType("Ghost")) {
+        move.ignoreImmunity = true;
+      }
+    },
+	onTryBoost(boost, target, source, effect) {
+      if (source && target === source) {
+        return;
+      }
+      if (target.hasType("Fighting")) {
+        for (const stat in boost) {
+          if (boost[stat] < 0) {
+              delete boost[stat];
+          if (!effect.secondaries) {
+              this.add("-fail", target, "unboost", stat, "[from] weather: BattleAura");
+            }
+          }
+        }
+      }
+	},
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  cursedwinds: {
+    name: "Cursed Winds",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("energychannelizer")) {
+        return 8;
+      }
+      return 5;
+    },
+    // This should be applied directly to the stat before any of the other modifiers are chained
+    // So we give it increased priority.
+    onModifySpDPriority: 10,
+    onModifySpD(spd, pokemon) {
+      if (pokemon.hasType("Ghost") && this.field.isWeather("cursedwinds")) {
+        return this.modify(spd, 1.5);
+      }
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "CursedWinds", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "CursedWinds");
+      }
+    },
+    onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "CursedWinds", "[upkeep]");
+      if (this.field.isWeather("cursedwinds"))
+        this.eachEvent("Weather");
+    },
+    onWeather(target) {
+      this.damage(target.baseMaxhp / 16);
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
   darkness: {
     name: "Darkness",
     effectType: "Weather",
@@ -101,6 +188,103 @@ const Conditions = {
       this.add("-weather", "none");
     }
   },
+  duststorm: {
+    name: "Dust Storm",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("volatilespray")) {
+        return 8;
+      }
+      return 5;
+    },
+	onWeatherModifyDamage(damage, attacker, defender, move) {
+      if (defender.hasItem("utilityumbrella"))
+        return;
+      if (move.type === "Electric") {
+        this.debug("Dust Storm fairy suppress");
+        return this.chainModify(0.5);
+      }
+    },
+	onModifySpePriority: 10,
+    onModifySpe(spe, pokemon) {
+      if (pokemon.hasType("Ground") && this.field.isWeather("duststorm")) {
+        return this.modify(spe, 1.5);
+      }
+    },
+	onModifyMove(move, attacker, defender) {
+      // Allow Ground-type moves to hit Flying-type Pokémon
+      if (move.type === "Ground" && defender.hasType("Flying")) {
+        move.ignoreImmunity = true;
+      }
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "DustStorm", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "DustStorm");
+      }
+    },
+    onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "DustStorm", "[upkeep]");
+      this.eachEvent("Weather");
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  dragonforce: {
+    name: "Dragon Force",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("energychannelizer")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "DragonForce", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "DragonForce");
+      }
+    },
+	onWeatherModifyDamage(damage, source, target, move) {
+      if (this.field.isWeather("DragonForce") && this.dex.getEffectiveness(move.type, target) 1) {
+        this.debug("Dragon Force weaken super effective damage");
+        return this.chainModify(0.8);
+      }
+    },
+	onModifyAtkPriority: 5,
+	onModifyAtk(atk, pokemon) {
+      if (pokemon.hasType("Dragon") && this.field.isWeather("DragonForce")) {
+        this.debug("Dragon Force boost Dragon-type Atk");
+        return this.chainModify(1.15);
+      }
+	},
+	onModifySpAPriority: 5,
+	onModifySpA(spa, pokemon) {
+      if (pokemon.hasType("Dragon") && this.field.isWeather("DragonForce")) {
+        this.debug("Dragon Force boost Dragon-type SpA");
+        return this.chainModify(1.15);
+      }
+	},
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "DragonForce", "[upkeep]");
+      if (this.field.isWeather("DragonForce"))
+        this.eachEvent("Weather");
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
   eclipse: {
     name: "Eclipse",
     effectType: "Weather",
@@ -135,6 +319,58 @@ const Conditions = {
 	  }
     },
 	onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  fairydust: {
+    name: "Fairy Dust",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("volatilespray")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "FairyDust", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "FairyDust");
+      }
+	  // Apply boost to Bug and Poison type Pokémon when the weather starts
+      for (const pokemon of this.getAllActive()) {
+        if (!pokemon.hasType("Fairy")) {
+          this.add("-activate", pokemon, "FairyDust");
+          this.boost({evasion: -1}, pokemon);
+        }
+      }
+    },
+	onSwitchIn(pokemon) {
+      if (!pokemon.hasType("Fairy")) {
+        this.add("-activate", pokemon, "FairyDust");
+        this.boost({evasion: -1}, pokemon);
+      }
+    },
+	onModifySpdPriority: 10,
+    onModifySpd(spd, pokemon) {
+      if (pokemon.hasType("Fairy") && this.field.isWeather("fairydust")) {
+        return this.modify(spd, 1.25);
+      }
+    },
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "FairyDust", "[upkeep]");
+      this.eachEvent("Weather");
+      for (const pokemon of this.getAllActive()) {
+        if (!pokemon.hasType("Ghost") && !pokemon.hasType("Dragon") && !pokemon.hasType("Eldritch")) {
+          this.heal(pokemon.baseMaxhp / 16, pokemon);
+        }
+      }
+    },
+    onFieldEnd() {
       this.add("-weather", "none");
     }
   },
@@ -209,9 +445,20 @@ const Conditions = {
         move.ignoreImmunity = true;
       }
       // Apply 10% accuracy debuff to non-Normal-type moves
-      if (move.type !== "Normal") {
+      if (
+        move.type !== "Normal" &&
+        move.type !== "Psychic" &&
+        move.type !== "Ghost" &&
+        !(attacker.hasAbility('keeneye'))
+      ) {
         move.accuracy *= 0.9;
       }
+	},
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "Fog", "[upkeep]");
+      if (this.field.isWeather("Fog"))
+        this.eachEvent("Weather");
     },
     onFieldEnd() {
       this.add("-weather", "none");
@@ -257,6 +504,165 @@ const Conditions = {
       this.add("-weather", "none");
     }
   },
+  magnetosphere: {
+    name: "Magneto Sphere",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("energychannelizer")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Magnetosphere", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Magnetosphere");
+      }
+    },
+	onModifyMovePriority: 8,
+    onModifyMove(move, attacker, defender) {
+      // Steel-type moves become perfectly accurate
+      if (move.type === "Steel") {
+        move.accuracy = true;
+      }
+      // Electric-type moves become perfectly accurate against Steel-type Pokémon
+      if (move.type === "Electric" && defender.hasType("Steel")) {
+        move.accuracy = true;
+      }
+    },
+	onModifySpDPriority: 6,
+	onModifySpD(spd, pokemon) {
+      // Boost Special Defense of Steel-type Pokémon by 25%
+      if (pokemon.hasType("Steel") && this.field.isWeather("Magnetosphere")) {
+        return this.chainModify(1.25);
+      }
+	},
+	onTrapPokemon(pokemon) {
+      if (pokemon.hasType("Steel") && this.field.isWeather("Magnetosphere")) {
+        pokemon.tryTrap();
+      }
+	},
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "Magnetosphere", "[upkeep]");
+      if (this.field.isWeather("Magnetosphere"))
+        this.eachEvent("Weather");
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  pheromones: {
+    name: "Pheromones",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("volatilespray")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Pheromones", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Pheromones");
+      }
+	  // Apply boost to Bug and Poison type Pokémon when the weather starts
+      for (const pokemon of this.getAllActive()) {
+        if (pokemon.hasType("Bug") || pokemon.hasType("Poison")) {
+          this.add("-activate", pokemon, "Pheromones");
+          this.boost({spe: 1, accuracy: 1}, pokemon);
+        }
+      }
+    },
+	onSwitchIn(pokemon) {
+      if (pokemon.hasType("Bug") || pokemon.hasType("Poison")) {
+        this.add("-activate", pokemon, "Pheromones");
+        this.boost({spe: 1, accuracy: 1}, pokemon);
+      }
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  pollenstorm: {
+    name: "Pollen Storm",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("volatilespray")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "PollenStorm", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "PollenStorm");
+      }
+    },
+	onModifySpAPriority: 10,
+    onModifySpA(spa, attacker, move) {
+      // Decrease Special Attack by 50% for moves that aren't Grass or Bug type
+      if (move.type !== "Grass" && move.type !== "Bug") {
+        this.debug("Pollen Storm suppress");
+        return this.chainModify(0.5);
+      }
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  psychicfield: {
+    name: "Psychic Field",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("energychannelizer")) {
+        return 8;
+      }
+      return 5;
+    },
+    onWeatherModifyDamage(damage, attacker, defender, move) {
+      if (defender.hasItem("utilityumbrella"))
+        return;
+      if (move.type === "Psychic") {
+        this.debug("Psychic Field Psychic boost");
+        return this.chainModify(1.5);
+      }
+      if (move.type === "Dark") {
+        this.debug("Psychic Field Dark suppress");
+        return this.chainModify(0.5);
+      }
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "PsychicField", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "PsychicField");
+      }
+    },
+    onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "PsychicField", "[upkeep]");
+      this.eachEvent("Weather");
+    },
+    onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
   shadowyaura: {
     name: "Shadowy Aura",
     effectType: "Weather",
@@ -290,6 +696,39 @@ const Conditions = {
       this.damage(target.baseMaxhp / 16);
     },
     onFieldEnd() {
+      this.add("-weather", "none");
+    }
+  },
+  smog: {
+    name: "Smog",
+    effectType: "Weather",
+    duration: 5,
+    durationCallback(source, effect) {
+      if (source?.hasItem("volatilespray")) {
+        return 8;
+      }
+      return 5;
+    },
+    onFieldStart(field, source, effect) {
+      if (effect?.effectType === "Ability") {
+        if (this.gen <= 5)
+          this.effectState.duration = 0;
+        this.add("-weather", "Smog", "[from] ability: " + effect.name, "[of] " + source);
+      } else {
+        this.add("-weather", "Smog");
+      }
+    },
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "Smog", "[upkeep]");
+      this.eachEvent("Weather");
+      for (const pokemon of this.getAllActive()) {
+        if (!pokemon.hasType("Poison") && !pokemon.hasType("Steel") && !pokemon.status) {
+          pokemon.trySetStatus("psn", pokemon.side.foe.active[0]);
+        }
+      }
+    },
+	onFieldEnd() {
       this.add("-weather", "none");
     }
   },
