@@ -1188,6 +1188,8 @@
   "cobblemon.ability.arcanum.desc": "The user fills the area with the power of dragon force.",
   "cobblemon.ability.ferroflux": "Ferroflux",
   "cobblemon.ability.ferroflux.desc": "The user creates a strong magnetosphere in the area.",
+  "cobblemon.ability.covermeindebris": "Cover me in Debris",
+  "cobblemon.ability.covermeindebris.desc": "The user's netherite body gives them an immunity to fire type moves and being burned.",
   
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   
