@@ -255,12 +255,6 @@ const Conditions = {
         this.add("-weather", "DragonForce");
       }
     },
-	onWeatherModifyDamage(damage, source, target, move) {
-      if (this.field.isWeather("DragonForce") && this.dex.getEffectiveness(move.type, target) 1) {
-        this.debug("Dragon Force weaken super effective damage");
-        return this.chainModify(0.8);
-      }
-    },
 	onModifyAtkPriority: 5,
 	onModifyAtk(atk, pokemon) {
       if (pokemon.hasType("Dragon") && this.field.isWeather("DragonForce")) {

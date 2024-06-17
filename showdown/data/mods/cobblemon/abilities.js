@@ -972,6 +972,14 @@ const Abilities = {
     rating: 5,
     num: 408
   },
+  ferroflux: {
+    onStart(source) {
+      this.field.setWeather("magnetosphere");
+    },
+    name: "Ferroflux",
+    rating: 4,
+    num: 444
+  },
   flameeater: {
     onTryHit(target, source, move) {
       if (target !== source && move.type === "Fire") {
