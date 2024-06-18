@@ -437,6 +437,22 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  auraprojection: {
+    num: 1312,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Aura Projection",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "battleaura",
+    secondary: null,
+    target: "all",
+    type: "Fighting",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   aurorabeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
@@ -1468,6 +1484,22 @@ const Moves = {
     type: "Cosmic",
     contestType: "Cool"
   },
+  cosmicrays: {
+    num: 1314,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Cosmic Rays",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "psychicfield",
+    secondary: null,
+    target: "all",
+    type: "Psychic",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   courtchange: {
     num: 756,
     accuracy: 100,
@@ -2449,6 +2481,22 @@ const Moves = {
     zMove: { boost: { spd: 1 } },
     contestType: "Cute"
   },
+  dragonforce: {
+    num: 1315,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Dragon Force",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "dragonforce",
+    secondary: null,
+    target: "all",
+    type: "Dragon",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   dragonhide: {
     num: 1056,
     accuracy: true,
@@ -2793,6 +2841,22 @@ const Moves = {
     target: "normal",
     type: "Ground",
     zMove: { basePower: 180 },
+    contestType: "Beautiful"
+  },
+  duststorm: {
+    num: 1307,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Dust Storm",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "duststorm",
+    secondary: null,
+    target: "all",
+    type: "Ground",
+    zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
   dustydash: {
@@ -3611,6 +3675,22 @@ const Moves = {
     type: "Water",
     contestType: "Beautiful"
   },
+  foghorn: {
+    num: 1306,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Foghorn",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "fog",
+    secondary: null,
+    target: "all",
+    type: "Normal",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   frostbite: {
     num: 1136,
     accuracy: 95,
@@ -4145,6 +4225,22 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Tough"
+  },
+  haunt: {
+    num: 1313,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Haunt",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "cursedwinds",
+    secondary: null,
+    target: "all",
+    type: "Ghost",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
   },
   hawthorns: {
     num: 1221,
@@ -4951,6 +5047,22 @@ const Moves = {
     },
     target: "normal",
     type: "Steel",
+    contestType: "Beautiful"
+  },
+  magnetize: {
+    num: 1316,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Magnetize",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "magnetosphere",
+    secondary: null,
+    target: "all",
+    type: "Steel",
+    zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
   magnetpulse: {
@@ -6044,6 +6156,22 @@ const Moves = {
     target: "normal",
     type: "Poison",
     contestType: "Cool"
+  },
+  pollinate: {
+    num: 1308,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Pollinate",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "pollenstorm",
+    secondary: null,
+    target: "all",
+    type: "Grass",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
   },
   polyblast: {
     num: 1119,
@@ -7707,6 +7835,22 @@ const Moves = {
     type: "Poison",
     contestType: "Beautiful"
   },
+  smogspread: {
+    num: 1310,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Smog Spread",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "smog",
+    secondary: null,
+    target: "all",
+    type: "Poison",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
+  },
   snoresound: {
     num: 1014,
     accuracy: 100,
@@ -7952,6 +8096,22 @@ const Moves = {
     type: "Light",
     zMove: { boost: { spd: 1 } },
     contestType: "Cute"
+  },
+  sprinkle: {
+    num: 1311,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Sprinkle",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "fairydust",
+    secondary: null,
+    target: "all",
+    type: "Fairy",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
   },
   squallstrike: {
     num: 1129,
@@ -8302,6 +8462,22 @@ const Moves = {
     target: "normal",
     type: "Ghost",
     contestType: "Cool"
+  },
+  swarmsignal: {
+    num: 1309,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Swarm Signal",
+    pp: 5,
+    priority: 0,
+    flags: {},
+    weather: "pheromones",
+    secondary: null,
+    target: "all",
+    type: "Bug",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Beautiful"
   },
   swiftcosmic: {
     num: 1099,

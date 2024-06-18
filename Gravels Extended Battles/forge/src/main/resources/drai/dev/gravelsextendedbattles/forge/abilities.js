@@ -481,6 +481,23 @@ const Abilities = {
     rating: 4,
     num: 419
   },
+  carboncapture: {
+    onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "smog") {
+        this.heal(target.baseMaxhp / 8);
+      }
+    },
+	onImmunity(type, pokemon) {
+      if (type === "smog")
+        return false;
+    },
+    flags: {},
+    name: "Carbon Capture",
+    rating: 1.5,
+    num: 445
+  },
   cashsplash: {
     onUpdate(pokemon) {
       if (pokemon.status === "brn") {
@@ -849,6 +866,19 @@ const Abilities = {
     rating: 4,
     num: 359
   },
+  druidry: {
+    onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "fairydust") {
+        this.heal(target.baseMaxhp / 16);
+      }
+    },
+    flags: {},
+    name: "Druidry",
+    rating: 1.5,
+    num: 446
+  },
   dustdevil: {
     onStart(source) {
       this.field.setWeather("duststorm");
@@ -896,6 +926,17 @@ const Abilities = {
     name: "Empathy",
     rating: 2,
     num: 366
+  },
+  energizer: {
+    onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["thunderstorm"])) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Energizer",
+    rating: 3,
+    num: 447
   },
   energyshield: {
     onTryHit(pokemon, target, move) {
@@ -971,6 +1012,14 @@ const Abilities = {
     name: "Feline Prowess",
     rating: 5,
     num: 408
+  },
+  ferroflux: {
+    onStart(source) {
+      this.field.setWeather("magnetosphere");
+    },
+    name: "Ferroflux",
+    rating: 4,
+    num: 444
   },
   flameeater: {
     onTryHit(target, source, move) {
