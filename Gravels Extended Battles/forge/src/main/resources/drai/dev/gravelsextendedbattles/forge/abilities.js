@@ -370,6 +370,29 @@ const Abilities = {
     rating: 4,
     num: 405
   },
+  bloodlust: {
+    onModifyAtk(atk, pokemon) {
+      if (["darkness"].includes(pokemon.effectiveWeather())) {
+        return this.chainModify(1.5);
+      }
+    },
+	onModifySpa(spa, pokemon) {
+      if (["darkness"].includes(pokemon.effectiveWeather())) {
+        return this.chainModify(1.5);
+      }
+    },
+	onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "darkness") {
+        this.damage(target.baseMaxhp / 8, target, target);
+      }
+    },
+    flags: {},
+    name: "Bloodlust",
+    rating: 3,
+    num: 449
+  },
   bloodthirst: {
     onModifyMove(move) {
       if (move.flags["bite"]) {
@@ -980,6 +1003,17 @@ const Abilities = {
 	rating: 4,
     num: 345
   },
+  fearmonger: {
+    onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["darkness"])) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Fearmonger",
+    rating: 3,
+    num: 450
+  },
   feedback: {
     onDamagingHitOrder: 1,
     onDamagingHit(damage, target, source, move) {
@@ -1230,6 +1264,26 @@ const Abilities = {
     rating: 2.5,
     num: 139
   },
+  haunt: {
+    onModifyMovePriority: -5,
+    onModifyMove(move) {
+      if (!move.ignoreImmunity)
+        move.ignoreImmunity = {};
+      if (move.ignoreImmunity !== true) {
+        move.ignoreImmunity["Ghost"] = true;
+      }
+    },
+    onTryBoost(boost, target, source, effect) {
+      if (effect.name === "psychout" && boost.atk) {
+        delete boost.atk;
+        this.add("-fail", target, "unboost", "Attack", "[from] ability: Haunt", "[of] " + target);
+      }
+    },
+    flags: {},
+    name: "Haunt",
+    rating: 3,
+    num: 448
+  },
   hayfever: {
     onStart(source) {
       this.field.setWeather("pollenstorm");
@@ -1303,6 +1357,21 @@ const Abilities = {
     name: "Hubris",
     rating: 3,
     num: 320
+  },
+  bloodbath: {
+    onResidualOrder: 5,
+    onResidualSubOrder: 3,
+    onResidual(pokemon) {
+      if (pokemon.status && ["darkness"].includes(pokemon.effectiveWeather())) {
+        this.debug("bloodbath");
+        this.add("-activate", pokemon, "ability: Bloodbath");
+        pokemon.cureStatus();
+      }
+    },
+    flags: {},
+    name: "Bloodbath",
+    rating: 1.5,
+    num: 451
   },
   iceslick: {
     onImmunity(type, pokemon) {

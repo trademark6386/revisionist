@@ -848,6 +848,14 @@
   "cobblemon.move.dragonforce.desc": "The user floods the field with draconic energy for five turns, it boosts the power of Dragon Type moves by 15%.",
   "cobblemon.move.magnetize": "Magnetize",
   "cobblemon.move.magnetize.desc": "The user messes with the magnetic field of the field for five turns, all Steel Type moves become perfectly accurate. Boosts the special defense of Steel type pokemon by 25%.",
+  "cobblemon.move.giraternalgrip": "Giraternal Grip",
+  "cobblemon.move.giraternalgrip.desc": "The user harnesses the raw power of the Eldritch arts to crush their Target, has a 50% chance to lower Target's defense by one stage.",
+  "cobblemon.move.necroticpunch": "Necrotic Punch",
+  "cobblemon.move.necroticpunch.desc": "The target is punched with a necrotic fist. This may also leave the target with paralysis.",
+  "cobblemon.move.banishingfist": "Banishing Fist",
+  "cobblemon.move.banishingfist.desc": "The User enchants their fist, before striking their opponent with a powerful sealing attack, this move has a high critical hit ratio.",
+  "cobblemon.move.sacrificialpact": "Sacrificial Pact",
+  "cobblemon.move.sacrificialpact.desc": "The User makes a deal with the Elder gods, to damage their Target hard, at the cost of taking half the pain themselves.",
   
   "cobblemon.battle.activate.magmaring": "%1$s became trapped in the fiery vortex!",
   "cobblemon.battle.activate.parasiticfungi": "%1$s became infected by the fungi!",
@@ -921,6 +929,7 @@
   "cobblemon.battle.damage.cursedwinds": "%1$s was haunted by otherwordly spirits.",
   "cobblemon.battle.damage.fallout": "%1$s was irradiated by the toxic fallout.",
   "cobblemon.battle.damage.parasiticfungi": "%1$s was damanged by the parasitic fungi!",
+  "cobblemon.battle.damage.bloodlust": "%1$s was hurt by its Bloodlust!",
   
   "cobblemon.ability.orbitaltide": "Orbital Tide",
   "cobblemon.ability.orbitaltide.desc": "Gravity is intensified while on the field.",
@@ -1218,6 +1227,14 @@
   "cobblemon.ability.druidry.desc": "The user gradually regains HP in Fairy Dust.",
   "cobblemon.ability.energizer": "Energizer",
   "cobblemon.ability.energizer.desc": "Doubles the User's Speed stat in a Thunderstorm.",
+  "cobblemon.ability.haunt": "Haunt",
+  "cobblemon.ability.haunt.desc": "The Pokémon can hit Normal- and Fighting-type Pokémon with Ghost-type moves.",
+  "cobblemon.ability.bloodlust": "Bloodlust",
+  "cobblemon.ability.bloodlust.desc": "Boosts Attack and Special Attack when in Darkness. Reduces HP in darkness.",
+  "cobblemon.ability.fearmonger": "Fearmonger",
+  "cobblemon.ability.fearmonger.desc": "Boosts Speed  when in Darkness.",
+  "cobblemon.ability.bloodbath": "Bloodbath",
+  "cobblemon.ability.bloodbath.desc": "Heals status conditions if it’s in Darkness.",
   
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   

@@ -492,6 +492,21 @@ const Moves = {
     type: "Sound",
     contestType: "Tough"
   },
+  banishingfist: {
+    num: 1319,
+    accuracy: 80,
+    basePower: 100,
+    category: "Physical",
+    name: "Banishing Fist",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Cute"
+  },
   bansheesscream: {
     num: 996,
     accuracy: 80,
@@ -3951,6 +3966,24 @@ const Moves = {
     type: "Ghost",
     contestType: "Beautiful"
   },
+  giraternalgrip: {
+    num: 1317,
+    accuracy: 95,
+    basePower: 75,
+    category: "Physical",
+    name: "Giraternal Grip",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Eldritch"
+  },
   glaciercrash: {
     num: 1072,
     accuracy: 100,
@@ -5699,6 +5732,23 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
   },
+  necroticpunch: {
+    num: 1318,
+    accuracy: 100,
+    basePower: 75,
+    category: "Special",
+    name: "Necrotic Punch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: {
+      chance: 10,
+      status: "par"
+    },
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Cool"
+  },
   newmoon: {
     num: 969,
     accuracy: true,
@@ -7016,6 +7066,21 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  sacrificialpact: {
+    num: 1320,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Sacrificial Pact",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    recoil: [50, 100],
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Tough"
   },
   saltcrash: {
     num: 917,
