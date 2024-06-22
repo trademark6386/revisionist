@@ -1235,8 +1235,11 @@
   "cobblemon.ability.fearmonger.desc": "Boosts Speed  when in Darkness.",
   "cobblemon.ability.bloodbath": "Bloodbath",
   "cobblemon.ability.bloodbath.desc": "Heals status conditions if it’s in Darkness.",
+  "cobblemon.ability.radsipper": "Rad Sipper",
+  "cobblemon.ability.radsipper.desc": "Boosts the Special Attack stat if hit by a Nuclear-type move instead of taking damage. The Pokémon gradually regains HP in Fallout.",
   
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   
+  "cobblemon.battle.heal.radsipper": "%1$s restored HP from Rad Sipper!",
   "cobblemon.battle.heal.fiesta": "%1$s ate some candy and restored its HP!"
 }

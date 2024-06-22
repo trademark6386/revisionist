@@ -9271,20 +9271,46 @@ const Moves = {
         case "primordialsea":
           move.basePower *= 2;
           break;
-        case "duststorm":
+        case "pollenstorm":
+          move.basePower *= 2;
+          break;
+		case "duststorm":
+          move.basePower *= 2;
+          break;
+		case "pheromones":
           move.basePower *= 2;
           break;
 		case "sandstorm":
           move.basePower *= 2;
           break;
-        case "hail":
+        case "battleaura":
+          move.basePower *= 2;
+          break;
+		case "hail":
         case "snow":
           move.basePower *= 2;
           break;
 		case "darkness":
+		case "eclipse":
+          move.basePower *= 2;
+          break;
+		case "cursedwinds":
+          move.basePower *= 2;
+          break;
+		case "psychicfield":
           move.basePower *= 2;
           break;
 		case "acidrain":
+		case "smog":
+          move.basePower *= 2;
+          break;
+		case "dragonforce":
+          move.basePower *= 2;
+          break;
+		case "magnetosphere":
+          move.basePower *= 2;
+          break;
+		case "fairydust":
           move.basePower *= 2;
           break;
 		case "fallout":
