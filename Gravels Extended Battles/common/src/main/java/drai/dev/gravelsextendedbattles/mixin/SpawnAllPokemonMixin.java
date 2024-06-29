@@ -1,22 +1,13 @@
-package drai.dev.gravelsextendedbattles.fabric.mixin;
+package drai.dev.gravelsextendedbattles.mixin;
 
-import com.cobblemon.mod.common.api.pokemon.*;
-import com.cobblemon.mod.common.pokemon.*;
-import com.mojang.brigadier.*;
 import com.mojang.brigadier.context.*;
 import com.mojang.brigadier.exceptions.*;
 import drai.dev.gravelsextendedbattles.mixinimpl.*;
-import kotlin.*;
 import kotlin.ranges.*;
 import net.minecraft.server.command.*;
-import net.minecraft.server.network.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-
-import java.util.*;
-
-import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
 
 @Mixin(com.cobblemon.mod.common.command.SpawnAllPokemon.class)
 public class SpawnAllPokemonMixin {

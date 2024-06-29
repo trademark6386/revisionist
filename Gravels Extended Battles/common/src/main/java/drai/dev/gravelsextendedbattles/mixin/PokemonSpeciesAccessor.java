@@ -1,4 +1,4 @@
-package drai.dev.gravelsextendedbattles.fabric.mixin;
+package drai.dev.gravelsextendedbattles.mixin;
 
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.pokemon.*;

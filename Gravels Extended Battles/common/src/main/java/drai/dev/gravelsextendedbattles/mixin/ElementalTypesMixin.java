@@ -1,10 +1,8 @@
-package drai.dev.gravelsextendedbattles.forge.mixin;
+package drai.dev.gravelsextendedbattles.mixin;
 
 import com.cobblemon.mod.common.api.types.*;
-import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.mixinimpl.*;
 import net.minecraft.text.*;
-import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;

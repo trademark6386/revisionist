@@ -18,7 +18,8 @@
     ]
   },
   "mixins": [
-    "gravels_extended_battles_fabric.mixins.json"
+    "gravels_extended_battles_fabric.mixins.json",
+    "gravels_extended_battles_common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

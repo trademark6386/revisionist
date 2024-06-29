@@ -1,4 +1,4 @@
-package drai.dev.gravelsextendedbattles.forge.mixin;
+package drai.dev.gravelsextendedbattles.mixin;
 
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.pokemon.evolution.adapters.*;

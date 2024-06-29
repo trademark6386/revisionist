@@ -1,18 +1,13 @@
-package drai.dev.gravelsextendedbattles.fabric.mixin;
+package drai.dev.gravelsextendedbattles.mixin;
 
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.summary.widgets.type.*;
-import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.mixinimpl.*;
-import kotlin.jvm.internal.*;
 import net.minecraft.client.util.math.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-
-import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.blitk;
-import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ICON_WIDGET_INIT;
 
 @Mixin(TypeWidget.class)
 public abstract class TypeWidgetMixin {
