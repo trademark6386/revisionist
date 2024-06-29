@@ -209,6 +209,23 @@ const Moves = {
     type: "Water",
     contestType: "Tough"
   },
+  arceanbanish: {
+    num: 1323,
+    accuracy: 30,
+    basePower: 0,
+    category: "Special",
+    name: "Arcean Banish",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    ohko: true,
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    zMove: { basePower: 180 },
+    maxMove: { basePower: 130 },
+    contestType: "Cool"
+  },
   asteroidbelt: {
     num: 958,
     accuracy: true,
@@ -891,6 +908,66 @@ const Moves = {
   bubblebeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
+  },
+  bufu: {
+    num: 6969,
+    accuracy: 90,
+    basePower: 40,
+    category: "Special",
+    name: "Bufu",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	onModifyMove(move) {
+      if (this.field.isWeather(["hail", "snow"]))
+        move.accuracy = true;
+	},
+    secondary: {
+      chance: 5,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Ice",
+  },
+  bufula: {
+    num: 6969,
+    accuracy: 90,
+    basePower: 70,
+    category: "Special",
+    name: "Bufula",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	onModifyMove(move) {
+      if (this.field.isWeather(["hail", "snow"]))
+        move.accuracy = true;
+	},
+    secondary: {
+      chance: 5,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Ice",
+  },
+  bufudyne: {
+    num: 6969,
+    accuracy: 90,
+    basePower: 95,
+    category: "Special",
+    name: "Bufudyne",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	onModifyMove(move) {
+      if (this.field.isWeather(["hail", "snow"]))
+        move.accuracy = true;
+	},
+    secondary: {
+      chance: 10,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Ice",
   },
   bugbomb: {
     num: 1053,
@@ -2984,6 +3061,23 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  eldritchinvocation: {
+    num: 1322,
+    accuracy: 90,
+    basePower: 150,
+    category: "Special",
+    name: "Eldritch Invocation",
+    pp: 5,
+    priority: 0,
+    flags: { recharge: 1, protect: 1, mirror: 1 },
+    self: {
+      volatileStatus: "mustrecharge"
+    },
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Cool"
+  },
   electrobash: {
     num: 1295,
     accuracy: 100,
@@ -3631,6 +3725,23 @@ const Moves = {
     zMove: { basePower: 170 },
     contestType: "Tough"
   },
+  flubberfang: {
+    num: 1327,
+    accuracy: 95,
+    basePower: 65,
+    category: "Physical",
+    name: "Flubber Fang",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Tough"
+  },
   fly: {
     inherit: true,
     flags: {
@@ -4019,6 +4130,23 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
+  glorp: {
+    num: 1326,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Glorp",
+    pp: 25,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Tough"
+  },
   goldenfist: {
     num: 981,
     accuracy: 100,
@@ -4032,6 +4160,23 @@ const Moves = {
     target: "normal",
     type: "Fighting",
     contestType: "Clever"
+  },
+  goopelt: {
+    num: 1324,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+    name: "Goo Pelt",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Slime",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
   },
   gravitycosmic: {
     num: 1100,
@@ -4576,6 +4721,23 @@ const Moves = {
     type: "Psychic",
     contestType: "Beautiful"
   },
+  hystericalslap: {
+    num: 6969,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Hysterical Slap",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	multihit: [1, 3],
+     secondary: {
+      chance: 5,
+      volatileStatus: "confusion"
+        },
+    target: "normal",
+    type: "Fighting",
+  },
   icebeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
@@ -4672,6 +4834,20 @@ const Moves = {
     target: "normal",
     type: "Steel",
     contestType: "Tough"
+  },
+  jellybounce: {
+    num: 1325,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Jelly Bounce",
+    pp: 30,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Slime",
+    contestType: "Beautiful"
   },
   jetpunch: {
     inherit: true,
@@ -5317,6 +5493,24 @@ const Moves = {
     type: "Psychic",
     contestType: "Clever"
   },
+  mindcharge: {
+    num: 6969,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Mind Charge",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1, dance: 1, metronome: 1, cantusetwice: 1 },
+    boosts: {
+      spa: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Normal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   minimize: {
     num: 107,
     accuracy: true,
@@ -5764,6 +5958,26 @@ const Moves = {
     type: "Dark",
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
+  },
+  niflheim: {
+    num: 6969,
+    accuracy: 80,
+    basePower: 110,
+    category: "Special",
+    name: "Niflheim",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+	onModifyMove(move) {
+      if (this.field.isWeather(["hail", "snow"]))
+        move.accuracy = true;
+	},
+    secondary: {
+      chance: 15,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Ice",
   },
   nimbusfist: {
     num: 939,
@@ -6588,7 +6802,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   ragingwaves: {
-    num: 1170,
+    num: 1321,
     accuracy: 100,
     basePower: 120,
     category: "Special",

@@ -856,6 +856,31 @@
   "cobblemon.move.banishingfist.desc": "The User enchants their fist, before striking their opponent with a powerful sealing attack, this move has a high critical hit ratio.",
   "cobblemon.move.sacrificialpact": "Sacrificial Pact",
   "cobblemon.move.sacrificialpact.desc": "The User makes a deal with the Elder gods, to damage their Target hard, at the cost of taking half the pain themselves.",
+  "cobblemon.move.eldritchinvocation": "Eldritch Invocation",
+  "cobblemon.move.eldritchinvocation.desc": "The User utilizes every ounce of the dark arts to damage their Target, at the cost of their next turn.",
+  "cobblemon.move.arceanbanish": "Arcean Banish",
+  "cobblemon.move.arceanbanish.desc": "The User banishes the Target's soul to the darkest depths of the distortion world, counts as a One=Hit KO move.",
+  "cobblemon.move.goopelt": "Goo Pelt",
+  "cobblemon.move.goopelt.desc": "The User lobs a repetitive wave of slime at the Target, hits up to 5 times.",
+  "cobblemon.move.jellybounce": "Jelly Bounce",
+  "cobblemon.move.jellybounce.desc": "The User harnesses their viscosity to bounce up and strike their foe with extreme haste, this move has increased priority.",
+  "cobblemon.move.glorp": "Glorp",
+  "cobblemon.move.glorp.desc": "The User gets up close to the Target and rubs up against them with their slimy skin, may cause the target to Flinch.",
+  "cobblemon.move.flubberfang": "Flubber Fang",
+  "cobblemon.move.flubberfang.desc": "The User bites the target with their wiggly wobbly slime teeth, may also confuse the target.",
+  
+  "cobblemon.move.bufu": "Bufu",
+  "cobblemon.move.bufu.desc": "Light Ice damage with Low chance to freeze",
+  "cobblemon.move.bufula": "Bufula",
+  "cobblemon.move.bufula.desc": "Medium Ice damage with Low chance to freeze",
+  "cobblemon.move.bufudyne": "Bufudyne",
+  "cobblemon.move.bufudyne.desc": "Heavy Ice damage with Medium chance to freeze",
+  "cobblemon.move.niflheim": "Niflheim",
+  "cobblemon.move.niflheim.desc": "Severe Ice damage with High chance to freeze",
+  "cobblemon.move.mindcharge": "Mind Charge",
+  "cobblemon.move.mindcharge.desc": "Next Special attack deals double the damage.",
+  "cobblemon.move.hystericalslap": "Hysterical Slap",
+  "cobblemon.move.hystericalslap.desc": "Light Physical damage with Low chance to confuse",
   
   "cobblemon.battle.activate.magmaring": "%1$s became trapped in the fiery vortex!",
   "cobblemon.battle.activate.parasiticfungi": "%1$s became infected by the fungi!",
@@ -1238,8 +1263,12 @@
   "cobblemon.ability.radsipper": "Rad Sipper",
   "cobblemon.ability.radsipper.desc": "Boosts the Special Attack stat if hit by a Nuclear-type move instead of taking damage. The Pokémon gradually regains HP in Fallout.",
   
+  "cobblemon.ability.heeho": "Hee-Ho!",
+  "cobblemon.ability.heeho.desc": "Hee-Ho! Hee-Ho!",
+  
   "cobblemon.battle.ability.resolute": "%1$s endured the hit!",
   
   "cobblemon.battle.heal.radsipper": "%1$s restored HP from Rad Sipper!",
-  "cobblemon.battle.heal.fiesta": "%1$s ate some candy and restored its HP!"
+  "cobblemon.battle.heal.fiesta": "%1$s ate some candy and restored its HP!",
+  "cobblemon.battle.heal.heeho": "Hee-Ho! %1$s has healed!"
 }

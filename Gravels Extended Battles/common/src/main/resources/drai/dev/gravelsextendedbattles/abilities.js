@@ -1316,6 +1316,24 @@ const Abilities = {
     rating: 3.5,
     num: 421
   },
+  heeho: {
+    onStart(source) {
+      this.field.setWeather("snow");
+    },
+    onWeather(target, source, effect) {
+      if (effect.id === "hail" || effect.id === "snow") {
+        this.heal(target.baseMaxhp / 16);
+      }
+    },
+    onImmunity(type, pokemon) {
+      if (type === "hail")
+        return false;
+    },
+	flags: {},
+    name: "Hee-Ho",
+    rating: 69,
+    num: 6969,
+  },
   heliophobia: {
     onSourceBasePowerPriority: 17,
     onSourceBasePower(basePower, attacker, defender, move) {
