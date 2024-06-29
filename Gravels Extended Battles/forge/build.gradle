@@ -18,6 +18,7 @@ sourceSets {
 loom {
     forge {
         mixinConfig "gravels_extended_battles_forge.mixins.json"
+        mixinConfig "gravels_extended_battles_common.mixins.json"
     }
 
     runs {

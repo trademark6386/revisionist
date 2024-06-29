@@ -24,7 +24,7 @@ side="BOTH"
 [[dependencies.gravels_extended_battles]]
 modId="cobblemon"
 mandatory=true
-versionRange="[1.5,)"
+versionRange="[1.5.1,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.gravels_extended_battles]]

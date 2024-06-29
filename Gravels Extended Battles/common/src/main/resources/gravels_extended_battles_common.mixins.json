@@ -1,9 +1,9 @@
 {
   "required": true,
-  "minVersion": "0.8",
-  "package": "drai.dev.gravelsextendedbattles.forge.mixin",
+  "package": "drai.dev.gravelsextendedbattles.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
+  "minVersion": "0.8",
+  "client": [
     "CobblemonPreEvolutionAdapterMixin",
     "ElementalTypesMixin",
     "FormDataMixin",
@@ -15,8 +15,6 @@
     "TeraTypesMixin",
     "TypeIconMixin",
     "TypeWidgetMixin"
-  ],
-  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
