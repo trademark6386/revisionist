@@ -12,9 +12,6 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
-        GravelsExtendedBattles.init(new GravelmonFabricConfig(), MINECRAFT_FOLDER);
-
-
+        GravelsExtendedBattles.init(MINECRAFT_FOLDER);
     }
 }

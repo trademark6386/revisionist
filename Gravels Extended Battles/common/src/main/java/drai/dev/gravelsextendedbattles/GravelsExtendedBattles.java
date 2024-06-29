@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.reactive.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 import net.minecraft.util.*;
 
@@ -38,11 +39,9 @@ public class GravelsExtendedBattles {
     public static void addModeledPokemon(Identifier identifier){
         modeledPokemonIdentifiers.add(identifier);
     }
-    public static void init(GravelmonConfig gravelmonConfig, String minecraftFolder) {
-        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, evolutionAcceptedEvent -> {
-
-            return Unit.INSTANCE;
-        });
+    public static void init(String minecraftFolder) {
+        MidnightConfig.init("gravelmon", GravelmonConfig.class);
+        var gravelmonConfig = new GravelmonConfig();
 
         BANNED_LABELS = gravelmonConfig.getBannedLabels().toArray(new String[0]);
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
