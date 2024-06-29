@@ -7,9 +7,9 @@ import net.minecraftforge.fml.loading.*;
 
 @Mod(GravelsExtendedBattles.MOD_ID)
 public class GravelsExtendedBattlesForge {
-    public static String MINECRAFT_FOLDER = FMLPaths.GAMEDIR.get().toString()+"/showdown/data/mods/cobblemon/";
+    public static String SHOWDOWN_MODS_COBBLEMON_FOLDER = FMLPaths.GAMEDIR.get().toString()+"/showdown/data/mods/cobblemon/";
     public GravelsExtendedBattlesForge() {
         MidnightConfig.init("gravelmon", GravelmonForgeConfig.class);
-        GravelsExtendedBattles.init(new GravelmonForgeConfig(), MINECRAFT_FOLDER);
+        GravelsExtendedBattles.init(new GravelmonForgeConfig(), SHOWDOWN_MODS_COBBLEMON_FOLDER);
     }
 }

@@ -7,12 +7,12 @@ import net.fabricmc.loader.api.*;
 
 public class GravelsExtendedBattlesFabric implements ModInitializer {
 
-    public static String MINECRAFT_FOLDER = FabricLoader.getInstance().getGameDir().toString()+"/showdown/data/mods/cobblemon/";
+    public static String SHOWDOWN_MODS_COBBLEMON_FOLDER = FabricLoader.getInstance().getGameDir().toString()+"/showdown/data/mods/cobblemon/";
 
 
     @Override
     public void onInitialize() {
         MidnightConfig.init("gravelmon", GravelmonFabricConfig.class);
-        GravelsExtendedBattles.init(new GravelmonFabricConfig(), MINECRAFT_FOLDER);
+        GravelsExtendedBattles.init(new GravelmonFabricConfig(), SHOWDOWN_MODS_COBBLEMON_FOLDER);
     }
 }

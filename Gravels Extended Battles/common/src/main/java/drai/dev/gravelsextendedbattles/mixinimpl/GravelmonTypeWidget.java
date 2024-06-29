@@ -13,10 +13,7 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ICON_WIDGET
 
 public class GravelmonTypeWidget {
     public static void changeTypeWidget(TypeWidget typeWidget, Identifier typeResource, ElementalType type, MatrixStack pMatrixStack, double pX, int pY, CallbackInfo ci) {
-        if(!ICON_WIDGET_INIT){
-            typeResource = new Identifier("gravelmon","textures/gui/types.png");
-            ICON_WIDGET_INIT=true;
-        }
+        typeResource = new Identifier("gravelmon","textures/gui/types.png");
         Intrinsics.checkNotNullParameter(type, "type");
         Intrinsics.checkNotNullParameter(pMatrixStack, "pMatrixStack");
         Identifier texture = typeResource;

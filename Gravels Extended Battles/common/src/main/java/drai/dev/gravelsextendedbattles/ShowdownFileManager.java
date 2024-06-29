@@ -7,7 +7,11 @@ public class ShowdownFileManager {
     public static void renameFile(String originalFilePath, String newFilePath) throws IOException {
         Path source = Paths.get(originalFilePath);
         Path destination = Paths.get(newFilePath);
-        Files.move(source, destination);
+//        File presentFile = destination.toFile();
+//        if(!presentFile.exists()) {
+//            presentFile.delete();
+//        }
+        Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
     }
 
     static public String exportResource(String minecraftFolder,String resourceName) throws Exception {
