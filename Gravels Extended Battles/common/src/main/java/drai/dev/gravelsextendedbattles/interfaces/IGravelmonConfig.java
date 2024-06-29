@@ -6,5 +6,6 @@ public interface IGravelmonConfig {
     boolean getEnableOriginalFanGameTypings();
     boolean getEnableDexResort();
     List<String> getBannedLabels();
+    List<String> getAllowedLabels();
 
 }

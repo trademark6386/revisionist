@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.api.reactive.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
-import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 import net.minecraft.util.*;
 
@@ -30,7 +29,8 @@ public class GravelsExtendedBattles {
             List.of("typechart.js"));
     public static Logger logger = Logger.getLogger(MOD_ID);
     public static URL SHOW_DOWN_FOLDER = GravelsExtendedBattles.class.getResource("\\showdown");
-    public static String[] BANNED_LABELS;
+    public static List<String> BANNED_LABELS;
+    public static List<String> ALLOWED_LABELS;
     public static int TYPE_COUNT = 18;
     public static List<Species> SORTED_SPECIES;
     public static SimpleObservable<Boolean> scaleNeedsARefresh = new SimpleObservable<>();
@@ -39,11 +39,9 @@ public class GravelsExtendedBattles {
     public static void addModeledPokemon(Identifier identifier){
         modeledPokemonIdentifiers.add(identifier);
     }
-    public static void init(String minecraftFolder) {
-        MidnightConfig.init("gravelmon", GravelmonConfig.class);
-        var gravelmonConfig = new GravelmonConfig();
-
-        BANNED_LABELS = gravelmonConfig.getBannedLabels().toArray(new String[0]);
+    public static void init(IGravelmonConfig gravelmonConfig, String minecraftFolder) {
+        BANNED_LABELS = gravelmonConfig.getBannedLabels();
+        ALLOWED_LABELS = gravelmonConfig.getAllowedLabels();
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
             try {
                 ShowdownFileManager.exportResource(minecraftFolder, fileName);

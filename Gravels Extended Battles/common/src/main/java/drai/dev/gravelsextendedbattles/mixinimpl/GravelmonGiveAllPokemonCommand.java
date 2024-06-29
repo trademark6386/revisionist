@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.util.*;
 import com.mojang.brigadier.*;
 import com.mojang.brigadier.context.*;
 import com.mojang.brigadier.exceptions.*;
+import drai.dev.gravelsextendedbattles.*;
 import kotlin.jvm.internal.*;
 import net.minecraft.server.command.*;
 import net.minecraft.server.network.*;
@@ -22,7 +23,7 @@ public class GravelmonGiveAllPokemonCommand {
         if (SORTED_SPECIES.isEmpty()) {
             SORTED_SPECIES = GravelmonGiveAllPokemonCommand.genSortedList();
         }
-        ServerPlayerEntity player = (context.getSource()).getPlayerOrThrow();
+        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
         Intrinsics.checkNotNullExpressionValue(player, "player");
         PCStore pcStore = PlayerExtensionsKt.party(player).getOverflowPC();
         if (pcStore == null) {
@@ -30,14 +31,8 @@ public class GravelmonGiveAllPokemonCommand {
         } else {
             PCStore pc = pcStore;
             for (Species species : SORTED_SPECIES) {
-                boolean isValid = true;
-                for (String label : BANNED_LABELS) {
-                    if (species.getLabels().contains(label)) {
-                        isValid = false;
-                        break;
-                    }
-                }
-                if(Arrays.stream(BANNED_LABELS).toList().contains("not_modeled") && !species.getImplemented()){
+                boolean isValid = SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
+                if(BANNED_LABELS.contains("not_modeled") && !species.getImplemented()){
                     isValid = false;
                 }
                 if(isValid){
@@ -55,7 +50,6 @@ public class GravelmonGiveAllPokemonCommand {
                             form.setAspects(new HashSet<>(formData.getAspects()));
                             pc.add(form);
                         }
-//                        }
                     }
                 }
             }
@@ -65,7 +59,7 @@ public class GravelmonGiveAllPokemonCommand {
     }
 
     public static List<Species> genSortedList(){
-        var allowedLabels = new ArrayList<>(List.of("baby", "pseudo_legendary", "legendary", "mythical",
+        var originalLabels = new ArrayList<>(List.of("baby", "pseudo_legendary", "legendary", "mythical",
                 "gen1", "gen2", "gen3", "gen4", "gen5",
                 "gen6", "gen7", "gen8", "gen9"));
         Comparator<Species> comparator = (o1, o2) -> {
@@ -74,12 +68,12 @@ public class GravelmonGiveAllPokemonCommand {
                 boolean o1IsOriginal = true;
                 boolean o2IsOriginal = true;
                 for (String label : o1.getLabels()) {
-                    if(!allowedLabels.contains(label)){
+                    if(!originalLabels.contains(label)){
                         o1IsOriginal = false;
                     }
                 }
                 for (String label : o2.getLabels()) {
-                    if(!allowedLabels.contains(label)){
+                    if(!originalLabels.contains(label)){
                         o2IsOriginal = false;
                     }
                 }

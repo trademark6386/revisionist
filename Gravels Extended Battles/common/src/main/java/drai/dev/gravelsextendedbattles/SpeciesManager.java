@@ -8,10 +8,10 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ALLOWED_LABELS;
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
 
 public class SpeciesManager {
-    public static List<String> BANNED_SPECIES = new ArrayList<>();
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
@@ -83,8 +83,8 @@ public class SpeciesManager {
         if(labels == null) return false;
         if(labels.isEmpty()) return false;
         for (String label : labels) {
-            if (Arrays.stream(BANNED_LABELS).toList().contains(label)) {
-                return true;
+            if (BANNED_LABELS.contains(label)) {
+                return !ALLOWED_LABELS.contains(label);
             }
         }
         return false;
