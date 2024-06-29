@@ -7,6 +7,8 @@ import com.cobblemon.mod.common.api.reactive.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import drai.dev.gravelsextendedbattles.resorting.*;
+import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 import net.minecraft.util.*;
 
@@ -39,7 +41,9 @@ public class GravelsExtendedBattles {
     public static void addModeledPokemon(Identifier identifier){
         modeledPokemonIdentifiers.add(identifier);
     }
-    public static void init(IGravelmonConfig gravelmonConfig, String minecraftFolder) {
+    public static void init(String minecraftFolder) {
+        MidnightConfig.init("gravelmon", GravelmonConfig.class);
+        var gravelmonConfig = new GravelmonConfig();
         BANNED_LABELS = gravelmonConfig.getBannedLabels();
         ALLOWED_LABELS = gravelmonConfig.getAllowedLabels();
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
@@ -82,7 +86,7 @@ public class GravelsExtendedBattles {
             SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor)(Object) pokemonSpecies));
             banHasBeenApplied = true;
             if(gravelmonConfig.getEnableDexResort()){
-                GravelmonDexSorter.resort(pokemonSpecies);
+                GravelmonPokedexResorter.resort(pokemonSpecies);
             }
             return Unit.INSTANCE;
         });

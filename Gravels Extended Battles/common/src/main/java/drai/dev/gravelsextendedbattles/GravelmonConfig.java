@@ -1,11 +1,11 @@
-package drai.dev.gravelsextendedbattles.fabric;
+package drai.dev.gravelsextendedbattles;
 
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import eu.midnightdust.lib.config.*;
 
 import java.util.*;
 
-public class GravelmonFabricConfig extends MidnightConfig implements IGravelmonConfig {
+public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig {
     @Entry(name = "Banned Labels: ")
     public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
     @Entry(name = "Allowed Labels: ")

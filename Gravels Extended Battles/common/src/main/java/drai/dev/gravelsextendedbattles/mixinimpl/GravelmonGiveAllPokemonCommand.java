@@ -37,7 +37,12 @@ public class GravelmonGiveAllPokemonCommand {
                 }
                 if(isValid){
                     pc.add(species.create(10));
-                    for (FormData formData : species.getForms()){
+                    var forms = species.getForms();
+                    forms.sort(Comparator.comparing(formData -> {
+                        var optional = formData.getAspects().stream().findFirst();
+                        return optional.isPresent() ? optional.get() : "";
+                        }, String::compareTo));
+                    for (FormData formData : forms){
                         if(!formData.getAspects().isEmpty()
                                 && !formData.getAspects().contains("female")
                                 && !formData.getAspects().contains("mega")
