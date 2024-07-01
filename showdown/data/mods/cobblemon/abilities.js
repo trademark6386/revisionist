@@ -1135,6 +1135,26 @@ const Abilities = {
     rating: 4,
     num: 308
   },
+  forked: {
+    onSetStatus(status, target, source, effect) {
+      if (["thunderstorm"].includes(target.effectiveWeather())) {
+        if (effect?.status) {
+          this.add("-immune", target, "[from] ability: Forked");
+        }
+        return false;
+      }
+    },
+    onTryAddVolatile(status, target) {
+      if (status.id === "yawn" && ["thunderstorm"].includes(target.effectiveWeather())) {
+        this.add("-immune", target, "[from] ability: Forked");
+        return null;
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Forked",
+    rating: 0.5,
+    num: 453
+  },
   foulshroud: {
     onImmunity(type, pokemon) {
       if (type === "eclipse")
@@ -1202,6 +1222,22 @@ const Abilities = {
     rating: 3.5,
     num: 392
   },
+  glacialarmor: {
+    onModifyDef(def, pokemon) {
+      if (this.field.isWeather(["hail", "snow"])) {
+        return this.chainModify(2);
+      }
+    },
+	onModifySpd(spd, pokemon) {
+      if (this.field.isWeather(["hail", "snow"])) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Glacial Armor",
+    rating: 3,
+    num: 454
+  },
   glacialize: {
     onModifyTypePriority: -1,
     onModifyType(move, pokemon) {
@@ -1238,6 +1274,17 @@ const Abilities = {
     name: "Grass Pelt",
     rating: 0.5,
     num: 179
+  },
+  gravitysling: {
+    onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["magnetosphere"]) || this.field.getPseudoWeather("gravity")) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Gravity Sling",
+    rating: 3,
+    num: 455
   },
   hailwarning: {
     onStart(source) {
@@ -1283,6 +1330,17 @@ const Abilities = {
     name: "Haunt",
     rating: 3,
     num: 448
+  },
+  haunting: {
+    onModifySpe(spe, pokemon) {
+      if (this.field.isWeather(["cursedwinds", "darkness", "eclipse"])) {
+        return this.chainModify(2);
+      }
+    },
+    flags: {},
+    name: "Haunting",
+    rating: 3,
+    num: 456
   },
   hayfever: {
     onStart(source) {
@@ -1623,6 +1681,18 @@ const Abilities = {
     rating: 2.5,
     num: 414
   },
+  masterinstinct: {
+    onModifyAccuracyPriority: 10,
+	onModifyAccuracy(accuracy, pokemon) {
+      if (this.field.isWeather("battleaura")) {
+        return accuracy * 1.2;
+      }
+	},
+    flags: { breakable: 1 },
+    name: "Master Instinct",
+    rating: 1.5,
+    num: 457
+  },
   icecleats: {
     onImmunity(type, pokemon) {
       if (type === "hail")
@@ -1667,6 +1737,25 @@ const Abilities = {
     name: "Nefarious",
     rating: 4,
     num: 380
+  },
+  nesting: {
+    onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "pheromones") {
+        // Check if there is a Bug-type teammate
+        const hasBugTeammate = target.side.pokemon.some(pokemon => pokemon.hasType("Bug") && !pokemon.fainted);
+        if (hasBugTeammate) {
+          this.heal(target.baseMaxhp / 8);
+        } else {
+          this.heal(target.baseMaxhp / 16);
+        }
+      }
+    },
+    flags: {},
+    name: "Nesting",
+    rating: 1.5,
+    num: 458
   },
   noctem: {
     onStart(source) {

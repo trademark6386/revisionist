@@ -104,6 +104,12 @@ const Conditions = {
         }
       }
 	},
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "BattleAura", "[upkeep]");
+      if (this.field.isWeather("BattleAura"))
+        this.eachEvent("Weather");
+    },
     onFieldEnd() {
       this.add("-weather", "none");
     }
@@ -582,6 +588,12 @@ const Conditions = {
         this.boost({spe: 1, accuracy: 1}, pokemon);
       }
     },
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "Pheromones", "[upkeep]");
+      if (this.field.isWeather("Pheromones"))
+        this.eachEvent("Weather");
+    },
     onFieldEnd() {
       this.add("-weather", "none");
     }
@@ -612,6 +624,12 @@ const Conditions = {
         this.debug("Pollen Storm suppress");
         return this.chainModify(0.5);
       }
+    },
+	onFieldResidualOrder: 1,
+    onFieldResidual() {
+      this.add("-weather", "PollenStorm", "[upkeep]");
+      if (this.field.isWeather("PollenStorm"))
+        this.eachEvent("Weather");
     },
     onFieldEnd() {
       this.add("-weather", "none");
