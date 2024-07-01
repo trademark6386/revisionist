@@ -1,8 +1,14 @@
 package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.pokemon.*;
+import com.cobblemon.mod.common.api.pokemon.evolution.*;
+import com.cobblemon.mod.common.api.pokemon.evolution.requirement.*;
 import com.cobblemon.mod.common.pokemon.*;
+import com.cobblemon.mod.common.pokemon.evolution.requirements.*;
+import com.cobblemon.mod.common.pokemon.evolution.variants.*;
+import drai.dev.gravelmon.pokemon.attributes.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import drai.dev.gravelsextendedbattles.mixin.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -89,6 +95,60 @@ public class SpeciesManager {
             }
         }
         return false;
+    }
+
+    private static HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
+//
+    public static void registerFormEvolution(String pokemon, EvolutionEntry moveToInsert){
+        additionalFormEvolutions.computeIfAbsent(pokemon, k -> new ArrayList<>()).add(moveToInsert);
+    }
+
+    public static void processFormEvolutionAdditions(){
+        SpeciesManager.registerFormEvolution("sandslash alolan", new EvolutionEntry("sandridger alolan", EvolutionType.LEVEL_UP, List.of(),
+                List.of(new EvolutionRequirementEntry(EvolutionRequirementCondition.LEVEL,"40"))));
+        additionalFormEvolutions.forEach((key,value)-> {
+            var splitFrom = key.split(" ");
+            var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
+            if(pokemon!=null){
+                var form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
+                if(form.getName().equalsIgnoreCase("normal")) return;
+                var evolutions = form.getEvolutions();
+                for(var evolution : value){
+                    evolutions.add(resolveEvolution(form, evolution));
+                    ((FormDataAccessor) (Object) form).setEvolutions(evolutions);
+                }
+            }
+        });
+    }
+
+    private static Evolution resolveEvolution(FormData form, EvolutionEntry evolutionEntry) {
+        var evolutionId = form.getSpecies().getName().toLowerCase()+"_"+evolutionEntry.getResult().replaceAll(" ", "_").toLowerCase();
+        var result = PokemonProperties.Companion.parse(evolutionEntry.getResult());
+        if(evolutionEntry.getKind() == EvolutionType.LEVEL_UP){
+            Set<EvolutionRequirement> requirements = new HashSet<>();
+            evolutionEntry.getRequirements().stream().forEach(evolutionRequirementEntry -> {
+                if(evolutionRequirementEntry.getRequirementKind().equalsIgnoreCase(EvolutionRequirementCondition.LEVEL.getName())){
+                    requirements.add(new LevelRequirement(Integer.parseInt(evolutionRequirementEntry.getConditionParameter())));
+                }
+            });
+            return new LevelUpEvolution(evolutionId, result, false, false, requirements, new HashSet<>(), true);
+        }
+        return null;
+    }
+
+    private static class LevelRequirement implements EvolutionRequirement {
+
+        int minLevel;
+        int maxLevel = Integer.MAX_VALUE;
+
+        public LevelRequirement(int minLevel) {
+            this.minLevel = minLevel;
+        }
+
+        @Override
+        public boolean check(@NotNull Pokemon pokemon) {
+            return pokemon.getLevel() >= minLevel && pokemon.getLevel() < maxLevel;
+        }
     }
 }
 

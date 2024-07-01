@@ -21,7 +21,7 @@ public class GravelmonSpawnAllPokemonCommand {
         ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
         for (Species species : PokemonSpecies.INSTANCE.getSpecies()) {
             if(range.contains(species.getNationalPokedexNumber())){
-                boolean isValid = SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
+                boolean isValid = !SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
                 if(BANNED_LABELS.contains("not_modeled") && !species.getImplemented()){
                     isValid = false;
                 }

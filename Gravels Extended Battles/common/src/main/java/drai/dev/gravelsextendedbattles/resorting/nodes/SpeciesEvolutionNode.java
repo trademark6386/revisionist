@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.pokemon.*;
 
 import java.util.*;
 
-public class SpeciesEvolutionNode implements IEvolutionNode{
+public class SpeciesEvolutionNode extends IEvolutionNode{
     private Species pokemon;
     private List<IEvolutionNode> evolutions;
     private List<IEvolutionNode> preEvolutions;
@@ -14,6 +14,7 @@ public class SpeciesEvolutionNode implements IEvolutionNode{
         this.pokemon = pokemon;
         this.evolutions = new ArrayList<>();
         this.preEvolutions = new ArrayList<>();
+        this.sortingNumber = pokemon.getNationalPokedexNumber();
     }
 
     public List<IEvolutionNode> getEvolutions() {
@@ -48,5 +49,15 @@ public class SpeciesEvolutionNode implements IEvolutionNode{
     @Override
     public int getPokedexNumber() {
         return pokemon.getNationalPokedexNumber();
+    }
+
+    @Override
+    public void setPokedexNumber(int i) {
+        pokemon.setNationalPokedexNumber(i);
+    }
+
+    @Override
+    public Species getPokemon() {
+        return pokemon;
     }
 }

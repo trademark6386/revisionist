@@ -9,7 +9,22 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
     @Entry(name = "Banned Labels: ")
     public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
     @Entry(name = "Allowed Labels: ")
-    public static List<String> allowedLabels = new ArrayList<>(); // Array String Lists are also supported
+    public static List<String> allowedLabels = new ArrayList<>();  // Array String Lists are also supported
+    @Entry(name = "Allowed Labels: ")
+    public static List<String> implementedTypes = new ArrayList<>(List.of(
+            "cosmic",
+            "crystal",
+            "digital",
+            "light",
+            "nuclear",
+            "plastic",
+            "questionmark",
+            "shadow",
+            "slime",
+            "sound",
+            "wind",
+            "eldritch"
+    )); // Array String Lists are also supported
     @Entry(name = "Original Fangame Typings: ")
     public static boolean enableFangameTypechart = false;
     @Entry(name = "Re-sort pokedex in evolution order: ")
