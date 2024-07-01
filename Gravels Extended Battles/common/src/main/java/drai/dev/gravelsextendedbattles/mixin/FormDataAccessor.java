@@ -13,6 +13,7 @@ import java.util.*;
 @Mixin(FormData.class)
 public interface FormDataAccessor {
 
+    @Mutable
     @Accessor("_evolutions")
     public void setEvolutions(Set<Evolution> evolutions);
 }

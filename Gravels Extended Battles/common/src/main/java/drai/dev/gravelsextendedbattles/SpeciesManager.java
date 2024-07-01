@@ -104,8 +104,6 @@ public class SpeciesManager {
     }
 
     public static void processFormEvolutionAdditions(){
-        SpeciesManager.registerFormEvolution("sandslash alolan", new EvolutionEntry("sandridger alolan", EvolutionType.LEVEL_UP, List.of(),
-                List.of(new EvolutionRequirementEntry(EvolutionRequirementCondition.LEVEL,"40"))));
         additionalFormEvolutions.forEach((key,value)-> {
             var splitFrom = key.split(" ");
             var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
@@ -114,7 +112,9 @@ public class SpeciesManager {
                 if(form.getName().equalsIgnoreCase("normal")) return;
                 var evolutions = form.getEvolutions();
                 for(var evolution : value){
-                    evolutions.add(resolveEvolution(form, evolution));
+                    var evolutionObj = resolveEvolution(form, evolution);
+                    if(evolutionObj==null) continue;
+                    evolutions.add(evolutionObj);
                     ((FormDataAccessor) (Object) form).setEvolutions(evolutions);
                 }
             }
@@ -124,31 +124,20 @@ public class SpeciesManager {
     private static Evolution resolveEvolution(FormData form, EvolutionEntry evolutionEntry) {
         var evolutionId = form.getSpecies().getName().toLowerCase()+"_"+evolutionEntry.getResult().replaceAll(" ", "_").toLowerCase();
         var result = PokemonProperties.Companion.parse(evolutionEntry.getResult());
+        if(result.getSpecies()==null) return null;
         if(evolutionEntry.getKind() == EvolutionType.LEVEL_UP){
             Set<EvolutionRequirement> requirements = new HashSet<>();
             evolutionEntry.getRequirements().stream().forEach(evolutionRequirementEntry -> {
                 if(evolutionRequirementEntry.getRequirementKind().equalsIgnoreCase(EvolutionRequirementCondition.LEVEL.getName())){
-                    requirements.add(new LevelRequirement(Integer.parseInt(evolutionRequirementEntry.getConditionParameter())));
+                    var requirement = new LevelRequirement();
+                    var level = Integer.parseInt(evolutionRequirementEntry.getConditionParameter());
+                    ((LevelRequirementAccessor)(Object) requirement).setMinLevel(level);
+                    requirements.add(requirement);
                 }
             });
-            return new LevelUpEvolution(evolutionId, result, false, false, requirements, new HashSet<>(), true);
+            return new LevelUpEvolution(evolutionId, result, true, false, requirements, new HashSet<>(), true);
         }
         return null;
-    }
-
-    private static class LevelRequirement implements EvolutionRequirement {
-
-        int minLevel;
-        int maxLevel = Integer.MAX_VALUE;
-
-        public LevelRequirement(int minLevel) {
-            this.minLevel = minLevel;
-        }
-
-        @Override
-        public boolean check(@NotNull Pokemon pokemon) {
-            return pokemon.getLevel() >= minLevel && pokemon.getLevel() < maxLevel;
-        }
     }
 }
 

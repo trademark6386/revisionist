@@ -16,6 +16,7 @@
     "FormDataAccessor",
     "FormDataMixin",
     "GiveAllPokemonMixin",
+    "LevelRequirementAccessor",
     "PokemonSpawnDetailMixin",
     "PokemonSpeciesAccessor",
     "SpawnAllPokemonMixin",
