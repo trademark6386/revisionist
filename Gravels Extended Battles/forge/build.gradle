@@ -37,9 +37,10 @@ dependencies {
         officialMojangMappings()
         parchment("org.parchmentmc.data:${mappings_channel}-${mappings_version}@zip")
     }
-    runtimeOnly "maven.modrinth:midnightlib:MsATpcA9"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    modImplementation "maven.modrinth:midnightlib:MsATpcA9"
     modImplementation "curse.maven:kotlin-forge-351264:${kotlin_forge_file}"
     modImplementation "com.cobblemon:forge:${cobblemon_file}"
     modImplementation "curse.maven:jade-forge-324717:${jade_forge_file}"
