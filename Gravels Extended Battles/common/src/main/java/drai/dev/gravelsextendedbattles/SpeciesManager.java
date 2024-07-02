@@ -19,19 +19,12 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ALLOWED_LAB
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
 
 public class SpeciesManager {
-    private static Map<String, List<TypeChangeEntry>> changedTypes = new HashMap<>();
-    private static HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
+    private static final Map<String, List<TypeChangeEntry>> changedTypes = new HashMap<>();
+    private static final HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
-        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(identifierSpeciesEntry -> {
-            boolean shouldBeBanned = false;
-            if (containsBannedLabels(identifierSpeciesEntry.getValue().getLabels().stream().toList())) {
-//                    System.out.println("blocked a pokemon with " +label + "label: " + pokemon.getDisplayName().toString());
-                shouldBeBanned = true;
-            }
-            return shouldBeBanned;
-        }).toList();
+        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(identifierSpeciesEntry -> containsBannedLabels(identifierSpeciesEntry.getValue().getLabels().stream().toList())).toList();
         if (!speciesToBeRemoved.isEmpty()) {
             accessor.getSpeciesByDex().clear();
             pokemonSpecies.getImplemented().clear();
@@ -41,8 +34,7 @@ public class SpeciesManager {
             }
             for (var species : currentSpecies.values()) {
                 if (species != null) {
-                    Species old = species;
-                    accessor.getSpeciesByDex().remove(old.getResourceIdentifier().getNamespace(), old.getNationalPokedexNumber());
+                    accessor.getSpeciesByDex().remove(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber());
                     accessor.getSpeciesByDex().put(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber(), species);
                     if (species.getImplemented()) {
                         pokemonSpecies.getImplemented().add(species);
@@ -109,14 +101,14 @@ public class SpeciesManager {
     }
 
     public static void processTypeChanges(){
-        registerTypeChange("sandslash Alola", new TypeChangeEntry("steel", "eldritch"));
+        registerTypeChange("sandslash alolan", new TypeChangeEntry("steel", "eldritch"));
         changedTypes.forEach((key,value)-> {
             var splitFrom = key.split(" ");
             var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
             if(pokemon!=null){
                 FormData form = null;
                 if(splitFrom.length>1){
-                    form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
+                    form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1].toLowerCase())));
                 }
                 var isForm = false;
                 if(form!=null){
@@ -179,18 +171,23 @@ public class SpeciesManager {
         var result = PokemonProperties.Companion.parse(evolutionEntry.getResult());
         if(result.getSpecies()==null) return null;
         if(evolutionEntry.getKind() == EvolutionType.LEVEL_UP){
-            Set<EvolutionRequirement> requirements = new HashSet<>();
-            evolutionEntry.getRequirements().stream().forEach(evolutionRequirementEntry -> {
-                if(evolutionRequirementEntry.getRequirementKind().equalsIgnoreCase(EvolutionRequirementCondition.LEVEL.getName())){
-                    var requirement = new LevelRequirement();
-                    var level = Integer.parseInt(evolutionRequirementEntry.getConditionParameter());
-                    ((LevelRequirementAccessor)(Object) requirement).setMinLevel(level);
-                    requirements.add(requirement);
-                }
-            });
+            Set<EvolutionRequirement> requirements = getEvolutionRequirements(evolutionEntry);
             return new LevelUpEvolution(evolutionId, result, true, false, requirements, new HashSet<>(), true);
         }
         return null;
+    }
+
+    private static @NotNull Set<EvolutionRequirement> getEvolutionRequirements(EvolutionEntry evolutionEntry) {
+        Set<EvolutionRequirement> requirements = new HashSet<>();
+        evolutionEntry.getRequirements().forEach(evolutionRequirementEntry -> {
+            if(evolutionRequirementEntry.getRequirementKind().equalsIgnoreCase(EvolutionRequirementCondition.LEVEL.getName())){
+                var requirement = new LevelRequirement();
+                var level = Integer.parseInt(evolutionRequirementEntry.getConditionParameter());
+                ((LevelRequirementAccessor)(Object) requirement).setMinLevel(level);
+                requirements.add(requirement);
+            }
+        });
+        return requirements;
     }
 }
 
