@@ -83,6 +83,7 @@ public class GravelsExtendedBattles {
                 GravelmonPokedexResorter.resort(pokemonSpecies);
             }
             SpeciesManager.processFormEvolutionAdditions();
+            SpeciesManager.processTypeChanges();
             GravelmonMoveSubstitution.substituteMoves();
             return Unit.INSTANCE;
         });

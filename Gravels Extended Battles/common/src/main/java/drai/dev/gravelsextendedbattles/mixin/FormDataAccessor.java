@@ -1,6 +1,7 @@
 package drai.dev.gravelsextendedbattles.mixin;
 
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
+import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.common.collect.*;
 import net.minecraft.registry.*;
@@ -16,4 +17,10 @@ public interface FormDataAccessor {
     @Mutable
     @Accessor("_evolutions")
     public void setEvolutions(Set<Evolution> evolutions);
+    @Mutable
+    @Accessor("_primaryType")
+    public void setPrimaryType(ElementalType evolutions);
+    @Mutable
+    @Accessor("_secondaryType")
+    public void setSecondaryType(ElementalType evolutions);
 }

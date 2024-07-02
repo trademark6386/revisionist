@@ -3,6 +3,7 @@ package drai.dev.gravelsextendedbattles;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.requirement.*;
+import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import com.cobblemon.mod.common.pokemon.evolution.requirements.*;
 import com.cobblemon.mod.common.pokemon.evolution.variants.*;
@@ -18,6 +19,8 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ALLOWED_LAB
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
 
 public class SpeciesManager {
+    private static Map<String, List<TypeChangeEntry>> changedTypes = new HashMap<>();
+    private static HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
@@ -96,11 +99,57 @@ public class SpeciesManager {
         }
         return false;
     }
-
-    private static HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
 //
     public static void registerFormEvolution(String pokemon, EvolutionEntry moveToInsert){
         additionalFormEvolutions.computeIfAbsent(pokemon, k -> new ArrayList<>()).add(moveToInsert);
+    }
+
+    public static void registerTypeChange(String pokemon, TypeChangeEntry typeChangeEntry){
+        changedTypes.computeIfAbsent(pokemon, k -> new ArrayList<>()).add(typeChangeEntry);
+    }
+
+    public static void processTypeChanges(){
+        registerTypeChange("sandslash Alola", new TypeChangeEntry("steel", "eldritch"));
+        changedTypes.forEach((key,value)-> {
+            var splitFrom = key.split(" ");
+            var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
+            if(pokemon!=null){
+                FormData form = null;
+                if(splitFrom.length>1){
+                    form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
+                }
+                var isForm = false;
+                if(form!=null){
+                    isForm = !form.getName().equalsIgnoreCase("normal");
+                }
+                for (var typeChanges : value) {
+                    if(!GravelmonConfig.implementedTypes.contains(typeChanges.getTo())) continue;
+                    var newType = ElementalTypes.INSTANCE.get(typeChanges.getTo());
+                    if(newType==null) continue;
+                    if(!isForm){
+                        if (pokemon.getPrimaryType().getName().equalsIgnoreCase(typeChanges.getFrom())) {
+                            pokemon.setPrimaryType$common(newType);
+                        } else if(
+                                (pokemon.getSecondaryType()!=null && pokemon.getSecondaryType().getName().equalsIgnoreCase(typeChanges.getFrom()))
+                                || pokemon.getSecondaryType() == null && typeChanges.getFrom() == null
+                            ){
+                            pokemon.setSecondaryType$common(newType);
+                        }
+                    } else {
+                        var agreeableForm = (FormDataAccessor)(Object)form;
+                        if (form.getPrimaryType().getName().equalsIgnoreCase(typeChanges.getFrom())) {
+                            agreeableForm.setPrimaryType(newType);
+                        } else if(
+                                (form.getSecondaryType()!=null && form.getSecondaryType().getName().equalsIgnoreCase(typeChanges.getFrom()))
+                                        || form.getSecondaryType() == null && typeChanges.getFrom() == null
+                        ){
+                            agreeableForm.setSecondaryType(newType);
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     public static void processFormEvolutionAdditions(){
@@ -108,7 +157,11 @@ public class SpeciesManager {
             var splitFrom = key.split(" ");
             var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
             if(pokemon!=null){
-                var form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
+                FormData form = null;
+                if(splitFrom.length<2){
+                    return;
+                }
+                form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
                 if(form.getName().equalsIgnoreCase("normal")) return;
                 var evolutions = form.getEvolutions();
                 for(var evolution : value){
