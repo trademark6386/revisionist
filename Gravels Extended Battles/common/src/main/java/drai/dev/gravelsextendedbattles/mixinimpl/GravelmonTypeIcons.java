@@ -2,10 +2,11 @@ package drai.dev.gravelsextendedbattles.mixinimpl;
 
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.*;
+import com.mojang.blaze3d.vertex.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import kotlin.jvm.internal.*;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.util.math.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
@@ -17,20 +18,20 @@ public class GravelmonTypeIcons {
 
     private boolean init = false;
 
-    public static void changeTypeIconResourced(GravelmonTypeIconMixin gravelmonTypeIconMixin, DrawContext context, CallbackInfo ci) {
+    public static void changeTypeIconResourced(GravelmonTypeIconMixin gravelmonTypeIconMixin, GuiGraphics context, CallbackInfo ci) {
         if(!ICON_MIXIN_INIT){
-            gravelmonTypeIconMixin.setSmallTypesResource(new Identifier("gravelmon","textures/gui/types_small.png"));
-            gravelmonTypeIconMixin.setTypesResource(new Identifier("gravelmon","textures/gui/types.png"));
+            gravelmonTypeIconMixin.setSmallTypesResource(new ResourceLocation("gravelmon","textures/gui/types_small.png"));
+            gravelmonTypeIconMixin.setTypesResource(new ResourceLocation("gravelmon","textures/gui/types.png"));
             ICON_MIXIN_INIT=true;
         }
         Intrinsics.checkNotNullParameter(context, "context");
         int diameter = gravelmonTypeIconMixin.getSmall() ? 18 : 36;
         float offsetX = gravelmonTypeIconMixin.getCenteredX() ? (float)(diameter / 2) * 0.5F + (gravelmonTypeIconMixin.getSecondaryType() != null ? gravelmonTypeIconMixin.getDoubleCenteredOffset() : 0.0F) : 0.0F;
-        MatrixStack matrixStack;
+        PoseStack matrixStack;
         if (gravelmonTypeIconMixin.getSecondaryType() != null) {
-            matrixStack = context.getMatrices();
+            matrixStack = context.pose();
             Intrinsics.checkNotNullExpressionValue(matrixStack, "context.matrices");
-            Identifier texture = gravelmonTypeIconMixin.getSmall() ? gravelmonTypeIconMixin.getSmallTypesResource() : gravelmonTypeIconMixin.getTypesResource();
+            ResourceLocation texture = gravelmonTypeIconMixin.getSmall() ? gravelmonTypeIconMixin.getSmallTypesResource() : gravelmonTypeIconMixin.getTypesResource();
             float xIcon = (gravelmonTypeIconMixin.getSelf().getX().floatValue() + gravelmonTypeIconMixin.getSecondaryOffset() - offsetX) / 0.5F;
             float yIcon = gravelmonTypeIconMixin.getSelf().getY().floatValue() / 0.5F;
             int width = diameter;
@@ -52,7 +53,7 @@ public class GravelmonTypeIcons {
                     gravelmonTypeIconMixin.getSCALE());
         }
 
-        matrixStack = context.getMatrices();
+        matrixStack = context.pose();
         Intrinsics.checkNotNullExpressionValue(matrixStack, "context.matrices");
         blitk(matrixStack,
                 gravelmonTypeIconMixin.getSmall() ? gravelmonTypeIconMixin.getSmallTypesResource() : gravelmonTypeIconMixin.getTypesResource(),

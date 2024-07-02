@@ -44,7 +44,8 @@ dependencies {
 
 
     mappings loom.layered() {
-        mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:${mappings_channel}-${mappings_version}@zip")
     }
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }

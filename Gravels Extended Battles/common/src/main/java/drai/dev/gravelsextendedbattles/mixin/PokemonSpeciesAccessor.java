@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.common.collect.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.*;
@@ -16,5 +17,5 @@ public interface PokemonSpeciesAccessor extends GravelmonPokemonSpeciesAccessor 
     HashBasedTable<String, Integer, Species> getSpeciesByDex();
 
     @Accessor
-    HashMap<Identifier, Species> getSpeciesByIdentifier();
+    HashMap<ResourceLocation, Species> getSpeciesByIdentifier();
 }

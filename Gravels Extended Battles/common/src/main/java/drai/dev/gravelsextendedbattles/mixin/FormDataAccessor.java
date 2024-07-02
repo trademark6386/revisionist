@@ -3,9 +3,6 @@ package drai.dev.gravelsextendedbattles.mixin;
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
-import com.google.common.collect.*;
-import net.minecraft.registry.*;
-import net.minecraft.world.biome.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.*;
 

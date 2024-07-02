@@ -2,9 +2,10 @@ package drai.dev.gravelsextendedbattles.mixinimpl;
 
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.summary.widgets.type.*;
+import com.mojang.blaze3d.vertex.*;
 import drai.dev.gravelsextendedbattles.*;
 import kotlin.jvm.internal.*;
-import net.minecraft.client.util.math.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
@@ -12,11 +13,11 @@ import static com.cobblemon.mod.common.api.gui.GuiUtilsKt.blitk;
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ICON_WIDGET_INIT;
 
 public class GravelmonTypeWidget {
-    public static void changeTypeWidget(TypeWidget typeWidget, Identifier typeResource, ElementalType type, MatrixStack pMatrixStack, double pX, int pY, CallbackInfo ci) {
-        typeResource = new Identifier("gravelmon","textures/gui/types.png");
+    public static void changeTypeWidget(TypeWidget typeWidget, ResourceLocation typeResource, ElementalType type, PoseStack pMatrixStack, double pX, int pY, CallbackInfo ci) {
+        typeResource = new ResourceLocation("gravelmon","textures/gui/types.png");
         Intrinsics.checkNotNullParameter(type, "type");
         Intrinsics.checkNotNullParameter(pMatrixStack, "pMatrixStack");
-        Identifier texture = typeResource;
+        ResourceLocation texture = typeResource;
         double iconX = pX + 0.5;
         int width = typeWidget.getWidth();
         int height = typeWidget.getHeight();

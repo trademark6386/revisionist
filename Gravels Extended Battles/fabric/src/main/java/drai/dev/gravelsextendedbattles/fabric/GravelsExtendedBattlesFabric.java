@@ -3,6 +3,7 @@ package drai.dev.gravelsextendedbattles.fabric;
 import drai.dev.gravelsextendedbattles.*;
 import net.fabricmc.api.*;
 import net.fabricmc.loader.api.*;
+import net.minecraft.util.*;
 
 public class GravelsExtendedBattlesFabric implements ModInitializer {
 

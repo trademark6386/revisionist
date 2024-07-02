@@ -8,8 +8,8 @@ import com.mojang.brigadier.exceptions.*;
 import drai.dev.gravelsextendedbattles.*;
 import kotlin.*;
 import kotlin.ranges.*;
-import net.minecraft.server.command.*;
-import net.minecraft.server.network.*;
+import net.minecraft.commands.*;
+import net.minecraft.server.level.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
@@ -17,8 +17,8 @@ import java.util.*;
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
 
 public class GravelmonSpawnAllPokemonCommand {
-    public static void spawnAllPokemon(CommandContext<ServerCommandSource> context, IntRange range, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
-        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+    public static void spawnAllPokemon(CommandContext<CommandSourceStack> context, IntRange range, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
+        ServerPlayer player = context.getSource().getPlayerOrException();
         for (Species species : PokemonSpecies.INSTANCE.getSpecies()) {
             if(range.contains(species.getNationalPokedexNumber())){
                 boolean isValid = !SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
@@ -27,8 +27,8 @@ public class GravelmonSpawnAllPokemonCommand {
                 }
                 if(isValid){
                     var pokemon = species.create(10);
-                    pokemon.sendOut(player.getServerWorld(),player.getPos(), null, (pokemonEntity) -> {
-                        pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
+                    pokemon.sendOut((ServerLevel) player.level(),player.position(), null, (pokemonEntity) -> {
+                        return Unit.INSTANCE;});
                     for (FormData formData : species.getForms()){
                         if(!formData.getAspects().isEmpty()
                                 && !formData.getAspects().contains("female")
@@ -40,8 +40,8 @@ public class GravelmonSpawnAllPokemonCommand {
                                 && !formData.getAspects().contains("gmax")){
                             var form = species.create(10);
                             form.setAspects(new HashSet<>(formData.getAspects()));
-                            pokemon.sendOut(player.getServerWorld(),player.getPos(),null, (pokemonEntity) -> {
-                                pokemonEntity.createSpawnPacket(); return Unit.INSTANCE;});
+                            pokemon.sendOut((ServerLevel) player.level(),player.position(),null, (pokemonEntity) -> {
+                                return Unit.INSTANCE;});
                         }
                     }
                 }

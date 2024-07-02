@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.pokemon.evolution.variants.*;
 import drai.dev.gravelmon.pokemon.attributes.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -24,7 +25,7 @@ public class SpeciesManager {
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
-        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(identifierSpeciesEntry -> containsBannedLabels(identifierSpeciesEntry.getValue().getLabels().stream().toList())).toList();
+        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(ResourceLocationSpeciesEntry -> containsBannedLabels(ResourceLocationSpeciesEntry.getValue().getLabels().stream().toList())).toList();
         if (!speciesToBeRemoved.isEmpty()) {
             accessor.getSpeciesByDex().clear();
             pokemonSpecies.getImplemented().clear();
@@ -43,7 +44,7 @@ public class SpeciesManager {
                     for (var evolutionData : evolutions) {
                         var result = evolutionData.getResult();
 
-                        var resultSpecies = currentSpecies.get(new Identifier("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
+                        var resultSpecies = currentSpecies.get(new ResourceLocation("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
                         if (resultSpecies != null) {
                             var resultForm = resultSpecies.getForm(Collections.singleton(result.getForm()));
                             if(containsBannedLabels(resultForm.getLabels().stream().toList())||containsBannedLabels(resultSpecies.getLabels().stream().toList())) {
@@ -64,7 +65,7 @@ public class SpeciesManager {
                         var formEvolutions = new ArrayList<>(formData.getEvolutions());
                         for (var formEvolutionData : formEvolutions) {
                             var result = formEvolutionData.getResult();
-                            var resultSpecies = currentSpecies.get(new Identifier("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
+                            var resultSpecies = currentSpecies.get(new ResourceLocation("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
                             if (resultSpecies != null) {
                                 var resultForm = resultSpecies.getForm(Collections.singleton(result.getForm()));
                                 if(containsBannedLabels(resultForm.getLabels().stream().toList())) {

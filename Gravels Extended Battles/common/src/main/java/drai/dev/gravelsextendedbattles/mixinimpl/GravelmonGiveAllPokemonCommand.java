@@ -9,8 +9,8 @@ import com.mojang.brigadier.context.*;
 import com.mojang.brigadier.exceptions.*;
 import drai.dev.gravelsextendedbattles.*;
 import kotlin.jvm.internal.*;
-import net.minecraft.server.command.*;
-import net.minecraft.server.network.*;
+import net.minecraft.commands.*;
+import net.minecraft.server.level.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
@@ -19,11 +19,11 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABE
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.SORTED_SPECIES;
 
 public class GravelmonGiveAllPokemonCommand {
-    public static void modifyGiveCommand(CommandContext<ServerCommandSource> context, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
+    public static void modifyGiveCommand(CommandContext<CommandSourceStack> context, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         if (SORTED_SPECIES.isEmpty()) {
             SORTED_SPECIES = GravelmonGiveAllPokemonCommand.genSortedList();
         }
-        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+        ServerPlayer player = context.getSource().getPlayerOrException();
         Intrinsics.checkNotNullExpressionValue(player, "player");
         PCStore pcStore = PlayerExtensionsKt.party(player).getOverflowPC();
         if (pcStore == null) {

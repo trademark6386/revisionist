@@ -4,7 +4,7 @@ import com.mojang.brigadier.context.*;
 import com.mojang.brigadier.exceptions.*;
 import drai.dev.gravelsextendedbattles.mixinimpl.*;
 import kotlin.ranges.*;
-import net.minecraft.server.command.*;
+import net.minecraft.commands.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 public class SpawnAllPokemonMixin {
 
     @Inject(method = "execute", at = @At("HEAD"), cancellable = true, remap = false)
-    public void executeInject(CommandContext<ServerCommandSource> context,
+    public void executeInject(CommandContext<CommandSourceStack> context,
                               IntRange range, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         GravelmonSpawnAllPokemonCommand.spawnAllPokemon(context, range, cir);
     }
