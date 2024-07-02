@@ -31,13 +31,18 @@ public class GravelmonGiveAllPokemonCommand {
         } else {
             PCStore pc = pcStore;
             for (Species species : SORTED_SPECIES) {
-                boolean isValid = SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
+                boolean isValid = !SpeciesManager.containsBannedLabels(species.getLabels().stream().toList());
                 if(BANNED_LABELS.contains("not_modeled") && !species.getImplemented()){
                     isValid = false;
                 }
                 if(isValid){
                     pc.add(species.create(10));
-                    for (FormData formData : species.getForms()){
+                    var forms = species.getForms();
+                    forms.sort(Comparator.comparing(formData -> {
+                        var optional = formData.getAspects().stream().findFirst();
+                        return optional.isPresent() ? optional.get() : "";
+                        }, String::compareTo));
+                    for (FormData formData : forms){
                         if(!formData.getAspects().isEmpty()
                                 && !formData.getAspects().contains("female")
                                 && !formData.getAspects().contains("mega")

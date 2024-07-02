@@ -41,9 +41,7 @@ dependencies {
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modImplementation "maven.modrinth:midnightlib:YXz8kIQl"
 
-    runtimeOnly files('libs/gravelmon2.0.0a.jar')
 
     mappings loom.layered() {
         mappings "net.fabricmc:yarn:${project.yarn_mappings}"

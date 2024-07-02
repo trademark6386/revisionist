@@ -1,15 +1,48 @@
-package drai.dev.gravelsextendedbattles.fabric;
+package drai.dev.gravelsextendedbattles;
 
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import eu.midnightdust.lib.config.*;
 
 import java.util.*;
 
-public class GravelmonFabricConfig extends MidnightConfig implements IGravelmonConfig {
+public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig {
     @Entry(name = "Banned Labels: ")
     public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
     @Entry(name = "Allowed Labels: ")
-    public static List<String> allowedLabels = new ArrayList<>(); // Array String Lists are also supported
+    public static List<String> allowedLabels = new ArrayList<>();  // Array String Lists are also supported
+    @Entry(name = "Allowed Labels: ")
+    public static List<String> implementedTypes = new ArrayList<>(List.of(
+            "normal",
+            "fire",
+            "water",
+            "grass",
+            "electric",
+            "ice",
+            "fighting",
+            "poison",
+            "ground",
+            "flying",
+            "psychic",
+            "bug",
+            "rock",
+            "ghost",
+            "dragon",
+            "dark",
+            "steel",
+            "fairy",
+            "cosmic",
+            "crystal",
+            "digital",
+            "light",
+            "nuclear",
+            "plastic",
+            "questionmark",
+            "shadow",
+            "slime",
+            "sound",
+            "wind",
+            "eldritch"
+    )); // Array String Lists are also supported
     @Entry(name = "Original Fangame Typings: ")
     public static boolean enableFangameTypechart = false;
     @Entry(name = "Re-sort pokedex in evolution order: ")

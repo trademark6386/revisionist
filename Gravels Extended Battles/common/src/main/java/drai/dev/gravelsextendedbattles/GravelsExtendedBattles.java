@@ -7,6 +7,8 @@ import com.cobblemon.mod.common.api.reactive.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import drai.dev.gravelsextendedbattles.resorting.*;
+import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 import net.minecraft.util.*;
 
@@ -28,18 +30,14 @@ public class GravelsExtendedBattles {
     public static final ArrayList<String> gebTypechart = new ArrayList<>(
             List.of("typechart.js"));
     public static Logger logger = Logger.getLogger(MOD_ID);
-    public static URL SHOW_DOWN_FOLDER = GravelsExtendedBattles.class.getResource("\\showdown");
     public static List<String> BANNED_LABELS;
     public static List<String> ALLOWED_LABELS;
     public static int TYPE_COUNT = 18;
-    public static List<Species> SORTED_SPECIES;
-    public static SimpleObservable<Boolean> scaleNeedsARefresh = new SimpleObservable<>();
+    public static List<Species> SORTED_SPECIES = new ArrayList<>();
     public static boolean banHasBeenApplied = false;
-    public static List<Identifier> modeledPokemonIdentifiers = new ArrayList<>();
-    public static void addModeledPokemon(Identifier identifier){
-        modeledPokemonIdentifiers.add(identifier);
-    }
-    public static void init(IGravelmonConfig gravelmonConfig, String minecraftFolder) {
+    public static void init(String minecraftFolder) {
+        MidnightConfig.init("gravelmon", GravelmonConfig.class);
+        var gravelmonConfig = new GravelmonConfig();
         BANNED_LABELS = gravelmonConfig.getBannedLabels();
         ALLOWED_LABELS = gravelmonConfig.getAllowedLabels();
         for (String fileName : GravelsExtendedBattles.showdownFiles) {
@@ -82,8 +80,11 @@ public class GravelsExtendedBattles {
             SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor)(Object) pokemonSpecies));
             banHasBeenApplied = true;
             if(gravelmonConfig.getEnableDexResort()){
-                GravelmonDexSorter.resort(pokemonSpecies);
+                GravelmonPokedexResorter.resort(pokemonSpecies);
             }
+            SpeciesManager.processFormEvolutionAdditions();
+            SpeciesManager.processTypeChanges();
+            GravelmonMoveSubstitution.substituteMoves();
             return Unit.INSTANCE;
         });
     }
