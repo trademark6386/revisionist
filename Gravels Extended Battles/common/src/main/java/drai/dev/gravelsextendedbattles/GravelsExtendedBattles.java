@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.resorting.*;
+import drai.dev.gravelsextendedbattles.starters.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 

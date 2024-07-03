@@ -1,16 +1,14 @@
-package drai.dev.gravelsextendedbattles;
+package drai.dev.gravelsextendedbattles.starters;
 
 import com.cobblemon.mod.common.*;
-import com.cobblemon.mod.common.config.starter.*;
-import com.cobblemon.mod.common.starter.*;
-import net.minecraft.client.particle.*;
+import drai.dev.gravelsextendedbattles.*;
 
 import java.util.*;
 
 public class GravelmonStarterManager {
-    public static Map<String, StarterCategory> NEW_STARTERS = new HashMap<>();
+    public static Map<String, StarterCategoryDataHolder> NEW_STARTERS = new HashMap<>();
 
-    public static void registerNewStarter(String afterCategory, StarterCategory newStarter) {
+    public static void registerNewStarter(String afterCategory, StarterCategoryDataHolder newStarter) {
         NEW_STARTERS.put(afterCategory, newStarter);
     }
 
@@ -18,7 +16,8 @@ public class GravelmonStarterManager {
         var starterConfig = Cobblemon.INSTANCE.getStarterConfig();
         var currentStarters = starterConfig.getStarters();
         if(GravelsExtendedBattles.ADD_STARTERS){
-            NEW_STARTERS.forEach((after, newStarter) -> {
+            NEW_STARTERS.forEach((after, newStarterData) -> {
+                var newStarter = newStarterData.toStarterCategory();
                 if(!currentStarters.contains(newStarter)){
                     var afterCategory = currentStarters.stream().filter(starterCategory -> starterCategory.getName().equalsIgnoreCase(after)).findFirst();
                     if(afterCategory.isPresent()){
@@ -40,5 +39,4 @@ public class GravelmonStarterManager {
         var finalCategories = currentStarters.stream().filter(starter -> !starter.component3().isEmpty()).toList();
         starterConfig.setStarters(finalCategories);
     }
-
 }
