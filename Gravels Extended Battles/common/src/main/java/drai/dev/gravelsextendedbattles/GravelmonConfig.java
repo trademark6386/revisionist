@@ -10,7 +10,7 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
     public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled", "joke")); // Array String Lists are also supported
     @Entry(name = "Allowed Labels: ")
     public static List<String> allowedLabels = new ArrayList<>();  // Array String Lists are also supported
-    @Entry(name = "Allowed Labels: ")
+    @Entry(name = "Allowed Types: ")
     public static List<String> implementedTypes = new ArrayList<>(getInitForTypes()); // Array String Lists are also supported
     @Entry(name = "Original Fangame Typings: ")
     public static boolean enableFangameTypechart = false;
