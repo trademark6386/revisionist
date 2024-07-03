@@ -1,6 +1,6 @@
 {
   "species": "cobblemon:weezing",
-  "order": -1,
+  "order": 0,
   "variations": [
     {
       "aspects": ["galarian"],
@@ -14,6 +14,8 @@
         "shiny",
         "galarian"
       ],
+      "poser": "gravelmon:cutout_poser",
+      "model": "gravelmon:cutout_geb.geo",
       "texture": "gravelmon:textures/pokemon/galarian_weezing_shiny.png"
     }  ]
 }

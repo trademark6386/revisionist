@@ -1,9 +1,11 @@
 {
   "species": "cobblemon:arcanine",
-  "order": -1,
+  "order": 0,
   "variations": [
     {
-      "aspects": ["hisuian"],
+      "aspects": [
+        "hisuian"
+      ],
       "poser": "gravelmon:cutout_poser",
       "model": "gravelmon:cutout_geb.geo",
       "texture": "gravelmon:textures/pokemon/hisuian_arcanine.png",
@@ -14,6 +16,8 @@
         "shiny",
         "hisuian"
       ],
+      "poser": "gravelmon:cutout_poser",
+      "model": "gravelmon:cutout_geb.geo",
       "texture": "gravelmon:textures/pokemon/hisuian_arcanine_shiny.png"
     }  ]
 }

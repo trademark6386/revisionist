@@ -1,6 +1,6 @@
 {
   "species": "cobblemon:sandslash",
-  "order": -1,
+  "order": 0,
   "variations": [
     {
       "aspects": ["alolan"],
@@ -14,6 +14,8 @@
         "shiny",
         "alolan"
       ],
+      "poser": "gravelmon:cutout_poser",
+      "model": "gravelmon:cutout_geb.geo",
       "texture": "gravelmon:textures/pokemon/alolan_sandslash_shiny.png"
     }  ]
 }

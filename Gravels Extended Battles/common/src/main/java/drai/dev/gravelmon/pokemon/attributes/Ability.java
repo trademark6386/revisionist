@@ -429,18 +429,18 @@ public enum Ability {
     REGALIA("regalia", true),
     MOMENTUM("momentum", false),
     FLYTRAP("flytrap", false),
-    CONDENSATION("condensation", false),
-    CARBON_CAPTURE("carboncapture", false),
-    WARP_MIST("warpmist", false),
-    MASTER_INSTINCT("masterinstinct", false),
-    ARCANUM("arcanum", false),
+    CONDENSATION("condensation", true),
+    CARBON_CAPTURE("carboncapture", true),
+    WARP_MIST("warpmist", true),
+    MASTER_INSTINCT("masterinstinct", true),
+    ARCANUM("arcanum", true),
     VEGETATE("vegetate", false),
     POWER_WITHIN("powerwithin", false),
     ROOT_CONTROL("rootcontrol", false),
     SURVEILLANCE("surveillance", false),
     EVERGREEN("evergreen", false),
     CHAKRA("chakra", false),
-    INCANTATION("incantation", false),
+    INCANTATION("incantation", true),
     HAUNTING("haunting", false),
     SOUL_DRAIN("souldrain", false),
     BIRDLIKE("birdlike", false),
@@ -457,7 +457,7 @@ public enum Ability {
     CACOPHONY("cacophony", false),
     GEIGER_SENSE("geigersense", false),
     REBUILD("rebuild", false),
-    BLOODLUST("bloodlust", false),
+    BLOODLUST("bloodlust", true),
     BOMBARDIER("bombardier", false),
     DEFIBRILLATOR("defibrillator", false),
     MINDS_EYE("mindseye", false),
@@ -474,29 +474,29 @@ public enum Ability {
     TRUMPET_WEEVIL("trumpetweevil", false),
     NESTING("nesting", false),
     HAY_FEVER("hayfever", false),
-    BLOOMSPRING("bloomspring", false),
+    BLOOMSPRING("bloomspring", true),
     SWARMING("swarming", false),
     PEARL_DROP("pearldrop", false),
-    DRUIDRY("druidry", false),
+    DRUIDRY("druidry", true),
     GRAVITY_SLING("gravitysling", false),
-    STAND_OFF("standup", false),
+    STAND_OFF("standoff", true),
     WET_AND_DRY("wetanddry", false),
-    ENERGIZER("energizer", false),
+    ENERGIZER("energizer", true),
     GEIGER_AURA("geigeraura", false),
     FIELDWORKER("fieldworker", false),
     PETRICHOR("petrichor", false),
     NASTY_WEBBING("nastywebbing", false),
-    FERROFLUX("ferroflux", false),
+    FERROFLUX("ferroflux", true),
     POWER_ABOVE("powerabove", false),
-    ANCIENT_BODY("ancientbody", false),
+    ANCIENT_BODY("ancientbody", true),
     ECHOLOCATION("echolocation", false),
     TWO_FACED("twofaced", false),
     SMOKE_AND_MIRRORS("smokeandmirrors", false),
-    SEANCE("seance", false),
+    SEANCE("seance", true),
     ENJOIN("enjoin", false),
     SONGBIRD("songbird", false),
     FRIGID_BLAZE("frigidblaze", false),
-    GLACIAL_ARMOR("glacialarmor", false),
+    GLACIAL_ARMOR("glacialarmor", true),
     ABSOLUTE_ZERO("absolutezero", false),
     ARENA_BLOOM("arenabloom", false),
     ARENA_CURSE("arenacurse", false),
@@ -504,7 +504,7 @@ public enum Ability {
     ICE_ARMOR("icearmor", false),
     NEUTRALIZE("neutralize", false),
     SOUL_PASSAGE("soulpassage", false),
-    TRANSCENDENCE("transcendence", false),
+    TRANSCENDENCE("transcendence", true),
     EXPIATION("expiation", false),
     ASTONISHMENT("astonishment", false),
     INFLAMABLE("inflamable", false),
@@ -696,11 +696,36 @@ public enum Ability {
     PRISMATICPOWER("prismaticpower", false),
     EVAPORATION("evaporation", false),
     WARMHANDS("warmhands", false),
-    ACCLIMATIZE("acclimatize", false), ROCKFALL("rockfall", false), UPDRAFT("updraft", false), DREAMTRAP("dreamtrap", false), DRAGONSMAW("dragonsmaw", true), COLDSTORAGE("coldstorage", false), BRANCHOUT("branchout", false);
+    ACCLIMATIZE("acclimatize", false),
+    ROCKFALL("rockfall", false),
+    UPDRAFT("updraft", false),
+    DREAMTRAP("dreamtrap", false),
+    DRAGONSMAW("dragonsmaw", true),
+    COLDSTORAGE("coldstorage", false),
+    BRANCHOUT("branchout", false),
+    COVER_ME_IN_DEBRIS(true),
+    BLOODBATH(true),
+    FEARMONGER(true),
+    HAUNT(true),
+    CONTAMINATION(true),
+    DUST_DEVIL(true),
+    FORKED(true),
+    HEE_HO(true);
 
 
     private String name;
-    private Boolean implemented;
+    private boolean implemented;
+
+    Ability(){
+        this.name = name().toLowerCase().replaceAll("_","");
+        this.implemented = false;
+    }
+
+    Ability(boolean implemented){
+        this();
+        this.implemented = implemented;
+    }
+
     Ability(String name, Boolean implemented){
         this.name = name;
         this.implemented = implemented;

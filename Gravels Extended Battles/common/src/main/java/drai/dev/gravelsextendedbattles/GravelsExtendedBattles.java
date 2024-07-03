@@ -10,7 +10,10 @@ import drai.dev.gravelsextendedbattles.starters.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 
+import javax.imageio.*;
+import java.awt.image.*;
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.logging.*;
 
@@ -77,8 +80,8 @@ public class GravelsExtendedBattles {
             }
         }
         PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, pokemonSpecies -> {
-            SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor)(Object) pokemonSpecies));
-            if(gravelmonConfig.getEnableDexResort()){
+            SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
+            if (gravelmonConfig.getEnableDexResort()) {
                 GravelmonPokedexResorter.resort(pokemonSpecies);
             }
             SpeciesManager.processFormEvolutionAdditions();

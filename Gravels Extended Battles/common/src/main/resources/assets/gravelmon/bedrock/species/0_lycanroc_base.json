@@ -14,5 +14,32 @@
         "shiny"
       ],
       "texture": "gravelmon:textures/pokemon/lycanroc_shiny.png"
-    }  ]
+    },
+    {
+      "aspects": [
+        "midnight"
+      ],
+      "texture": "gravelmon:textures/pokemon/lycanroc_midnight.png"
+    },
+    {
+      "aspects": [
+        "midnight",
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/lycanroc_midnight_shiny.png"
+    },
+    {
+      "aspects": [
+        "dusk"
+      ],
+      "texture": "gravelmon:textures/pokemon/lycanroc_dusk.png"
+    },
+    {
+      "aspects": [
+        "dusk",
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/lycanroc_dusk_shiny.png"
+    }
+  ]
 }

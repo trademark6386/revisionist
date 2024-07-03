@@ -6,27 +6,29 @@ import drai.dev.gravelsextendedbattles.*;
 import java.util.*;
 
 public class GravelmonStarterManager {
-    public static Map<String, StarterCategoryDataHolder> NEW_STARTERS = new HashMap<>();
+    public static Map<String, List<StarterCategoryDataHolder>> NEW_STARTERS = new HashMap<>();
 
     public static void registerNewStarter(String afterCategory, StarterCategoryDataHolder newStarter) {
-        NEW_STARTERS.put(afterCategory, newStarter);
+        NEW_STARTERS.computeIfAbsent(afterCategory, k -> new ArrayList<>()).add(newStarter);
     }
 
     public static void processStarters(){
         var starterConfig = Cobblemon.INSTANCE.getStarterConfig();
         var currentStarters = starterConfig.getStarters();
         if(GravelsExtendedBattles.ADD_STARTERS){
-            NEW_STARTERS.forEach((after, newStarterData) -> {
-                var newStarter = newStarterData.toStarterCategory();
-                if(!currentStarters.contains(newStarter)){
-                    var afterCategory = currentStarters.stream().filter(starterCategory -> starterCategory.getName().equalsIgnoreCase(after)).findFirst();
-                    if(afterCategory.isPresent()){
-                         var index = currentStarters.indexOf(afterCategory.get()) + 1;
-                         currentStarters.add(index, newStarter);
-                    } else {
-                        currentStarters.add(newStarter);
-                    }
+            NEW_STARTERS.keySet().stream().sorted().forEach(key -> {
+                for(var starterCategoryData : NEW_STARTERS.get(key).stream().sorted().toList()){
+                    var newStarter = starterCategoryData.toStarterCategory();
+                    if(!currentStarters.contains(newStarter)){
+                        var afterCategory = currentStarters.stream().filter(starterCategory -> starterCategory.getName().equalsIgnoreCase(key)).findFirst();
+                        if(afterCategory.isPresent()){
+                            var index = currentStarters.indexOf(afterCategory.get()) + 1;
+                            currentStarters.add(index, newStarter);
+                        } else {
+                            currentStarters.add(newStarter);
+                        }
 
+                    }
                 }
             });
         }
