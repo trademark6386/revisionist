@@ -144,6 +144,7 @@ public class GravelmonGiveAllPokemonCommand {
                             && !formData.getAspects().contains("hearthflame-tera")
                             && !formData.getAspects().contains("cornerstone-tera")
                             && !formData.getAspects().contains("terastal")
+                            && !formData.getAspects().contains("roaming")
                             && !formData.getAspects().contains("stellar")
                     ) {
                         var form = species.create(10);
