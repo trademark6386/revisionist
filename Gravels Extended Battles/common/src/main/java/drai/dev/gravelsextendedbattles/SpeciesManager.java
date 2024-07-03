@@ -25,7 +25,10 @@ public class SpeciesManager {
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
-        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(ResourceLocationSpeciesEntry -> containsBannedLabels(ResourceLocationSpeciesEntry.getValue().getLabels().stream().toList())).toList();
+        var speciesToBeRemoved = currentSpecies.entrySet().stream()
+                .filter(ResourceLocationSpeciesEntry ->
+                        containsBannedLabels(ResourceLocationSpeciesEntry.getValue().getLabels().stream().toList())
+                ).toList();
         if (!speciesToBeRemoved.isEmpty()) {
             accessor.getSpeciesByDex().clear();
             pokemonSpecies.getImplemented().clear();
@@ -37,7 +40,7 @@ public class SpeciesManager {
                 if (species != null) {
                     accessor.getSpeciesByDex().remove(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber());
                     accessor.getSpeciesByDex().put(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber(), species);
-                    if (species.getImplemented()) {
+                    if (species.getImplemented() || !containsBannedLabels(List.of("not_modeled"))) {
                         pokemonSpecies.getImplemented().add(species);
                     }
                     var evolutions = new ArrayList<>(species.getEvolutions());
