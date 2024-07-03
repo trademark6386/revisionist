@@ -81,6 +81,12 @@ public class SpeciesManager {
         }
     }
 
+    public static boolean containsBannedLabels(String species, String form){
+        var pokemon = PokemonSpecies.INSTANCE.getByName(species);
+        if(pokemon == null) return true;
+        return containsBannedLabels(pokemon.getForm(Set.of(form == null ? "" : form)).getLabels().stream().toList());
+    }
+
     public static boolean containsBannedLabels(List<String> labels) {
         if(labels == null) return false;
         if(labels.isEmpty()) return false;
@@ -116,7 +122,7 @@ public class SpeciesManager {
                     isForm = !form.getName().equalsIgnoreCase("normal");
                 }
                 for (var typeChanges : value) {
-                    if(!GravelmonConfig.implementedTypes.contains(typeChanges.getTo())) continue;
+                    if(!GravelsExtendedBattles.IMPLEMENTED_TYPES.contains(typeChanges.getTo())) continue;
                     var newType = ElementalTypes.INSTANCE.get(typeChanges.getTo());
                     if(newType==null) continue;
                     if(!isForm){

@@ -108,7 +108,7 @@ public class EvolutionGraph {
         String fromKey = fromForm == null ? fromName : fromName + "-" + fromForm;
         String toKey = toForm == null ? toName : toName + "-" + toForm;
         if (toName == null)
-            GravelsExtendedBattles.logger.log(Level.WARNING, "Invalid evolution result for evolution of " + fromKey);
+            GravelsExtendedBattles.LOGGER.log(Level.WARNING, "Invalid evolution result for evolution of " + fromKey);
         if (fromKey.equals(toKey)) return;
         IEvolutionNode fromNode = nodes.get(fromKey);
         IEvolutionNode toNode = nodes.get(toKey);
