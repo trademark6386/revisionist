@@ -139,6 +139,7 @@ public class GravelmonGiveAllPokemonCommand {
                             && !formData.getAspects().contains("wellspring")
                             && !formData.getAspects().contains("hearthflame")
                             && !formData.getAspects().contains("cornerstone")
+                            && !formData.getAspects().contains("masterpiece")
                             && !formData.getAspects().contains("teal-tera")
                             && !formData.getAspects().contains("wellspring-tera")
                             && !formData.getAspects().contains("hearthflame-tera")
