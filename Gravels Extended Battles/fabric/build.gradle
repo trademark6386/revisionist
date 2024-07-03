@@ -51,6 +51,7 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
     modImplementation "com.cobblemon:fabric:${cobblemon_file}"
+    modImplementation "maven.modrinth:midnightlib:YXz8kIQl"
 }
 
 def replaceProperties = [mod_id          : mod_id,
