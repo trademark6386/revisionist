@@ -7,9 +7,9 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 public class StarterCategoryDataHolder {
-        private String name;
-        private String lang;
-        private List<String> starters;
+        private final String name;
+        private final String lang;
+        private final List<String> starters;
 
         public StarterCategoryDataHolder(String name, String lang, List<String> starters) {
             this.name = name;
