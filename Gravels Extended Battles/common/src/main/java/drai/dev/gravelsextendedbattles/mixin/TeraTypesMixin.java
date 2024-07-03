@@ -5,16 +5,21 @@ import com.cobblemon.mod.common.api.types.tera.elemental.*;
 import drai.dev.gravelsextendedbattles.*;
 import net.minecraft.resources.*;
 import net.minecraft.util.*;
+import org.intellij.lang.annotations.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
+
+import java.util.*;
 
 @Mixin(TeraTypes.class)
 public abstract class TeraTypesMixin {
     @Unique
     private static boolean initializing= false;
 
-    @Shadow protected abstract TeraType create(ResourceLocation par1, TeraType par2);
+    @Final
+    @Shadow
+    private static HashMap<ResourceLocation, TeraType> types;
 
     @Unique
     private static boolean isInit = false;
@@ -30,4 +35,8 @@ public abstract class TeraTypesMixin {
         }
     }
 
+    @Unique
+    private TeraType create(ResourceLocation id, TeraType type) {
+        return types.put(id, type);
+    }
 }
