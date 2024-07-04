@@ -1,20 +1,10 @@
 package drai.dev.gravelsextendedbattles.fabric;
 
-import com.cobblemon.mod.common.api.fossil.*;
 import drai.dev.gravelsextendedbattles.*;
+import drai.dev.gravelsextendedbattles.loot.*;
 import net.fabricmc.api.*;
 import net.fabricmc.fabric.api.loot.v2.*;
-import net.fabricmc.fabric.mixin.registry.sync.*;
 import net.fabricmc.loader.api.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.util.*;
-import net.minecraft.world.level.storage.loot.*;
-import net.minecraft.world.level.storage.loot.entries.*;
-
-import java.util.*;
-
-import static drai.dev.gravelsextendedbattles.GravelmonFossilManager.createLootItemAccessor;
-import static drai.dev.gravelsextendedbattles.GravelmonFossilManager.createLootPoolAccessor;
 
 public class GravelsExtendedBattlesFabric implements ModInitializer {
 

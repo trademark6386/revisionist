@@ -1,14 +1,12 @@
-package drai.dev.gravelsextendedbattles;
+package drai.dev.gravelsextendedbattles.loot;
 
-import com.cobblemon.mod.common.api.fossil.*;
+import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.mixin.loot.*;
-import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.entries.*;
-import org.intellij.lang.annotations.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -56,6 +54,14 @@ public class GravelmonFossilManager {
         return (LootItemAccessor) lootItem;
     }
 
+    public static void addFossils(ResourceLocation id, Consumer<LootPool> tableBuilder) {
+        if(LOOT_POOL_ADDITIONS.containsKey(id)){
+            LootPool.Builder poolBuilder = new LootPool.Builder();
+            LOOT_POOL_ADDITIONS.get(id).forEach(itemSupplier -> poolBuilder.add(LootItem.lootTableItem(itemSupplier.get()).setWeight(2)));
+            tableBuilder.accept(poolBuilder.build());
+        }
+    }
+
     public static void addFossils(ResourceLocation id, LootTable.Builder tableBuilder) {
         if(LOOT_POOL_ADDITIONS.containsKey(id)){
             LootPool.Builder poolBuilder = new LootPool.Builder();
@@ -63,4 +69,6 @@ public class GravelmonFossilManager {
             tableBuilder.withPool(poolBuilder);
         }
     }
+
+
 }

@@ -2,10 +2,10 @@ package drai.dev.gravelsextendedbattles.forge;
 
 import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.forge.mixin.*;
+import drai.dev.gravelsextendedbattles.loot.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.*;
-import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.loading.*;
 
@@ -20,5 +20,6 @@ public class GravelsExtendedBattlesForge {
     private void onLootTableLoad(LootTableLoadEvent event) {
         var pools = ((LootTableAccessor)event.getTable()).getPools();
         GravelmonFossilManager.addLootPools(pools.toArray(new LootPool[0]));
+        GravelmonFossilManager.addFossils(event.getTable().getLootTableId(), lootPool->event.getTable().addPool(lootPool));
     }
 }

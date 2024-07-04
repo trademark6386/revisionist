@@ -6,12 +6,14 @@ import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import drai.dev.gravelsextendedbattles.loot.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
 import drai.dev.gravelsextendedbattles.resorting.*;
 import drai.dev.gravelsextendedbattles.starters.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
 import net.minecraft.resources.*;
+import net.minecraft.world.item.*;
 
 import java.io.*;
 import java.util.*;
