@@ -1,24 +1,25 @@
 package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.*;
+import com.cobblemon.mod.common.api.fossil.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
+import drai.dev.gravelsextendedbattles.mixin.*;
 import drai.dev.gravelsextendedbattles.resorting.*;
 import drai.dev.gravelsextendedbattles.starters.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
+import net.minecraft.resources.*;
 
-import javax.imageio.*;
-import java.awt.image.*;
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 import java.util.logging.*;
 
 public class GravelsExtendedBattles {
 
+    public static final Map<ResourceLocation, Fossil> FOSSIL_MAP = new HashMap<>();
     public static List<ElementalType> NEW_TYPES = new ArrayList<>();
     public static boolean ICON_MIXIN_INIT = false;
     public static boolean ICON_WIDGET_INIT = false;
@@ -88,6 +89,21 @@ public class GravelsExtendedBattles {
             SpeciesManager.processTypeChanges();
             GravelmonStarterManager.processStarters();
             GravelmonMoveSubstitution.substituteMoves();
+            return Unit.INSTANCE;
+        });
+
+        Fossils.INSTANCE.getObservable().subscribe(Priority.LOWEST, fossils -> {
+            fossils.all().forEach(fossil -> {
+                var identifiers = fossil.getFossils().stream().map(fossilPredicate-> {
+                            return ((RegistryLikeIdentifierConditionAccessor)fossilPredicate.component1()).getIdentifier();
+                }
+
+                ).toList();
+                for (ResourceLocation identifier : identifiers) {
+                    FOSSIL_MAP.put(identifier, fossil);
+                }
+            });
+            GravelmonFossilManager.scanLootPools();
             return Unit.INSTANCE;
         });
     }

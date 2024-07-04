@@ -17,10 +17,14 @@
     "FormDataMixin",
     "GiveAllPokemonMixin",
     "LevelRequirementAccessor",
+    "NbtItemPredicateAccessor",
     "PokemonSpawnDetailMixin",
     "PokemonSpeciesAccessor",
+    "RegistryLikeIdentifierConditionAccessor",
     "SpawnAllPokemonMixin",
     "SpeciesMixin",
-    "TeraTypesMixin"
+    "TeraTypesMixin",
+    "loot.LootItemAccessor",
+    "loot.LootPoolAccessor"
   ]
 }
