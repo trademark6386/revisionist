@@ -5,14 +5,27 @@ import drai.dev.gravelsextendedbattles.mixin.loot.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.*;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.entries.*;
 import org.intellij.lang.annotations.*;
 
 import java.util.*;
+import java.util.function.*;
 
 public class GravelmonFossilManager {
     private static final List<LootPool[]> LOOT_POOLS = new ArrayList<>();
+    private static final Map<ResourceLocation, List<Supplier<Item>>> LOOT_POOL_ADDITIONS = new HashMap<>();
+
+    public static void addFossil(ResourceLocation lootTableResourceLocation, Supplier<Item> fossil){
+        LOOT_POOL_ADDITIONS.computeIfAbsent(lootTableResourceLocation, k -> new ArrayList<>()).add(fossil);
+    }
+
+    public static void addFossil(List<ResourceLocation> lootTableResourceLocations, Supplier<Item> fossil){
+        for (ResourceLocation lootTableResourceLocation : lootTableResourceLocations) {
+            LOOT_POOL_ADDITIONS.computeIfAbsent(lootTableResourceLocation, k -> new ArrayList<>()).add(fossil);
+        }
+    }
 
     public static void addLootPools(LootPool[] lootPool){
         LOOT_POOLS.add(lootPool);
@@ -41,5 +54,13 @@ public class GravelmonFossilManager {
     }
     public static LootItemAccessor createLootItemAccessor(LootItem lootItem) {
         return (LootItemAccessor) lootItem;
+    }
+
+    public static void addFossils(ResourceLocation id, LootTable.Builder tableBuilder) {
+        if(LOOT_POOL_ADDITIONS.containsKey(id)){
+            LootPool.Builder poolBuilder = new LootPool.Builder();
+            LOOT_POOL_ADDITIONS.get(id).forEach(itemSupplier -> poolBuilder.add(LootItem.lootTableItem(itemSupplier.get()).setWeight(2)));
+            tableBuilder.withPool(poolBuilder);
+        }
     }
 }
