@@ -703,6 +703,8 @@ public enum Ability {
     DRAGONSMAW("dragonsmaw", true),
     COLDSTORAGE("coldstorage", false),
     BRANCHOUT("branchout", false),
+    OJOS_PETREOES("ojospetreos", false),
+    PIEL_PUNICA("pielpunica", false),
     COVER_ME_IN_DEBRIS(true),
     BLOODBATH(true),
     FEARMONGER(true),
