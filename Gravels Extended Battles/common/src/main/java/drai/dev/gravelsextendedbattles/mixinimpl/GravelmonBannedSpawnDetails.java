@@ -37,7 +37,7 @@ public class GravelmonBannedSpawnDetails {
         } else {
             if(notSuppressedYet){
                 notSuppressedYet = false;
-                GravelsExtendedBattles.logger.fine("Suppressed invalid species spawn detail warnings");
+                GravelsExtendedBattles.LOGGER.fine("Suppressed invalid species spawn detail warnings");
             }
             cir.setReturnValue(false);
             cir.cancel();

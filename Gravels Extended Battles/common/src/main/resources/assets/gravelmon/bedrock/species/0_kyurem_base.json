@@ -14,5 +14,32 @@
         "shiny"
       ],
       "texture": "gravelmon:textures/pokemon/kyurem_shiny.png"
-    }  ]
+    },
+    {
+      "aspects": [
+        "black"
+      ],
+      "texture": "gravelmon:textures/pokemon/kyurem_black.png"
+    },
+    {
+      "aspects": [
+        "black",
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/kyurem_black_shiny.png"
+    },
+    {
+      "aspects": [
+        "white"
+      ],
+      "texture": "gravelmon:textures/pokemon/kyurem_white.png"
+    },
+    {
+      "aspects": [
+        "white",
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/kyurem_white_shiny.png"
+    }
+  ]
 }

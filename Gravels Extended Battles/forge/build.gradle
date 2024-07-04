@@ -20,14 +20,6 @@ loom {
         mixinConfig "gravels_extended_battles_forge.mixins.json"
         mixinConfig "gravels_extended_battles_common.mixins.json"
     }
-
-    runs {
-        data {
-            data()
-            programArgs "--all", "--mod", "gravelmon"
-            programArgs "--output", generatedResources.absolutePath
-        }
-    }
 }
 
 configurations {
@@ -42,13 +34,22 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
     mappings loom.layered() {
-        mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:${mappings_channel}-${mappings_version}@zip")
     }
-   // runtimeOnly "maven.modrinth:midnightlib:MsATpcA9"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    modImplementation "maven.modrinth:midnightlib:1.4.2-forge"
     modImplementation "curse.maven:kotlin-forge-351264:${kotlin_forge_file}"
     modImplementation "com.cobblemon:forge:${cobblemon_file}"
+    modImplementation "curse.maven:jade-forge-324717:${jade_forge_file}"
+    modImplementation "curse.maven:jei-forge-238222:${jei_forge_file}"
+    modImplementation "curse.maven:tan-forge-246391:${tan_forge_file}"
+    modImplementation "curse.maven:waystones-forge-245755:${waystones_forge_file}"
+    modImplementation "curse.maven:balm-forge-531761:${balm_forge_file}"
+    modImplementation "curse.maven:enhanced_celestials-forge-438447:${enhanced_celestials_forge_file}"
+    modImplementation "curse.maven:corgilib-forge-693313:${corgilib_forge_file}"
 }
 
 def replaceProperties = [mod_id                 : mod_id,
@@ -95,7 +96,4 @@ components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
     }
-}
-loom {
-
 }

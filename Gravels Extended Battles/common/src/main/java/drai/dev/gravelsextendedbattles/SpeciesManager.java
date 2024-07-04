@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.pokemon.evolution.variants.*;
 import drai.dev.gravelmon.pokemon.attributes.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.jetbrains.annotations.*;
 
@@ -24,7 +25,10 @@ public class SpeciesManager {
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
-        var speciesToBeRemoved = currentSpecies.entrySet().stream().filter(identifierSpeciesEntry -> containsBannedLabels(identifierSpeciesEntry.getValue().getLabels().stream().toList())).toList();
+        var speciesToBeRemoved = currentSpecies.entrySet().stream()
+                .filter(ResourceLocationSpeciesEntry ->
+                        containsBannedLabels(ResourceLocationSpeciesEntry.getValue().getLabels().stream().toList())
+                ).toList();
         if (!speciesToBeRemoved.isEmpty()) {
             accessor.getSpeciesByDex().clear();
             pokemonSpecies.getImplemented().clear();
@@ -36,14 +40,14 @@ public class SpeciesManager {
                 if (species != null) {
                     accessor.getSpeciesByDex().remove(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber());
                     accessor.getSpeciesByDex().put(species.getResourceIdentifier().getNamespace(), species.getNationalPokedexNumber(), species);
-                    if (species.getImplemented()) {
+                    if (species.getImplemented() || !containsBannedLabels(List.of("not_modeled"))) {
                         pokemonSpecies.getImplemented().add(species);
                     }
                     var evolutions = new ArrayList<>(species.getEvolutions());
                     for (var evolutionData : evolutions) {
                         var result = evolutionData.getResult();
 
-                        var resultSpecies = currentSpecies.get(new Identifier("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
+                        var resultSpecies = currentSpecies.get(new ResourceLocation("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
                         if (resultSpecies != null) {
                             var resultForm = resultSpecies.getForm(Collections.singleton(result.getForm()));
                             if(containsBannedLabels(resultForm.getLabels().stream().toList())||containsBannedLabels(resultSpecies.getLabels().stream().toList())) {
@@ -64,7 +68,7 @@ public class SpeciesManager {
                         var formEvolutions = new ArrayList<>(formData.getEvolutions());
                         for (var formEvolutionData : formEvolutions) {
                             var result = formEvolutionData.getResult();
-                            var resultSpecies = currentSpecies.get(new Identifier("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
+                            var resultSpecies = currentSpecies.get(new ResourceLocation("cobblemon", result.getSpecies() != null ? result.getSpecies() : ""));
                             if (resultSpecies != null) {
                                 var resultForm = resultSpecies.getForm(Collections.singleton(result.getForm()));
                                 if(containsBannedLabels(resultForm.getLabels().stream().toList())) {
@@ -78,6 +82,12 @@ public class SpeciesManager {
                 }
             }
         }
+    }
+
+    public static boolean containsBannedLabels(String species, String form){
+        var pokemon = PokemonSpecies.INSTANCE.getByName(species);
+        if(pokemon == null) return true;
+        return containsBannedLabels(pokemon.getForm(Set.of(form == null ? "" : form)).getLabels().stream().toList());
     }
 
     public static boolean containsBannedLabels(List<String> labels) {
@@ -115,7 +125,7 @@ public class SpeciesManager {
                     isForm = !form.getName().equalsIgnoreCase("normal");
                 }
                 for (var typeChanges : value) {
-                    if(!GravelmonConfig.implementedTypes.contains(typeChanges.getTo())) continue;
+                    if(!GravelsExtendedBattles.IMPLEMENTED_TYPES.contains(typeChanges.getTo())) continue;
                     var newType = ElementalTypes.INSTANCE.get(typeChanges.getTo());
                     if(newType==null) continue;
                     if(!isForm){

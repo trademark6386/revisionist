@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.client.gui.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.mixinimpl.*;
 import net.minecraft.client.gui.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -21,14 +22,14 @@ public abstract class TypeIconMixin implements GravelmonTypeIconMixin {
     @Shadow @Final private static float SCALE;
 
     @Mutable
-    @Shadow @Final private static Identifier smallTypesResource;
+    @Shadow @Final private static ResourceLocation smallTypesResource;
 
     @Mutable
-    @Shadow @Final private static Identifier typesResource;
+    @Shadow @Final private static ResourceLocation typesResource;
     @Shadow @Final private float secondaryOffset;
     @Shadow @Final private float opacity;
     @Inject(method = "render", at = @At("HEAD"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void changeTypeIconResource(DrawContext context, CallbackInfo ci){
+    private void changeTypeIconResource(GuiGraphics context, CallbackInfo ci){
         GravelmonTypeIcons.changeTypeIconResourced(this,context, ci);
     }
 
@@ -52,11 +53,11 @@ public abstract class TypeIconMixin implements GravelmonTypeIconMixin {
         return secondaryOffset;
     }
 
-    public Identifier getSmallTypesResource(){
+    public ResourceLocation getSmallTypesResource(){
         return smallTypesResource;
     }
 
-    public Identifier getTypesResource(){
+    public ResourceLocation getTypesResource(){
         return typesResource;
     }
 
@@ -68,11 +69,11 @@ public abstract class TypeIconMixin implements GravelmonTypeIconMixin {
         return opacity;
     }
 
-    public void setSmallTypesResource(Identifier gravelmon){
+    public void setSmallTypesResource(ResourceLocation gravelmon){
         smallTypesResource = gravelmon;
     }
 
-    public void setTypesResource(Identifier gravelmon){
+    public void setTypesResource(ResourceLocation gravelmon){
         typesResource = gravelmon;
     }
 

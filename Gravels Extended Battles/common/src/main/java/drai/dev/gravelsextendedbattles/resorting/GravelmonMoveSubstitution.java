@@ -84,7 +84,7 @@ public class GravelmonMoveSubstitution {
     }
 
     private static void registerGEBMovesForSubstitution() {
-        Move.getTypeOverwrittenMoves().stream().filter(move-> GravelmonConfig.implementedTypes.contains(move.getTypeOverwrite()) && move.isImplemented()).forEach(move ->
+        Move.getTypeOverwrittenMoves().stream().filter(move-> GravelsExtendedBattles.IMPLEMENTED_TYPES.contains(move.getTypeOverwrite()) && move.isImplemented()).forEach(move ->
                 moveUpdateMap.put(move.getName(), move.getOverwittenMoveName())
         );
     }

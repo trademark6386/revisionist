@@ -14,5 +14,19 @@
         "shiny"
       ],
       "texture": "gravelmon:textures/pokemon/enamorus_shiny.png"
-    }  ]
+    },
+    {
+      "aspects": [
+        "therian"
+      ],
+      "texture": "gravelmon:textures/pokemon/enamorus_therian.png"
+    }  ,
+    {
+      "aspects": [
+        "therian",
+        "shiny"
+      ],
+      "texture": "gravelmon:textures/pokemon/enamorus_therian_shiny.png"
+    }
+  ]
 }

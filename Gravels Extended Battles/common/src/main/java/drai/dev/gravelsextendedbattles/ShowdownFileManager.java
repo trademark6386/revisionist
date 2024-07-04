@@ -14,8 +14,9 @@ public class ShowdownFileManager {
         Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    static public String exportResource(String minecraftFolder,String resourceName) throws Exception {
-        String jarFolder = minecraftFolder +resourceName;
+    static public String exportResource(String showdownFolder,String resourceName) throws Exception {
+        String jarFolder = showdownFolder +resourceName;
+        Files.createDirectories(new File(showdownFolder).toPath());
         try (InputStream stream = GravelsExtendedBattles.class.getResourceAsStream(resourceName); OutputStream resStreamOut = new FileOutputStream(jarFolder)){
             if(stream == null) {
                 throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
@@ -23,7 +24,7 @@ public class ShowdownFileManager {
 
             int readBytes;
             byte[] buffer = new byte[4096];
-            Files.createDirectories(new File(minecraftFolder).toPath());
+            Files.createDirectories(new File(showdownFolder).toPath());
             //jarFolder = "C:\\Users\\Stijn\\Desktop\\test\\"+resourceName;
 
             while ((readBytes = stream.read(buffer)) > 0) {

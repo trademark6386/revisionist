@@ -7,46 +7,17 @@ import java.util.*;
 
 public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig {
     @Entry(name = "Banned Labels: ")
-    public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled")); // Array String Lists are also supported
+    public static List<String> bannedLabels = new ArrayList<>(List.of("not_modeled", "joke")); // Array String Lists are also supported
     @Entry(name = "Allowed Labels: ")
     public static List<String> allowedLabels = new ArrayList<>();  // Array String Lists are also supported
-    @Entry(name = "Allowed Labels: ")
-    public static List<String> implementedTypes = new ArrayList<>(List.of(
-            "normal",
-            "fire",
-            "water",
-            "grass",
-            "electric",
-            "ice",
-            "fighting",
-            "poison",
-            "ground",
-            "flying",
-            "psychic",
-            "bug",
-            "rock",
-            "ghost",
-            "dragon",
-            "dark",
-            "steel",
-            "fairy",
-            "cosmic",
-            "crystal",
-            "digital",
-            "light",
-            "nuclear",
-            "plastic",
-            "questionmark",
-            "shadow",
-            "slime",
-            "sound",
-            "wind",
-            "eldritch"
-    )); // Array String Lists are also supported
+    @Entry(name = "Allowed Types: ")
+    public static List<String> implementedTypes = new ArrayList<>(getInitForTypes()); // Array String Lists are also supported
     @Entry(name = "Original Fangame Typings: ")
     public static boolean enableFangameTypechart = false;
     @Entry(name = "Re-sort pokedex in evolution order: ")
     public static boolean resortPokedexInEvolutionOrder = false;
+    @Entry(name = "Add Starters to the starter screen: ")
+    public static boolean addStartersToTheStarterScreen = true;
 
     @Override
     public boolean getEnableOriginalFanGameTypings() {
@@ -66,6 +37,16 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
     @Override
     public List<String> getAllowedLabels() {
         return allowedLabels;
+    }
+
+    @Override
+    public List<String> getImplementedTypes() {
+        return implementedTypes;
+    }
+
+    @Override
+    public boolean getShouldAddStarters() {
+        return addStartersToTheStarterScreen;
     }
     /*
     The .json language file for your config class could look similar to this:
@@ -98,4 +79,39 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
         return parent -> MidnightConfig.getScreen(parent, "modid");
     }
     */
+
+    static List<String> getInitForTypes(){
+        return List.of(
+                "normal",
+                "fire",
+                "water",
+                "grass",
+                "electric",
+                "ice",
+                "fighting",
+                "poison",
+                "ground",
+                "flying",
+                "psychic",
+                "bug",
+                "rock",
+                "ghost",
+                "dragon",
+                "dark",
+                "steel",
+                "fairy",
+                "cosmic",
+                "crystal",
+                "digital",
+                "light",
+                "nuclear",
+                "plastic",
+                "questionmark",
+                "shadow",
+                "slime",
+                "sound",
+                "wind",
+                "eldritch"
+        );
+    }
 }

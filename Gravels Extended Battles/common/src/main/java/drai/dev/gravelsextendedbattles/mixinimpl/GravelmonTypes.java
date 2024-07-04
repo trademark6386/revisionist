@@ -2,7 +2,8 @@ package drai.dev.gravelsextendedbattles.mixinimpl;
 
 import com.cobblemon.mod.common.api.types.*;
 import drai.dev.gravelsextendedbattles.*;
-import net.minecraft.text.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
 
 import java.util.function.*;
@@ -33,9 +34,9 @@ public class GravelmonTypes {
     }
 
     private static ElementalType createType(String typeName, int hue) {
-        var type = new ElementalType(typeName, Text.translatable("cobblemon.type."+typeName),
+        var type = new ElementalType(typeName, Component.translatable("cobblemon.type."+typeName),
                 hue,TYPE_COUNT,
-                new Identifier("gravelmon",
+                new ResourceLocation("gravelmon",
                         "types/"+typeName+".png"));
         TYPE_COUNT++;
         return registrationFunction.apply(type);

@@ -915,6 +915,7 @@ public enum Move {
     FIESTA("fiesta", true),
     SINGULARITY("singularity", false),
     DUST_DEVIL("dustdevil", true),
+    DEVILS_WRATH(true),
     STOKE("stoke", false),
     ATOM_SPLIT("atomsplit", true, "nuclear"),
     ASTEROID_BELT("asteroidbelt", true),
@@ -950,6 +951,7 @@ public enum Move {
     BRAIN_FREEZE("brainfreeze", true),
     DECAP_ATTACK("decapattack", false),
     COSMIC_RAY("cosmicray", true),
+    COSMIC_RAYS("cosmicrays", true),
     DEJAVU("dejavu", true),
     BRAIN_STORM("brainstorm", true),
     ASTRAL_SHOT("astralshot", true),
@@ -1298,7 +1300,7 @@ public enum Move {
     ACCELVOLT("accelvolt", false),
     LEAF_HIDE("leafhide", false),
     AROMA_WIND("aromawind", false),
-    LUSTER_BLOOM("lusterbloom", false),
+    LUSTER_BLOOM("lusterbloom", true),
     BOLD_BLAZE("boldblaze", false),
     TERRAFIRM("terrafirm", false),
     SOIL_THROW("soilthrow", false),
@@ -1312,7 +1314,7 @@ public enum Move {
     MYSTIC_CHANT("mysticchant", false),
     VILE_VENOM("vilevenom", false),
     DARK_CUTTER("darkcutter", false),
-    EXSANGUINATE("exsanguinate", false),
+    EXSANGUINATE("exsanguinate", true),
     LIGHT_PULSE("lightpulse", false),
     CRYOSHOCK("cryoshock", false),
     TAI_CHI("taichi", false),
@@ -1321,7 +1323,7 @@ public enum Move {
     GLOMP("glomp", false),
     SPIRIT_SNUFF("spiritsnuff", false),
     DARK_ROAR("darkroar", true, "sound"),
-    BLACK_HOLE("blackhole", false),
+    BLACK_HOLE("blackhole", true),
     ROCKET_DRIVE("rocketdrive", false),
     SHADOW_SPLIT("shadowsplit", false),
     PSYCRUSH("psycrush", false),
@@ -1334,7 +1336,7 @@ public enum Move {
     CRAG_CANNON("cragcannon", false),
     NEUROTOXIN("neurotoxin", false),
     SIGNAL("signal", false),
-    BUG_GNAW("buggnaw", false),
+    BUG_GNAW("buggnaw", true),
     PALEOBREATH("paleobreath", false),
     WINDMILL("windmill", false),
     DEEP_YAWN("deepyawn", true),
@@ -1345,8 +1347,8 @@ public enum Move {
     VITAL_SURGE("vitalsurge", false),
     MARVEL_TRICK("marveltrick", false),
     GNAW_OFF("gnawoff", false),
-    ENGORGE("engorge", false),
-    ELECTROBASH("electrobash", false),
+    ENGORGE("engorge", true),
+    ELECTROBASH("electrobash", true),
     POWERVOLT("powervolt", false),
     ICE_PICK("icepick", false),
     DEWDROP("dewdrop", false),
@@ -1371,21 +1373,24 @@ public enum Move {
     SEVERE_POISON("severepoison", false),
     PHEROTOXIN("pherotoxin", false),
     YOGA_SMASH("yogasmash", false),
-    ROYAL_BREATH("royalbreath", false),
+    ROYAL_BREATH("royalbreath", true),
     DYNASWORD("dynasword", false),
     ICE_ENTOMB("iceentomb", false),
     BOULDER_BASH("boulderbash", false),
-    SAURTOOTH("saurtooth", false),
-    HAUNT("haunt", false),
-    PROBE_PUNCH("probepunch", false),
+    SAURTOOTH("saurtooth", true),
+    HAUNT("haunt", true),
+    PROBE_PUNCH("probepunch", true),
     SOULSHOCK("soulshock", false),
     STRETCH("stretch", false),
-    SOMNISMOG("somnismog", false),
+    SOMNISMOG("somnismog", true),
     HYPER_JINGLE("hyperjingle", false),
     SMOGSCREEN("smogscreen", true),
+    SMOGSPREAD(true),
+    SPRINKLE(true),
+    SWARM_SIGNAL(true),
     WILD_CARD("wildcard", false),
-    MOON_IMPACT("moonimpact", false),
-    ZENITH_BREAK("zenithbreak", false),
+    MOON_IMPACT("moonimpact", true),
+    ZENITH_BREAK("zenithbreak", true),
     RUNESTRIKE("runestrike", false),
     HEARTFELTPULSE("heartfeltpulse", false
     ), AQUASLAP("aquaslap", false),
@@ -1452,6 +1457,8 @@ public enum Move {
     RUSHDOWN("rushdown", false),
     TITLEMATCH("titlematch", false),
     MOLTENDEFENSE("moltendefense", false),
+    MOW_DOWN(true),
+    PLAGUE(true),
     NUGGETFLING("nuggetfling", false),
     VORTEXDRAIN("vortexdrain", false),
     PARADISEDISPLAY("paradisedisplay", false),
@@ -1463,6 +1470,7 @@ public enum Move {
     HAZARDCLOUD("hazardcloud", false),
     SELFREPAIR("selfrepair", false),
     FLAMEWOOL("flamewool", false),
+    REPRISAL(true),
     HEMODRAIN("hemodrain", false),
     WANDERLUST("wanderlust", false),
     CORROSIVEBITE("corrosivebite", false),
@@ -1681,12 +1689,69 @@ public enum Move {
     WINDBLOW("windblow"),
     SAND_SHOT("sandshot"),
     CLONE_ATTACK("cloneattack"),
-    HOOK_CLAW("hookclaw"), HAPPY_SLAP("happyslap"), FESTIVE_SHOT("festiveshot"), CHEERFUL_SHOUT("cheerfulshout"), FIRE_CRACKER("firecracker");
+    HOOK_CLAW("hookclaw"),
+    HAPPY_SLAP("happyslap"),
+    FESTIVE_SHOT("festiveshot"),
+    CHEERFUL_SHOUT("cheerfulshout"),
+    CHOMP("chomp", true),
+    ANTIVIRUS_NET(true),
+    ARCEAN_BANISH(true),
+    BANISHING_FIST(true),
+    CACOPHONY(true),
+    DATA_TRANSFER(true),
+    DECODE(true),
+    DEAFENING_NOISE(true),
+    DIVINE_CALL(true),
+    ELDRITCH_INVOCATION(true),
+    ETERNAL_HEX(true),
+    FLASHING_LIGHTNING(true),
+    FLUBBER_FANG(true),
+    GIRATERNAL_GRIP(true),
+    POLLINATE(true),
+    GLORP(true),
+    GOOEY_STRIKE(true),
+    GOO_PELT(true),
+    JELLY_BOUNCE(true),
+    MENTAL_ANGUISH(true),
+    NECROTIC_PUNCH(true),
+    POKEBURST_STREAM(true),
+    DRAJECTILE(true),
+    REFORMAT(true),
+    ROTTING_SPARKS(true),
+    SACRIFICIAL_PACT(true),
+//    SMART_STRIKE(true),//todo apply rename here marmar
+    SOUND_POUND(true),
+    TROJAN_HORSE(true),
+    FOG_HORN(true),
+    VISCOSITY_STREAM(true),
+    AURA_PROJECTION(true),
+    DUST_STORM(true),
+    BUFU(true),
+    BUFULA(true),
+    BUFUDYNE(true),
+    HYSTERICAL_SLAP(true),
+    MIND_CHANGE(true),
+    NIFLHEIM(true),
+    ACES_PLAY(true);
 
     private String name;
     private boolean implemented;
     private String typeOverwrite;
 
+    Move(){
+        this.name = this.name().toLowerCase().replaceAll("_","");
+        this.implemented = false;
+    }
+
+    Move(boolean implemented, String typeOverwrite){
+        this(implemented);
+        this.typeOverwrite = typeOverwrite;
+    }
+
+    Move(boolean implemented){
+        this();
+        this.implemented = implemented;
+    }
 
     Move(String name){
         this.name = name;

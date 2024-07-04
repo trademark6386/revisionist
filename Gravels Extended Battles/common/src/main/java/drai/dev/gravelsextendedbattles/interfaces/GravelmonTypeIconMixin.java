@@ -2,7 +2,9 @@ package drai.dev.gravelsextendedbattles.interfaces;
 
 import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.client.gui.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
+import org.intellij.lang.annotations.*;
 
 public interface GravelmonTypeIconMixin {
     boolean getSmall();
@@ -15,17 +17,17 @@ public interface GravelmonTypeIconMixin {
 
     float getSecondaryOffset();
 
-    Identifier getSmallTypesResource();
+    ResourceLocation getSmallTypesResource();
 
-    Identifier getTypesResource();
+    ResourceLocation getTypesResource();
 
     float getSCALE();
 
     float getOpacity();
 
-    void setSmallTypesResource(Identifier gravelmon);
+    void setSmallTypesResource(ResourceLocation gravelmon);
 
-    void setTypesResource(Identifier gravelmon);
+    void setTypesResource(ResourceLocation gravelmon);
 
     TypeIcon getSelf();
 }

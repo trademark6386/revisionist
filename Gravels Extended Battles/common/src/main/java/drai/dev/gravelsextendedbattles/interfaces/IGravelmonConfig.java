@@ -7,5 +7,6 @@ public interface IGravelmonConfig {
     boolean getEnableDexResort();
     List<String> getBannedLabels();
     List<String> getAllowedLabels();
-
+    List<String> getImplementedTypes();
+    boolean getShouldAddStarters();
 }

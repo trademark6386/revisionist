@@ -5,7 +5,9 @@ import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.*;
+import net.minecraft.resources.*;
 import net.minecraft.util.*;
+import org.intellij.lang.annotations.*;
 import org.jetbrains.annotations.*;
 
 public class GravelmonLazyPreEvolution implements PreEvolution {
@@ -60,24 +62,24 @@ public class GravelmonLazyPreEvolution implements PreEvolution {
         if(!speciesInitialized){
             speciesInitialized = true;
             if (this.getProperties().getSpecies() != null) {
-                Identifier identifier = asIdentifierDefaultingNamespace(this.getProperties().getSpecies());
-                Species species = PokemonSpecies.INSTANCE.getByIdentifier(identifier);
+                ResourceLocation ResourceLocation = asResourceLocationDefaultingNamespace(this.getProperties().getSpecies());
+                Species species = PokemonSpecies.INSTANCE.getByIdentifier(ResourceLocation);
                 this.species = species;
             }
         }
         return species;
     }
 
-    public static Identifier asIdentifierDefaultingNamespace(String input, String namespace) {
+    public static ResourceLocation asResourceLocationDefaultingNamespace(String input, String namespace) {
         String id = input.toLowerCase();
         if (id.contains(":")) {
-            return new Identifier(id.substring(0, id.indexOf(":")), id.substring(id.indexOf(":") + 1));
+            return new ResourceLocation(id.substring(0, id.indexOf(":")), id.substring(id.indexOf(":") + 1));
         } else {
-            return new Identifier(namespace, id);
+            return new ResourceLocation(namespace, id);
         }
     }
 
-    public static Identifier asIdentifierDefaultingNamespace(String input) {
-        return asIdentifierDefaultingNamespace(input, Cobblemon.MODID);
+    public static ResourceLocation asResourceLocationDefaultingNamespace(String input) {
+        return asResourceLocationDefaultingNamespace(input, Cobblemon.MODID);
     }
 }
