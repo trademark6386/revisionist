@@ -96,11 +96,7 @@ public class GravelsExtendedBattles {
 
         Fossils.INSTANCE.getObservable().subscribe(Priority.LOWEST, fossils -> {
             fossils.all().forEach(fossil -> {
-                var identifiers = fossil.getFossils().stream().map(fossilPredicate-> {
-                            return ((RegistryLikeIdentifierConditionAccessor)fossilPredicate.component1()).getIdentifier();
-                }
-
-                ).toList();
+                var identifiers = fossil.getFossils().stream().map(fossilPredicate-> ((RegistryLikeIdentifierConditionAccessor)fossilPredicate.component1()).getIdentifier()).toList();
                 for (ResourceLocation identifier : identifiers) {
                     FOSSIL_MAP.put(identifier, fossil);
                 }

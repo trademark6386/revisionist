@@ -20,6 +20,6 @@ public class GravelsExtendedBattlesForge {
     private void onLootTableLoad(LootTableLoadEvent event) {
         var pools = ((LootTableAccessor)event.getTable()).getPools();
         GravelmonFossilManager.addLootPools(pools.toArray(new LootPool[0]));
-        GravelmonFossilManager.addFossils(event.getTable().getLootTableId(), lootPool->event.getTable().addPool(lootPool));
+        GravelmonFossilManager.processFossilAdditions(event.getTable().getLootTableId(), lootPool->event.getTable().addPool(lootPool));
     }
 }

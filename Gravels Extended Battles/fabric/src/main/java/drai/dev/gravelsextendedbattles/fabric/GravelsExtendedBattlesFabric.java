@@ -17,7 +17,7 @@ public class GravelsExtendedBattlesFabric implements ModInitializer {
 
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             GravelmonFossilManager.addLootPools(lootManager.getLootTable(id).pools);
-            GravelmonFossilManager.addFossils(id, tableBuilder);
+            GravelmonFossilManager.processFossilAdditions(id, tableBuilder);
         });
 
     }

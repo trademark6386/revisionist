@@ -54,7 +54,7 @@ public class GravelmonFossilManager {
         return (LootItemAccessor) lootItem;
     }
 
-    public static void addFossils(ResourceLocation id, Consumer<LootPool> tableBuilder) {
+    public static void processFossilAdditions(ResourceLocation id, Consumer<LootPool> tableBuilder) {
         if(LOOT_POOL_ADDITIONS.containsKey(id)){
             LootPool.Builder poolBuilder = new LootPool.Builder();
             LOOT_POOL_ADDITIONS.get(id).forEach(itemSupplier -> poolBuilder.add(LootItem.lootTableItem(itemSupplier.get()).setWeight(2)));
@@ -62,7 +62,7 @@ public class GravelmonFossilManager {
         }
     }
 
-    public static void addFossils(ResourceLocation id, LootTable.Builder tableBuilder) {
+    public static void processFossilAdditions(ResourceLocation id, LootTable.Builder tableBuilder) {
         if(LOOT_POOL_ADDITIONS.containsKey(id)){
             LootPool.Builder poolBuilder = new LootPool.Builder();
             LOOT_POOL_ADDITIONS.get(id).forEach(itemSupplier -> poolBuilder.add(LootItem.lootTableItem(itemSupplier.get()).setWeight(2)));
