@@ -9,7 +9,7 @@ public class GravelmonStarterManager {
     public static Map<String, List<StarterCategoryDataHolder>> NEW_STARTERS = new HashMap<>();
 
     public static void registerNewStarter(String afterCategory, StarterCategoryDataHolder newStarter) {
-        NEW_STARTERS.computeIfAbsent(afterCategory, k -> new ArrayList<>()).add(newStarter);
+        NEW_STARTERS.computeIfAbsent(afterCategory == null ? "" : afterCategory, k -> new ArrayList<>()).add(newStarter);
     }
 
     public static void processStarters(){

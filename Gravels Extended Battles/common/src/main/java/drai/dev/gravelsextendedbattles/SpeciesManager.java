@@ -85,6 +85,7 @@ public class SpeciesManager {
     }
 
     public static boolean containsBannedLabels(String species, String form){
+        if(species == null) return true;
         var pokemon = PokemonSpecies.INSTANCE.getByName(species);
         if(pokemon == null) return true;
         return containsBannedLabels(pokemon.getForm(Set.of(form == null ? "" : form)).getLabels().stream().toList());
