@@ -892,8 +892,8 @@
   "cobblemon.move.antivirusnet.desc": "The User entraps their Target in a precise digital webbing, damaging them for as long as they're a security risk. Traps the target for four to five turns.",
   "cobblemon.move.trojanhorse": "Trojan Horse",
   "cobblemon.move.trojanhorse.desc": "The User launches an unassuming attack at their Target, if the Target is switching out, the power of this attack will double.",
-  "cobblemon.move.smartstrike": "Smart Strike",
-  "cobblemon.move.smartstrike.desc": "The User hits their Target with a precisely calculated strike, that at most will leave the opponent at 1 HP.",
+  "cobblemon.move.smartpunch": "Smart Punch",
+  "cobblemon.move.smartpunch.desc": "The User hits their Target with a precisely calculated strike, that at most will leave the opponent at 1 HP.",
   "cobblemon.move.datatransfer": "Data Transfer",
   "cobblemon.move.datatransfer.desc": "The User steals data directly from the Target, healing for half of what's been stolen.",
   
