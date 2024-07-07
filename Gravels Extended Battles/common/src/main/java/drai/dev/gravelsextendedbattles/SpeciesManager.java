@@ -16,8 +16,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.ALLOWED_LABELS;
-import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.BANNED_LABELS;
+import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.*;
 
 public class SpeciesManager {
     private static final Map<String, List<TypeChangeEntry>> changedTypes = new HashMap<>();
@@ -95,6 +94,16 @@ public class SpeciesManager {
         if(labels == null) return false;
         if(labels.isEmpty()) return false;
         for (String label : labels) {
+            try {
+                var labelEnum = Label.valueOf(label.toUpperCase());
+                if (Label.passwordProtectedLabels.containsKey(labelEnum)) {
+                    if (!PASSWORDS.contains(Label.passwordProtectedLabels.get(labelEnum))) return true;
+                }
+            } catch (IllegalArgumentException e) {
+                //do nothing, this is fine
+            }
+
+
             if(ALLOWED_LABELS.contains(label)) return false;
             if (BANNED_LABELS.contains(label)) {
                 return true;

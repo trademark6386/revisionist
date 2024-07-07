@@ -132,6 +132,7 @@ public enum Aspect {
     HAVAIIAN,
     LAGOONAN,
     RICAN,
+    CROZOICAN,
     INTERIAN,
     DELTA_WATER,
     DELTA_FAIRY,
@@ -163,7 +164,8 @@ public enum Aspect {
     CEFIRAN_ICE,
     CEFIRAN_ELECTRIC,
     MALE_X,
-    FEMALE_X, DELTA_UNLEASHED;
+    FEMALE_X,
+    DELTA_UNLEASHED;
     private String name;
     private boolean isNew;
     private boolean isDefault;

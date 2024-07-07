@@ -35,6 +35,7 @@ public class GravelsExtendedBattles {
     public static Logger LOGGER = Logger.getLogger(MOD_ID);
     public static List<String> BANNED_LABELS;
     public static List<String> ALLOWED_LABELS;
+    public static List<String> PASSWORDS;
     public static List<String> IMPLEMENTED_TYPES;
     public static int TYPE_COUNT = 18;
     public static boolean ADD_STARTERS = false;
@@ -46,6 +47,7 @@ public class GravelsExtendedBattles {
         ALLOWED_LABELS = gravelmonConfig.getAllowedLabels();
         IMPLEMENTED_TYPES = gravelmonConfig.getImplementedTypes();
         ADD_STARTERS = gravelmonConfig.getShouldAddStarters();
+        PASSWORDS = gravelmonConfig.getPasswords();
         for (String fileName : GravelsExtendedBattles.SHOWDOWN_FILES) {
             try {
                 ShowdownFileManager.exportResource(minecraftFolder, fileName);

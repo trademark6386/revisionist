@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.loot.entries.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 public class GravelmonFossilManager {
     private static final List<LootPool[]> LOOT_POOLS = new ArrayList<>();
@@ -41,6 +42,16 @@ public class GravelmonFossilManager {
                         if(fossil == null) return;
                         if(!SpeciesManager.containsBannedLabels(fossil.getResult().getSpecies(), fossil.getResult().getForm())) return;
                         entries.remove(lootItem);
+                        if (entries.isEmpty()){
+                            var optionalFossil = GravelsExtendedBattles.FOSSIL_MAP.values().stream()
+                                    .filter(fossil1->!SpeciesManager.containsBannedLabels(fossil1.getResult().getSpecies(), fossil1.getResult().getForm())).findFirst();
+                            if(optionalFossil.isEmpty()) return;
+                            var fossilItemId = GravelsExtendedBattles.FOSSIL_MAP.entrySet().stream().filter(entry -> entry.getValue() == optionalFossil.get()).map(Map.Entry::getKey).toList();
+                            if(fossilItemId.isEmpty()) return;
+                            var newFossilItem = BuiltInRegistries.ITEM.get(fossilItemId.get(0));
+                            createLootItemAccessor(lootItem).setItem(newFossilItem);
+                            entries.add(lootItem);
+                        }
                     });
             LootPoolEntryContainer[] array = new LootPoolEntryContainer[entries.size()];
             accessor.setEntries(entries.toArray(array));
@@ -69,6 +80,4 @@ public class GravelmonFossilManager {
             tableBuilder.withPool(poolBuilder);
         }
     }
-
-
 }
