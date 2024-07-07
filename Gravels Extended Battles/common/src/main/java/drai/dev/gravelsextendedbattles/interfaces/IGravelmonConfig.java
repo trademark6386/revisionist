@@ -8,5 +8,6 @@ public interface IGravelmonConfig {
     List<String> getBannedLabels();
     List<String> getAllowedLabels();
     List<String> getImplementedTypes();
+    List<String> getPasswords();
     boolean getShouldAddStarters();
 }
