@@ -145,6 +145,7 @@ public enum Label {
         passwordProtectedLabels.put(PASTEL_ISLAND, "mysteriousIsland");
         passwordProtectedLabels.put(MYTH, "dramaQueen");
         passwordProtectedLabels.put(URANIUM, "morrowind");
+        passwordProtectedLabels.put(ISIAH, "hiddenNinjaVillage");
         passwordProtectedLabels.put(CROZOIC, "prehistoric");
         passwordProtectedLabels.put(FLUX, "ghosted");
     }
