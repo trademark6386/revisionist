@@ -61,14 +61,14 @@ public class EvolutionGraph {
                 multiplePreEvoSpecies.getPreEvolutions().remove(baseForms.get(key));
             });
             var baseFormList = baseForms.keySet().stream().filter(key-> key!=baseFormWithLowestPokedexNumber).sorted().toList();
-            var startingSortingNumber = baseFormWithLowestPokedexNumber.getSortingNumber();
+            var startingSortingNumber = sortedSpecies.indexOf(baseFormWithLowestPokedexNumber);
             for (int i = 0; i < baseFormList.size(); i++) {
                 var node = baseFormList.get(i);
                 shiftDex(node, startingSortingNumber+1+i);
             }
         });
 
-        sortedSpecies = sortedSpecies.stream().sorted().toList();
+        sortedSpecies = new ArrayList<IEvolutionNode>(sortedSpecies.stream().sorted().toList());
         var dexNumber = new MutableInt(0);
         for (int i = 0; i < sortedSpecies.size(); i++) {
             var species = sortedSpecies.get(i);
