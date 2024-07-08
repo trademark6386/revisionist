@@ -892,8 +892,8 @@
   "cobblemon.move.antivirusnet.desc": "The User entraps their Target in a precise digital webbing, damaging them for as long as they're a security risk. Traps the target for four to five turns.",
   "cobblemon.move.trojanhorse": "Trojan Horse",
   "cobblemon.move.trojanhorse.desc": "The User launches an unassuming attack at their Target, if the Target is switching out, the power of this attack will double.",
-  "cobblemon.move.smartstrike": "Smart Strike",
-  "cobblemon.move.smartstrike.desc": "The User hits their Target with a precisely calculated strike, that at most will leave the opponent at 1 HP.",
+  "cobblemon.move.smartpunch": "Smart Punch",
+  "cobblemon.move.smartpunch.desc": "The User hits their Target with a precisely calculated strike, that at most will leave the opponent at 1 HP.",
   "cobblemon.move.datatransfer": "Data Transfer",
   "cobblemon.move.datatransfer.desc": "The User steals data directly from the Target, healing for half of what's been stolen.",
   
@@ -1300,6 +1300,10 @@
   "cobblemon.ability.masterinstinct.desc": "Boosts the User's Accuracy in Battle Aura.",
   "cobblemon.ability.nesting": "Nesting",
   "cobblemon.ability.nesting.desc": "The User gradually regains HP in Pheromones. If it has a bug-type ally, the amount healed doubles.",
+  "cobblemon.ability.pielpunica": "Punic Skin",
+  "cobblemon.ability.pielpunica.desc": "Reduces the damage of Water and Grass-Type moves targetting the user.",
+  "cobblemon.ability.ojospetreos": "Stoney Eyes",
+  "cobblemon.ability.ojospetreos.desc": "The gaze of the user leaves the opposing pokemon petrified, making them unable to switch out and making them slower.",
   
   "cobblemon.ability.heeho": "Hee-Ho!",
   "cobblemon.ability.heeho.desc": "Hee-Ho! Hee-Ho!",

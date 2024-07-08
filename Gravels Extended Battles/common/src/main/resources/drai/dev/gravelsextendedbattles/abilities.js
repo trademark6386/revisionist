@@ -1765,6 +1765,40 @@ const Abilities = {
     rating: 4,
     num: 322
   },
+  ojospetreos: {
+    onStart(pokemon) {
+      let activated = false;
+      for (const target of pokemon.adjacentFoes()) {
+        if (!activated) {
+          this.add("-ability", pokemon, "Ojos Petreos", "boost");
+          activated = true;
+        }
+        if (target.volatiles["substitute"]) {
+          this.add("-immune", target);
+        } else {
+          this.boost({ spe: -1 }, target, pokemon, null, true);
+        }
+      }
+    },
+	onFoeTrapPokemon(pokemon) {
+      if (!pokemon.hasAbility("ojospetreos") && pokemon.isAdjacent(this.effectState.target)) {
+        pokemon.tryTrap(true);
+      }
+    },
+    onFoeMaybeTrapPokemon(pokemon, source) {
+      if (!source)
+        source = this.effectState.target;
+      if (!source || !pokemon.isAdjacent(source))
+        return;
+      if (!pokemon.hasAbility("ojospetreos")) {
+        pokemon.maybeTrapped = true;
+      }
+    },
+    flags: {},
+    name: "Ojos Petreos",
+    rating: 3.5,
+    num: 460
+  },
   oraoraoraora: {
     onPrepareHit(target, source, move) {
       if (move.flags["punch"]) {
@@ -1836,6 +1870,26 @@ const Abilities = {
     name: "phototroph",
     rating: 1.5,
     num: 323
+  },
+  pielpunica: {
+    onSourceModifyAtkPriority: 6,
+    onSourceModifyAtk(atk, attacker, defender, move) {
+      if (move.type === "Water" || move.type === "Grass") {
+        this.debug("Piel Punica weaken");
+        return this.chainModify(0.5);
+      }
+    },
+    onSourceModifySpAPriority: 5,
+    onSourceModifySpA(atk, attacker, defender, move) {
+      if (move.type === "Water" || move.type === "Grass") {
+        this.debug("Piel Punica weaken");
+        return this.chainModify(0.5);
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Piel Punica",
+    rating: 3.5,
+    num: 459
   },
   pollution: {
     onStart(source) {

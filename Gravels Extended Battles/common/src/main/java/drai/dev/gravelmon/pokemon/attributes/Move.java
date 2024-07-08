@@ -668,7 +668,7 @@ public enum Move {
     POWER_TRIP("powertrip",true),
     BURN_UP("burnup",true),
     SPEED_SWAP("speedswap",true),
-    SMART_STRIKE("smartstrike",true),
+    SMART_PUNCH("smartpunch",true),
     PURIFY("purify",true),
     REVELATION_DANCE("revelationdance",true),
     CORE_ENFORCER("coreenforcer",true),

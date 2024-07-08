@@ -8516,15 +8516,15 @@ const Moves = {
     type: "Slime",
     contestType: "Clever"
   },
-  smartstrike: {
+  smartpunch: {
     num: 1340,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
-    name: "Smart Strike",
+    name: "Smart Punch",
     pp: 40,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, punch: 1, mirror: 1 },
     onDamagePriority: -20,
     onDamage(damage, target, source, effect) {
       if (damage >= target.hp)
