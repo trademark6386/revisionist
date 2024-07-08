@@ -121,7 +121,7 @@ public class SpeciesManager {
     }
 
     public static void processTypeChanges(){
-        registerTypeChange("sandslash alolan", new TypeChangeEntry("steel", "eldritch"));
+        var implementedTypes = GravelsExtendedBattles.IMPLEMENTED_TYPES;
         changedTypes.forEach((key,value)-> {
             var splitFrom = key.split(" ");
             var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
@@ -135,7 +135,7 @@ public class SpeciesManager {
                     isForm = !form.getName().equalsIgnoreCase("normal");
                 }
                 for (var typeChanges : value) {
-                    if(!GravelsExtendedBattles.IMPLEMENTED_TYPES.contains(typeChanges.getTo())) continue;
+                    if(!implementedTypes.contains(typeChanges.getTo())) continue;
                     var newType = ElementalTypes.INSTANCE.get(typeChanges.getTo());
                     if(newType==null) continue;
                     if(!isForm){
@@ -162,6 +162,74 @@ public class SpeciesManager {
                 }
             }
         });
+        var pokemonSpecies = PokemonSpecies.INSTANCE;
+        var accessor = ((PokemonSpeciesAccessor)(Object)pokemonSpecies);
+        var currentSpecies = accessor.getSpeciesByIdentifier();
+        currentSpecies.forEach((key, value) -> substituteType(value, implementedTypes));
+    }
+
+    private static void substituteType(Species species, List<String> implementedTypes) {
+        if(!implementedTypes.contains(species.getPrimaryType().getName())) {
+            var type = Type.getByName(species.getPrimaryType().getName());
+            if(type!=null){
+                var substitutionType = type.getSubstitutionType();
+                if(substitutionType!=null){
+                    var substitutionTypeName = substitutionType.getName();
+                    var newType = ElementalTypes.INSTANCE.get(substitutionTypeName);
+                    if(newType!=null){
+                        species.setPrimaryType$common(newType);
+                    }
+                }
+            }
+        }
+        if(species.getSecondaryType()!=null){
+            if(!implementedTypes.contains(species.getSecondaryType().getName())) {
+                var type = Type.getByName(species.getSecondaryType().getName());
+                if(type!=null){
+                    var substitutionType = type.getSubstitutionType();
+                    if(substitutionType!=null){
+                        var substitutionTypeName = substitutionType.getName();
+                        var newType = ElementalTypes.INSTANCE.get(substitutionTypeName);
+                        if(newType!=null){
+                            species.setSecondaryType$common(newType);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (var formData : species.getForms()){
+            if(!implementedTypes.contains(formData.getPrimaryType().getName())) {
+                var type = Type.getByName(formData.getPrimaryType().getName());
+                if(type!=null){
+                    var substitutionType = type.getSubstitutionType();
+                    if(substitutionType!=null){
+                        var substitutionTypeName = substitutionType.getName();
+                        var newType = ElementalTypes.INSTANCE.get(substitutionTypeName);
+                        if(newType!=null){
+                            var formDataAccessor = (FormDataAccessor)(Object)formData;
+                            formDataAccessor.setPrimaryType(newType);
+                        }
+                    }
+                }
+            }
+            if(formData.getSecondaryType()!=null){
+                if(!implementedTypes.contains(formData.getSecondaryType().getName())) {
+                    var type = Type.getByName(formData.getSecondaryType().getName());
+                    if(type!=null){
+                        var substitutionType = type.getSubstitutionType();
+                        if(substitutionType!=null){
+                            var substitutionTypeName = substitutionType.getName();
+                            var newType = ElementalTypes.INSTANCE.get(substitutionTypeName);
+                            if(newType!=null){
+                                var formDataAccessor = (FormDataAccessor)(Object)formData;
+                                formDataAccessor.setSecondaryType(newType);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void processFormEvolutionAdditions(){
