@@ -53,8 +53,10 @@ public class GravelmonMoveSubstitution {
             var moveList = new ArrayList<>(pokemon.getMoves().getEvolutionMoves());
             for(var move : moveList){
                 if(keys.contains(move.getName())){
+                    var newMove = Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName()));
+                    if (newMove == null) continue;
                     pokemon.getMoves().getEvolutionMoves().remove(move);
-                    pokemon.getMoves().getEvolutionMoves().add(Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName())));
+                    pokemon.getMoves().getEvolutionMoves().add(newMove);
                 }
             }
 
@@ -64,8 +66,10 @@ public class GravelmonMoveSubstitution {
 
                 for(var move : movesOnLevel){
                     if(keys.contains(move.getName())){
+                        var newMove = Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName()));
+                        if (newMove == null) continue;
                         levelMoves.getValue().remove(move);
-                        levelMoves.getValue().add(Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName())));
+                        levelMoves.getValue().add(newMove);
                     }
                 }
                 levelUpMoves.put(levelMoves.getKey(), levelMoves.getValue());
@@ -74,9 +78,11 @@ public class GravelmonMoveSubstitution {
     }
 
     private static void substituteMoves(Set<String> keys, List<MoveTemplate> moves) {
-        var moveList = new ArrayList<MoveTemplate>(moves);
+        var moveList = new ArrayList<>(moves);
         for(var move : moveList){
             if(keys.contains(move.getName())){
+                var newMove = Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName()));
+                if (newMove == null) continue;
                 moves.remove(move);
                 moves.add(Moves.INSTANCE.getByName(moveUpdateMap.get(move.getName())));
             }
