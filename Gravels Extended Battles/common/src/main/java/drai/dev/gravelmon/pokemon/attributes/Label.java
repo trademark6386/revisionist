@@ -103,7 +103,6 @@ public enum Label {
     public static Map<Label, String> passwordProtectedLabels;
     static{
         passwordProtectedLabels = new HashMap<>();
-        //TODO altera uranium Solar light lunar dark
         passwordProtectedLabels.put(OTTORA, "15thaddictionIsAddicted");
         passwordProtectedLabels.put(IONOS, "airikr4283");
         passwordProtectedLabels.put(MASTENIA, "airikr4283");
