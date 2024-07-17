@@ -2070,7 +2070,7 @@ const Moves = {
     pp: 10,
     priority: 0,
     flags: { bullet: 1, protect: 1, mirror: 1 },
-	recoil: [1, 2],
+	recoil: [33, 100],
     secondary: null,
     target: "normal",
     type: "Bug",
@@ -2671,7 +2671,7 @@ const Moves = {
     pp: 10,
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1, defrost: 1 },
-    recoil: [50, 100],
+    recoil: [33, 100],
     secondary: {
       chance: 10,
       status: "brn"
@@ -3232,8 +3232,8 @@ const Moves = {
     basePower: 0,
     category: "Status",
     name: "Eevoboost",
-    pp: 5,
-    priority: -1,
+    pp: 2,
+    priority: -2,
     flags: { snatch: 1 },
     boosts: {
       atk: 1,
@@ -3994,7 +3994,7 @@ const Moves = {
     name: "Focused Ram",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1 },
     recoil: [1, 4],
     secondary: null,
     target: "normal",
@@ -7841,7 +7841,7 @@ const Moves = {
   searingslash: {
     num: 941,
     accuracy: 95,
-    basePower: 95,
+    basePower: 90,
     category: "Physical",
     name: "Searing Slash",
     pp: 10,
@@ -9411,7 +9411,7 @@ const Moves = {
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1, defrost: 1, punch: 1 },
     secondary: {
-      chance: 100,
+      chance: 30,
       boosts: {
         spe: -1
       }
@@ -9567,7 +9567,7 @@ const Moves = {
   thunderslash: {
     num: 944,
     accuracy: 100,
-    basePower: 90,
+    basePower: 95,
     category: "Physical",
     name: "Thunder Slash",
     pp: 15,
@@ -9927,7 +9927,7 @@ const Moves = {
   venomswipe: {
     num: 947,
     accuracy: 90,
-    basePower: 90,
+    basePower: 100,
     category: "Physical",
     name: "Venom Swipe",
     pp: 10,
