@@ -334,7 +334,7 @@ const Moves = {
     name: "Atomic Punch",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: {
       chance: 30,
       status: "par"
@@ -2054,7 +2054,7 @@ const Moves = {
     name: "Dazzle Dust",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, powder: 1 },
     secondary: null,
     target: "normal",
     type: "Fairy",
@@ -3100,7 +3100,7 @@ const Moves = {
     name: "Dust Devil",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1, nonsky: 1 },
+    flags: { protect: 1, mirror: 1, nonsky: 1, powder: 1 },
     onEffectiveness(typeMod, target, type, move) {
       if (move.type !== "Ground")
         return;
@@ -3142,7 +3142,7 @@ const Moves = {
     name: "Dusty Dash",
     pp: 15,
     priority: 1,
-    flags: { protect: 1, mirror: 1, speed: 1 },
+    flags: { protect: 1, mirror: 1, speed: 1, powder: 1 },
     secondary: {
       chance: 10,
       volatileStatus: "flinch"
@@ -3541,7 +3541,7 @@ const Moves = {
     name: "Fang Barrage",
     pp: 5,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1, bite: 1 },
     ohko: true,
     secondary: null,
     target: "normal",
@@ -3685,7 +3685,7 @@ const Moves = {
       if (type === "Flying")
         return 1;
     },
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, bullet: 1 },
     ignoreImmunity: { "Flying": true },
     secondary: {
       chance: 10,
@@ -3874,7 +3874,7 @@ const Moves = {
     name: "Flash Pulse",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, pulse: 1 },
     secondary: {
       chance: 20,
       volatileStatus: "confusion"
@@ -4394,7 +4394,7 @@ const Moves = {
     name: "Golden Fist",
     pp: 20,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: null,
     target: "normal",
     type: "Fighting",
@@ -4770,7 +4770,7 @@ const Moves = {
     name: "Heavy Punch",
     pp: 35,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: {
       chance: 30,
       volatileStatus: "flinch"
@@ -5261,7 +5261,7 @@ const Moves = {
     name: "Knucklefins",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: {
       chance: 100,
       volatileStatus: "torment"
@@ -5600,7 +5600,7 @@ const Moves = {
     name: "Magnet Pulse",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, pulse: 1 },
     secondary: {
       chance: 30,
       onHit(target, source, move) {
@@ -6951,7 +6951,7 @@ const Moves = {
     name: "Probe Punch",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: {
       chance: 10,
       boosts: {
@@ -7073,7 +7073,7 @@ const Moves = {
     name: "Pummel",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
     secondary: {
       chance: 10,
       self: {
@@ -7980,7 +7980,7 @@ const Moves = {
     name: "Shadow Clamp",
     pp: 20,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
     secondary: {
       chance: 30,
       onHit(target, source) {

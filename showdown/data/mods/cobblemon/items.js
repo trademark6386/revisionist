@@ -60,7 +60,7 @@ const Items = {
     num: 508,
     gen: 9,
     isNonstandard: "Past"
-  }
+  },
   corruptedseed: {
     name: "Corrupted Seed",
     spritenum: 513,
