@@ -3331,7 +3331,7 @@ const Moves = {
     name: "Emperor's Edge",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, slicing: 1 },
     critRatio: 2,
     secondary: null,
     target: "normal",
@@ -3985,6 +3985,24 @@ const Moves = {
       }
     }
   },
+  focalforce: {
+    num: 1350,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Focal Force",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, defrost: 1 },
+    recoil: [33, 100],
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
+  },
   focusedram: {
     num: 936,
     accuracy: 100,
@@ -4086,7 +4104,7 @@ const Moves = {
     name: "Frost Slash",
     pp: 15,
     priority: 0,
-    flags: { protect: 1, mirror: 1, contact: 1 },
+    flags: { protect: 1, mirror: 1, contact: 1, slicing: 1 },
     critRatio: 2,
     secondary: {
       chance: 10,
@@ -4153,6 +4171,24 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Tough"
+  },
+  gatlinglaser: {
+    num: 1346,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+	overrideDefensiveStat: "def",
+    name: "Gatling Laser",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, beam: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
   },
   gemstoneglimmer: {
     num: 980,
@@ -4385,6 +4421,20 @@ const Moves = {
     target: "normal",
     type: "Slime",
     contestType: "Tough"
+  },
+  glowingorb: {
+    num: 1351,
+    accuracy: 100,
+    basePower: 45,
+    category: "Special",
+    name: "Glowing Orb",
+    pp: 25,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
   },
   goldenfist: {
     num: 981,
@@ -5074,7 +5124,7 @@ const Moves = {
       if (type === "Fairy")
         return 1;
     },
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     secondary: {
       chance: 30,
       status: "brn"
@@ -5358,7 +5408,7 @@ const Moves = {
     name: "Leek Cutter",
     pp: 10,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, slicing: 1 },
     secondary: {
       chance: 100,
       boosts: {
@@ -5367,6 +5417,20 @@ const Moves = {
     },
     target: "normal",
     type: "Grass",
+    contestType: "Tough"
+  },
+  lightcharge: {
+    num: 1349,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Light Charge",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Light",
     contestType: "Tough"
   },
   lightningstrike: {
@@ -5753,7 +5817,7 @@ const Moves = {
     name: "Metal Whip",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     volatileStatus: "partiallytrapped",
     secondary: null,
     target: "normal",
@@ -6398,7 +6462,7 @@ const Moves = {
     name: "Nuclear Slash",
     pp: 20,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     secondary: null,
 	critRatio: 2,
     target: "normal",
@@ -6908,6 +6972,26 @@ const Moves = {
     type: "Sound",
     contestType: "Tough"
   },
+  prismarush: {
+    num: 1343,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Prisma Rush",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        def: -1,
+        spd: -1
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
   prismaticlaser: {
     inherit: true,
 	flags: { recharge: 1, protect: 1, mirror: 1, beam: 1, legendary: 1 }
@@ -7149,6 +7233,21 @@ const Moves = {
     type: "Ground",
     contestType: "Tough"
   },
+  radiantblade: {
+    num: 1342,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Radiant Blade",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
+  },
   radioacid: {
     num: 992,
     accuracy: 100,
@@ -7206,6 +7305,34 @@ const Moves = {
     target: "randomNormal",
     type: "Water",
     contestType: "Cool"
+  },
+  rainbowpunch: {
+    num: 1345,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Rainbow Punch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: {
+      chance: 10,
+      onHit(target, source) {
+        const result = this.random(4);
+        if (result === 0) {
+          target.trySetStatus("brn", source);
+        } else if (result === 1) {
+          target.trySetStatus("par", source);
+        } else if (result === 2) {
+          target.trySetStatus("psn", source);
+        } else {
+          target.trySetStatus("frz", source);
+        }
+      }
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
   },
   rapidspin: {
     num: 229,
@@ -7846,7 +7973,7 @@ const Moves = {
     name: "Searing Slash",
     pp: 10,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     secondary: {
       chance: 10,
       status: "brn"
@@ -7903,7 +8030,7 @@ const Moves = {
     name: "Shadow Blast",
     pp: 5,
     priority: 0,
-    flags: { protect: 1, mirror: 1, distance: 1, legendary: 1 },
+    flags: { protect: 1, mirror: 1, distance: 1, legendary: 1, slicing: 1 },
     critRatio: 2,
     secondary: null,
     target: "any",
@@ -8662,6 +8789,38 @@ const Moves = {
     type: "Grass",
     contestType: "Cool"
   },
+  solarpunch: {
+    num: 1344,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Solar Punch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
+  solarspear: {
+    num: 1348,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Solar Spear",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
   somnismog: {
     num: 1300,
     accuracy: 60,
@@ -8844,6 +9003,132 @@ const Moves = {
   spectralthief: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, bypasssub: 1, legendary: 1 }
+  },
+  spiritaway: {
+    num: 1352,
+    accuracy: 100,
+    basePower: 100,
+    category: "Physical",
+    isNonstandard: "Past",
+    name: "Spirit Away",
+    pp: 5,
+    priority: 0,
+    flags: {
+      contact: 1,
+      charge: 1,
+      protect: 1,
+      mirror: 1,
+      distance: 1,
+      metronome: 1,
+      nosleeptalk: 1,
+      noassist: 1,
+      failinstruct: 1
+    },
+    onModifyMove(move, source) {
+      if (!source.volatiles["spiritaway"]) {
+        move.accuracy = true;
+        delete move.flags["contact"];
+      }
+    },
+    onMoveFail(target, source) {
+      if (source.volatiles["twoturnmove"] && source.volatiles["twoturnmove"].duration === 1) {
+        source.removeVolatile("spiritaway");
+        source.removeVolatile("twoturnmove");
+        if (target === this.effectState.target) {
+          this.add("-end", target, "Spirit Away", "[interrupt]");
+        }
+      }
+    },
+    onTry(source, target) {
+      return !target.fainted;
+    },
+    onTryHit(target, source, move) {
+      if (source.removeVolatile(move.id)) {
+        if (target !== source.volatiles["twoturnmove"].source)
+          return false;
+        if (target.hasType("Fairy")) {
+          this.add("-immune", target);
+          return null;
+        }
+      } else {
+        if (target.volatiles["substitute"] || target.isAlly(source)) {
+          return false;
+        }
+        if (target.getWeight() >= 2e3) {
+          this.add("-fail", target, "move: Spirit Away", "[heavy]");
+          return null;
+        }
+        this.add("-prepare", source, move.name, target);
+        source.addVolatile("twoturnmove", target);
+        return null;
+      }
+    },
+    onHit(target, source) {
+      if (target.hp)
+        this.add("-end", target, "Spirit Away");
+    },
+    condition: {
+      duration: 2,
+      onAnyDragOut(pokemon) {
+        if (pokemon === this.effectState.target || pokemon === this.effectState.source)
+          return false;
+      },
+      onFoeTrapPokemonPriority: -15,
+      onFoeTrapPokemon(defender) {
+        if (defender !== this.effectState.source)
+          return;
+        defender.trapped = true;
+      },
+      onFoeBeforeMovePriority: 12,
+      onFoeBeforeMove(attacker, defender, move) {
+        if (attacker === this.effectState.source) {
+          attacker.activeMoveActions--;
+          this.debug("Spirit Away nullifying.");
+          return null;
+        }
+      },
+      onRedirectTargetPriority: 99,
+      onRedirectTarget(target, source, source2) {
+        if (source !== this.effectState.target)
+          return;
+        if (this.effectState.source.fainted)
+          return;
+        return this.effectState.source;
+      },
+      onAnyInvulnerability(target, source, move) {
+        if (target !== this.effectState.target && target !== this.effectState.source) {
+          return;
+        }
+        if (source === this.effectState.target && target === this.effectState.source) {
+          return;
+        }
+        if (["placeholermove"].includes(move.id)) {
+          return;
+        }
+        return false;
+      },
+      onAnyBasePower(basePower, target, source, move) {
+        if (target !== this.effectState.target && target !== this.effectState.source) {
+          return;
+        }
+        if (source === this.effectState.target && target === this.effectState.source) {
+          return;
+        }
+        if (move.id === "placeholdermove") {
+          this.debug("BP doubled on banished target");
+          return this.chainModify(2);
+        }
+      },
+      onFaint(target) {
+        if (target.volatiles["spiritaway"] && target.volatiles["twoturnmove"].source) {
+          this.add("-end", target.volatiles["twoturnmove"].source, "Spirit Away", "[interrupt]");
+        }
+      }
+    },
+    secondary: null,
+    target: "any",
+    type: "Fairy",
+    contestType: "Tough"
   },
   spotlightlight: {
     num: 1108,
@@ -9157,6 +9442,20 @@ const Moves = {
   sunsteelstrike: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
+  },
+  superluminalstrike: {
+    num: 1347,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Superluminal Strike",
+    pp: 30,
+    priority: 1,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Beautiful"
   },
   supernova: {
     num: 1048,
@@ -9572,7 +9871,7 @@ const Moves = {
     name: "Thunder Slash",
     pp: 15,
     priority: 0,
-    flags: { contact: 1, protect: 1, mirror: 1 },
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     secondary: null,
 	critRatio: 2,
     target: "normal",
