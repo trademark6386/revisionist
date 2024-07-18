@@ -825,9 +825,11 @@ const Abilities = {
     num: 443
   },
   crystalcase: {
-    onImmunity(type, pokemon) {
-      if (type === "water")
-        return false;
+    onTryHit(target, source, move) {
+      if (move.type === "Water") {
+        this.add("-immune", target, "[from] ability: Crystal Case");
+        return null;
+      }
     },
 	onDamagingHit(damage, target, source, move) {
       if (["Fire"].includes(move.type)) {
