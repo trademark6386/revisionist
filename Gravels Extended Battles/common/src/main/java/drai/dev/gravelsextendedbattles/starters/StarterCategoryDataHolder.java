@@ -38,6 +38,6 @@ public class StarterCategoryDataHolder implements Comparable<StarterCategoryData
 
     @Override
     public int compareTo(@NotNull StarterCategoryDataHolder o) {
-        return o.name.compareTo(this.name);
+        return Collections.reverseOrder(String.CASE_INSENSITIVE_ORDER).compare(this.name, o.name);
     }
 }

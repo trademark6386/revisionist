@@ -9,6 +9,7 @@ import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.loot.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
 import drai.dev.gravelsextendedbattles.resorting.*;
+import drai.dev.gravelsextendedbattles.resorting.nodes.*;
 import drai.dev.gravelsextendedbattles.starters.*;
 import eu.midnightdust.lib.config.*;
 import kotlin.Unit;
@@ -39,7 +40,7 @@ public class GravelsExtendedBattles {
     public static List<String> IMPLEMENTED_TYPES;
     public static int TYPE_COUNT = 18;
     public static boolean ADD_STARTERS = false;
-    public static List<Species> SORTED_SPECIES = new ArrayList<>();
+    public static List<IEvolutionNode> SORTED_SPECIES = new ArrayList<>();
     public static void init(String minecraftFolder) {
         MidnightConfig.init("gravelmon", GravelmonConfig.class);
         var gravelmonConfig = new GravelmonConfig();
@@ -85,12 +86,13 @@ public class GravelsExtendedBattles {
             }
         }
         PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, pokemonSpecies -> {
+            SpeciesManager.processFormEvolutionAdditions();
+            SpeciesManager.processTypeChanges();
+            SpeciesManager.processFormBaseScaleAdditions();
             SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
             if (gravelmonConfig.getEnableDexResort()) {
                 GravelmonPokedexResorter.resort(pokemonSpecies);
             }
-            SpeciesManager.processFormEvolutionAdditions();
-            SpeciesManager.processTypeChanges();
             GravelmonStarterManager.processStarters();
             GravelmonMoveSubstitution.substituteMoves();
             return Unit.INSTANCE;

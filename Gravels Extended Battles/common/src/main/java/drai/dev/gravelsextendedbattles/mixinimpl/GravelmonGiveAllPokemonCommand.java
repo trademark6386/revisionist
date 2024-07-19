@@ -20,7 +20,7 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.SORTED_SPEC
 public class GravelmonGiveAllPokemonCommand {
     public static void modifyGiveCommand(CommandContext<CommandSourceStack> context, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
         if (SORTED_SPECIES.isEmpty()) {
-            SORTED_SPECIES = GravelmonGiveAllPokemonCommand.genSortedList();
+            return;
         }
         ServerPlayer player = context.getSource().getPlayerOrException();
         Intrinsics.checkNotNullExpressionValue(player, "player");
@@ -29,7 +29,7 @@ public class GravelmonGiveAllPokemonCommand {
             cir.setReturnValue(0);
         } else {
             PCStore pc = pcStore;
-            for (Species species : SORTED_SPECIES) {
+            for (Species species : SORTED_SPECIES.stream().map(entry-> PokemonSpecies.INSTANCE.getByName(entry.getSpecies())).toList()) {
                 pc.add(species.create(10));
                 var forms = species.getForms();
                 forms.sort(Comparator.comparing(formData -> {

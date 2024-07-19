@@ -74,7 +74,7 @@ public class EvolutionGraph {
             var species = sortedSpecies.get(i);
             updateDexNumbers(species, dexNumber);
         }
-        GravelsExtendedBattles.SORTED_SPECIES = sortedSpecies.stream().map(IEvolutionNode::getPokemon).toList();
+        GravelsExtendedBattles.SORTED_SPECIES = sortedSpecies;
     }
 
     public void shiftDex(IEvolutionNode node, int newNumber) {

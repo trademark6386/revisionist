@@ -20,4 +20,7 @@ public interface FormDataAccessor {
     @Mutable
     @Accessor("_secondaryType")
     public void setSecondaryType(ElementalType evolutions);
+    @Mutable
+    @Accessor("_baseScale")
+    public void setBaseScale(Float baseScale);
 }

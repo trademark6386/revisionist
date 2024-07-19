@@ -165,7 +165,19 @@ public enum Aspect {
     CEFIRAN_ELECTRIC,
     MALE_X,
     FEMALE_X,
-    DELTA_UNLEASHED;
+    DELTA_UNLEASHED,
+    AFRICANUSAN,
+    VESITAN,
+    EPOCH,
+    TOKASSIAN,
+    PASTELIAN,
+    NODORRAN,
+    OLYSOSIAN,
+    OTTORAN,
+    MYSTISIAN,
+    MASTENIAN,
+    THEOSSIAN,
+    ;
     private String name;
     private boolean isNew;
     private boolean isDefault;
