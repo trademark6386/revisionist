@@ -4154,9 +4154,9 @@ const Moves = {
       chance: 30,
       volatileStatus: "flinch"
     },
-    target: "Normal",
+    target: "normal",
     type: "Flying",
-    contestType: "Cool"
+    contestType: "Tough"
   },
   gammaray: {
     num: 979,
