@@ -38,7 +38,7 @@ const Abilities = {
     },
     name: "Absolution",
     rating: 2,
-    num: 331
+    num: 3000
   },
   acceleration: {
     onBasePowerPriority: 19,
@@ -50,7 +50,7 @@ const Abilities = {
     },
     name: "Acceleration",
     rating: 3.5,
-    num: 331
+    num: 3001
   },
   adrenaline: {
     onDamage(damage, target, source, effect) {
@@ -91,7 +91,7 @@ const Abilities = {
     },
     name: "Adrenaline",
     rating: 4,
-    num: 393
+    num: 3002
   },
   aircontrol: {
     onModifyTypePriority: -1,
@@ -117,7 +117,7 @@ const Abilities = {
     },
     name: "Air Control",
     rating: 4,
-    num: 373
+    num: 3003
   },
   alchemicpower: {
     onAllyFaint(target) {
@@ -146,7 +146,7 @@ const Abilities = {
     },
 	name: "Alchemic POwer",
 	rating: 2,
-	num: 403
+	num: 3004
   },
   allure: {
     onStart(pokemon) {
@@ -167,7 +167,7 @@ const Abilities = {
     },
     name: "Allure",
     rating: 0,
-    num: 309
+    num: 3005
   },
   amalgam: {
     onPrepareHit(source, target, move) {
@@ -188,7 +188,7 @@ const Abilities = {
     },
     name: "Amalgam",
     rating: 4,
-    num: 374
+    num: 3006
   },
   ambush: {
     onModifyMove(move) {
@@ -198,7 +198,7 @@ const Abilities = {
     },
     name: "Ambush",
     rating: 2.5,
-    num: 387
+    num: 3007
   },
   amplifier: {
     onBasePowerPriority: 19,
@@ -210,7 +210,7 @@ const Abilities = {
     },
     name: "Amplifier",
     rating: 3.5,
-    num: 314
+    num: 3008
   },
   ancientbody: {
     onSourceModifyAtkPriority: 6,
@@ -247,7 +247,7 @@ const Abilities = {
     flags: { breakable: 1 },
     name: "Ancient Body",
     rating: 3.5,
-    num: 432
+    num: 3009
   },
   arcanum: {
     onStart(source) {
@@ -255,7 +255,7 @@ const Abilities = {
     },
     name: "Arcanum",
     rating: 4,
-    num: 442
+    num: 3010
   },
   athenian: {
     onModifySpAPriority: 5,
@@ -264,7 +264,7 @@ const Abilities = {
     },
     name: "Athenian",
     rating: 5,
-    num: 315
+    num: 3011
   },
   atomizate: {
     onModifyTypePriority: -1,
@@ -290,7 +290,7 @@ const Abilities = {
     },
     name: "Atomizate",
     rating: 4,
-    num: 332
+    num: 3012
   },
   badcompany: {
     onDamage(damage, target, source, effect) {
@@ -319,7 +319,7 @@ const Abilities = {
     isBreakable: true,
     name: "Bad Company",
     rating: 2,
-    num: 404
+    num: 3013
   },
   barbednest: {
     onDamagingHitOrder: 1,
@@ -339,7 +339,7 @@ const Abilities = {
     isBreakable: true,
     name: "Barbed Nest",
     rating: 3.5,
-    num: 363
+    num: 3014
   },
   blackhole: {
     onFoeTrapPokemon(pokemon) {
@@ -358,7 +358,7 @@ const Abilities = {
     },
     name: "Black Hole",
     rating: 4,
-    num: 347
+    num: 3015
   },
   blazingsoul: {
     onModifyPriority(priority, pokemon, target, move) {
@@ -368,7 +368,7 @@ const Abilities = {
     },
     name: "Blazing Soul",
     rating: 4,
-    num: 405
+    num: 3016
   },
   bloodlust: {
     onModifyAtk(atk, pokemon) {
@@ -391,7 +391,7 @@ const Abilities = {
     flags: {},
     name: "Bloodlust",
     rating: 3,
-    num: 449
+    num: 3017
   },
   bloodthirst: {
     onModifyMove(move) {
@@ -403,7 +403,7 @@ const Abilities = {
     },
 	name: "Bloodthirst",
 	rating: 2,
-	num: 353
+	num: 3018
   },
   bloomspring: {
     onWeather(target, source, effect) {
@@ -416,7 +416,7 @@ const Abilities = {
     flags: {},
     name: "Bloomspring",
     rating: 1.5,
-    num: 436
+    num: 3019
   },
   blubberdefense: {
     onSourceModifyDamage(damage, source, target, move) {
@@ -428,7 +428,7 @@ const Abilities = {
     isBreakable: true,
     name: "blubber Defense",
     rating: 3.5,
-    num: 406
+    num: 3020
   },
   bouncy: {
     onDamagingHitOrder: 1,
@@ -440,7 +440,7 @@ const Abilities = {
     },
     name: "Bouncy",
     rating: 2.5,
-    num: 353
+    num: 3021
   },
   braveheart: {
     onFoeAfterBoost(boost, target, source, effect) {
@@ -465,7 +465,7 @@ const Abilities = {
     },
     name: "Brave Heart",
     rating: 3,
-    num: 394
+    num: 3022
   },
   brutalize: {
     onModifyTypePriority: -1,
@@ -491,7 +491,7 @@ const Abilities = {
     },
     name: "Brutalize",
     rating: 4,
-    num: 385
+    num: 3023
   },
   busybee: {
     onModifyPriority(priority, pokemon, target, move) {
@@ -502,7 +502,7 @@ const Abilities = {
     },
     name: "Busy Bee",
     rating: 4,
-    num: 419
+    num: 3024
   },
   carboncapture: {
     onWeather(target, source, effect) {
@@ -519,7 +519,7 @@ const Abilities = {
     flags: {},
     name: "Carbon Capture",
     rating: 1.5,
-    num: 445
+    num: 3025
   },
   cashsplash: {
     onUpdate(pokemon) {
@@ -566,7 +566,7 @@ const Abilities = {
     },
     name: "Cash Splash",
     rating: 3.5,
-    num: 407
+    num: 3026
   },
   castlemoat: {
     onTryHitPriority: 1,
@@ -581,7 +581,7 @@ const Abilities = {
     isBreakable: true,
     name: "Castle Moat",
     rating: 3,
-    num: 316
+    num: 3027
   },
   chargedwool: {
     onModifyTypePriority: -1,
@@ -607,7 +607,7 @@ const Abilities = {
     },
     name: "Charged Wool",
     rating: 4,
-    num: 375
+    num: 3028
   },
   chernobyl: {
     onStart(source) {
@@ -615,7 +615,7 @@ const Abilities = {
     },
     name: "Chernobyl",
     rating: 4,
-    num: 333
+    num: 3029
   },
   chlorophyll: {
     onModifySpe(spe, pokemon) {
@@ -634,7 +634,7 @@ const Abilities = {
     },
     name: "Circus Props",
     rating: 4,
-    num: 429
+    num: 3030
   },
   climatechange: {
     onStart(source) {
@@ -655,7 +655,7 @@ const Abilities = {
     },
     name: "climatechange",
     rating: 4,
-    num: 377
+    num: 3031
   },
   cloudburst: {
     onResidualOrder: 29,
@@ -698,7 +698,7 @@ const Abilities = {
     flags: { failroleplay: 1, noreceiver: 1, noentrain: 1, notrace: 1, failskillswap: 1, cantsuppress: 1 },
     name: "Cloud Burst",
     rating: 0,
-    num: 461
+    num: 3032
   },
   coldwave: {
     onDamagingHit(damage, target, source, move) {
@@ -710,7 +710,7 @@ const Abilities = {
     },
     name: "Cold Wave",
     rating: 1.5,
-    num: 334
+    num: 3033
   },
   composed: {
     onBasePowerPriority: 19,
@@ -722,7 +722,7 @@ const Abilities = {
     },
     name: "Composed",
     rating: 3.5,
-    num: 365
+    num: 3034
   },
   condensation: {
     onStart(source) {
@@ -730,7 +730,7 @@ const Abilities = {
     },
     name: "Condensation",
     rating: 4,
-    num: 431
+    num: 3035
   },
   conditioning: {
     onPrepareHit(target, source, move) {
@@ -748,7 +748,7 @@ const Abilities = {
 	},
 	name: "Conditioning",
     rating: 4.5,
-    num: 395
+    num: 3036
   },
   confident: {
     onSourceAfterFaint(length, target, source, effect) {
@@ -758,7 +758,7 @@ const Abilities = {
     },
     name: "Confident",
     rating: 3,
-    num: 420
+    num: 3037
   },
   contamination: {
     onStart(source) {
@@ -766,7 +766,7 @@ const Abilities = {
     },
     name: "Contamination",
     rating: 4,
-    num: 437
+    num: 3038
   },
   content: {
     onAfterMove(target, source, move) {
@@ -776,7 +776,7 @@ const Abilities = {
     },
     name: "Content",
     rating: 1,
-    num: 396
+    num: 3039
   },
   conundrum: {
     onDamagingHit(damage, target, source, move) {
@@ -788,7 +788,7 @@ const Abilities = {
     },
     name: "Conundrum",
     rating: 1.5,
-    num: 310
+    num: 3040
   },
   cosmicpresence: {
     onStart(source) {
@@ -796,7 +796,7 @@ const Abilities = {
     },
     name: "Cosmic Presence",
     rating: 4,
-    num: 350
+    num: 3041
   },
   covermeindebris: {
     onTryHit(pokemon, target, move) {
@@ -822,7 +822,7 @@ const Abilities = {
     flags: {},
     name: "Cover me in Debris",
     rating: 3,
-    num: 443
+    num: 3042
   },
   crystalcase: {
     onTryHit(target, source, move) {
@@ -845,7 +845,7 @@ const Abilities = {
     isBreakable: true,
     name: "Crystal Case",
     rating: 3,
-    num: 364
+    num: 3043
   },
   damp: {
     onAnyTryMove(target, source, effect) {
@@ -875,7 +875,7 @@ const Abilities = {
     },
     name: "Deep Freeze",
     rating: 1.5,
-    num: 343
+    num: 3044
   },
   deepsleep: {
     onDamagePriority: 1,
@@ -887,7 +887,7 @@ const Abilities = {
     },
     name: "Deep Sleep",
     rating: 4,
-    num: 344
+    num: 3045
   },
   digitize: {
     onModifyTypePriority: -1,
@@ -913,7 +913,7 @@ const Abilities = {
     },
     name: "Digitize",
     rating: 4,
-    num: 307
+    num: 3046
   },
   disenchant: {
     onTryHit(target, source, move) {
@@ -924,7 +924,7 @@ const Abilities = {
     },
     name: "Disenchant",
     rating: 2,
-    num: 335
+    num: 3047
   },
   dirtypool: {
     onStart(pokemon) {
@@ -957,7 +957,7 @@ const Abilities = {
     flags: { failroleplay: 1, noreceiver: 1, noentrain: 1, notrace: 1, failskillswap: 1, cantsuppress: 1 },
     name: "Dirty Pool",
     rating: 3,
-    num: 462
+    num: 3169
   },
   dragonarmor: {
     onModifyMove(move) {
@@ -965,7 +965,7 @@ const Abilities = {
     },
     name: "Dragon Armor",
     rating: 4,
-    num: 359
+    num: 3048
   },
   druidry: {
     onWeather(target, source, effect) {
@@ -978,7 +978,7 @@ const Abilities = {
     flags: {},
     name: "Druidry",
     rating: 1.5,
-    num: 446
+    num: 3049
   },
   dustdevil: {
     onStart(source) {
@@ -986,7 +986,7 @@ const Abilities = {
     },
     name: "Dust Devil",
     rating: 4,
-    num: 433
+    num: 3050
   },
   eccentric: {
     onModifySpAPriority: 5,
@@ -1002,7 +1002,7 @@ const Abilities = {
     },
     name: "Eccentric",
     rating: 5,
-    num: 397
+    num: 3051
   },
   elusive: {
     onModifyMove(move) {
@@ -1015,7 +1015,7 @@ const Abilities = {
     },
 	name: "Elusive",
 	rating: 2,
-	num: 376
+	num: 3052
   },
   empathy: {
     onDamagingHit(damage, target, source, move) {
@@ -1026,7 +1026,7 @@ const Abilities = {
     },
     name: "Empathy",
     rating: 2,
-    num: 366
+    num: 3053
   },
   energizer: {
     onModifySpe(spe, pokemon) {
@@ -1037,7 +1037,7 @@ const Abilities = {
     flags: {},
     name: "Energizer",
     rating: 3,
-    num: 447
+    num: 3054
   },
   energyshield: {
     onTryHit(pokemon, target, move) {
@@ -1049,7 +1049,7 @@ const Abilities = {
     isBreakable: true,
     name: "Energy Shield",
     rating: 3,
-    num: 390
+    num: 3055
   },
   escapevelocity: {
     onModifySpe(spe) {
@@ -1059,7 +1059,7 @@ const Abilities = {
     },
     name: "Escape Velocity",
     rating: 3,
-    num: 352
+    num: 3056
   },
   eventhorizon: {
     onDamagingHit(damage, target, source, move) {
@@ -1071,7 +1071,7 @@ const Abilities = {
     },
   name: "Event Horizon",
   rating: 1.5,
-  num: 317,
+  num: 3057,
   },
   explode: {
     name: "Explode",
@@ -1079,7 +1079,7 @@ const Abilities = {
 		this.useMove("explosion", source);
     },
 	rating: 4,
-    num: 345
+    num: 3058
   },
   fearmonger: {
     onModifySpe(spe, pokemon) {
@@ -1090,7 +1090,7 @@ const Abilities = {
     flags: {},
     name: "Fearmonger",
     rating: 3,
-    num: 450
+    num: 3059
   },
   feedback: {
     onDamagingHitOrder: 1,
@@ -1101,7 +1101,7 @@ const Abilities = {
     },
     name: "Feedback",
     rating: 2.5,
-    num: 311
+    num: 3060
   },
   feisty: {
     onModifyAtkPriority: 5,
@@ -1114,7 +1114,7 @@ const Abilities = {
     },
     name: "Feisty",
     rating: 5,
-    num: 398
+    num: 3061
   },
   felineprowess: {
     onModifySpAPriority: 5,
@@ -1123,7 +1123,7 @@ const Abilities = {
     },
     name: "Feline Prowess",
     rating: 5,
-    num: 408
+    num: 3062
   },
   ferroflux: {
     onStart(source) {
@@ -1131,7 +1131,7 @@ const Abilities = {
     },
     name: "Ferroflux",
     rating: 4,
-    num: 444
+    num: 3063
   },
   flameeater: {
     onTryHit(target, source, move) {
@@ -1145,7 +1145,7 @@ const Abilities = {
     isBreakable: true,
     name: "Flame Eater",
     rating: 3.5,
-    num: 355
+    num: 3064
   },
   flowergift: {
     onStart(pokemon) {
@@ -1211,7 +1211,7 @@ const Abilities = {
     },
     name: "Fossilize",
     rating: 4,
-    num: 308
+    num: 3065
   },
   forked: {
     onSetStatus(status, target, source, effect) {
@@ -1231,7 +1231,7 @@ const Abilities = {
     flags: { breakable: 1 },
     name: "Forked",
     rating: 0.5,
-    num: 453
+    num: 3066
   },
   foulshroud: {
     onImmunity(type, pokemon) {
@@ -1250,7 +1250,7 @@ const Abilities = {
     isBreakable: true,
     name: "Foul Shroud",
     rating: 1.5,
-    num: 388
+    num: 3067
   },
   foundry: {
     onModifyTypePriority: -1,
@@ -1267,7 +1267,7 @@ const Abilities = {
     },
     name: "Foundry",
     rating: 4,
-    num: 318
+    num: 3068
   },
   frighten: {
     onStart(pokemon) {
@@ -1286,7 +1286,7 @@ const Abilities = {
     },
     name: "Frighten",
     rating: 3.5,
-    num: 346
+    num: 3069
   },
   fruitrition: {
     onTryHealPriority: 19,
@@ -1298,7 +1298,7 @@ const Abilities = {
     },
     name: "Fruitrition",
     rating: 3.5,
-    num: 392
+    num: 3070
   },
   glacialarmor: {
     onModifyDef(def, pokemon) {
@@ -1314,7 +1314,7 @@ const Abilities = {
     flags: {},
     name: "Glacial Armor",
     rating: 3,
-    num: 454
+    num: 3071
   },
   glacialize: {
     onModifyTypePriority: -1,
@@ -1340,7 +1340,7 @@ const Abilities = {
     },
     name: "Glacialize",
     rating: 4,
-    num: 378
+    num: 3072
   },
   grasspelt: {
     onModifyDefPriority: 6,
@@ -1362,7 +1362,7 @@ const Abilities = {
     flags: {},
     name: "Gravity Sling",
     rating: 3,
-    num: 455
+    num: 3073
   },
   hailwarning: {
     onStart(source) {
@@ -1370,7 +1370,7 @@ const Abilities = {
     },
     name: "Hail Warning",
     rating: 4,
-    num: 362
+    num: 3074
   },
   harvest: {
     onResidualOrder: 28,
@@ -1407,7 +1407,7 @@ const Abilities = {
     flags: {},
     name: "Haunt",
     rating: 3,
-    num: 448
+    num: 3075
   },
   haunting: {
     onModifySpe(spe, pokemon) {
@@ -1418,7 +1418,7 @@ const Abilities = {
     flags: {},
     name: "Haunting",
     rating: 3,
-    num: 456
+    num: 3076
   },
   hayfever: {
     onStart(source) {
@@ -1426,7 +1426,7 @@ const Abilities = {
     },
     name: "Hay Fever",
     rating: 4,
-    num: 434
+    num: 3077
   },
   hazysurge: {
     onStart(pokemon) {
@@ -1439,7 +1439,7 @@ const Abilities = {
     },
     name: "Hazy Surge",
     rating: 4,
-    num: 428
+    num: 3078
   },
   headache: {
     onModifySpAPriority: 5,
@@ -1450,7 +1450,7 @@ const Abilities = {
     },
     name: "Headache",
     rating: 3.5,
-    num: 421
+    num: 3079
   },
   heeho: {
     onStart(source) {
@@ -1468,7 +1468,7 @@ const Abilities = {
 	flags: {},
     name: "Hee-Ho",
     rating: 69,
-    num: 6969,
+    num: 3080,
   },
   heliophobia: {
     onSourceBasePowerPriority: 17,
@@ -1489,7 +1489,7 @@ const Abilities = {
     isBreakable: true,
     name: "Heliophobia",
     rating: 3,
-    num: 319
+    num: 3081
   },
   highnoon: {
     onModifyPriority(priority, pokemon, target, move) {
@@ -1500,7 +1500,7 @@ const Abilities = {
     },
     name: "High Noon",
     rating: 4,
-    num: 312
+    num: 3082
   },
   hubris: {
     onSourceAfterFaint(length, target, source, effect) {
@@ -1510,7 +1510,7 @@ const Abilities = {
     },
     name: "Hubris",
     rating: 3,
-    num: 320
+    num: 3083
   },
   bloodbath: {
     onResidualOrder: 5,
@@ -1525,7 +1525,7 @@ const Abilities = {
     flags: {},
     name: "Bloodbath",
     rating: 1.5,
-    num: 451
+    num: 3084
   },
   iceslick: {
     onImmunity(type, pokemon) {
@@ -1539,7 +1539,7 @@ const Abilities = {
     },
     name: "Ice Slick",
     rating: 3,
-    num: 399
+    num: 3085
   },
   incantation: {
     onStart(source) {
@@ -1547,7 +1547,7 @@ const Abilities = {
     },
     name: "Incantation",
     rating: 4,
-    num: 438
+    num: 3086
   },
   insatiable: {
     onBasePowerPriority: 8,
@@ -1561,7 +1561,7 @@ const Abilities = {
     },
     name: "Insatiable",
     rating: 3,
-    num: 379
+    num: 3087
   },
   intoxicate: {
     onModifyTypePriority: -1,
@@ -1587,7 +1587,7 @@ const Abilities = {
     },
     name: "Intoxicate",
     rating: 4,
-    num: 321
+    num: 3088
   },
   invigorate: {
     onModifyTypePriority: -1,
@@ -1613,7 +1613,7 @@ const Abilities = {
     },
     name: "Invigorate",
     rating: 4,
-    num: 358
+    num: 3089
   },
   ironjaw: {
     onBasePowerPriority: 19,
@@ -1624,7 +1624,7 @@ const Abilities = {
     },
     name: "Iron Jaw",
     rating: 3.5,
-    num: 400
+    num: 3090
   },
   irrelephant: {
     onStart(pokemon) {
@@ -1635,7 +1635,7 @@ const Abilities = {
     },
     name: "Irrelephant",
     rating: 3,
-    num: 415
+    num: 3091
   },
   junglespirit: {
     onModifyMove(move) {
@@ -1643,7 +1643,7 @@ const Abilities = {
     },
     name: "Jungle Spirit",
     rating: 4,
-    num: 360
+    num: 3092
   },
   laserfocus: {
     onBasePowerPriority: 19,
@@ -1655,7 +1655,7 @@ const Abilities = {
     },
     name: "Laser Focus",
     rating: 3.5,
-    num: 389
+    num: 3093
   },
   lazy: {
     onStart(pokemon) {
@@ -1666,7 +1666,7 @@ const Abilities = {
     },
     name: "Lazy",
     rating: 1,
-    num: 336
+    num: 3094
   },
   leadskin: {
     onTryHit(target, source, move) {
@@ -1677,7 +1677,7 @@ const Abilities = {
     },
     name: "Lead Skin",
     rating: 2,
-    num: 337
+    num: 3095
   },
   leafguard: {
     onSetStatus(status, target, source, effect) {
@@ -1711,7 +1711,7 @@ const Abilities = {
     isBreakable: true,
     name: "Levin Skin",
     rating: 3,
-    num: 367
+    num: 3096
   },
   lithe: {
     onModifySpePriority: 5,
@@ -1722,7 +1722,7 @@ const Abilities = {
     },
     name: "Lithe",
     rating: 3.5,
-    num: 368
+    num: 3097
   },
   luckystar: {
     onModifyAccuracyPriority: 5,
@@ -1731,7 +1731,7 @@ const Abilities = {
     },
     name: "Lucky Star",
     rating: 5,
-    num: 369
+    num: 3098
   },
   magicianshat: {
     onStart(source) {
@@ -1739,7 +1739,7 @@ const Abilities = {
     },
     name: "Magician's Hat",
     rating: 4,
-    num: 430
+    num: 3099
   },
   majesticaura: {
     onFoeTryMove(target, source, move) {
@@ -1757,7 +1757,7 @@ const Abilities = {
     isBreakable: true,
     name: "Majestic Aura",
     rating: 2.5,
-    num: 414
+    num: 3100
   },
   masterinstinct: {
     onModifyAccuracyPriority: 10,
@@ -1769,7 +1769,7 @@ const Abilities = {
     flags: { breakable: 1 },
     name: "Master Instinct",
     rating: 1.5,
-    num: 457
+    num: 3101
   },
   icecleats: {
     onImmunity(type, pokemon) {
@@ -1783,7 +1783,7 @@ const Abilities = {
     },
     name: "Ice Cleats",
     rating: 2,
-    num: 409
+    num: 3102
   },
   naturaltoxin: {
     onSourceModifyAtkPriority: 6,
@@ -1803,7 +1803,7 @@ const Abilities = {
     isBreakable: true,
     name: "Natural Toxin",
     rating: 3.5,
-    num: 422
+    num: 3103
   },
   nefarious: {
     onModifyPriority(priority, pokemon, target, move) {
@@ -1814,7 +1814,7 @@ const Abilities = {
     },
     name: "Nefarious",
     rating: 4,
-    num: 380
+    num: 3104
   },
   nesting: {
     onWeather(target, source, effect) {
@@ -1833,7 +1833,7 @@ const Abilities = {
     flags: {},
     name: "Nesting",
     rating: 1.5,
-    num: 458
+    num: 3105
   },
   noctem: {
     onStart(source) {
@@ -1841,7 +1841,7 @@ const Abilities = {
     },
     name: "Noctem",
     rating: 4,
-    num: 322
+    num: 3106
   },
   ojospetreos: {
     onStart(pokemon) {
@@ -1875,7 +1875,7 @@ const Abilities = {
     flags: {},
     name: "Ojos Petreos",
     rating: 3.5,
-    num: 460
+    num: 3107
   },
   oraoraoraora: {
     onPrepareHit(target, source, move) {
@@ -1885,7 +1885,7 @@ const Abilities = {
 	},
     name: "ORAORAORAORA!",
     rating: 3,
-    num: 410
+    num: 3108
   },
   orbitaltide: {
     onStart(source) {
@@ -1893,7 +1893,7 @@ const Abilities = {
     },
     name: "Orbital Tide",
     rating: 4,
-    num: 299
+    num: 3109
   },
   perforate: {
     onModifyMovePriority: -5,
@@ -1906,7 +1906,7 @@ const Abilities = {
     },
     name: "Perforate",
     rating: 3,
-    num: 300
+    num: 3110
   },
   permafrost: {
     onModifyDef(def, pokemon) {
@@ -1916,7 +1916,7 @@ const Abilities = {
     },
     name: "Permafrost",
     rating: 3,
-    num: 301
+    num: 3111
   },
   petrify: {
     onStart(pokemon) {
@@ -1935,7 +1935,7 @@ const Abilities = {
     },
     name: "Petrify",
     rating: 3.5,
-    num: 338
+    num: 3112
   },
   phototroph: {
     onWeather(target, source, effect) {
@@ -1947,7 +1947,7 @@ const Abilities = {
     },
     name: "phototroph",
     rating: 1.5,
-    num: 323
+    num: 3113
   },
   pielpunica: {
     onSourceModifyAtkPriority: 6,
@@ -1967,7 +1967,7 @@ const Abilities = {
     flags: { breakable: 1 },
     name: "Piel Punica",
     rating: 3.5,
-    num: 459
+    num: 3114
   },
   pollution: {
     onStart(source) {
@@ -1975,7 +1975,7 @@ const Abilities = {
     },
     name: "Pollution",
     rating: 4,
-    num: 302
+    num: 3115
   },
   powerfist: {
     onBasePowerPriority: 23,
@@ -1987,7 +1987,7 @@ const Abilities = {
     },
     name: "Power Fist",
     rating: 3,
-    num: 381
+    num: 3116
   },
   powerofalchemy: {
     onAllyFaint(target) {
@@ -2029,7 +2029,7 @@ const Abilities = {
     },
     name: "Prismatic Hue",
     rating: 4,
-    num: 426
+    num: 3117
   },
   prismguard: {
     onDamagingHitOrder: 1,
@@ -2040,7 +2040,7 @@ const Abilities = {
     },
     name: "Prism Guard",
     rating: 2.5,
-    num: 416
+    num: 3118
   },
   psychocall: {
     onModifyAtkPriority: 5,
@@ -2059,7 +2059,7 @@ const Abilities = {
     },
     name: "Psycho Call",
     rating: 3.5,
-    num: 324
+    num: 3119
   },
   psychout: {
     onStart(pokemon) {
@@ -2078,7 +2078,7 @@ const Abilities = {
     },
     name: "Psych Out",
     rating: 3.5,
-    num: 303
+    num: 3120
   },
   radsipper: {
     onTryHitPriority: 1,
@@ -2111,7 +2111,7 @@ const Abilities = {
     flags: { breakable: 1 },
     name: "Rad Sipper",
     rating: 3.5,
-    num: 452
+    num: 3121
   },
   receiver: {
     onAllyFaint(target) {
@@ -2140,7 +2140,7 @@ const Abilities = {
     },
     name: "Receiver",
     rating: 0,
-    num: 222
+    num: 3122
   },
   regalia: {
     onModifyTypePriority: -1,
@@ -2166,7 +2166,7 @@ const Abilities = {
     },
     name: "Regalia",
     rating: 4,
-    num: 382
+    num: 3123
   },
   resolute: {
     onTryHit(pokemon, target, move) {
@@ -2185,7 +2185,7 @@ const Abilities = {
     isBreakable: true,
     name: "Resolute",
     rating: 3,
-    num: 383
+    num: 3124
   },
   rosesthorns: {
     onDamagingHit(damage, target, source, move) {
@@ -2198,7 +2198,7 @@ const Abilities = {
     },
     name: "Rose's Thorns",
     rating: 3.5,
-    num: 423
+    num: 3125
   },
   sandforce: {
     onBasePowerPriority: 21,
@@ -2217,7 +2217,7 @@ const Abilities = {
     flags: {},
     name: "Sand Force",
     rating: 2,
-    num: 159
+    num: 3126
   },
   sandman: {
     onDamagingHit(damage, target, source, move) {
@@ -2229,7 +2229,7 @@ const Abilities = {
     },
     name: "Sandman",
     rating: 1.5,
-    num: 356
+    num: 3127
   },
   sandpit: {
     onStart(pokemon) {
@@ -2248,7 +2248,7 @@ const Abilities = {
     },
     name: "Sand PIt",
     rating: 3.5,
-    num: 424
+    num: 3128
   },
   sandrush: {
     onModifySpe(spe, pokemon) {
@@ -2263,7 +2263,7 @@ const Abilities = {
     flags: {},
     name: "Sand Rush",
     rating: 3,
-    num: 146
+    num: 3129
   },
   sandveil: {
     onImmunity(type, pokemon) {
@@ -2292,7 +2292,7 @@ const Abilities = {
     },
     name: "Scavenger",
     rating: 3.5,
-    num: 304
+    num: 3130
   },
   scarecrow: {
     onTryHit(target, source, move) {
@@ -2303,7 +2303,7 @@ const Abilities = {
 	},
 	name: "Scarecrow",
 	rating: 2,
-    num: 357
+    num: 3131
   },
   secretion: {
     onStart(source) {
@@ -2311,7 +2311,7 @@ const Abilities = {
     },
     name: "secretion",
     rating: 4,
-    num: 437
+    num: 3132
   },
   selfsufficient: {
     onResidualOrder: 5,
@@ -2321,7 +2321,7 @@ const Abilities = {
     },
     name: "Self Sufficient",
     rating: 3,
-    num: 411
+    num: 3133
   },
   shadowcall: {
     onModifyAtkPriority: 5,
@@ -2340,7 +2340,7 @@ const Abilities = {
     },
     name: "Shadow Call",
     rating: 3.5,
-    num: 325
+    num: 3134
   },
   shadowdance: {
     onModifySpe(spe, pokemon) {
@@ -2350,7 +2350,7 @@ const Abilities = {
     },
     name: "Shadow Dance",
     rating: 3,
-    num: 326
+    num: 3135
   },
   shadowsynergy: {
     onModifyAtkPriority: 5,
@@ -2369,7 +2369,7 @@ const Abilities = {
     },
     name: "Shadow Synergy",
     rating: 3.5,
-    num: 327
+    num: 3136
   },
   sharpcoral: {
     onModifyAtkPriority: 5,
@@ -2390,7 +2390,7 @@ const Abilities = {
     },
     name: "Sharp Coral",
     rating: 5,
-    num: 339
+    num: 3137
   },
   siegedrive: {
     onBasePowerPriority: 19,
@@ -2402,7 +2402,7 @@ const Abilities = {
     },
     name: "Siege Drive",
     rating: 3.5,
-    num: 384
+    num: 3138
   },
   siphon: {
     onModifyMove(move) {
@@ -2414,7 +2414,7 @@ const Abilities = {
     },
 	name: "Siphon",
 	rating: 2,
-	num: 401
+	num: 3139
   },
   skyscourge: {
     onStart(source) {
@@ -2422,7 +2422,7 @@ const Abilities = {
     },
     name: "Sky Scourge",
     rating: 4,
-    num: 386
+    num: 3140
   },
   specialist: {
     onBasePowerPriority: 19,
@@ -2434,7 +2434,7 @@ const Abilities = {
     },
     name: "Specialist",
     rating: 3.5,
-    num: 391
+    num: 3141
   },
   spectraljaws: {
     onModifyMove(move) {
@@ -2444,19 +2444,19 @@ const Abilities = {
     },
     name: "Spectral Jaws",
     rating: 3.5,
-    num: 417
+    num: 3142
   },
   speedswap: {
     onStart(source) {
-      if (this.field.isTerrain('trickroom')) {
+      if (this.field.isTerrain("trickroom")) {
        this.field.clearTerrain();
       } else {
-       this.field.setTerrain('trickroom');
+       this.field.setTerrain("trickroom");
       }
     },
     name: "Speed Swap",
     rating: 4,
-    num: 328
+    num: 3143
   },
   spiritcall: {
     onModifyAtkPriority: 5,
@@ -2475,7 +2475,7 @@ const Abilities = {
     },
     name: "Spirit Call",
     rating: 3.5,
-    num: 340
+    num: 3144
   },
   sprint: {
     onDamagingHit(damage, target, source, effect) {
@@ -2483,7 +2483,7 @@ const Abilities = {
     },
     name: "Sprint",
     rating: 3.5,
-    num: 348
+    num: 3145
   },
   soundboost: {
     onBasePowerPriority: 19,
@@ -2495,7 +2495,7 @@ const Abilities = {
     },
     name: "Sound Boost",
     rating: 3.5,
-    num: 341
+    num: 3146
   },
   standoff: {
     onStart(source) {
@@ -2503,7 +2503,7 @@ const Abilities = {
     },
     name: "Stand Off",
     rating: 4,
-    num: 439
+    num: 3147
   },
   seance: {
     onStart(source) {
@@ -2511,7 +2511,7 @@ const Abilities = {
     },
     name: "Seance",
     rating: 4,
-    num: 440
+    num: 3148
   },
   stormbringer: {
     onStart(source) {
@@ -2519,7 +2519,7 @@ const Abilities = {
     },
     name: "Stormbringer",
     rating: 4,
-    num: 342
+    num: 3149
   },
   striker: {
     onBasePowerPriority: 19,
@@ -2531,7 +2531,7 @@ const Abilities = {
     },
     name: "Striker",
     rating: 3.5,
-    num: 412
+    num: 3150
   },
   stubborn: {
     onDamage(damage, target, source, effect) {
@@ -2572,7 +2572,7 @@ const Abilities = {
     },
     name: "stubborn",
     rating: 4,
-    num: 402
+    num: 3151
   },
   sunbathe: {
     onWeather(target, source, effect) {
@@ -2582,7 +2582,7 @@ const Abilities = {
     },
     name: "Sunbathe",
     rating: 1,
-    num: 305
+    num: 3152
   },
   tactician: {
     onBasePowerPriority: 8,
@@ -2594,7 +2594,7 @@ const Abilities = {
     },
     name: "Tactician",
     rating: 5,
-    num: 370,
+    num: 3153,
   },
   tenacious: {
     onModifyDefPriority: 5,
@@ -2603,7 +2603,7 @@ const Abilities = {
     },
     name: "Tenacious",
     rating: 5,
-    num: 371
+    num: 3154
   },
   tenacity: {
     // upokecenter says this is implemented as an added secondary effect
@@ -2621,7 +2621,7 @@ const Abilities = {
     },
     name: "Tenacity",
     rating: 2,
-    num: 349
+    num: 3155
   },
   terrorize: {
     onModifyTypePriority: -1,
@@ -2647,7 +2647,7 @@ const Abilities = {
     },
     name: "Terrorize",
     rating: 4,
-    num: 306
+    num: 3156
   },
   trace: {
     onStart(pokemon) {
@@ -2696,7 +2696,7 @@ const Abilities = {
     },
     name: "Transcendence",
     rating: 4,
-    num: 441
+    num: 3157
   },
   unstable: {
     onPrepareHit(source, target, move) {
@@ -2733,7 +2733,7 @@ const Abilities = {
     },
     name: "Unstable",
     rating: 4,
-    num: 354
+    num: 3158
   },
   valiantshield: {
     onStart(pokemon) {
@@ -2742,7 +2742,7 @@ const Abilities = {
     },
     name: "Valiant Shield",
     rating: 3.5,
-    num: 413
+    num: 3159
   },
   vampiric: {
     onModifyMove(move) {
@@ -2754,7 +2754,7 @@ const Abilities = {
     },
 	name: "vampiric",
 	rating: 2,
-	num: 418
+	num: 3160
   },
   vibranthue: {
     onStart(pokemon) {
@@ -2767,7 +2767,7 @@ const Abilities = {
     },
     name: "Vibrant Hue",
     rating: 4,
-    num: 427
+    num: 3161
   },
   visionary: {
     onModifyMovePriority: -5,
@@ -2787,7 +2787,7 @@ const Abilities = {
     },
     name: "Visionary",
     rating: 3,
-    num: 372
+    num: 3162
   },
   voicetuning: {
     onModifyMove(move) {
@@ -2795,7 +2795,7 @@ const Abilities = {
     },
     name: "Voice Tuning",
     rating: 4,
-    num: 361
+    num: 3163
   },
   warpmist: {
     onTryHit(target, source, move) {
@@ -2812,7 +2812,7 @@ const Abilities = {
     },
     name: "Warp Mist",
     rating: 4,
-    num: 435
+    num: 3164
   },
   windforce: {
     onTryHitPriority: 1,
@@ -2834,7 +2834,7 @@ const Abilities = {
     isBreakable: true,
     name: "Wind Force",
     rating: 3,
-    num: 330
+    num: 3165
   },
   windturbine: {
     onStart(pokemon) {
@@ -2847,7 +2847,7 @@ const Abilities = {
     },
     name: "Wind Turbine",
     rating: 4,
-    num: 425
+    num: 3166
   },
   wizardstome: {
     onStart(source) {
@@ -2855,7 +2855,7 @@ const Abilities = {
     },
     name: "Wizard's Tome",
     rating: 4,
-    num: 430
+    num: 3167
   },
   xenoforce: {
     onModifyAtk(atk) {
@@ -2870,7 +2870,7 @@ const Abilities = {
     },
     name: "Xenoforce",
     rating: 3,
-    num: 351
+    num: 3168
   }
 };
 //# sourceMappingURL=abilities.js.map

@@ -23,7 +23,7 @@ __export(moves_exports, {
 module.exports = __toCommonJS(moves_exports);
 const Moves = {
   abyssallure: {
-    num: 1154,
+    num: 3000,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -45,7 +45,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   acesplay: {
-    num: 1297,
+    num: 3001,
     accuracy: 100,
     basePower: 95,
     category: "Speecial",
@@ -60,7 +60,7 @@ const Moves = {
     contestType: "Clever"
   },
   achillesheel: {
-    num: 967,
+    num: 3002,
     accuracy: true,
     basePower: 50,
     category: "Physical",
@@ -78,7 +78,7 @@ const Moves = {
     contestType: "Cool"
   },
   acidrain: {
-    num: 957,
+    num: 3003,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -98,7 +98,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, wind: 1, legendary: 1 }
   },
   aircannon: {
-    num: 1051,
+    num: 3004,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -112,7 +112,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   allure: {
-    num: 1214,
+    num: 3005,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -137,7 +137,7 @@ const Moves = {
     contestType: "Tough"
   },
   ampclaw: {
-    num: 1252,
+    num: 3006,
     accuracy: 100,
     basePower: 85,
     category: "Physical",
@@ -168,7 +168,7 @@ const Moves = {
     contestType: "Tough"
   },
   ancientroarsound: {
-    num: 1095,
+    num: 3007,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -195,7 +195,7 @@ const Moves = {
     contestType: "Tough"
   },
   antivirusnet: {
-    num: 1338,
+    num: 3008,
     accuracy: 85,
     basePower: 35,
     category: "Physical",
@@ -210,7 +210,7 @@ const Moves = {
     contestType: "Tough"
   },
   aquaslam: {
-    num: 1052,
+    num: 3009,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -229,7 +229,7 @@ const Moves = {
     contestType: "Tough"
   },
   arceanbanish: {
-    num: 1323,
+    num: 3010,
     accuracy: 30,
     basePower: 0,
     category: "Special",
@@ -246,7 +246,7 @@ const Moves = {
     contestType: "Cool"
   },
   asteroidbelt: {
-    num: 958,
+    num: 3011,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -277,7 +277,7 @@ const Moves = {
     contestType: "Tough"
   },
   asteroidshot: {
-    num: 901,
+    num: 3012,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -298,7 +298,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   astrallance: {
-    num: 1251,
+    num: 3013,
     accuracy: true,
     basePower: 80,
     category: "Special",
@@ -313,7 +313,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   astralshot: {
-    num: 1037,
+    num: 3014,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -327,7 +327,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   atomicpunch: {
-    num: 972,
+    num: 3015,
     accuracy: 95,
     basePower: 80,
     category: "Physical",
@@ -344,7 +344,7 @@ const Moves = {
     contestType: "Cute"
   },
   atomsplit: {
-    num: 959,
+    num: 3016,
     accuracy: 100,
     basePower: 250,
     category: "special",
@@ -359,7 +359,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   atomsplitnuclear: {
-    num: 1097,
+    num: 3017,
     accuracy: 100,
     basePower: 250,
     category: "special",
@@ -455,7 +455,7 @@ const Moves = {
     contestType: "Cute"
   },
   audacity: {
-    num: 1155,
+    num: 3018,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -478,7 +478,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   auraprojection: {
-    num: 1312,
+    num: 3019,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -498,7 +498,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   aurorawave: {
-    num: 1280,
+    num: 3020,
     accuracy: 100,
     basePower: 65,
     category: "Special",
@@ -519,7 +519,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
   babble: {
-    num: 1224,
+    num: 3021,
     accuracy: 100,
     basePower: 45,
     category: "Special",
@@ -533,7 +533,7 @@ const Moves = {
     contestType: "Tough"
   },
   banishingfist: {
-    num: 1319,
+    num: 3022,
     accuracy: 80,
     basePower: 100,
     category: "Physical",
@@ -548,7 +548,7 @@ const Moves = {
     contestType: "Cute"
   },
   bansheesscream: {
-    num: 996,
+    num: 3023,
     accuracy: 80,
     basePower: 100,
     category: "Special",
@@ -565,7 +565,7 @@ const Moves = {
     contestType: "Clever"
   },
   barbedtackle: {
-    num: 926,
+    num: 3024,
     accuracy: 100,
     basePower: 45,
     category: "Physical",
@@ -582,7 +582,7 @@ const Moves = {
     contestType: "Tough"
   },
   barrierlight: {
-    num: 1105,
+    num: 3025,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -601,7 +601,7 @@ const Moves = {
     contestType: "Cool"
   },
   basilisksglare: {
-    num: 924,
+    num: 3026,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -623,7 +623,7 @@ const Moves = {
     contestType: "Cute"
   },
   batteringram: {
-    num: 916,
+    num: 3027,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -642,7 +642,7 @@ const Moves = {
     contestType: "Cool"
   },
   beguile: {
-    num: 1193,
+    num: 3028,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -674,7 +674,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, nosleeptalk: 1, failinstruct: 1, speed: 1 }
   },
   bigbang: {
-    num: 1038,
+    num: 3029,
     accuracy: 100,
     basePower: 105,
     category: "Physical",
@@ -700,7 +700,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   blackhole: {
-    num: 1288,
+    num: 3030,
     accuracy: 90,
     basePower: 130,
     category: "Special",
@@ -719,7 +719,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   blackout: {
-    num: 1158,
+    num: 3031,
     accuracy: 85,
     basePower: 70,
     category: "Physical",
@@ -736,7 +736,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   blastcannon: {
-    num: 1276,
+    num: 3032,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -777,7 +777,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   bluenote: {
-    num: 1238,
+    num: 3033,
     accuracy: 75,
     basePower: 0,
     category: "Status",
@@ -794,7 +794,7 @@ const Moves = {
     contestType: "Clever"
   },
   boltblitz: {
-    num: 1156,
+    num: 3034,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -814,7 +814,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   bonesweep: {
-    num: 927,
+    num: 3035,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -828,7 +828,7 @@ const Moves = {
     contestType: "Tough"
   },
   boomburstsound: {
-    num: 998,
+    num: 3036,
     accuracy: 100,
     basePower: 140,
     category: "Special",
@@ -859,7 +859,7 @@ const Moves = {
     }
   },
   bramblebash: {
-    num: 1198,
+    num: 3037,
     accuracy: 100,
     basePower: 65,
     category: "Physical",
@@ -877,7 +877,7 @@ const Moves = {
     contestType: "Tough"
   },
   brace: {
-    num: 902,
+    num: 3038,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -911,7 +911,7 @@ const Moves = {
     contestType: "Cool"
   },
   brainfreeze: {
-    num: 928,
+    num: 3039,
     accuracy: 100,
     basePower: 85,
     category: "Special",
@@ -928,7 +928,7 @@ const Moves = {
     contestType: "Cool"
   },
   brainstorm: {
-    num: 929,
+    num: 3040,
     accuracy: 90,
     basePower: 70,
     category: "Special",
@@ -953,7 +953,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   bufu: {
-    num: 6969,
+    num: 3041,
     accuracy: 90,
     basePower: 40,
     category: "Special",
@@ -973,7 +973,7 @@ const Moves = {
     type: "Ice",
   },
   bufula: {
-    num: 6969,
+    num: 3042,
     accuracy: 90,
     basePower: 70,
     category: "Special",
@@ -993,7 +993,7 @@ const Moves = {
     type: "Ice",
   },
   bufudyne: {
-    num: 6969,
+    num: 3043,
     accuracy: 90,
     basePower: 95,
     category: "Special",
@@ -1013,7 +1013,7 @@ const Moves = {
     type: "Ice",
   },
   bugbomb: {
-    num: 1053,
+    num: 3044,
     accuracy: 95,
     basePower: 70,
     category: "Special",
@@ -1030,7 +1030,7 @@ const Moves = {
     contestType: "Cute"
   },
   bugbuzzsound: {
-    num: 1001,
+    num: 3045,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -1062,7 +1062,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   buggnaw: {
-    num: 1283,
+    num: 3046,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -1076,7 +1076,7 @@ const Moves = {
     contestType: "Tough"
   },
   bugnoise: {
-    num: 1130,
+    num: 3047,
     accuracy: 90,
     basePower: 120,
     category: "Special",
@@ -1092,7 +1092,7 @@ const Moves = {
     type: "Bug"
   },
   bugout: {
-    num: 951,
+    num: 3048,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -1115,7 +1115,7 @@ const Moves = {
 	flags: { metronome: 1, noassist: 1, failcopycat: 1, legendary: 1 }
   },
   cacophony: {
-    num: 1333,
+    num: 3049,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -1137,7 +1137,7 @@ const Moves = {
     contestType: "Cool"
   },
   cactussmash: {
-    num: 930,
+    num: 3050,
     accuracy: 100,
     basePower: 115,
     category: "Physical",
@@ -1155,7 +1155,7 @@ const Moves = {
     contestType: "Cool"
   },
   carbonize: {
-    num: 1157,
+    num: 3051,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -1173,7 +1173,7 @@ const Moves = {
     contestType: "Cool"
   },
   cataclysm: {
-    num: 1190,
+    num: 3052,
     accuracy: 100,
     basePower: 200,
     category: "Special",
@@ -1190,7 +1190,7 @@ const Moves = {
     contestType: "Cool"
   },
   causticbreath: {
-    num: 903,
+    num: 3053,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -1210,7 +1210,7 @@ const Moves = {
     contestType: "Tough"
   },
   cavein: {
-    num: 1275,
+    num: 3054,
     accuracy: 85,
     basePower: 90,
     category: "Physical",
@@ -1225,7 +1225,7 @@ const Moves = {
     contestType: "Tough"
   },
   chairdrop: {
-    num: 955,
+    num: 3055,
     accuracy: 95,
     basePower: 100,
     category: "Physical",
@@ -1243,7 +1243,7 @@ const Moves = {
     contestType: "Tough"
   },
   channel: {
-    num: 1151,
+    num: 3056,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1279,7 +1279,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   charminggnash: {
-    num: 1278,
+    num: 3057,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -1296,7 +1296,7 @@ const Moves = {
     contestType: "Tough"
   },
   chattersound: {
-    num: 999,
+    num: 3058,
     accuracy: 100,
     basePower: 65,
     category: "Special",
@@ -1326,7 +1326,7 @@ const Moves = {
     contestType: "Cute"
   },
   cheapshot: {
-    num: 904,
+    num: 3059,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -1340,7 +1340,7 @@ const Moves = {
     type: "Dark"
   },
   chomper: {
-    num: 1301,
+    num: 3060,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -1359,7 +1359,7 @@ const Moves = {
     contestType: "Tough"
   },
   cinderbreath: {
-    num: 931,
+    num: 3061,
     accuracy: 100,
     basePower: 55,
     category: "Special",
@@ -1378,7 +1378,7 @@ const Moves = {
     contestType: "Tough"
   },
   cloudburst: {
-    num: 1159,
+    num: 3062,
     accuracy: 90,
     basePower: 140,
     category: "Special",
@@ -1397,7 +1397,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   cloudburstwind: {
-    num: 1160,
+    num: 3063,
     accuracy: 90,
     basePower: 140,
     category: "Special",
@@ -1420,7 +1420,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
   },
   cometcrash: {
-    num: 1046,
+    num: 3064,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -1435,7 +1435,7 @@ const Moves = {
     contestType: "Cute"
   },
   cometshower: {
-    num: 1039,
+    num: 3065,
     accuracy: 95,
     basePower: 80,
     category: "Physical",
@@ -1452,7 +1452,7 @@ const Moves = {
     contestType: "Cool"
   },
   constructionblocks: {
-    num: 1118,
+    num: 3066,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1480,7 +1480,7 @@ const Moves = {
     contestType: "Cool"
   },
   cookiecut: {
-    num: 1194,
+    num: 3067,
     accuracy: 100,
     basePower: 10,
     category: "Physical",
@@ -1506,7 +1506,7 @@ const Moves = {
     contestType: "Tough"
   },
   copypaste: {
-    num: 1281,
+    num: 3068,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1556,7 +1556,7 @@ const Moves = {
     contestType: "Clever"
   },
   coralbreak: {
-    num: 973,
+    num: 3069,
     accuracy: 95,
     basePower: 80,
     category: "Special",
@@ -1575,7 +1575,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   corrode: {
-    num: 919,
+    num: 3070,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -1594,7 +1594,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   corrupt: {
-    num: 1215,
+    num: 3071,
     accuracy: 85,
     basePower: 0,
     category: "Status",
@@ -1617,7 +1617,7 @@ const Moves = {
     contestType: "Cool"
   },
   cosmicpowercosmic: {
-    num: 1101,
+    num: 3072,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1637,7 +1637,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   cosmicray: {
-    num: 1040,
+    num: 3073,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -1654,7 +1654,7 @@ const Moves = {
     contestType: "Cool"
   },
   cosmicrays: {
-    num: 1314,
+    num: 3074,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1767,7 +1767,7 @@ const Moves = {
     type: "Normal"
   },
   crackleslam: {
-    num: 1054,
+    num: 3075,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
@@ -1784,7 +1784,7 @@ const Moves = {
     contestType: "Cool"
   },
   creamwhip: {
-    num: 1246,
+    num: 3076,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -1807,7 +1807,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   crystalize: {
-    num: 1161,
+    num: 3077,
     accuracy: 90,
     basePower: 110,
     category: "Special",
@@ -1823,7 +1823,7 @@ const Moves = {
     type: "Rock"
   },
   crystalizecrystal: {
-    num: 1162,
+    num: 3078,
     accuracy: 90,
     basePower: 110,
     category: "Special",
@@ -1839,7 +1839,7 @@ const Moves = {
     type: "Crystal"
   },
   crystallization: {
-    num: 1036,
+    num: 3079,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -1861,7 +1861,7 @@ const Moves = {
     contestType: "Cute"
   },
   crystalrush: {
-    num: 968,
+    num: 3080,
     accuracy: 100,
     basePower: 45,
     category: "Physical",
@@ -1875,7 +1875,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   cursedwrath: {
-    num: 1266,
+    num: 3081,
     accuracy: 100,
     basePower: 0,
     basePowerCallback(pokemon, target) {
@@ -1914,7 +1914,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, slicing: 1, hm: 1 }
   },
   cymbalcrash: {
-    num: 1119,
+    num: 3082,
     accuracy: 95,
     basePower: 90,
     category: "Physical",
@@ -1931,7 +1931,7 @@ const Moves = {
     contestType: "Cool"
   },
   darkbargain: {
-    num: 1191,
+    num: 3083,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -1952,7 +1952,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   darkeningbolt: {
-    num: 1239,
+    num: 3084,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -1971,7 +1971,7 @@ const Moves = {
     contestType: "Cool"
   },
   darkmatter: {
-    num: 920,
+    num: 3085,
     accuracy: 90,
     basePower: 150,
     category: "Special",
@@ -1988,7 +1988,7 @@ const Moves = {
     contestType: "Cool"
   },
   darkroar: {
-    num: 1131,
+    num: 3086,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -2002,7 +2002,7 @@ const Moves = {
     contestType: "Cool"
   },
   darkroarsound: {
-    num: 1132,
+    num: 3087,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -2029,7 +2029,7 @@ const Moves = {
     contestType: "Cool"
   },
   datatransfer: {
-    num: 1341,
+    num: 3088,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -2044,7 +2044,7 @@ const Moves = {
     contestType: "Clever"
   },
   dazzledust: {
-    num: 1163,
+    num: 3089,
     accuracy: 95,
     basePower: 0,
     damageCallback(pokemon, target) {
@@ -2061,7 +2061,7 @@ const Moves = {
     contestType: "Tough"
   },
   decapattack: {
-    num: 1041,
+    num: 3090,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -2077,7 +2077,7 @@ const Moves = {
     contestType: "Tough"
   },
   deafeningnoise: {
-    num: 1334,
+    num: 3091,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -2104,7 +2104,7 @@ const Moves = {
     contestType: "Clever"
   },
   decode: {
-	num: 1328,
+	num: 3092,
 	accuracy: 100,
 	basePower: 60,
 	category: "Special",
@@ -2118,7 +2118,7 @@ const Moves = {
 	contestType: "Clever"
   },
   deepyawn: {
-    num: 1267,
+    num: 3093,
     accuracy: 75,
     basePower: 0,
     category: "Status",
@@ -2205,7 +2205,7 @@ const Moves = {
     contestType: "Cool"
   },
   defogwind: {
-    num: 1093,
+    num: 3094,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -2269,7 +2269,7 @@ const Moves = {
     contestType: "Cool"
   },
   dejavu: {
-    num: 1042,
+    num: 3095,
     accuracy: true,
     basePower: 105,
     category: "Special",
@@ -2283,7 +2283,7 @@ const Moves = {
     contestType: "Cool"
   },
   demoralize: {
-    num: 1153,
+    num: 3096,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -2312,7 +2312,7 @@ const Moves = {
     contestType: "Cute"
   },
   depthcharge: {
-    num: 960,
+    num: 3097,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -2329,7 +2329,7 @@ const Moves = {
     contestType: "Cute"
   },
   detox: {
-    num: 1213,
+    num: 3098,
     accuracy: 100,
     basePower: 130,
     category: "Special",
@@ -2353,7 +2353,7 @@ const Moves = {
     contestType: "Cute"
   },
   devastate: {
-    num: 1133,
+    num: 3099,
     accuracy: 85,
     basePower: 120,
     category: "Physical",
@@ -2372,7 +2372,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   devildarts: {
-    num: 1164,
+    num: 3100,
     accuracy: 100,
     basePower: 45,
     category: "Physical",
@@ -2388,7 +2388,7 @@ const Moves = {
     maxMove: { basePower: 130 }
   },
   diamondclaw: {
-    num: 1055,
+    num: 3101,
     accuracy: 95,
     basePower: 50,
     category: "Physical",
@@ -2410,7 +2410,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   diamondclawcrystal: {
-    num: 1114,
+    num: 3102,
     accuracy: 95,
     basePower: 50,
     category: "Physical",
@@ -2436,7 +2436,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   diamondstormcrystal: {
-    num: 1113,
+    num: 3103,
     accuracy: 95,
     basePower: 100,
     category: "Physical",
@@ -2501,7 +2501,7 @@ const Moves = {
     contestType: "Tough"
   },
   disarmingvoicesound: {
-    num: 1002,
+    num: 3104,
     accuracy: true,
     basePower: 40,
     category: "Special",
@@ -2528,7 +2528,7 @@ const Moves = {
     contestType: "Cute"
   },
   discofever: {
-    num: 1235,
+    num: 3105,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -2602,7 +2602,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   divinecall: {
-    num: 1332,
+    num: 3106,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -2640,7 +2640,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
   doubleshot: {
-    num: 1134,
+    num: 3107,
     accuracy: 100,
     basePower: 35,
     category: "Special",
@@ -2663,7 +2663,7 @@ const Moves = {
     contestType: "Tough"
   },
   dracoblitz: {
-    num: 932,
+    num: 3108,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -2681,7 +2681,7 @@ const Moves = {
     contestType: "Cool"
   },
   dracojet: {
-    num: 921,
+    num: 3109,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -2699,7 +2699,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, distance: 1, legendary: 1 }
   },
   dragonbeat: {
-    num: 1135,
+    num: 3110,
     accuracy: 90,
     basePower: 120,
     category: "Special",
@@ -2718,7 +2718,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonendurance: {
-    num: 1231,
+    num: 3111,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -2757,7 +2757,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   dragonforce: {
-    num: 1315,
+    num: 3112,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -2773,7 +2773,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonhide: {
-    num: 1056,
+    num: 3113,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -2792,7 +2792,7 @@ const Moves = {
     contestType: "Cool"
   },
   dragonify: {
-    num: 922,
+    num: 3114,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -2814,7 +2814,7 @@ const Moves = {
     contestType: "Cute"
   },
   dragonicbloom: {
-    num: 1058,
+    num: 3115,
     accuracy: 95,
     basePower: 100,
     category: "Physical",
@@ -2841,7 +2841,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonicflare: {
-    num: 1059,
+    num: 3116,
     accuracy: 95,
     basePower: 100,
     category: "Special",
@@ -2868,7 +2868,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonicglow: {
-    num: 1060,
+    num: 3117,
     accuracy: 95,
     basePower: 100,
     category: "Physical",
@@ -2895,7 +2895,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonicstrike: {
-    num: 1061,
+    num: 3118,
     accuracy: 95,
     basePower: 100,
     category: "Special",
@@ -2922,7 +2922,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonicwave: {
-    num: 1062,
+    num: 3119,
     accuracy: 95,
     basePower: 100,
     category: "Special",
@@ -2949,7 +2949,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dragonimpact: {
-    num: 1057,
+    num: 3120,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -2969,7 +2969,7 @@ const Moves = {
     contestType: "Tough"
   },
   dragonpledge: {
-    num: 1233,
+    num: 3121,
     accuracy: 100,
 	basePower: 80,
     category: "Special",
@@ -2983,7 +2983,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   drainlife: {
-    num: 974,
+    num: 3122,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -2998,7 +2998,7 @@ const Moves = {
     contestType: "Clever"
   },
   drajectile: {
-    num: 1291,
+    num: 3123,
     accuracy: 80,
     basePower: 100,
     category: "Physical",
@@ -3013,7 +3013,7 @@ const Moves = {
     contestType: "Cool"
   },
   drakonvoice: {
-    num: 923,
+    num: 3124,
     accuracy: 85,
     basePower: 105,
     category: "Special",
@@ -3027,7 +3027,7 @@ const Moves = {
     contestType: "Tough"
   },
   drakonvoicesound: {
-    num: 1096,
+    num: 3125,
     accuracy: 85,
     basePower: 105,
     category: "Special",
@@ -3054,7 +3054,7 @@ const Moves = {
     contestType: "Tough"
   },
   dryice: {
-    num: 1063,
+    num: 3126,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -3078,7 +3078,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dryneedles: {
-    num: 933,
+    num: 3127,
     accuracy: 95,
     basePower: 18,
     category: "Physical",
@@ -3093,7 +3093,7 @@ const Moves = {
     contestType: "Tough"
   },
   dustdevil: {
-    num: 961,
+    num: 3128,
     accuracy: 80,
     basePower: 90,
     category: "Special",
@@ -3119,7 +3119,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   duststorm: {
-    num: 1307,
+    num: 3129,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -3135,7 +3135,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   dustydash: {
-    num: 1064,
+    num: 3130,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -3156,7 +3156,7 @@ const Moves = {
 	flags: { protect: 1, failencore: 1, nosleeptalk: 1, failcopycat: 1, failmimic: 1, failinstruct: 1, noparentalbond: 1, legendary: 1 }
   },
   earthmover: {
-    num: 1216,
+    num: 3131,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -3174,7 +3174,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   echoedvoicesound: {
-    num: 999,
+    num: 3132,
     accuracy: 100,
     basePower: 40,
     basePowerCallback(pokemon, target, move) {
@@ -3213,7 +3213,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   echoingblow: {
-    num: 1120,
+    num: 3133,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -3227,7 +3227,7 @@ const Moves = {
     contestType: "Cool"
   },
   eevoboost: {
-    num: 1043,
+    num: 3134,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -3249,7 +3249,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   eldritchinvocation: {
-    num: 1322,
+    num: 3135,
     accuracy: 90,
     basePower: 150,
     category: "Special",
@@ -3266,7 +3266,7 @@ const Moves = {
     contestType: "Cool"
   },
   electrobash: {
-    num: 1295,
+    num: 3136,
     accuracy: 100,
     basePower: 85,
     category: "Physical",
@@ -3283,7 +3283,7 @@ const Moves = {
     contestType: "Cool"
   },
   electroburst: {
-    num: 1165,
+    num: 3137,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -3307,7 +3307,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
   },
   electroswing: {
-    num: 1237,
+    num: 3138,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -3324,7 +3324,7 @@ const Moves = {
     contestType: "Cool"
   },
   emperorsedge: {
-    num: 1253,
+    num: 3139,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -3339,7 +3339,7 @@ const Moves = {
     contestType: "Tough"
   },
   engorge: {
-    num: 1284,
+    num: 3140,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -3353,7 +3353,7 @@ const Moves = {
     contestType: "Tough"
   },
   engulf: {
-    num: 962,
+    num: 3141,
     accuracy: 100,
     basePower: 20,
     category: "Special",
@@ -3399,7 +3399,7 @@ const Moves = {
 	flags: { recharge: 1, protect: 1, mirror: 1, legendary: 1 }
   },
   eternalhex: {
-    num: 1305,
+    num: 3142,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -3422,7 +3422,7 @@ const Moves = {
     contestType: "Tough"
   },
   exsanguinate: {
-    num: 1289,
+    num: 3143,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -3437,7 +3437,7 @@ const Moves = {
     contestType: "Clever"
   },
   expunge: {
-    num: 976,
+    num: 3144,
     accuracy: 70,
     basePower: 110,
     category: "Special",
@@ -3466,7 +3466,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   faengrush: {
-    num: 934,
+    num: 3145,
     accuracy: 95,
     basePower: 80,
     category: "Physical",
@@ -3483,7 +3483,7 @@ const Moves = {
     contestType: "Cool"
   },
   fairypledge: {
-    num: 1220,
+    num: 3146,
     accuracy: 100,
 	basePower: 80,
     category: "Special",
@@ -3497,7 +3497,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   fairyrush: {
-    num: 1302,
+    num: 3147,
     accuracy: 75,
     basePower: 100,
     category: "Physical",
@@ -3518,7 +3518,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   fallout: {
-    num: 975,
+    num: 3148,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -3534,7 +3534,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   fangbarrage: {
-    num: 1207,
+    num: 3149,
     accuracy: 30,
     basePower: 0,
     category: "Physical",
@@ -3555,7 +3555,7 @@ const Moves = {
 	flags: { mirror: 1, noassist: 1, failcopycat: 1, speed: 1 }
   },
   feralclutch: {
-    num: 1223,
+    num: 3150,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -3570,7 +3570,7 @@ const Moves = {
     contestType: "Tough"
   },
   fever: {
-    num: 1065,
+    num: 3151,
     accuracy: 100,
     basePower: 60,
     category: "Special",
@@ -3587,7 +3587,7 @@ const Moves = {
     contestType: "Cool"
   },
   feyhammer: {
-    num: 1066,
+    num: 3152,
     accuracy: 85,
     basePower: 120,
     category: "Physical",
@@ -3601,7 +3601,7 @@ const Moves = {
     contestType: "Tough"
   },
   fiesta: {
-    num: 1000,
+    num: 3153,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -3643,7 +3643,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   firecracker: {
-    num: 1186,
+    num: 3154,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -3660,7 +3660,7 @@ const Moves = {
     contestType: "Cool"
   },
   firekunai: {
-    num: 1243,
+    num: 3155,
     accuracy: 95,
     basePower: 40,
     category: "Physical",
@@ -3674,7 +3674,7 @@ const Moves = {
     type: "Fire"
   },
   fireworks: {
-    num: 1067,
+    num: 3156,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -3700,7 +3700,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   fissionburst: {
-    num: 977,
+    num: 3157,
     accuracy: 100,
     basePower: 150,
     category: "special",
@@ -3715,7 +3715,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flameimpact: {
-    num: 978,
+    num: 3158,
     accuracy: 100,
     basePower: 65,
     category: "Physical",
@@ -3729,7 +3729,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flamejet: {
-    num: 953,
+    num: 3159,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -3743,7 +3743,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flamingfists: {
-    num: 1254,
+    num: 3160,
     accuracy: 100,
     basePower: 95,
     category: "Physical",
@@ -3768,7 +3768,7 @@ const Moves = {
     }
   },
   flashinglightning: {        
-	num: 1331,
+	num: 3161,
 	accuracy: 100,
 	basePower: 90,
 	category: "Physical",
@@ -3783,7 +3783,7 @@ const Moves = {
 	contestType: "Cool"
   },
   flashlight: {
-    num: 1104,
+    num: 3162,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -3806,7 +3806,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flashflood: {
-    num: 935,
+    num: 3163,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -3820,7 +3820,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flashbang: {
-    num: 997,
+    num: 3164,
     accuracy: 100,
     basePower: 65,
     category: "Special",
@@ -3835,7 +3835,7 @@ const Moves = {
     contestType: "Cool"
   },
   flashcannonlight: {
-    num: 1110,
+    num: 3165,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -3867,7 +3867,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   flashpulse: {
-    num: 996,
+    num: 3166,
     accuracy: 90,
     basePower: 85,
     category: "Special",
@@ -3884,7 +3884,7 @@ const Moves = {
     contestType: "Clever"
   },
   flavortest: {
-    num: 1242,
+    num: 3167,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -3905,7 +3905,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1, legendary: 1 }
   },
   flop: {
-    num: 1124,
+    num: 3168,
     accuracy: 80,
     basePower: 80,
     category: "Physical",
@@ -3922,7 +3922,7 @@ const Moves = {
     contestType: "Cool"
   },
   flowerpower: {
-    num: 1279,
+    num: 3169,
     accuracy: 100,
     basePower: 65,
     category: "Physical",
@@ -3940,7 +3940,7 @@ const Moves = {
     contestType: "Tough"
   },
   flubberfang: {
-    num: 1327,
+    num: 3170,
     accuracy: 95,
     basePower: 65,
     category: "Physical",
@@ -3986,7 +3986,7 @@ const Moves = {
     }
   },
   focalforce: {
-    num: 1350,
+    num: 3171,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -4004,7 +4004,7 @@ const Moves = {
     contestType: "Cool"
   },
   focusedram: {
-    num: 936,
+    num: 3172,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -4020,7 +4020,7 @@ const Moves = {
     contestType: "Tough"
   },
   foggystrike: {
-    num: 937,
+    num: 3173,
     accuracy: true,
     basePower: 55,
     category: "Physical",
@@ -4034,7 +4034,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   foghorn: {
-    num: 1306,
+    num: 3174,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4058,7 +4058,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   frostbite: {
-    num: 1136,
+    num: 3175,
     accuracy: 95,
     basePower: 80,
     category: "Special",
@@ -4079,7 +4079,7 @@ const Moves = {
     contestType: "Tough"
   },
   frostclaw: {
-    num: 1255,
+    num: 3176,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -4096,7 +4096,7 @@ const Moves = {
     contestType: "Cool"
   },
   frostslash: {
-    num: 905,
+    num: 3177,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -4123,7 +4123,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, defrost: 1, metronome: 1, legendary: 1 }
   },
   gaiasfury: {
-    num: 1256,
+    num: 3178,
     accuracy: 100,
     basePower: 110,
     category: "Physical",
@@ -4142,7 +4142,7 @@ const Moves = {
     contestType: "Tough"
   },
   galerush: {
-    num: 1068,
+    num: 3179,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -4159,7 +4159,7 @@ const Moves = {
     contestType: "Tough"
   },
   gammaray: {
-    num: 979,
+    num: 3180,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -4173,7 +4173,7 @@ const Moves = {
     contestType: "Tough"
   },
   gatlinglaser: {
-    num: 1346,
+    num: 3181,
     accuracy: 100,
     basePower: 25,
     category: "Special",
@@ -4191,7 +4191,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   gemstoneglimmer: {
-    num: 980,
+    num: 3182,
     accuracy: 95,
     basePower: 75,
     category: "Special",
@@ -4210,7 +4210,7 @@ const Moves = {
     contestType: "Tough"
   },
   gemstoneglimmercrystal: {
-    num: 1115,
+    num: 3183,
     accuracy: 95,
     basePower: 75,
     category: "Special",
@@ -4229,7 +4229,7 @@ const Moves = {
     contestType: "Tough"
   },
   geodecannon: {
-    num: 1070,
+    num: 3184,
     accuracy: 90,
     basePower: 90,
     category: "Special",
@@ -4243,7 +4243,7 @@ const Moves = {
     contestType: "Tough"
   },
   geodecannoncrystal: {
-    num: 1116,
+    num: 3185,
     accuracy: 90,
     basePower: 90,
     category: "Special",
@@ -4257,7 +4257,7 @@ const Moves = {
     contestType: "Tough"
   },
   geoimpact: {
-    num: 1137,
+    num: 3186,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -4289,7 +4289,7 @@ const Moves = {
     },
   },
   geosphere: {
-    num: 1069,
+    num: 3187,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -4315,7 +4315,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   geosplinter: {
-    num: 1210,
+    num: 3188,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4331,7 +4331,7 @@ const Moves = {
     contestType: "Clever"
   },
   ghastlywail: {
-    num: 1071,
+    num: 3189,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -4345,7 +4345,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   giraternalgrip: {
-    num: 1317,
+    num: 3190,
     accuracy: 95,
     basePower: 75,
     category: "Physical",
@@ -4371,7 +4371,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   glaciercrash: {
-    num: 1072,
+    num: 3191,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -4385,7 +4385,7 @@ const Moves = {
     contestType: "Tough"
   },
   glide: {
-    num: 1138,
+    num: 3192,
     accuracy: 100,
     basePower: 50,
     category: "Physical",
@@ -4406,7 +4406,7 @@ const Moves = {
     contestType: "Tough"
   },
   glorp: {
-    num: 1326,
+    num: 3193,
     accuracy: 100,
     basePower: 50,
     category: "Physical",
@@ -4423,7 +4423,7 @@ const Moves = {
     contestType: "Tough"
   },
   glowingorb: {
-    num: 1351,
+    num: 3194,
     accuracy: 100,
     basePower: 45,
     category: "Special",
@@ -4437,7 +4437,7 @@ const Moves = {
     contestType: "Cool"
   },
   goldenfist: {
-    num: 981,
+    num: 3195,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -4451,7 +4451,7 @@ const Moves = {
     contestType: "Clever"
   },
   gooeystrike: {
-    num: 1336,
+    num: 3196,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -4470,7 +4470,7 @@ const Moves = {
     contestType: "Tough"
   },
   goopelt: {
-    num: 1324,
+    num: 3197,
     accuracy: 100,
     basePower: 25,
     category: "Special",
@@ -4487,7 +4487,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   gravitycosmic: {
-    num: 1100,
+    num: 3198,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4503,7 +4503,7 @@ const Moves = {
     contestType: "Clever"
   },
   gravitywave: {
-    num: 1139,
+    num: 3199,
     accuracy: 100,
     basePower: 0,
     basePowerCallback(pokemon, target) {
@@ -4545,7 +4545,7 @@ const Moves = {
     contestType: "Cute"
   },
   gravitywavecosmic: {
-    num: 1140,
+    num: 3200,
     accuracy: 100,
     basePower: 0,
     basePowerCallback(pokemon, target) {
@@ -4587,7 +4587,7 @@ const Moves = {
     contestType: "Cute"
   },
   grimstinger: {
-    num: 1166,
+    num: 3201,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -4606,7 +4606,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   groomguard: {
-    num: 938,
+    num: 3202,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4647,7 +4647,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   guardianleaf: {
-    num: 1141,
+    num: 3203,
     accuracy: 95,
     basePower: 75,
     category: "Physical",
@@ -4668,7 +4668,7 @@ const Moves = {
     contestType: "Tough"
   },
   gustwind: {
-    num: 1088,
+    num: 3204,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -4682,7 +4682,7 @@ const Moves = {
     contestType: "Clever"
   },
   h4k41: {
-    num: 1257,
+    num: 3205,
     accuracy: true,
     basePower: 60,
     category: "Special",
@@ -4696,7 +4696,7 @@ const Moves = {
     contestType: "Cool"
   },
   halflife: {
-    num: 982,
+    num: 3206,
     accuracy: 90,
     basePower: 0,
     damageCallback(pokemon, target) {
@@ -4713,7 +4713,7 @@ const Moves = {
     contestType: "Tough"
   },
   haunt: {
-    num: 1313,
+    num: 3207,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4729,7 +4729,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   hawthorns: {
-    num: 1221,
+    num: 3208,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4754,7 +4754,7 @@ const Moves = {
     contestType: "Clever"
   },
   healbellsound: {
-    num: 1003,
+    num: 3209,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4813,7 +4813,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, bypasssub: 1, allyanim: 1, legendary: 1 }
   },
   heavypunch: {
-    num: 1202,
+    num: 3210,
     accuracy: 100,
     basePower: 50,
     category: "Physical",
@@ -4834,7 +4834,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, gravity: 1, kick: 1 }
   },
   hiss: {
-    num: 1222,
+    num: 3211,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -4852,7 +4852,7 @@ const Moves = {
     contestType: "Cute"
   },
   hitandrun: {
-    num: 1187,
+    num: 3212,
     accuracy: 90,
     basePower: 65,
     category: "Physical",
@@ -4881,7 +4881,7 @@ const Moves = {
     contestType: "Cute"
   },
   hivemind: {
-    num: 1167,
+    num: 3213,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -4903,7 +4903,7 @@ const Moves = {
     }
   },
   hotchilipepper: {
-    num: 1244,
+    num: 3214,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -4920,7 +4920,7 @@ const Moves = {
     contestType: "Tough"
   },
   howlsound: {
-    num: 1004,
+    num: 3215,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -4938,7 +4938,7 @@ const Moves = {
     contestType: "Cool"
   },
   hurricane: {
-    num: 542,
+    num: 3216,
     accuracy: 70,
     basePower: 110,
     category: "Special",
@@ -4969,7 +4969,7 @@ const Moves = {
     contestType: "Tough"
   },
   hurricanewind: {
-    num: 1089,
+    num: 3217,
     accuracy: 70,
     basePower: 110,
     category: "Special",
@@ -5014,12 +5014,8 @@ const Moves = {
     inherit: true,
 	flags: { mirror: 1, bypasssub: 1, legendary: 1 }
   },
-  hyperspacehole: {
-    inherit: true,
-	flags: { mirror: 1, bypasssub: 1, legendary: 1 }
-  },
   hypervoicesound: {
-    num: 1005,
+    num: 3218,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -5033,7 +5029,7 @@ const Moves = {
     contestType: "Cool"
   },
   hypnopulse: {
-    num: 1142,
+    num: 3219,
     accuracy: 90,
     basePower: 55,
     category: "Special",
@@ -5050,7 +5046,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   hystericalslap: {
-    num: 6969,
+    num: 3220,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -5079,7 +5075,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, speed: 1 }
   },
   icewall: {
-    num: 1258,
+    num: 3221,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -5096,7 +5092,7 @@ const Moves = {
     contestType: "Clever"
   },
   iceweave: {
-    num: 1274,
+    num: 3222,
     accuracy: 95,
     basePower: 0,
     category: "Status",
@@ -5113,7 +5109,7 @@ const Moves = {
     contestType: "Cute"
   },
   infernalblade: {
-    num: 983,
+    num: 3223,
     accuracy: 95,
     basePower: 90,
     category: "Special",
@@ -5134,7 +5130,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   instantcrush: {
-    num: 984,
+    num: 3224,
     accuracy: 100,
     basePower: 60,
     category: "Special",
@@ -5148,7 +5144,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   ironsphere: {
-    num: 1259,
+    num: 3225,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -5172,7 +5168,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   jellybounce: {
-    num: 1325,
+    num: 3226,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -5190,7 +5186,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
   },
   jetstrike: {
-    num: 906,
+    num: 3227,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -5204,7 +5200,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   jewelflash: {
-    num: 1073,
+    num: 3228,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -5223,7 +5219,7 @@ const Moves = {
     contestType: "Tough"
   },
   jewelflashcrystal: {
-    num: 1117,
+    num: 3229,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -5254,7 +5250,7 @@ const Moves = {
 	flags: { heal: 1, bypasssub: 1, allyanim: 1, legendary: 1 }
   },
   kindleseed: {
-    num: 1199,
+    num: 3230,
     accuracy: 90,
     basePower: 60,
     category: "Special",
@@ -5273,7 +5269,7 @@ const Moves = {
     contestType: "Clever"
   },
   knightsvow: {
-    num: 1195,
+    num: 3231,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -5304,7 +5300,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   knucklefins: {
-    num: 1211,
+    num: 3232,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
@@ -5321,7 +5317,7 @@ const Moves = {
     contestType: "Tough"
   },
   landsliderush: {
-    num: 954,
+    num: 3233,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -5340,7 +5336,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, nonsky: 1, metronome: 1, legendary: 1 }
   },
   latentpower: {
-    num: 1143,
+    num: 3234,
     accuracy: 100,
     basePower: 130,
     category: "Special",
@@ -5359,7 +5355,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   leafdarts: {
-    num: 1074,
+    num: 3235,
     accuracy: 90,
     basePower: 10,
 	basePowerCallback(pokemon, target, move) {
@@ -5401,7 +5397,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   leekcutter: {
-    num: 1260,
+    num: 3236,
     accuracy: 100,
     basePower: 95,
     category: "Physical",
@@ -5420,7 +5416,7 @@ const Moves = {
     contestType: "Tough"
   },
   lightcharge: {
-    num: 1349,
+    num: 3237,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -5434,7 +5430,7 @@ const Moves = {
     contestType: "Tough"
   },
   lightningstrike: {
-    num: 1075,
+    num: 3238,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -5455,7 +5451,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   lightscreenlight: {
-    num: 1107,
+    num: 3239,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -5479,7 +5475,7 @@ const Moves = {
 	flags: { snatch: 1, heal: 1, metronome: 1, legendary: 1 }
   },
   lunarcannon: {
-    num: 1189,
+    num: 3240,
     accuracy: 100,
     basePower: 105,
     category: "Special",
@@ -5520,7 +5516,7 @@ const Moves = {
 	flags: { snatch: 1, dance: 1, heal: 1, metronome: 1, legendary: 1 }
   },
   lusterbloom: {
-    num: 1296,
+    num: 3241,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -5548,7 +5544,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
   },
   magicwall: {
-    num: 1230,
+    num: 3242,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -5583,7 +5579,7 @@ const Moves = {
     contestType: "Cute"
   },
   magmablade: {
-    num: 1277,
+    num: 3243,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -5598,7 +5594,7 @@ const Moves = {
     contestType: "Cool"
   },
   magmaring: {
-    num: 1144,
+    num: 3244,
     accuracy: true,
     basePower: 55,
     category: "Special",
@@ -5617,7 +5613,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   magnetforce: {
-    num: 1269,
+    num: 3245,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -5641,7 +5637,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   magnetize: {
-    num: 1316,
+    num: 3246,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -5657,7 +5653,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   magnetpulse: {
-    num: 1261,
+    num: 3247,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -5677,7 +5673,7 @@ const Moves = {
     contestType: "Tough"
   },
   magnumpunch: {
-    num: 1270,
+    num: 3248,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -5709,7 +5705,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
   megalofang: {
-    num: 1076,
+    num: 3249,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -5726,7 +5722,7 @@ const Moves = {
     contestType: "Cool"
   },
   meltdown: {
-    num: 1217,
+    num: 3250,
     accuracy: 100,
     basePower: 250,
     category: "Physical",
@@ -5741,7 +5737,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   meltdownnuclear: {
-    num: 1218,
+    num: 3251,
     accuracy: 100,
     basePower: 250,
     category: "Physical",
@@ -5756,7 +5752,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   mentalanguish: {
-    num: 1304,
+    num: 3252,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -5775,7 +5771,7 @@ const Moves = {
     contestType: "Clever"
   },
   mesmersmoke: {
-    num: 1077,
+    num: 3253,
     accuracy: 70,
     basePower: 0,
     category: "Status",
@@ -5791,7 +5787,7 @@ const Moves = {
     contestType: "Clever"
   },
   metalcruncher: {
-    num: 985,
+    num: 3254,
     accuracy: 85,
     basePower: 120,
     category: "Physical",
@@ -5810,7 +5806,7 @@ const Moves = {
     contestType: "Tough"
   },
   metalwhip: {
-    num: 986,
+    num: 3255,
     accuracy: 90,
     basePower: 50,
     category: "Physical",
@@ -5829,7 +5825,7 @@ const Moves = {
 	flags: { charge: 1, protect: 1, mirror: 1, beam: 1 }
   },
   meteormashcosmic: {
-    num: 1102,
+    num: 3256,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
@@ -5867,7 +5863,7 @@ const Moves = {
 	flags: { contact: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
   },
   mindblast: {
-    num: 1078,
+    num: 3257,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -5888,7 +5884,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   mindcharge: {
-    num: 6969,
+    num: 3258,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -5962,7 +5958,7 @@ const Moves = {
     contestType: "Cute"
   },
   miraclewill: {
-    num: 964,
+    num: 3259,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -5990,7 +5986,7 @@ const Moves = {
     contestType: "Cute"
   },
   miresurge: {
-    num: 1203,
+    num: 3260,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -6009,7 +6005,7 @@ const Moves = {
     contestType: "Cool"
   },
   miresurgeslime: {
-    num: 1205,
+    num: 3261,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -6036,7 +6032,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1, legendary: 1 }
   },
   moonimpact: {
-    num: 1298,
+    num: 3262,
     accuracy: 80,
     basePower: 150,
     category: "Physical",
@@ -6104,7 +6100,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   moonrazer: {
-    num: 1168,
+    num: 3263,
     accuracy: 100,
     basePower: 85,
     category: "Special",
@@ -6216,7 +6212,7 @@ const Moves = {
     type: "Poison"
   },
   movemountains: {
-    num: 1262,
+    num: 3264,
     accuracy: 90,
     basePower: 105,
     category: "Physical",
@@ -6237,7 +6233,7 @@ const Moves = {
     type: "Rock"
   },
   mowdown: {
-    num: 1290,
+    num: 3265,
     accuracy: 90,
     basePower: 80,
     category: "Physical",
@@ -6258,7 +6254,7 @@ const Moves = {
     contestType: "Tough"
   },
   mudslide: {
-    num: 908,
+    num: 3266,
     accuracy: 95,
     basePower: 75,
     category: "Special",
@@ -6281,7 +6277,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   mysticchant: {
-    num: 1299,
+    num: 3267,
     accuracy: true,
     basePower: 60,
     category: "Special",
@@ -6295,7 +6291,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   nailflick: {
-    num: 1044,
+    num: 3268,
     accuracy: 90,
     basePower: 50,
     category: "Physical",
@@ -6310,7 +6306,7 @@ const Moves = {
     contestType: "Cute"
   },
   nanorepair: {
-    num: 925,
+    num: 3269,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -6333,7 +6329,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   necroticpunch: {
-    num: 1318,
+    num: 3270,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -6350,7 +6346,7 @@ const Moves = {
     contestType: "Cool"
   },
   newmoon: {
-    num: 969,
+    num: 3271,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -6366,7 +6362,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   niflheim: {
-    num: 6969,
+    num: 3272,
     accuracy: 80,
     basePower: 110,
     category: "Special",
@@ -6386,7 +6382,7 @@ const Moves = {
     type: "Ice",
   },
   nimbusfist: {
-    num: 939,
+    num: 3273,
     accuracy: 100,
     basePower: 35,
     category: "Physical",
@@ -6405,7 +6401,7 @@ const Moves = {
     contestType: "Tough"
   },
   nobleroarsound: {
-    num: 1006,
+    num: 3274,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -6424,7 +6420,7 @@ const Moves = {
     contestType: "Tough"
   },
   noiseburst: {
-    num: 1249,
+    num: 3275,
     accuracy: 90,
     basePower: 150,
     category: "Special",
@@ -6441,7 +6437,7 @@ const Moves = {
     contestType: "Cool"
   },
   nostrilflare: {
-    num: 1045,
+    num: 3276,
     accuracy: 90,
     basePower: 55,
     category: "Special",
@@ -6455,7 +6451,7 @@ const Moves = {
     contestType: "Tough"
   },
   nuclearslash: {
-    num: 987,
+    num: 3277,
     accuracy: 90,
     basePower: 55,
     category: "Physical",
@@ -6470,7 +6466,7 @@ const Moves = {
     contestType: "Cute"
   },
   nuclearwaste: {
-    num: 988,
+    num: 3278,
     accuracy: 85,
     basePower: 0,
     category: "Status",
@@ -6491,7 +6487,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, distance: 1, heal: 1, metronome: 1, legendary: 1 }
   },
   oceanswrath: {
-    num: 989,
+    num: 3279,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -6510,7 +6506,7 @@ const Moves = {
 	flags: { protect: 1, pulse: 1, mirror: 1, beam: 1, legendary: 1 }
   },
   overheadstrike: {
-    num: 949,
+    num: 3280,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -6531,7 +6527,7 @@ const Moves = {
     contestType: "Cute"
   },
   ozonebeam: {
-    num: 1128,
+    num: 3281,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -6548,7 +6544,7 @@ const Moves = {
     contestType: "Tough"
   },
   parasiticfungi: {
-    num: 1188,
+    num: 3282,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -6581,7 +6577,7 @@ const Moves = {
     type: "Grass"
   },
   pentascale: {
-    num: 1050,
+    num: 3283,
     accuracy: 100,
     basePower: 15,
     category: "Special",
@@ -6596,7 +6592,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   perfectglare: {
-    num: 1248,
+    num: 3284,
     accuracy: 90,
     basePower: 0,
     category: "Status",
@@ -6612,7 +6608,7 @@ const Moves = {
     contestType: "Tough"
   },
   perishsongsound: {
-    num: 1007,
+    num: 3285,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -6660,7 +6656,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   perplex: {
-    num: 965,
+    num: 3286,
     accuracy: 100,
     basePower: 65,
     category: "Special",
@@ -6679,7 +6675,7 @@ const Moves = {
     contestType: "Clever"
   },
   pesticide: {
-    num: 1152,
+    num: 3287,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -6719,7 +6715,7 @@ const Moves = {
     }
   },
   phantomgrip: {
-    num: 1079,
+    num: 3288,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -6742,7 +6738,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   photongeyserlight: {
-    num: 1103,
+    num: 3289,
     accuracy: 100,
     basePower: 100,
     category: "Special",
@@ -6762,7 +6758,7 @@ const Moves = {
     contestType: "Cool"
   },
   piercepincer: {
-    num: 950,
+    num: 3290,
     accuracy: 100,
     basePower: 50,
     category: "Physical",
@@ -6781,7 +6777,7 @@ const Moves = {
     contestType: "Tough"
   },
   pillowpummel: {
-    num: 1152,
+    num: 3291,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -6797,7 +6793,7 @@ const Moves = {
     type: "Fairy"
   },
   plague: {
-    num: 1285,
+    num: 3292,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -6823,7 +6819,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, legendary: 1 }
   },
   poisonleaf: {
-    num: 1145,
+    num: 3293,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -6839,8 +6835,8 @@ const Moves = {
     type: "Poison",
     contestType: "Cool"
   },
-  pokeburstream: {
-	num: 1330,
+  pokeburststream: {
+	num: 3294,
 	accuracy: 100,
 	basePower: 100,
 	category: "Physical",
@@ -6854,7 +6850,7 @@ const Moves = {
 	contestType: "Beautiful"
   },
   pollinate: {
-    num: 1308,
+    num: 3295,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -6870,7 +6866,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   polyblast: {
-    num: 1119,
+    num: 3296,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -6887,7 +6883,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   polygonalsword: {
-    num: 1121,
+    num: 3297,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -6902,7 +6898,7 @@ const Moves = {
     contestType: "Cool"
   },
   possession: {
-    num: 910,
+    num: 3298,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -6918,7 +6914,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   powergemcrystal: {
-    num: 1112,
+    num: 3299,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -6936,7 +6932,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, nonsky: 1, legendary: 1 }
   },
   pressurize: {
-    num: 940,
+    num: 3300,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -6954,7 +6950,7 @@ const Moves = {
     contestType: "Tough"
   },
   primalscream: {
-    num: 1228,
+    num: 3301,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -6973,7 +6969,7 @@ const Moves = {
     contestType: "Tough"
   },
   prismarush: {
-    num: 1343,
+    num: 3302,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -6997,7 +6993,7 @@ const Moves = {
 	flags: { recharge: 1, protect: 1, mirror: 1, beam: 1, legendary: 1 }
   },
   prismaticlaserlight: {
-    num: 1111,
+    num: 3303,
     accuracy: 100,
     basePower: 160,
     category: "Special",
@@ -7028,7 +7024,7 @@ const Moves = {
     contestType: "Cool"
   },
   probepunch: {
-    num: 1286,
+    num: 3304,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
@@ -7047,7 +7043,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   protonbeam: {
-    num: 990,
+    num: 3305,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -7074,7 +7070,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
   },
   psybolt: {
-    num: 911,
+    num: 3306,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -7088,7 +7084,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   psyburn: {
-    num: 1146,
+    num: 3307,
     accuracy: 70,
     basePower: 120,
     category: "Special",
@@ -7113,7 +7109,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   psylight: {
-    num: 1209,
+    num: 3308,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -7134,7 +7130,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   puffup: {
-    num: 1263,
+    num: 3309,
     accuracy: true,
     basePower: 120,
     category: "Special",
@@ -7150,7 +7146,7 @@ const Moves = {
     contestType: "Cool"
   },
   pummel: {
-    num: 1169,
+    num: 3310,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -7171,7 +7167,7 @@ const Moves = {
     contestType: "Tough"
   },
   pursuant: {
-    num: 1282,
+    num: 3311,
     accuracy: 100,
     basePower: 125,
     category: "Physical",
@@ -7185,7 +7181,7 @@ const Moves = {
     contestType: "Tough"
   },
   quantumleap: {
-    num: 991,
+    num: 3312,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -7219,7 +7215,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   quicksand: {
-    num: 1080,
+    num: 3313,
     accuracy: 100,
     basePower: 20,
     category: "Special",
@@ -7234,7 +7230,7 @@ const Moves = {
     contestType: "Tough"
   },
   radiantblade: {
-    num: 1342,
+    num: 3314,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -7249,7 +7245,7 @@ const Moves = {
     contestType: "Cool"
   },
   radioacid: {
-    num: 992,
+    num: 3315,
     accuracy: 100,
     basePower: 60,
     category: "Special",
@@ -7266,7 +7262,7 @@ const Moves = {
     contestType: "Cute"
   },
   ragingflame: {
-    num: 1271,
+    num: 3316,
     accuracy: 100,
     basePower: 110,
     category: "Physical",
@@ -7285,7 +7281,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   ragingwaves: {
-    num: 1321,
+    num: 3317,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -7307,7 +7303,7 @@ const Moves = {
     contestType: "Cool"
   },
   rainbowpunch: {
-    num: 1345,
+    num: 3318,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -7384,7 +7380,7 @@ const Moves = {
     contestType: "Cool"
   },
   rapidgrowth: {
-    num: 1147,
+    num: 3319,
     accuracy: 85,
     basePower: 100,
     category: "Special",
@@ -7405,7 +7401,7 @@ const Moves = {
     contestType: "Cool"
   },
   razorblade: {
-    num: 1081,
+    num: 3320,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -7420,7 +7416,7 @@ const Moves = {
     contestType: "Cool"
   },
   razorwindwind: {
-    num: 1090,
+    num: 3321,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -7447,7 +7443,7 @@ const Moves = {
     contestType: "Cool"
   },
   reflectivecloak: {
-    num: 1118,
+    num: 3322,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7470,7 +7466,7 @@ const Moves = {
     contestType: "Cool"
   },
   reflectlight: {
-    num: 1106,
+    num: 3323,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7486,7 +7482,7 @@ const Moves = {
     contestType: "Clever"
   },
   reformat: {
-	num: 1329,
+	num: 3324,
 	accuracy: 100,
 	basePower: 0,
 	category: "Status",
@@ -7509,7 +7505,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, legendary: 1 }
   },
   relicsongsound: {
-    num: 1008,
+    num: 3325,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -7537,7 +7533,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   remoraidcannon: {
-    num: 1264,
+    num: 3326,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -7553,7 +7549,7 @@ const Moves = {
     maxMove: { basePower: 130 }
   },
   replicate: {
-    num: 1171,
+    num: 3327,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7603,7 +7599,7 @@ const Moves = {
     contestType: "Clever"
   },
   reprisal: {
-    num: 1287,
+    num: 3328,
     accuracy: 100,
     basePower: 60,
     basePowerCallback(pokemon, target, move) {
@@ -7627,7 +7623,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   revup: {
-    num: 1250,
+    num: 3329,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -7648,7 +7644,7 @@ const Moves = {
     contestType: "Cool"
   },
   rhythmstrike: {
-    num: 1049,
+    num: 3330,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -7668,7 +7664,7 @@ const Moves = {
     contestType: "Cool"
   },
   ripen: {
-    num: 1172,
+    num: 3331,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7687,7 +7683,7 @@ const Moves = {
     contestType: "Clever"
   },
   ripplewave: {
-    num: 1082,
+    num: 3332,
     accuracy: 90,
     basePower: 50,
     category: "Special",
@@ -7712,7 +7708,7 @@ const Moves = {
 	flags: { recharge: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   roarsound: {
-    num: 1009,
+    num: 3333,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7740,7 +7736,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
   roundsound: {
-    num: 1010,
+    num: 3334,
     accuracy: 100,
     basePower: 60,
     basePowerCallback(target, source, move) {
@@ -7771,7 +7767,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   rottingsparks: {
-    num: 1303,
+    num: 3335,
     accuracy: 90,
     basePower: 25,
     category: "Special",
@@ -7788,7 +7784,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   royalbreath: {
-    num: 1292,
+    num: 3336,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -7809,7 +7805,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   rubblerush: {
-    num: 1173,
+    num: 3337,
     accuracy: 80,
     basePower: 140,
     category: "Physical",
@@ -7836,7 +7832,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
   },
   sacrificialpact: {
-    num: 1320,
+    num: 3338,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -7851,7 +7847,7 @@ const Moves = {
     contestType: "Tough"
   },
   saltcrash: {
-    num: 917,
+    num: 3339,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -7871,7 +7867,7 @@ const Moves = {
     type: "Fighting"
   },
   salttherapy: {
-    num: 1185,
+    num: 3340,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7903,7 +7899,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, wind: 1, legendary: 1 }
   },
   saurtooth: {
-    num: 1293,
+    num: 3341,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -7917,7 +7913,7 @@ const Moves = {
     contestType: "Tough"
   },
   scorchedashes: {
-    num: 1227,
+    num: 3342,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -7944,7 +7940,7 @@ const Moves = {
     contestType: "Tough"
   },
   screechsound: {
-    num: 1011,
+    num: 3343,
     accuracy: 85,
     basePower: 0,
     category: "Status",
@@ -7966,7 +7962,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, bullet: 1, legendary: 1 }
   },
   searingslash: {
-    num: 941,
+    num: 3344,
     accuracy: 95,
     basePower: 90,
     category: "Physical",
@@ -7992,7 +7988,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   seedyrecede: {
-    num: 956,
+    num: 3345,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -8006,7 +8002,7 @@ const Moves = {
     contestType: "Cute"
   },
   shadetrance: {
-    num: 1174,
+    num: 3346,
     accuracy: 75,
     basePower: 0,
     category: "Status",
@@ -8022,7 +8018,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowblast: {
-    num: 1019,
+    num: 3347,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -8038,7 +8034,7 @@ const Moves = {
     contestType: "Cool"
   },
   shadowblitz: {
-    num: 1020,
+    num: 3348,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -8052,7 +8048,7 @@ const Moves = {
     contestType: "Tough"
   },
   shadowbolt: {
-    num: 1021,
+    num: 3349,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -8069,7 +8065,7 @@ const Moves = {
     contestType: "Cool"
   },
   shadowbreak: {
-    num: 1022,
+    num: 3350,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -8083,7 +8079,7 @@ const Moves = {
     contestType: "Tough"
   },
   shadowchill: {
-    num: 1023,
+    num: 3351,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -8100,7 +8096,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowclamp: {
-    num: 1272,
+    num: 3352,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
@@ -8124,7 +8120,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowdown: {
-    num: 1024,
+    num: 3353,
     accuracy: 85,
     basePower: 0,
     category: "Status",
@@ -8142,7 +8138,7 @@ const Moves = {
     contestType: "Clever"
   },
   shadowend: {
-    num: 1025,
+    num: 3354,
     accuracy: 80,
     basePower: 120,
     category: "Physical",
@@ -8157,7 +8153,7 @@ const Moves = {
     contestType: "Tough"
   },
   shadowfire: {
-    num: 1026,
+    num: 3355,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -8194,7 +8190,7 @@ const Moves = {
     }
   },
   shadowhalf: {
-    num: 1027,
+    num: 3356,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -8217,7 +8213,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowhold: {
-    num: 1028,
+    num: 3357,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -8235,7 +8231,7 @@ const Moves = {
     contestType: "Cute"
   },
   shadowmist: {
-    num: 1029,
+    num: 3358,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -8253,7 +8249,7 @@ const Moves = {
     contestType: "Cute"
   },
   shadowpanic: {
-    num: 1030,
+    num: 3359,
     accuracy: 60,
     basePower: 0,
     category: "Status",
@@ -8269,7 +8265,7 @@ const Moves = {
     contestType: "Clever"
   },
   shadowrave: {
-    num: 1031,
+    num: 3360,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -8283,7 +8279,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowrush: {
-    num: 1018,
+    num: 3361,
     accuracy: 100,
     basePower: 55,
     category: "Physical",
@@ -8297,7 +8293,7 @@ const Moves = {
     contestType: "Tough"
   },
   shadowshed: {
-    num: 1032,
+    num: 3362,
     accuracy: 100,
     basePower: 0,
     category: "Status",
@@ -8317,7 +8313,7 @@ const Moves = {
     contestType: "Clever"
   },
   shadowsky: {
-    num: 1035,
+    num: 3363,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -8337,7 +8333,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   shadowstorm: {
-    num: 1033,
+    num: 3364,
     accuracy: 100,
     basePower: 95,
     category: "Special",
@@ -8351,7 +8347,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shadowwave: {
-    num: 1034,
+    num: 3365,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -8365,7 +8361,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shieldbash: {
-    num: 912,
+    num: 3366,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -8379,7 +8375,7 @@ const Moves = {
     type: "Steel"
   },
   shimmershot: {
-    num: 1175,
+    num: 3367,
     accuracy: 80,
     basePower: 65,
     category: "Special",
@@ -8396,7 +8392,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   shimmershotlight: {
-    num: 1176,
+    num: 3368,
     accuracy: 80,
     basePower: 65,
     category: "Special",
@@ -8444,7 +8440,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   signalbeamlight: {
-    num: 1109,
+    num: 3369,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -8479,7 +8475,7 @@ const Moves = {
 	flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1, beam: 1 }
   },
   singsound: {
-    num: 1012,
+    num: 3370,
     accuracy: 55,
     basePower: 0,
     category: "Status",
@@ -8495,7 +8491,7 @@ const Moves = {
     contestType: "Cute"
   },
   siphon: {
-    num: 1177,
+    num: 3371,
     accuracy: 75,
     basePower: 100,
     category: "Special",
@@ -8510,7 +8506,7 @@ const Moves = {
     contestType: "Clever"
   },
   siphonbite: {
-    num: 1083,
+    num: 3372,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -8525,7 +8521,7 @@ const Moves = {
     contestType: "Cool"
   },
   sizzlebeak: {
-    num: 1178,
+    num: 3373,
     accuracy: 95,
     basePower: 25,
     category: "Physical",
@@ -8569,7 +8565,7 @@ const Moves = {
       }
   },
   skyfall: {
-    num: 993,
+    num: 3374,
     accuracy: 100,
     basePower: 85,
     category: "Physical",
@@ -8586,7 +8582,7 @@ const Moves = {
     contestType: "Cute"
   },
   sleeptalksound: {
-    num: 1013,
+    num: 3375,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -8625,7 +8621,7 @@ const Moves = {
     contestType: "Cute"
   },
   slimyspit: {
-    num: 1126,
+    num: 3376,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -8644,7 +8640,7 @@ const Moves = {
     contestType: "Clever"
   },
   smartpunch: {
-    num: 1340,
+    num: 3377,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -8663,7 +8659,7 @@ const Moves = {
     contestType: "Cool"
   },
   smogdiffusion: {
-    num: 948,
+    num: 3378,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -8681,7 +8677,7 @@ const Moves = {
     contestType: "Cool"
   },
   smogscreen: {
-    num: 1273,
+    num: 3379,
     accuracy: 95,
     basePower: 55,
     category: "Special",
@@ -8705,7 +8701,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   smogspread: {
-    num: 1310,
+    num: 3380,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -8721,7 +8717,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   snoresound: {
-    num: 1014,
+    num: 3381,
     accuracy: 100,
     basePower: 50,
     category: "Special",
@@ -8790,7 +8786,7 @@ const Moves = {
     contestType: "Cool"
   },
   solarpunch: {
-    num: 1344,
+    num: 3382,
     accuracy: 100,
     basePower: 75,
     category: "Physical",
@@ -8807,7 +8803,7 @@ const Moves = {
     contestType: "Tough"
   },
   solarspear: {
-    num: 1348,
+    num: 3383,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -8822,7 +8818,7 @@ const Moves = {
     contestType: "Tough"
   },
   somnismog: {
-    num: 1300,
+    num: 3384,
     accuracy: 60,
     basePower: 0,
     category: "Status",
@@ -8838,7 +8834,7 @@ const Moves = {
     contestType: "Clever"
   },
   sonicboomsound: {
-    num: 1015,
+    num: 3385,
     accuracy: 90,
     basePower: 0,
     damage: 20,
@@ -8854,7 +8850,7 @@ const Moves = {
     contestType: "Cool"
   },
   souldevour: {
-    num: 1265,
+    num: 3386,
     accuracy: 100,
     basePower: 90,
     category: "Physical",
@@ -8873,7 +8869,7 @@ const Moves = {
 	flags: { contact: 1, kick: 1 }
   },
   soundbarrier: {
-    num: 1229,
+    num: 3387,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -8908,7 +8904,7 @@ const Moves = {
     contestType: "Cute"
   },
   soundpledge: {
-    num: 1226,
+    num: 3388,
     accuracy: 100,
 	basePower: 80,
     category: "Special",
@@ -8922,7 +8918,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   soundpound: {
-    num: 1335,
+    num: 3389,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -8945,7 +8941,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
   spam: {
-    num: 1123,
+    num: 3390,
     accuracy: 100,
     basePower: 25,
     category: "Special",
@@ -8962,7 +8958,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   sparklingariasound: {
-    num: 1016,
+    num: 3391,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -9005,7 +9001,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, bypasssub: 1, legendary: 1 }
   },
   spiritaway: {
-    num: 1352,
+    num: 3458,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -9131,7 +9127,7 @@ const Moves = {
     contestType: "Tough"
   },
   spotlightlight: {
-    num: 1108,
+    num: 3392,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9156,7 +9152,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, wind: 1, legendary: 1 }
   },
   sprinkle: {
-    num: 1311,
+    num: 3393,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9172,7 +9168,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   squallstrike: {
-    num: 1129,
+    num: 3394,
     accuracy: 100,
     basePower: 75,
     category: "Special",
@@ -9189,7 +9185,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   standoff: {
-    num: 966,
+    num: 3395,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9207,7 +9203,7 @@ const Moves = {
     contestType: "Cool"
   },
   stardust: {
-    num: 1148,
+    num: 3396,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -9221,7 +9217,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   stardustcosmic: {
-    num: 1149,
+    num: 3397,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -9235,7 +9231,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   starshot: {
-    num: 1047,
+    num: 3398,
     accuracy: 100,
     basePower: 70,
     category: "Special",
@@ -9254,7 +9250,7 @@ const Moves = {
     contestType: "Cool"
   },
   starstorm: {
-    num: 1196,
+    num: 3399,
     accuracy: 100,
     basePower: 110,
     category: "Special",
@@ -9268,7 +9264,7 @@ const Moves = {
     contestType: "Tough"
   },
   starstormcosmic: {
-    num: 1197,
+    num: 3400,
     accuracy: 100,
     basePower: 110,
     category: "Special",
@@ -9290,7 +9286,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   stingfreeze: {
-    num: 1245,
+    num: 3401,
     accuracy: 100,
     basePower: 60,
     category: "Physical",
@@ -9307,7 +9303,7 @@ const Moves = {
     contestType: "Cool"
   },
   fakemonstonesurge: {
-    num: 1179,
+    num: 3402,
     accuracy: 95,
     basePower: 90,
     category: "Physical",
@@ -9322,7 +9318,7 @@ const Moves = {
     contestType: "Cool"
   },
   stormforecast: {
-    num: 1150,
+    num: 3403,
     accuracy: 100,
     basePower: 120,
     category: "Special",
@@ -9364,7 +9360,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
   },
   subwoofer: {
-    num: 1225,
+    num: 3404,
     accuracy: 100,
     basePower: 70,
     category: "Physical",
@@ -9385,7 +9381,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   suddenstrike: {
-    num: 994,
+    num: 3405,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -9399,7 +9395,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   sugarrush: {
-    num: 1241,
+    num: 3406,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -9414,7 +9410,7 @@ const Moves = {
     contestType: "Cool"
   },
   sulfuricspray: {
-    num: 1084,
+    num: 3407,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -9444,7 +9440,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
   },
   superluminalstrike: {
-    num: 1347,
+    num: 3408,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -9458,7 +9454,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   supernova: {
-    num: 1048,
+    num: 3409,
     accuracy: 100,
     basePower: 250,
     category: "Physical",
@@ -9474,7 +9470,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   supersonicsound: {
-    num: 1017,
+    num: 3410,
     accuracy: 55,
     basePower: 0,
     category: "Status",
@@ -9490,7 +9486,7 @@ const Moves = {
     contestType: "Clever"
   },
   superstar: {
-    num: 1122,
+    num: 3411,
     accuracy: 90,
     basePower: 120,
     category: "Physical",
@@ -9532,7 +9528,7 @@ const Moves = {
     }
   },
   spectralsap: {
-    num: 1200,
+    num: 3412,
     accuracy: 100,
     basePower: 65,
     category: "Physical",
@@ -9548,7 +9544,7 @@ const Moves = {
     contestType: "Cool"
   },
   swarmsignal: {
-    num: 1309,
+    num: 3413,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9564,7 +9560,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   swiftcosmic: {
-    num: 1099,
+    num: 3414,
     accuracy: true,
     basePower: 60,
     category: "Special",
@@ -9578,7 +9574,7 @@ const Moves = {
     contestType: "Cool"
   },
   swindle: {
-    num: 1180,
+    num: 3415,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -9649,7 +9645,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
   },
   taiga: {
-    num: 1201,
+    num: 3416,
     accuracy: 95,
     basePower: 120,
     category: "Physical",
@@ -9664,7 +9660,7 @@ const Moves = {
     contestType: "Cool"
   },
   tailwindwind: {
-    num: 1092,
+    num: 3417,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9684,7 +9680,7 @@ const Moves = {
 	flags: { snatch: 1, metronome: 1, legendary: 1 }
   },
   talongash: {
-    num: 1085,
+    num: 3418,
     accuracy: 90,
     basePower: 50,
     category: "Physical",
@@ -9701,7 +9697,7 @@ const Moves = {
     contestType: "Cool"
   },
   tartantrum: {
-    num: 942,
+    num: 3419,
     accuracy: 95,
     basePower: 90,
     category: "Physical",
@@ -9724,7 +9720,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1, legendary: 1 }
   },
   tempest: {
-    num: 1219,
+    num: 3420,
     accuracy: 100,
     basePower: 60,
     category: "Special",
@@ -9743,7 +9739,7 @@ const Moves = {
     contestType: "Cool"
   },
   tendril: {
-    num: 1125,
+    num: 3421,
     accuracy: 100,
     basePower: 80,
     category: "Physical",
@@ -9766,7 +9762,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, noassist: 1, failcopycat: 1, failmimic: 1, legendary: 1 }
   },
   terrorize: {
-    num: 913,
+    num: 3422,
     accuracy: 70,
     basePower: 120,
     category: "Special",
@@ -9783,7 +9779,7 @@ const Moves = {
     contestType: "Clever"
   },
   thornwhip: {
-    num: 943,
+    num: 3423,
     accuracy: 95,
     basePower: 50,
     category: "Physical",
@@ -9827,7 +9823,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, legendary: 1 }
   },
   thunderclap: {
-    num: 1181,
+    num: 3424,
     accuracy: 100,
     basePower: 40,
     category: "Physical",
@@ -9841,7 +9837,7 @@ const Moves = {
     contestType: "Clever"
   },
   thundercrush: {
-    num: 952,
+    num: 3425,
     accuracy: 80,
     basePower: 100,
     category: "Physical",
@@ -9864,7 +9860,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1, legendary: 1 }
   },
   thunderslash: {
-    num: 944,
+    num: 3426,
     accuracy: 100,
     basePower: 95,
     category: "Physical",
@@ -9879,7 +9875,7 @@ const Moves = {
     contestType: "Cute"
   },
   thunderstorm: {
-    num: 995,
+    num: 3427,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -9895,7 +9891,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   thunderstruck: {
-    num: 1240,
+    num: 3428,
     accuracy: 90,
     basePower: 150,
     category: "Physical",
@@ -9912,7 +9908,7 @@ const Moves = {
     contestType: "Tough"
   },
   tidaldragoon: {
-    num: 1234,
+    num: 3429,
     accuracy: 100,
     basePower: 25,
     category: "Special",
@@ -9929,7 +9925,7 @@ const Moves = {
     contestType: "Cool"
   },
   tikitorch: {
-    num: 1086,
+    num: 3430,
     accuracy: 90,
     basePower: 60,
     category: "Special",
@@ -9946,7 +9942,7 @@ const Moves = {
     contestType: "Cool"
   },
   tornado: {
-    num: 1127,
+    num: 3431,
     accuracy: 100,
     basePower: 90,
     category: "Special",
@@ -9960,7 +9956,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   toxifume: {
-    num: 1208,
+    num: 3432,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -10003,7 +9999,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
   },
   twirlenade: {
-    num: 1182,
+    num: 3433,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -10022,7 +10018,7 @@ const Moves = {
     contestType: "Clever"
   },
   twisterwind: {
-    num: 1094,
+    num: 3434,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -10056,7 +10052,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   trickshot: {
-    num: 1087,
+    num: 3435,
     accuracy: 90,
     basePower: 30,
     category: "Special",
@@ -10073,7 +10069,7 @@ const Moves = {
     contestType: "Cool"
   },
   trojanhorse: {
-    num: 1339,
+    num: 3436,
     accuracy: 100,
     basePower: 40,
     basePowerCallback(pokemon, target, move) {
@@ -10118,7 +10114,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, beam: 1 }
   },
   typhoon: {
-    num: 945,
+    num: 3437,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -10136,8 +10132,36 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
+  uproarsound: {
+    num: 3459,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Uproar Sound",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1, nosleeptalk: 1, failinstruct: 1 },
+    self: {
+      volatileStatus: "uproar"
+    },
+    onTryHit(target) {
+      const activeTeam = target.side.activeTeam();
+      const foeActiveTeam = target.side.foe.activeTeam();
+      for (const [i, allyActive] of activeTeam.entries()) {
+        if (allyActive && allyActive.status === "slp")
+          allyActive.cureStatus();
+        const foeActive = foeActiveTeam[i];
+        if (foeActive && foeActive.status === "slp")
+          foeActive.cureStatus();
+      }
+    },
+    secondary: null,
+    target: "randomNormal",
+    type: "Sound",
+    contestType: "Cute"
+  },
   uvray: {
-    num: 1184,
+    num: 3438,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -10159,7 +10183,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, speed: 1 }
   },
   vanish: {
-    num: 946,
+    num: 3439,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -10181,7 +10205,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
   },
   veiledsky: {
-    num: 1268,
+    num: 3440,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -10197,7 +10221,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   velvetscales: {
-    num: 1232,
+    num: 3441,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -10224,7 +10248,7 @@ const Moves = {
     contestType: "Tough"
   },
   venomswipe: {
-    num: 947,
+    num: 3442,
     accuracy: 90,
     basePower: 100,
     category: "Physical",
@@ -10241,7 +10265,7 @@ const Moves = {
     contestType: "Tough"
   },
   virugait: {
-    num: 1183,
+    num: 3443,
     accuracy: 100,
     basePower: 50,
     category: "Physical",
@@ -10262,7 +10286,7 @@ const Moves = {
     contestType: "Cool"
   },
   viscosityslam: {
-    num: 1337,
+    num: 3444,
     accuracy: 100,
     basePower: 100,
     category: "Physical",
@@ -10282,7 +10306,7 @@ const Moves = {
     contestType: "Tough"
   },
   voidstar: {
-    num: 1247,
+    num: 3445,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -10435,7 +10459,7 @@ const Moves = {
     }
   },
   webball: {
-    num: 914,
+    num: 3446,
     accuracy: 100,
     basePower: 60,
     category: "Special",
@@ -10454,7 +10478,7 @@ const Moves = {
     contestType: "Tough"
   },
   weepywail: {
-    num: 1212,
+    num: 3447,
     accuracy: 100,
     basePower: 80,
     category: "Special",
@@ -10477,7 +10501,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, hm: 1 }
   },
   whirlwindwind: {
-    num: 1091,
+    num: 3448,
     accuracy: true,
     basePower: 0,
     category: "Status",
@@ -10497,7 +10521,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, legendary: 1 }
   },
   wickedlash: {
-    num: 1192,
+    num: 3449,
     accuracy: 100,
     basePower: 110,
     category: "Physical",
@@ -10532,7 +10556,7 @@ const Moves = {
 	flags: { protect: 1, mirror: 1, metronome: 1, wind: 1, legendary: 1 }
   },
   wilddance: {
-    num: 1236,
+    num: 3450,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -10554,7 +10578,7 @@ const Moves = {
     contestType: "Cool"
   },
   wildroar: {
-    num: 1204,
+    num: 3451,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -10573,7 +10597,7 @@ const Moves = {
     contestType: "Cool"
   },
   wildroarsound: {
-    num: 1206,
+    num: 3452,
     accuracy: 90,
     basePower: 100,
     category: "Special",
@@ -10592,7 +10616,7 @@ const Moves = {
     contestType: "Cool"
   },
   windshear: {
-    num: 915,
+    num: 3453,
     accuracy: 100,
     basePower: 45,
     basePowerCallback(pokemon, target, move) {
@@ -10613,7 +10637,7 @@ const Moves = {
     type: "Flying"
   },
   wormhole: {
-    num: 971,
+    num: 3454,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -10627,7 +10651,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   wormholecosmic: {
-    num: 1098,
+    num: 3455,
     accuracy: 100,
     basePower: 40,
     category: "Special",
@@ -10641,7 +10665,7 @@ const Moves = {
     contestType: "Beautiful"
   },
   zenithbreak: {
-    num: 1294,
+    num: 3456,
     accuracy: 100,
     basePower: 120,
     category: "Physical",
@@ -10665,7 +10689,7 @@ const Moves = {
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
   },
   zombiestrike: {
-    num: 970,
+    num: 3457,
     accuracy: 90,
     basePower: 90,
     category: "Physical",
