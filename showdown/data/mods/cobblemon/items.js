@@ -24,7 +24,7 @@ module.exports = __toCommonJS(items_exports);
 const Items = {
   boltorb: {
     name: "Bolt Orb",
-    spritenum: 509,
+    spritenum: 3000,
     fling: {
       basePower: 30,
       status: "par"
@@ -34,7 +34,7 @@ const Items = {
     onResidual(pokemon) {
       pokemon.trySetStatus("par", pokemon);
     },
-    num: 509,
+    num: 3000,
     gen: 4
   },
   clouddust: {
@@ -42,7 +42,7 @@ const Items = {
     fling: {
       basePower: 10
     },
-    spritenum: 508,
+    spritenum: 3001,
     onSwitchIn(pokemon) {
       this.effectState.switchingIn = true;
     },
@@ -57,13 +57,13 @@ const Items = {
       this.eachEvent("WeatherChange", this.effect);
     },
     suppressWeather: true,
-    num: 508,
+    num: 3001,
     gen: 9,
     isNonstandard: "Past"
   },
   corruptedseed: {
     name: "Corrupted Seed",
-    spritenum: 513,
+    spritenum: 3002,
     fling: {
       basePower: 30
     },
@@ -75,21 +75,21 @@ const Items = {
         return 0;
       }
     },
-    num: 513,
+    num: 3002,
     gen: 2
   },
   darkrock: {
     name: "Dark Rock",
-    spritenum: 510,
+    spritenum: 3003,
     fling: {
       basePower: 60
     },
-    num: 510,
+    num: 3003,
     gen: 4
   },
   everlite: {
     name: "EVerlite",
-    spritenum: 511,
+    spritenum: 3004,
     fling: {
       basePower: 40
     },
@@ -99,21 +99,21 @@ const Items = {
         return this.chainModify(1.5);
       }
     },
-    num: 511,
+    num: 3004,
     gen: 5
   },
   foulrock: {
     name: "Foul Rock",
-    spritenum: 505,
+    spritenum: 3005,
     fling: {
       basePower: 60
     },
-    num: 505,
+    num: 3005,
     gen: 4
   },
   hafliberry: {
     name: "Hafli Berry",
-    spritenum: 514,
+    spritenum: 3006,
     isBerry: true,
     naturalGift: {
       basePower: 60,
@@ -133,12 +133,12 @@ const Items = {
     },
     onEat() {
     },
-    num: 514,
+    num: 3006,
     gen: 4
   },
   iceshard: {
     name: "Ice Shard",
-    spritenum: 512,
+    spritenum: 3007,
     fling: {
       basePower: 30
     },
@@ -148,12 +148,12 @@ const Items = {
         return this.chainModify([4915, 4096]);
       }
     },
-    num: 512,
+    num: 3007,
     gen: 2
   },
   iveolite: {
     name: "Iveolite",
-    spritenum: 502,
+    spritenum: 3008,
     fling: {
       basePower: 40
     },
@@ -169,7 +169,7 @@ const Items = {
         return this.chainModify(1.5);
       }
     },
-    num: 502,
+    num: 3008,
     gen: 5
   },
   longclub: {
@@ -177,20 +177,20 @@ const Items = {
     fling: {
       basePower: 60
     },
-    spritenum: 501,
+    spritenum: 3009,
     onModifyCritRatio(critRatio, user) {
       if (["terathwack"].includes(this.toID(user.baseSpecies.baseSpecies))) {
         return critRatio + 2;
       }
     },
     itemUser: ["Terathwack"],
-    num: 501,
+    num: 3009,
     gen: 9,
     isNonstandard: "Past"
   },
   mossshard: {
     name: "Moss Shard",
-    spritenum: 515,
+    spritenum: 3010,
     fling: {
       basePower: 30
     },
@@ -200,12 +200,12 @@ const Items = {
         return this.chainModify([4915, 4096]);
       }
     },
-    num: 515,
+    num: 3010,
     gen: 2
   },
   prettyribbon: {
     name: "Pretty Ribbon",
-    spritenum: 516,
+    spritenum: 3011,
     fling: {
       basePower: 30
     },
@@ -215,12 +215,12 @@ const Items = {
         return this.chainModify([4915, 4096]);
       }
     },
-    num: 516,
+    num: 3011,
     gen: 2
   },
   raggedpebble: {
     name: "Ragged Pebble",
-    spritenum: 506,
+    spritenum: 3012,
     fling: {
       basePower: 30
     },
@@ -237,12 +237,12 @@ const Items = {
       }
     },
     itemUser: ["Enigmite"],
-    num: 506,
+    num: 3012,
     gen: 3
   },
   polishedsphere: {
     name: "Polished Sphere",
-    spritenum: 507,
+    spritenum: 3013,
     fling: {
       basePower: 30
     },
@@ -259,7 +259,7 @@ const Items = {
       }
     },
     itemUser: ["Enigmantis"],
-    num: 507,
+    num: 3013,
     gen: 3
   },
   thirdeye: {
@@ -267,7 +267,7 @@ const Items = {
     fling: {
       basePower: 20
     },
-    spritenum: 504,
+    spritenum: 3014,
     onStart(pokemon) {
       for (const target of pokemon.foes()) {
         if (target.ability) {
@@ -275,7 +275,7 @@ const Items = {
         }
       }
     },
-    num: 504,
+    num: 3014,
     gen: 9,
     isNonstandard: "Past"
   },
@@ -284,7 +284,7 @@ const Items = {
     fling: {
       basePower: 10
     },
-    spritenum: 503,
+    spritenum: 3015,
     onStart(pokemon) {
       for (const target of pokemon.foes()) {
         if (target.item) {
@@ -292,7 +292,7 @@ const Items = {
         }
       }
     },
-    num: 503,
+    num: 3015,
     gen: 9,
     isNonstandard: "Past"
   }
