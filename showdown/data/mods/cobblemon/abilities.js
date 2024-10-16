@@ -790,6 +790,35 @@ const Abilities = {
     rating: 1.5,
     num: 3040
   },
+  copperstate: {
+    onTryHit(target, source, move) {
+      if (target !== source && move.type === "Electric") {
+        if (!this.heal(target.baseMaxhp / 4)) {
+          this.add("-immune", target, "[from] ability: Copper State");
+        }
+        return null;
+      }
+    },
+    onSourceBasePowerPriority: 17,
+    onSourceBasePower(basePower, attacker, defender, move) {
+      if (move.type === "Water") {
+        return this.chainModify(2);
+      }
+    },
+    onWeather(target, source, effect) {
+      if (target.hasItem("utilityumbrella"))
+        return;
+      if (effect.id === "thunderstorm") {
+        this.heal(target.baseMaxhp / 8);
+      } else if (effect.id === "raindance" || effect.id === "primordialsea" || effect.id === "acidrain") {
+        this.damage(target.baseMaxhp / 8, target, target);
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Copper State",
+    rating: 3,
+    num: 3171
+  },
   cosmicpresence: {
     onStart(source) {
       this.field.setTerrain("gravity");
@@ -967,6 +996,20 @@ const Abilities = {
     rating: 4,
     num: 3048
   },
+  dreadspace: {
+    onStart(pokemon) {
+      this.add("-ability", pokemon, "Dread Space");
+    },
+    onDeductPP(target, source) {
+      if (target.isAlly(source))
+        return;
+      return 1;
+    },
+    flags: {},
+    name: "Dread Space",
+    rating: 2.5,
+    num: 3172
+  },
   druidry: {
     onWeather(target, source, effect) {
       if (target.hasItem("utilityumbrella"))
@@ -1050,6 +1093,33 @@ const Abilities = {
     name: "Energy Shield",
     rating: 3,
     num: 3055
+  },
+  equalize: {
+    onModifyTypePriority: -1,
+    onModifyType(move, pokemon) {
+      const noModifyType = [
+        "judgment",
+        "multiattack",
+        "naturalgift",
+        "revelationdance",
+        "technoblast",
+        "terrainpulse",
+        "weatherball"
+      ];
+      if (move.type === "Normal" && !noModifyType.includes(move.id) && !(move.isZ && move.category !== "Status") && !(move.name === "Tera Blast" && pokemon.terastallized)) {
+        move.type = "Sound";
+        move.typeChangerBoosted = this.effect;
+      }
+    },
+    onBasePowerPriority: 23,
+    onBasePower(basePower, pokemon, target, move) {
+      if (move.typeChangerBoosted === this.effect)
+        return this.chainModify([4915, 4096]);
+    },
+    flags: {},
+    name: "Equalize",
+    rating: 4,
+    num: 3173
   },
   escapevelocity: {
     onModifySpe(spe) {
@@ -1501,6 +1571,25 @@ const Abilities = {
     name: "High Noon",
     rating: 4,
     num: 3082
+  },
+  holyguard: {
+    onStart(pokemon) {
+      let totalatk = 0;
+      let totalspa = 0;
+      for (const target of pokemon.foes()) {
+        totalatk += target.getStat("atk", false, true);
+        totalspa += target.getStat("spa", false, true);
+      }
+      if (totalatk && totalatk >= totalspa) {
+        this.boost({ def: 1 });
+      } else if (totalspa) {
+        this.boost({ spd: 1 });
+      }
+    },
+    flags: {},
+    name: "Holy Guard",
+    rating: 3.5,
+    num: 3174
   },
   hubris: {
     onSourceAfterFaint(length, target, source, effect) {
@@ -2113,6 +2202,21 @@ const Abilities = {
     rating: 3.5,
     num: 3121
   },
+  raptor: {
+    onModifyPriority(priority, pokemon, target, move) {
+      if (move?.type === "Flying" && pokemon.hp === pokemon.maxhp)
+        return priority + 1;
+    },
+	onModifyPriority(priority, pokemon, target, move) {
+      if (target && target.hp <= target.maxhp / 4) {
+        return priority + 1;
+      }
+    },
+    flags: {},
+    name: "Raptor",
+    rating: 1.5,
+    num: 3175
+  },
   receiver: {
     onAllyFaint(target) {
       if (!this.effectState.target.hp)
@@ -2284,6 +2388,33 @@ const Abilities = {
     rating: 1.5,
     num: 8
   },
+  scalate: {
+    onModifyTypePriority: -1,
+    onModifyType(move, pokemon) {
+      const noModifyType = [
+        "judgment",
+        "multiattack",
+        "naturalgift",
+        "revelationdance",
+        "technoblast",
+        "terrainpulse",
+        "weatherball"
+      ];
+      if (move.type === "Normal" && !noModifyType.includes(move.id) && !(move.isZ && move.category !== "Status") && !(move.name === "Tera Blast" && pokemon.terastallized)) {
+        move.type = "Dragon";
+        move.typeChangerBoosted = this.effect;
+      }
+    },
+    onBasePowerPriority: 23,
+    onBasePower(basePower, pokemon, target, move) {
+      if (move.typeChangerBoosted === this.effect)
+        return this.chainModify([4915, 4096]);
+    },
+    flags: {},
+    name: "Scalate",
+    rating: 4,
+    num: 3176
+  },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
       if (effect && effect.effectType === "Move") {
@@ -2404,6 +2535,25 @@ const Abilities = {
     rating: 3.5,
     num: 3138
   },
+  silverlining: {
+    onModifyMovePriority: -5,
+	onModifyMove(move, attacker, defender) {
+      if (move.type === "Steel") {
+        // Make Steel-type moves hit Ghost and Dark types super effectively
+        if (defender.hasType("Ghost") || defender.hasType("Dark")) {
+          move.onEffectiveness = function(typeMod, target, type) {
+            if (type === "Ghost" || type === "Dark") {
+              return 1; // Treat as super effective
+            }
+          };
+        }
+      }
+    },
+    flags: {},
+    name: "Silver Lining",
+    rating: 3,
+    num: 3170
+  },
   siphon: {
     onModifyMove(move) {
       if (move.flags["contact"] && this.randomChance(3, 10)) {
@@ -2484,6 +2634,15 @@ const Abilities = {
     name: "Sprint",
     rating: 3.5,
     num: 3145
+  },
+  solarprominence: {
+    onSourceModifyDamage(damage, source, target, move) {
+      return this.chainModify(0.7); // Reduces incoming damage by 30%
+	},
+    flags: { breakable: 1 },
+    name: "Solar Prominence",
+    rating: 3.5,
+    num: 3177
   },
   soundboost: {
     onBasePowerPriority: 19,
@@ -2583,6 +2742,20 @@ const Abilities = {
     name: "Sunbathe",
     rating: 1,
     num: 3152
+  },
+  synthesizer: {
+    onTryHit(target, source, move) {
+      if (target !== source && move.type === "Sound") {
+        if (!this.heal(target.baseMaxhp / 4)) {
+          this.add("-immune", target, "[from] ability: Synthesizer");
+        }
+        return null;
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Synthesizer",
+    rating: 3.5,
+    num: 3178
   },
   tactician: {
     onBasePowerPriority: 8,
