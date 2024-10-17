@@ -920,6 +920,16 @@
   "cobblemon.move.spiritaway.desc": "The target is whisked away, returning on the next turn. The target cannot attack during this time.",
   "cobblemon.move.uproarsound": "Uproar",
   "cobblemon.move.uproarsound.desc": "The user attacks in an uproar for three turns. During that time, no Pokémon can fall asleep.",
+  "cobblemon.move.riderkick": "Rider Kick",
+  "cobblemon.move.riderkick.desc": "The user jumps to the sky and launches a high speed kick at the target. If it misses, the user is hurt instead.",
+  "cobblemon.move.mightykick": "Mighty Kick",
+  "cobblemon.move.mightykick.desc": "The user coats its feet with fire before striking the target with a powerful kick. If it misses, the user is hurt instead.",
+  "cobblemon.move.risingimpact": "Rising impact",
+  "cobblemon.move.risingimpact.desc": "The user launches the target at the sky before striking it with a strong kick. If it misses, the user is hurt instead.",
+  "cobblemon.move.spaciumbeam": "Spacium Beam",
+  "cobblemon.move.spaciumbeam.desc": "The target is struck with a beam of cosmic energy.",
+  "cobblemon.move.atomicbreath": "Atomic Breath",
+  "cobblemon.move.atomicbreath.desc": "The user shoots a concentrated ray of nuclear energy at its target.",
   
   "cobblemon.move.bufu": "Bufu",
   "cobblemon.move.bufu.desc": "Light Ice damage with Low chance to freeze",
@@ -1352,6 +1362,8 @@
   "cobblemon.ability.solarprominence.desc": "Lessens the damage taken from attacks by 30%.",
   "cobblemon.ability.synthesizer": "Synthesizer",
   "cobblemon.ability.synthesizer.desc": "This Pokemon is immune to Sound-type moves and restores 1/4 of its maximum HP, rounded down, when hit by a Sound-type move.",
+  "cobblemon.ability.ridersyndrome": "Rider Syndrome",
+  "cobblemon.ability.ridersyndrome.desc": "Boosts the power of Kicking Moves when the target is below 25% HP.",
   
   
   "cobblemon.ability.heeho": "Hee-Ho!",

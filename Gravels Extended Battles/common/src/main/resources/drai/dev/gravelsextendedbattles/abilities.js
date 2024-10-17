@@ -1860,26 +1860,6 @@ const Abilities = {
     rating: 1.5,
     num: 3101
   },
-  mysticwind: {
-    onSourceModifyAtkPriority: 6,
-    onSourceModifyAtk(atk, attacker, defender, move) {
-      if (move.type === "Fairy") {
-        this.debug("Mystic Wind Atk weaken");
-        return this.chainModify(0.5);
-      }
-    },
-    onSourceModifySpAPriority: 5,
-    onSourceModifySpA(atk, attacker, defender, move) {
-      if (move.type === "Fairy") {
-        this.debug("Mystic Wind SpA weaken");
-        return this.chainModify(0.5);
-      }
-    },
-    flags: { breakable: 1 },
-    name: "Mystic Wind",
-    rating: 2,
-    num: 3175
-  },
   icecleats: {
     onImmunity(type, pokemon) {
       if (type === "hail")
@@ -2224,10 +2204,6 @@ const Abilities = {
   },
   raptor: {
     onModifyPriority(priority, pokemon, target, move) {
-      if (move?.type === "Flying" && pokemon.hp === pokemon.maxhp)
-        return priority + 1;
-    },
-	onModifyPriority(priority, pokemon, target, move) {
       if (target && target.hp <= target.maxhp / 4) {
         return priority + 1;
       }
@@ -2235,7 +2211,7 @@ const Abilities = {
     flags: {},
     name: "Raptor",
     rating: 1.5,
-    num: 3176
+    num: 3175
   },
   receiver: {
     onAllyFaint(target) {
@@ -2310,6 +2286,18 @@ const Abilities = {
     name: "Resolute",
     rating: 3,
     num: 3124
+  },
+  ridersyndrome: {
+    onBasePowerPriority: 23,
+	onBasePower(basePower, attacker, defender, move) {
+      if (defender && defender.hp <= defender.maxhp / 3 && move.flags["kick"]) {
+        return this.chainModify(2);
+      }
+	},
+    flags: {},
+    name: "Rider Syndrome",
+    rating: 1.5,
+    num: 3179
   },
   rosesthorns: {
     onDamagingHit(damage, target, source, move) {
@@ -2407,6 +2395,33 @@ const Abilities = {
     name: "Sand Veil",
     rating: 1.5,
     num: 8
+  },
+  scalate: {
+    onModifyTypePriority: -1,
+    onModifyType(move, pokemon) {
+      const noModifyType = [
+        "judgment",
+        "multiattack",
+        "naturalgift",
+        "revelationdance",
+        "technoblast",
+        "terrainpulse",
+        "weatherball"
+      ];
+      if (move.type === "Normal" && !noModifyType.includes(move.id) && !(move.isZ && move.category !== "Status") && !(move.name === "Tera Blast" && pokemon.terastallized)) {
+        move.type = "Dragon";
+        move.typeChangerBoosted = this.effect;
+      }
+    },
+    onBasePowerPriority: 23,
+    onBasePower(basePower, pokemon, target, move) {
+      if (move.typeChangerBoosted === this.effect)
+        return this.chainModify([4915, 4096]);
+    },
+    flags: {},
+    name: "Scalate",
+    rating: 4,
+    num: 3176
   },
   scavenger: {
     onSourceAfterFaint(length, pokemon, source, effect) {
@@ -2628,6 +2643,15 @@ const Abilities = {
     rating: 3.5,
     num: 3145
   },
+  solarprominence: {
+    onSourceModifyDamage(damage, source, target, move) {
+      return this.chainModify(0.7); // Reduces incoming damage by 30%
+	},
+    flags: { breakable: 1 },
+    name: "Solar Prominence",
+    rating: 3.5,
+    num: 3177
+  },
   soundboost: {
     onBasePowerPriority: 19,
     onBasePower(basePower, attacker, defender, move) {
@@ -2726,6 +2750,20 @@ const Abilities = {
     name: "Sunbathe",
     rating: 1,
     num: 3152
+  },
+  synthesizer: {
+    onTryHit(target, source, move) {
+      if (target !== source && move.type === "Sound") {
+        if (!this.heal(target.baseMaxhp / 4)) {
+          this.add("-immune", target, "[from] ability: Synthesizer");
+        }
+        return null;
+      }
+    },
+    flags: { breakable: 1 },
+    name: "Synthesizer",
+    rating: 3.5,
+    num: 3178
   },
   tactician: {
     onBasePowerPriority: 8,

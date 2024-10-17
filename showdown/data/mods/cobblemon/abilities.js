@@ -2204,10 +2204,6 @@ const Abilities = {
   },
   raptor: {
     onModifyPriority(priority, pokemon, target, move) {
-      if (move?.type === "Flying" && pokemon.hp === pokemon.maxhp)
-        return priority + 1;
-    },
-	onModifyPriority(priority, pokemon, target, move) {
       if (target && target.hp <= target.maxhp / 4) {
         return priority + 1;
       }
@@ -2290,6 +2286,18 @@ const Abilities = {
     name: "Resolute",
     rating: 3,
     num: 3124
+  },
+  ridersyndrome: {
+    onBasePowerPriority: 23,
+	onBasePower(basePower, attacker, defender, move) {
+      if (defender && defender.hp <= defender.maxhp / 3 && move.flags["kick"]) {
+        return this.chainModify(2);
+      }
+	},
+    flags: {},
+    name: "Rider Syndrome",
+    rating: 1.5,
+    num: 3179
   },
   rosesthorns: {
     onDamagingHit(damage, target, source, move) {

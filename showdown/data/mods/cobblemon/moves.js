@@ -326,6 +326,21 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
+  atomicbreath: {
+    num: 3464,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Atomic Breath",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1 },
+    thawsTarget: true,
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Tough"
+  },
   atomicpunch: {
     num: 3015,
     accuracy: 95,
@@ -5862,6 +5877,26 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
   },
+  mightykick: {
+    num: 3461,
+    accuracy: 90,
+    basePower: 120,
+    category: "Physical",
+    name: "Mighty Kick",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, defrost: 1, kick: 1 },
+	hasCrashDamage: true,
+    onMoveFail(target, source, move) {
+      this.damage(source.baseMaxhp / 2, source, source, this.dex.conditions.get("High Jump Kick"));
+    },
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Fire"
+  },
   mindblast: {
     num: 3257,
     accuracy: 100,
@@ -7663,6 +7698,27 @@ const Moves = {
     type: "Sound",
     contestType: "Cool"
   },
+  riderkick: {
+    num: 3460,
+    accuracy: 90,
+    basePower: 130,
+    category: "Physical",
+    name: "Rider Kick",
+    pp: 10,
+    priority: 0,
+    flags: { recharge: 1, contact: 1, protect: 1, mirror: 1, gravity: 1, kick: 1 },
+	hasCrashDamage: true,
+    onMoveFail(target, source, move) {
+      this.damage(source.baseMaxhp / 2, source, source, this.dex.conditions.get("High Jump Kick"));
+    },
+    onEffectiveness(typeMod, target, type, move) {
+      return typeMod + this.dex.getEffectiveness("Fighting", type);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Bug",
+    contestType: "Cool"
+  },
   ripen: {
     num: 3331,
     accuracy: true,
@@ -7697,6 +7753,24 @@ const Moves = {
     type: "Water",
     zMove: { basePower: 140 },
     maxMove: { basePower: 120 },
+    contestType: "Cool"
+  },
+  risingimpact: {
+    num: 3462,
+    accuracy: 90,
+    basePower: 120,
+    category: "Physical",
+    name: "Rising Impact",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, gravity: 1, kick: 1 },
+    hasCrashDamage: true,
+    onMoveFail(target, source, move) {
+      this.damage(source.baseMaxhp / 2, source, source, this.dex.conditions.get("High Jump Kick"));
+    },
+    secondary: null,
+    target: "normal",
+    type: "Steel",
     contestType: "Cool"
   },
   risingvoltage: {
@@ -8939,6 +9013,20 @@ const Moves = {
   spacialrend: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
+  },
+  spaciumbeam: {
+    num: 3463,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Spacium Beam",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1, beam: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Beautiful"
   },
   spam: {
     num: 3390,
