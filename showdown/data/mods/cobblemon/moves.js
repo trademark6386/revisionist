@@ -77,6 +77,24 @@ const Moves = {
     type: "Normal",
     contestType: "Cool"
   },
+  acidarmorslime: {
+    num: 3512,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Acid Armor Slime",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      def: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Slime",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Tough"
+  },
   acidrain: {
     num: 3003,
     accuracy: true,
@@ -135,6 +153,19 @@ const Moves = {
     target: "allAdjacent",
     type: "Normal",
     contestType: "Tough"
+  },
+  amoebahammer: {
+    num: 3510,
+    accuracy: 100,
+    basePower: 160,
+    category: "Physical",
+    name: "Amoeba Hammer",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, cantusetwice: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Slime"
   },
   ampclaw: {
     num: 3006,
@@ -1009,6 +1040,29 @@ const Moves = {
     type: "Plastic",
     contestType: "Tough"
   },
+  brickwall: {
+    num: 3502,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Firewall",
+    pp: 10,
+    priority: 4,
+    flags: { noassist: 1, failcopycat: 1 },
+    stallingMove: true,
+    volatileStatus: "protect",
+    onPrepareHit(pokemon) {
+      return !!this.queue.willAct() && this.runEvent("StallMove", pokemon);
+    },
+    onHit(pokemon) {
+      pokemon.addVolatile("stall");
+    },
+    secondary: null,
+    target: "self",
+    type: "Plastic",
+    zMove: { boost: { evasion: 1 } },
+    contestType: "Cool"
+  },
   bubblebeam: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, beam: 1 }
@@ -1457,6 +1511,49 @@ const Moves = {
     type: "Fire",
     contestType: "Tough"
   },
+  clockworkmouse: {
+    num: 3499,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    isNonstandard: "Past",
+    name: "Clockwork Mouse",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, metronome: 1 },
+    multihit: 2,
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    maxMove: { basePower: 100 },
+    contestType: "Cool"
+  },
+  clonestamp: {
+    num: 3521,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Clone Stamp",
+    pp: 20,
+    priority: 0,
+    flags: { failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failmimic: 1, failinstruct: 1 },
+    onHit(pokemon) {
+      let move = this.lastMove;
+      if (!move)
+        return;
+      if (move.isMax && move.baseMove)
+        move = this.dex.moves.get(move.baseMove);
+      if (move.flags["failcopycat"] || move.isZ || move.isMax) {
+        return false;
+      }
+      this.actions.useMove(move.id, pokemon);
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { boost: { accuracy: 1 } },
+    contestType: "Cute"
+  },
   cloudburst: {
     num: 3062,
     accuracy: 90,
@@ -1571,6 +1668,64 @@ const Moves = {
     type: "Plastic",
     zMove: { boost: { def: 1 } },
     contestType: "Cool"
+  },
+  conversiondigital: {
+    num: 3513,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Conversion Digital",
+    pp: 30,
+    priority: 0,
+    flags: { snatch: 1 },
+    onHit(target) {
+      const type = this.dex.moves.get(target.moveSlots[0].id).type;
+      if (target.hasType(type) || !target.setType(type))
+        return false;
+      this.add("-start", target, "typechange", type);
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { boost: { atk: 1, def: 1, spa: 1, spd: 1, spe: 1 } },
+    contestType: "Beautiful"
+  },
+  conversion2digital: {
+    num: 3514,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Conversion 2 Digital",
+    pp: 30,
+    priority: 0,
+    flags: { bypasssub: 1, metronome: 1 },
+    onHit(target, source) {
+      if (!target.lastMoveUsed) {
+        return false;
+      }
+      const possibleTypes = [];
+      const attackType = target.lastMoveUsed.type;
+      for (const type of this.dex.types.names()) {
+        if (source.hasType(type))
+          continue;
+        const typeCheck = this.dex.types.get(type).damageTaken[attackType];
+        if (typeCheck === 2 || typeCheck === 3) {
+          possibleTypes.push(type);
+        }
+      }
+      if (!possibleTypes.length) {
+        return false;
+      }
+      const randomType = this.sample(possibleTypes);
+      if (!source.setType(randomType))
+        return false;
+      this.add("-start", source, "typechange", randomType);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    zMove: { effect: "heal" },
+    contestType: "Beautiful"
   },
   cookiecut: {
     num: 3067,
@@ -1899,6 +2054,25 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
+  crystaldance: {
+    num: 3501,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Crystal Dance",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1, dance: 1, metronome: 1 },
+    boosts: {
+      atk: 1,
+      spe: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Crystal",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
   crystalize: {
     num: 3077,
     accuracy: 90,
@@ -2216,6 +2390,25 @@ const Moves = {
     secondary: null,
     target: "normal",
     type: "Fairy",
+    contestType: "Tough"
+  },
+  ddosattack: {
+    num: 3519,
+    accuracy: 95,
+    basePower: 55,
+    category: "Special",
+    name: "DDOS Attack",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Digital",
     contestType: "Tough"
   },
   decapattack: {
@@ -2685,6 +2878,21 @@ const Moves = {
     type: "Fairy",
     contestType: "Cute"
   },
+  disceject: {
+    num: 3523,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Disc Eject",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    selfSwitch: true,
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Cool"
+  },
   discofever: {
     num: 3105,
     accuracy: 100,
@@ -2700,6 +2908,25 @@ const Moves = {
     type: "Sound",
     zMove: { boost: { spa: 1 } },
     contestType: "Clever"
+  },
+  discrot: {
+    num: 3522,
+    accuracy: 100,
+    basePower: 65,
+    category: "Special",
+    name: "Disc Rot",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Digital",
+    contestType: "Beautiful"
   },
   dive: {
     num: 291,
@@ -2792,6 +3019,20 @@ const Moves = {
   doomdesire: {
     inherit: true,
 	flags: { metronome: 1, futuremove: 1, legendary: 1 }
+  },
+  doomscrolling: {
+    num: 3515,
+    accuracy: 90,
+    basePower: 80,
+    category: "Special",
+    name: "Doom Scrolling",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    volatileStatus: "partiallytrapped",
+    secondary: null,
+    target: "normal",
+    type: "Digital"
   },
   doublekick: {
     inherit: true,
@@ -3480,6 +3721,27 @@ const Moves = {
     type: "Sound",
     zMove: { boost: { spd: 1 } },
     contestType: "Cool"
+  },
+  empblast: {
+    num: 3524,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "EMP Blast",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, nonsky: 1 },
+	self: {
+      volatileStatus: "mustrecharge"
+    },
+    secondary: null,
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Digital" || type === "Electric")
+        return 1;
+    },
+    target: "allAdjacent",
+    type: "Electric",
+    contestType: "Beautiful"
   },
   emperorsedge: {
     num: 3139,
@@ -4181,6 +4443,23 @@ const Moves = {
       }
     }
   },
+  foamdarts: {
+    num: 3503,
+    accuracy: 100,
+    basePower: 25,
+    category: "Physical",
+    name: "Foam Darts",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
   focalforce: {
     num: 3171,
     accuracy: 100,
@@ -4385,6 +4664,23 @@ const Moves = {
     zMove: { basePower: 140 },
     maxMove: { basePower: 130 },
     contestType: "Beautiful"
+  },
+  gelatinousdoom: {
+    num: 3508,
+    accuracy: 30,
+    basePower: 0,
+    category: "Physical",
+    name: "Gelatinous Doom",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1 },
+    ohko: true,
+    secondary: null,
+    target: "normal",
+    type: "Slime",
+    zMove: { basePower: 180 },
+    maxMove: { basePower: 130 },
+    contestType: "Cool"
   },
   gemstoneglimmer: {
     num: 3182,
@@ -6047,6 +6343,24 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
   },
+  massproduction: {
+    num: 3496,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Mass Production",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    boosts: {
+      atk: 2,
+      spa: 2
+    },
+	status: "tox",
+    secondary: null,
+    target: "normal",
+    type: "Plastic"
+  },
   megakick: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
@@ -6323,6 +6637,25 @@ const Moves = {
     type: "Normal",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Cute"
+  },
+  minmax: {
+    num: 3517,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "MinMax",
+    pp: 5,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      atk: 2,
+      def: -2,
+      spa: 2,
+	  spd: -2
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital"
   },
   miraclewill: {
     num: 3259,
@@ -6712,6 +7045,34 @@ const Moves = {
     type: "Eldritch",
     contestType: "Cool"
   },
+  networking: {
+    num: 3520,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Networking",
+    pp: 40,
+    priority: 0,
+    flags: {},
+    onHit(target) {
+      if (!this.canSwitch(target.side) || target.volatiles["commanded"]) {
+        this.attrLastMove("[still]");
+        this.add("-fail", target);
+        return this.NOT_FAIL;
+      }
+    },
+    self: {
+      onHit(source) {
+        source.skipBeforeSwitchOutEventFlag = true;
+      }
+    },
+    selfSwitch: "copyvolatile",
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cute"
+  },
   newmoon: {
     num: 3271,
     accuracy: true,
@@ -6871,6 +7232,24 @@ const Moves = {
   originpulse: {
     inherit: true,
 	flags: { protect: 1, pulse: 1, mirror: 1, beam: 1, legendary: 1 }
+  },
+  overclock: {
+    num: 3518,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Overclock",
+    pp: 30,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      spe: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
   },
   overheadstrike: {
     num: 3280,
@@ -7202,6 +7581,73 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, legendary: 1 }
   },
+  plasticblade: {
+    num: 3500,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Plastic Blade",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    contestType: "Cool"
+  },
+  plasticexplosive: {
+    num: 3497,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Plastic Explosive",
+    pp: 10,
+    priority: 0,
+    flags: { allyanim: 1, futuremove: 1 },
+    ignoreImmunity: true,
+    onTry(source, target) {
+      if (!target.side.addSlotCondition(target, "futuremove"))
+        return false;
+      Object.assign(target.side.slotConditions[target.position]["futuremove"], {
+        duration: 3,
+        move: "plasticexplosive",
+        source,
+        moveData: {
+          id: "plasticexplosive",
+          name: "Plastic Explosive",
+          accuracy: 100,
+          basePower: 120,
+          category: "Special",
+          priority: 0,
+          flags: { allyanim: 1, futuremove: 1 },
+          ignoreImmunity: false,
+          effectType: "Move",
+          type: "Plastic"
+        }
+      });
+      this.add("-start", source, "move: Plastic Explosive");
+      return this.NOT_FAIL;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    contestType: "Clever"
+  },
+  plasticrings: {
+    num: 3498,
+    accuracy: 90,
+    basePower: 80,
+    category: "Physical",
+    name: "Plastic Rings",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    volatileStatus: "partiallytrapped",
+    secondary: null,
+    target: "normal",
+    type: "Plastic"
+  },
   plasticseal: {
     num: 3486,
     accuracy: 100,
@@ -7479,6 +7925,29 @@ const Moves = {
     target: "normal",
     type: "Bug",
     contestType: "Beautiful"
+  },
+  protectivelayer: {
+    num: 3506,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Protective Layer",
+    pp: 10,
+    priority: 4,
+    flags: { noassist: 1, failcopycat: 1 },
+    stallingMove: true,
+    volatileStatus: "protect",
+    onPrepareHit(pokemon) {
+      return !!this.queue.willAct() && this.runEvent("StallMove", pokemon);
+    },
+    onHit(pokemon) {
+      pokemon.addVolatile("stall");
+    },
+    secondary: null,
+    target: "self",
+    type: "Slime",
+    zMove: { boost: { evasion: 1 } },
+    contestType: "Cool"
   },
   protonbeam: {
     num: 3305,
@@ -8853,6 +9322,24 @@ const Moves = {
     type: "Shadow",
     contestType: "Beautiful"
   },
+  shatterfist: {
+    num: 3494,
+    accuracy: 100,
+    basePower: 30,
+    category: "Physical",
+    name: "Shatterfist",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+	recoil: [33, 100],
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
   shieldbash: {
     num: 3366,
     accuracy: 100,
@@ -9143,6 +9630,88 @@ const Moves = {
     type: "Sound",
     zMove: { effect: "crit2" },
     contestType: "Cute"
+  },
+  slimeball: {
+    num: 3505,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Slimeball",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        spd: -1
+      }
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Clever"
+  },
+  slimecannon: {
+    num: 3507,
+    accuracy: 80,
+    basePower: 110,
+    category: "Special",
+    name: "Slime Cannon",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spe: -1
+      }
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Beautiful"
+  },
+  slimetrail: {
+    num: 3511,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Slime Trail",
+    pp: 20,
+    priority: 0,
+    flags: { reflectable: 1, metronome: 1 },
+    sideCondition: "slimetrail",
+    condition: {
+      onSideStart(side) {
+        this.add("-sidestart", side, "move: Slime Trail");
+      },
+	  onAfterMoveSecondarySelf(source, target, move) {
+        if (move.flags["contact"] && target && !target.fainted) {
+          const recoilDamage = this.clampIntRange(move.totalDamage * 50 / 100, 1);
+          this.damage(recoilDamage, source, source, "slimetrail");
+        }
+	  }
+    },
+    secondary: null,
+    target: "foeSide",
+    type: "Slime",
+    zMove: { boost: { spe: 1 } },
+    contestType: "Tough"
+  },
+  slimeyslam: {
+    num: 3509,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Slimey Slam",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    secondary: {
+      chance: 30,
+      status: "par"
+    },
+    target: "normal",
+    type: "Slime",
+    contestType: "Tough"
   },
   slimyspit: {
     num: 3376,
@@ -10654,6 +11223,21 @@ const Moves = {
     target: "Plastic",
     contestType: "Tough"
   },
+  toyhammer: {
+    num: 3504,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Toy Hammer",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [33, 100],
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    contestType: "Tough"
+  },
   tripleaxel: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
@@ -10798,6 +11382,29 @@ const Moves = {
     },
     target: "normal",
     type: "Flying",
+    contestType: "Tough"
+  },
+  undegradeable: {
+    num: 3495,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Undegradeable",
+    pp: 10,
+    priority: 4,
+    flags: { noassist: 1, failcopycat: 1 },
+    stallingMove: true,
+    volatileStatus: "endure",
+    onPrepareHit(pokemon) {
+      return !!this.queue.willAct() && this.runEvent("StallMove", pokemon);
+    },
+    onHit(pokemon) {
+      pokemon.addVolatile("stall");
+    },
+    secondary: null,
+    target: "self",
+    type: "Plastic",
+    zMove: { effect: "clearnegativeboost" },
     contestType: "Tough"
   },
   uproarsound: {
@@ -10995,6 +11602,22 @@ const Moves = {
   watershuriken: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, speed: 1 }
+  },
+  wavedash: {
+    num: 3516,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Wavedash",
+    pp: 15,
+    priority: 0,
+    flags: { snatch: 1, wind: 1 },
+    sideCondition: "tailwind",
+    secondary: null,
+    target: "allySide",
+    type: "Digital",
+    zMove: { effect: "crit2" },
+    contestType: "Cool"
   },
   weatherball: {
     inherit: true,

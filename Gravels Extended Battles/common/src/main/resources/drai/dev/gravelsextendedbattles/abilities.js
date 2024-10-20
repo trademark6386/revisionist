@@ -2288,12 +2288,20 @@ const Abilities = {
     num: 3124
   },
   ridersyndrome: {
-    onBasePowerPriority: 23,
-	onBasePower(basePower, attacker, defender, move) {
-      if (defender && defender.hp <= defender.maxhp / 3 && move.flags["kick"]) {
-        return this.chainModify(2);
+    onModifyAtkPriority: 5,
+    onModifyAtk(atk, attacker, defender, move) {
+      if (move.flags["Kick"] && attacker.hp <= attacker.maxhp / 3) {
+        this.debug("Rider Syndrome boost");
+        return this.chainModify(1.5);
       }
-	},
+    },
+    onModifySpAPriority: 5,
+    onModifySpA(atk, attacker, defender, move) {
+      if (move.flags["Kick"] && attacker.hp <= attacker.maxhp / 3) {
+        this.debug("Rider Syndrome boost");
+        return this.chainModify(1.5);
+      }
+    },
     flags: {},
     name: "Rider Syndrome",
     rating: 1.5,
