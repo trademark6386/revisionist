@@ -115,6 +115,21 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, wind: 1, legendary: 1 }
   },
+  aerobuster: {
+    num: 3539,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+    name: "Aerobuster",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Wind",
+    contestType: "Cool"
+  },
   aircannon: {
     num: 3004,
     accuracy: 100,
@@ -305,6 +320,20 @@ const Moves = {
     target: "self",
     type: "Rock",
     zMove: { boost: { def: 1 } },
+    contestType: "Tough"
+  },
+  asteroidfist: {
+    num: 3530,
+    accuracy: true,
+    basePower: 75,
+    category: "Physical",
+    name: "Asteroid Fist",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
     contestType: "Tough"
   },
   asteroidshot: {
@@ -687,6 +716,20 @@ const Moves = {
     type: "Rock",
     contestType: "Cool"
   },
+  beampulser: {
+    num: 3543,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Beam Pulser",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, beam: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Fairy",
+    contestType: "Tough"
+  },
   beguile: {
     num: 3028,
     accuracy: 100,
@@ -848,6 +891,21 @@ const Moves = {
     target: "normal",
     type: "Plastic",
     contestType: "Tough"
+  },
+  bloodytriggers: {
+    num: 3550,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Bloody Triggers",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Dark",
+    contestType: "Cool"
   },
   blueflare: {
     inherit: true,
@@ -1865,6 +1923,24 @@ const Moves = {
     zMove: { boost: { atk: 1 } },
     contestType: "Cool"
   },
+  cosmichorror: {
+    num: 3526,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Cosmic Horror",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    boosts: {
+      atk: -2
+    },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cute"
+  },
   cosmicpowercosmic: {
     num: 3072,
     accuracy: true,
@@ -1951,7 +2027,8 @@ const Moves = {
         "gmaxsteelsurge",
         "gmaxcannonade",
         "gmaxvinelash",
-        "gmaxwildfire"
+        "gmaxwildfire",
+		"slimetrail"
       ];
       let success = false;
       if (this.gameType === "freeforall") {
@@ -2054,6 +2131,19 @@ const Moves = {
   crushgrip: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
+  },
+  cryforpeace: {
+    num: 3544,
+    accuracy: 85,
+    basePower: 110,
+    category: "Special",
+    name: "Cry for Peace",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, pulse: 1 },
+    target: "allAdjacentFoes",
+    type: "Fairy",
+    contestType: "Beautiful"
   },
   crystaldance: {
     num: 3501,
@@ -2519,7 +2609,8 @@ const Moves = {
 		"scorchedashes",
 		"velvetscales",
         "stickyweb",
-        "gmaxsteelsurge"
+        "gmaxsteelsurge",
+		"slimetrail"
       ];
       const removeAll = [
         "constructionblocks",
@@ -2531,7 +2622,8 @@ const Moves = {
 		"scorchedashes",
 		"velvetscales",
         "stickyweb",
-        "gmaxsteelsurge"
+        "gmaxsteelsurge",
+		"slimetrail"
       ];
       for (const targetCondition of removeTarget) {
         if (target.side.removeSideCondition(targetCondition)) {
@@ -2583,7 +2675,8 @@ const Moves = {
 		"scorchedashes",
 		"velvetscales",
         "stickyweb",
-        "gmaxsteelsurge"
+        "gmaxsteelsurge",
+		"slimetrail"
       ];
       const removeAll = [
         "constructionblocks",
@@ -2595,7 +2688,8 @@ const Moves = {
 		"scorchedashes",
 		"velvetscales",
         "stickyweb",
-        "gmaxsteelsurge"
+        "gmaxsteelsurge",
+		"slimetrail"
       ];
       for (const targetCondition of removeTarget) {
         if (target.side.removeSideCondition(targetCondition)) {
@@ -3786,7 +3880,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -3800,7 +3894,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Engulf", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Engulf", "[of] " + pokemon);
@@ -4617,6 +4711,21 @@ const Moves = {
     type: "Ground",
     contestType: "Tough"
   },
+  galaxyslash: {
+    num: 3538,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Galaxy Slash",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   galerush: {
     num: 3179,
     accuracy: 100,
@@ -4837,6 +4946,40 @@ const Moves = {
     type: "Ghost",
     contestType: "Beautiful"
   },
+  giantstep: {
+    num: 3534,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Giant Step",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    secondary: {
+      chance: 30,
+      status: "par"
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
+  },
+  giganumecluster: {
+    num: 3553,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Giganume Cluster",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   giggle: {
     num: 3466,
     accuracy: 100,
@@ -5019,6 +5162,21 @@ const Moves = {
     zMove: { basePower: 140 },
     maxMove: { basePower: 130 },
     contestType: "Beautiful"
+  },
+  gravitybeam: {
+    num: 3545,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Gravity Beam",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1 },
+    thawsTarget: true,
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
   },
   gravitycosmic: {
     num: 3198,
@@ -5287,6 +5445,21 @@ const Moves = {
     type: "Nuclear",
     contestType: "Tough"
   },
+  hammerclaw: {
+    num: 3549,
+    accuracy: 90,
+    basePower: 100,
+    category: "Physical",
+    name: "Hammerclaw",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
+  },
   haunt: {
     num: 3207,
     accuracy: true,
@@ -5403,6 +5576,41 @@ const Moves = {
     target: "normal",
     type: "Normal",
     contestType: "Cute"
+  },
+  hedriumray: {
+    num: 3548,
+    accuracy: 100,
+    basePower: 80,
+    category: "Special",
+    name: "Hedrium Ray",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1 },
+    thawsTarget: true,
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Poison",
+    contestType: "Tough"
+  },
+  hedriumsludge: {
+    num: 3547,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Hedrium Sludge",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Poison",
+    contestType: "Tough"
   },
   highjumpkick: {
     inherit: true,
@@ -6040,6 +6248,36 @@ const Moves = {
     type: "Grass",
     contestType: "Tough"
   },
+  liftoff: {
+    num: 3531,
+    accuracy: 95,
+    basePower: 90,
+    category: "Physical",
+    name: "Lift Off",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, contact: 1, charge: 1, mirror: 1, gravity: 1, distance: 1, nosleeptalk: 1, noassist: 1, failinstruct: 1 },
+    breaksProtect: true,
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    condition: {
+      duration: 2,
+      onInvulnerability: false
+    },
+    secondary: null,
+    target: "any",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   lightcharge: {
     num: 3237,
     accuracy: 100,
@@ -6486,6 +6724,24 @@ const Moves = {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, beam: 1 }
   },
+  meteorblitz: {
+    num: 3525,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Meteor Blitz",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, defrost: 1 },
+    recoil: [33, 100],
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   meteormashcosmic: {
     num: 3256,
     accuracy: 90,
@@ -6519,6 +6775,42 @@ const Moves = {
     target: "normal",
     type: "Steel",
     contestType: "Cool"
+  },
+  meteorstormpunisher: {
+    num: 3535,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Meteor Storm Punisher",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
+  },
+  meteorstrike: {
+    num: 3532,
+    accuracy: 100,
+    basePower: 25,
+    category: "Physical",
+    name: "Meteor Strike",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, punch: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
   },
   mightycleave: {
     inherit: true,
@@ -6881,7 +7173,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -6895,7 +7187,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Mortal Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Mortal Spin", "[of] " + pokemon);
@@ -7024,6 +7316,26 @@ const Moves = {
     type: "Steel",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
+  },
+  napalmshells: {
+    num: 3551,
+    accuracy: 100,
+    basePower: 25,
+    category: "Physical",
+    name: "Napalm Shells",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    multihit: [2, 5],
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Fire",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Cool"
   },
   naturesmadness: {
     inherit: true,
@@ -7178,6 +7490,23 @@ const Moves = {
     target: "normal",
     type: "Fire",
     contestType: "Tough"
+  },
+  nuclearpulse: {
+    num: 3542,
+    accuracy: 85,
+    basePower: 110,
+    category: "Special",
+    name: "Nuclear Pulse",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, pulse: 1 },
+	secondary: {
+      chance: 30,
+      status: "psn"
+    },
+    target: "allAdjacent",
+    type: "Nuclear",
+    contestType: "Beautiful"
   },
   nuclearslash: {
     num: 3277,
@@ -8251,7 +8580,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -8265,7 +8594,7 @@ const Moves = {
       if (pokemon.hp && pokemon.removeVolatile("leechseed")) {
         this.add("-end", pokemon, "Leech Seed", "[from] move: Rapid Spin", "[of] " + pokemon);
       }
-      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge"];
+      const sideConditions = ["constructionblocks", "fiesta", "spikes", "toxicspikes", "stealthrock", "hawthorns", "scorchedashes", "velvetscales", "salttherapy", "stickyweb", "gmaxsteelsurge", "slimetrail"];
       for (const condition of sideConditions) {
         if (pokemon.hp && pokemon.side.removeSideCondition(condition)) {
           this.add("-sideend", pokemon.side, this.dex.conditions.get(condition).name, "[from] move: Rapid Spin", "[of] " + pokemon);
@@ -8580,6 +8909,9 @@ const Moves = {
     pp: 10,
     priority: 0,
     flags: { recharge: 1, contact: 1, protect: 1, mirror: 1, gravity: 1, kick: 1 },
+	self: {
+      volatileStatus: "mustrecharge"
+    },
 	hasCrashDamage: true,
     onMoveFail(target, source, move) {
       this.damage(source.baseMaxhp / 2, source, source, this.dex.conditions.get("High Jump Kick"));
@@ -8673,6 +9005,27 @@ const Moves = {
   rockclimb: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
+  },
+  rocketdrillkick: {
+    num: 3536,
+    accuracy: 90,
+    basePower: 120,
+    category: "Physical",
+    name: "Rocket Drill Kick",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, kick: 1 },
+	hasCrashDamage: true,
+    onMoveFail(target, source, move) {
+      this.damage(source.baseMaxhp / 2, source, source, this.dex.conditions.get("High Jump Kick"));
+    },
+    onEffectiveness(typeMod, target, type, move) {
+      return typeMod + this.dex.getEffectiveness("Steel", type);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
   },
   rocksmash: {
     inherit: true,
@@ -9896,6 +10249,38 @@ const Moves = {
     type: "Grass",
     contestType: "Cool"
   },
+  solarflare: {
+    num: 3528,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Solar Flare",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bypasssub: 1 },
+	onModifyType(move, pokemon, target) {
+      const cosmicTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Light";
+      const lightTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Cosmic";
+      if (cosmicTypeEffectiveness === lightTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Light")){
+          move.type = "Light";
+        }
+      } else if(lightTypeEffectiveness>cosmicTypeEffectiveness){
+        move.type = "Light"
+      }
+    },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spd: -1
+      }
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Beautiful"
+  },
   solarpunch: {
     num: 3382,
     accuracy: 100,
@@ -10065,6 +10450,23 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
+  spaghettification: {
+    num: 3529,
+    accuracy: 30,
+    basePower: 0,
+    category: "Physical",
+    name: "Spaghettification",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    ohko: true,
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    zMove: { basePower: 180 },
+    maxMove: { basePower: 130 },
+    contestType: "Cool"
+  },
   spam: {
     num: 3390,
     accuracy: 100,
@@ -10138,6 +10540,36 @@ const Moves = {
     target: "normal",
     type: "Digital",
     contestType: "Tough"
+  },
+  spiralheatray: {
+    num: 3541,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Spiral Heat Ray",
+    pp: 10,
+    priority: 0,
+    flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["fallout"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+    secondary: null,
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Cool"
   },
   spiritaway: {
     num: 3458,
@@ -10411,6 +10843,21 @@ const Moves = {
     type: "Cosmic",
     contestType: "Beautiful"
   },
+  starlightshower: {
+    num: 3533,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+    name: "Starlight Shower",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, punch: 1 },
+    multihit: [2, 5],
+    secondary: null,
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Cool"
+  },
   starshot: {
     num: 3398,
     accuracy: 100,
@@ -10497,6 +10944,25 @@ const Moves = {
     target: "normal",
     type: "Rock",
     contestType: "Cool"
+  },
+  stormbomb: {
+    num: 3540,
+    accuracy: 90,
+    basePower: 130,
+    category: "Special",
+    name: "Storm Bomb",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Wind",
+    contestType: "Beautiful"
   },
   stormforecast: {
     num: 3403,
@@ -10590,6 +11056,25 @@ const Moves = {
     type: "Fairy",
     contestType: "Cool"
   },
+  suitup: {
+    num: 3527,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Suit Up",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      def: 1,
+      spd: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Cosmic",
+    zMove: { boost: { spd: 1 } },
+    contestType: "Beautiful"
+  },
   sulfuricspray: {
     num: 3407,
     accuracy: 100,
@@ -10635,6 +11120,49 @@ const Moves = {
   sunsteelstrike: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, legendary: 1 }
+  },
+  superembomber: {
+    num: 3537,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Super EM Bomber",
+    pp: 10,
+    priority: 0,
+    flags: { charge: 1, protect: 1, mirror: 1, metronome: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
+    onTryMove(attacker, defender, move) {
+      if (attacker.removeVolatile(move.id)) {
+        return;
+      }
+      this.add("-prepare", attacker, move.name);
+      if (["magnetosphere"].includes(attacker.effectiveWeather())) {
+        this.attrLastMove("[still]");
+        this.addMove("-anim", attacker, move.name, defender);
+        return;
+      }
+      if (!this.runEvent("ChargeMove", attacker, defender, move)) {
+        return;
+      }
+      attacker.addVolatile("twoturnmove", defender);
+      return null;
+    },
+	onModifyType(move, pokemon, target) {
+      const electricTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Steel";
+      const steelTypeEffectiveness = target.runEffectiveness(move);
+      move.type = "Electric";
+      if (electricTypeEffectiveness === steelTypeEffectiveness) {
+        if(pokemon.getTypes(false, true).includes("Steel")){
+          move.type = "Steel";
+        }
+      } else if(steelTypeEffectiveness>electricTypeEffectiveness){
+        move.type = "Steel"
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Electric",
+    contestType: "Cool"
   },
   superluminalstrike: {
     num: 3408,
@@ -11221,7 +11749,8 @@ const Moves = {
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
-    target: "Plastic",
+    target: "normal",
+	type: "Plastic",
     contestType: "Tough"
   },
   toyhammer: {
@@ -11408,6 +11937,20 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Tough"
   },
+  universalcutter: {
+    num: 3552,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Universal Cutter",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, heal: 1, slicing: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Cosmic"
+  },
   uproarsound: {
     num: 3459,
     accuracy: 100,
@@ -11435,6 +11978,23 @@ const Moves = {
     target: "randomNormal",
     type: "Sound",
     contestType: "Cute"
+  },
+  uraniumheatbeam: {
+    num: 3546,
+    accuracy: 85,
+    basePower: 110,
+    category: "Special",
+    name: "Uranium Heat Beam",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Nuclear",
+    contestType: "Beautiful"
   },
   uvray: {
     num: 3438,
