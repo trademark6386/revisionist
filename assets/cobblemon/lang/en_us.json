@@ -972,6 +972,8 @@
   "cobblemon.move.blockblitz.desc": "The User sends out a rapid onslaught of Plastic Bricks at their Target. This may also confuse the target.",
   "cobblemon.move.plasticseal": "Plastic Seal",
   "cobblemon.move.plasticseal.desc": "The User hurls and coats the Target in a synthetic polymer coating and changes the target’s type to Plstic.",
+  "cobblemon.move.polymercannon": "Polymer Cannon",
+  "cobblemon.move.polymercannon.desc": "The User harnesses a great amount of their own Polymers to attack the Target. This also damages the user quite a lot.",
   "cobblemon.move.buildup": "Build-Up",
   "cobblemon.move.buildup.desc": "The User sporadically builds themselves up with plastic, sharply raising the Defense stat but sharply decreasing Evasion.",
   "cobblemon.move.glitch": "Glitch",

@@ -1045,7 +1045,7 @@ const Moves = {
     accuracy: true,
     basePower: 0,
     category: "Status",
-    name: "Firewall",
+    name: "Brick Wall",
     pp: 10,
     priority: 4,
     flags: { noassist: 1, failcopycat: 1 },
@@ -1638,7 +1638,8 @@ const Moves = {
     priority: 0,
     flags: { protect: 1, mirror: 1 },
     secondary: null,
-    target: "Plastic",
+    target: "normal",
+	type: "Plastic",
     contestType: "Tough"
   },
   constructionblocks: {
@@ -11220,7 +11221,8 @@ const Moves = {
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
     secondary: null,
-    target: "Plastic",
+    target: "normal",
+	type: "Plastic",
     contestType: "Tough"
   },
   toyhammer: {
