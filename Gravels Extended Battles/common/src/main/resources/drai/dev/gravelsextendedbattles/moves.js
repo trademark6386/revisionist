@@ -111,6 +111,20 @@ const Moves = {
     zMove: { boost: { spe: 1 } },
     contestType: "Beautiful"
   },
+  actionsword: {
+    num: 3566,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Action Sword",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    contestType: "Tough"
+  },
   aeroblast: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, distance: 1, metronome: 1, wind: 1, legendary: 1 }
@@ -168,6 +182,25 @@ const Moves = {
     target: "allAdjacent",
     type: "Normal",
     contestType: "Tough"
+  },
+  altf4: {
+    num: 3561,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Alt+F4",
+    pp: 20,
+    priority: -6,
+    flags: {},
+    onTry(source) {
+      return !!this.canSwitch(source.side);
+    },
+    selfSwitch: true,
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "heal" },
+    contestType: "Cool"
   },
   amoebahammer: {
     num: 3510,
@@ -607,6 +640,20 @@ const Moves = {
     type: "Sound",
     contestType: "Tough"
   },
+  banhammer: {
+    num: 3565,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Ban Hammer",
+    pp: 10,
+    priority: -6,
+    flags: { contact: 1, protect: 1, mirror: 1, noassist: 1, failcopycat: 1 },
+    forceSwitch: true,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
   banishingfist: {
     num: 3022,
     accuracy: 80,
@@ -875,6 +922,23 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, wind: 1, legendary: 1 }
   },
+  blindingflash: {
+    num: 3580,
+    accuracy: 90,
+    basePower: 80,
+    category: "Special",
+    name: "Blinding Flash",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
   blockblitz: {
     num: 3484,
     accuracy: 70,
@@ -1120,6 +1184,25 @@ const Moves = {
     type: "Plastic",
     zMove: { boost: { evasion: 1 } },
     contestType: "Cool"
+  },
+  brightbreak: {
+    num: 3575,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Bright Break",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
   },
   bubblebeam: {
     inherit: true,
@@ -1649,6 +1732,20 @@ const Moves = {
     target: "normal",
     type: "Wind",
     contestType: "Beautiful"
+  },
+  clustercrash: {
+    num: 3557,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Cluster Crash",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [33, 100],
+    secondary: null,
+    target: "normal",
+    type: "Crystal"
   },
   collisioncourse: {
     inherit: true,
@@ -2451,6 +2548,20 @@ const Moves = {
     type: "Dark",
     contestType: "Cool"
   },
+  darkwhispers: {
+    num: 3571,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Dark Whispers",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Cute"
+  },
   datatransfer: {
     num: 3088,
     accuracy: 100,
@@ -2833,6 +2944,40 @@ const Moves = {
     type: "Fire",
     maxMove: { basePower: 130 }
   },
+  devillishfavor: {
+    num: 3572,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Devillish Favor",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1, dance: 1 },
+    boosts: {
+      atk: 1,
+      spa: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Eldritch",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
+  diamondaxe: {
+    num: 3554,
+    accuracy: 90,
+    basePower: 100,
+    category: "Physical",
+    name: "Diamond Axe",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    contestType: "Tough"
+  },
   diamondclaw: {
     num: 3101,
     accuracy: 95,
@@ -2877,6 +3022,23 @@ const Moves = {
     type: "Crystal",
     contestType: "Beautiful"
   },
+  diamonddrop: {
+    num: 3558,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Diamond Drop",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Psychic",
+    contestType: "Cool"
+  },
   diamondstorm: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, legendary: 1 }
@@ -2902,6 +3064,21 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Crystal",
     contestType: "Beautiful"
+  },
+  diamondsword: {
+    num: 3555,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Diamond Sword",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    contestType: "Cool"
   },
   dig: {
     num: 91,
@@ -3742,6 +3919,21 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  eldritchblast: {
+    num: 3563,
+    accuracy: 100,
+    basePower: 25,
+    category: "Special",
+    name: "Eldritch Blast",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, beam: 1 },
+	multihit: [1, 4],
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Beautiful"
+  },
   eldritchinvocation: {
     num: 3135,
     accuracy: 90,
@@ -3936,6 +4128,21 @@ const Moves = {
     type: "Eldritch",
     contestType: "Tough"
   },
+  eventhorizon: {
+    num: 3582,
+    accuracy: 30,
+    basePower: 0,
+    category: "Special",
+    name: "Event Horizon",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: null,
+    ohko: "Cosmic",
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Beautiful"
+  },
   exsanguinate: {
     num: 3143,
     accuracy: 100,
@@ -4079,6 +4286,21 @@ const Moves = {
     zMove: { basePower: 180 },
     maxMove: { basePower: 130 },
     contestType: "Tough"
+  },
+  fatalexception: {
+    num: 3560,
+    accuracy: 100,
+    basePower: 250,
+    category: "Physical",
+    name: "Fatal Exception",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, noparentalbond: 1 },
+    selfdestruct: "always",
+    secondary: null,
+    target: "allAdjacent",
+    type: "Digital",
+    contestType: "Beautiful"
   },
   feint: {
     inherit: true,
@@ -4538,6 +4760,40 @@ const Moves = {
       }
     }
   },
+  foamarrows: {
+    num: 3567,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Foam Arrows",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    multihit: [1, 3],
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
+  foambullets: {
+    num: 3568,
+    accuracy: 100,
+    basePower: 10,
+    category: "Physical",
+    name: "Foam Bullets",
+    pp: 30,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    multihit: [5, 10],
+    secondary: null,
+    target: "normal",
+    type: "Plastic",
+    zMove: { basePower: 140 },
+    maxMove: { basePower: 130 },
+    contestType: "Beautiful"
+  },
   foamdarts: {
     num: 3503,
     accuracy: 100,
@@ -4546,7 +4802,7 @@ const Moves = {
     name: "Foam Darts",
     pp: 30,
     priority: 0,
-    flags: { protect: 1, mirror: 1 },
+    flags: { protect: 1, mirror: 1, bullet: 1 },
     multihit: [2, 5],
     secondary: null,
     target: "normal",
@@ -4830,6 +5086,20 @@ const Moves = {
     type: "Crystal",
     contestType: "Tough"
   },
+  gemstoneimpact: {
+    num: 3556,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Gemstone Impact",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    contestType: "Tough"
+  },
   geodecannon: {
     num: 3184,
     accuracy: 90,
@@ -5059,6 +5329,20 @@ const Moves = {
     type: "Flying",
     contestType: "Tough"
   },
+  glisteningstrike: {
+    num: 3579,
+    accuracy: 100,
+    basePower: 95,
+    category: "Physical",
+    name: "Glistening Strike",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
+  },
   glitch: {
     num: 3488,
     accuracy: 100,
@@ -5112,6 +5396,26 @@ const Moves = {
     target: "normal",
     type: "Light",
     contestType: "Cool"
+  },
+  glowwhack: {
+    num: 3576,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Glow Whack",
+    pp: 30,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      self: {
+        boosts: {
+          evasion: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Light"
   },
   goldenfist: {
     num: 3195,
@@ -5678,6 +5982,20 @@ const Moves = {
     type: "Bug",
     contestType: "Beautiful"
   },
+  hololaser: {
+    num: 3564,
+    accuracy: 100,
+    basePower: 85,
+    category: "Special",
+    name: "Holo Laser",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, beam: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Beautiful"
+  },
   honeclaws: {
     inherit: true,
 	onModifyMove(move, pokemon) {
@@ -6052,6 +6370,20 @@ const Moves = {
     type: "Crystal",
     contestType: "Tough"
   },
+  jewelshards: {
+    num: 3559,
+    accuracy: 100,
+    basePower: 20,
+    category: "Special",
+    name: "Jewel Shards",
+    pp: 35,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    multihit: 3,
+    secondary: null,
+    target: "normal",
+    type: "Crystal"
+  },
   judgment: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
@@ -6347,6 +6679,20 @@ const Moves = {
     target: "normal",
     type: "Light",
     contestType: "Cool"
+  },
+  lovecraftianmaw: {
+    num: 3570,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Lovecraftian Maw",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Tough"
   },
   lowkick: {
     inherit: true,
@@ -7563,6 +7909,23 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, pulse: 1, mirror: 1, beam: 1, legendary: 1 }
   },
+  otherworldlytentacles: {
+    num: 3569,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Otherworldly Tentacles",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    onHit(target, source, move) {
+      target.addVolatile("trapped", source, move, "trapper");
+    },
+    secondary: null,
+    target: "normal",
+    type: "Eldritch",
+    contestType: "Tough"
+  },
   overclock: {
     num: 3518,
     accuracy: true,
@@ -7808,6 +8171,26 @@ const Moves = {
     target: "normal",
     type: "Ghost",
     contestType: "Cool"
+  },
+  photonblitz: {
+    num: 3577,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Photon Blitz",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        def: -1,
+        spd: -1
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Light",
+    contestType: "Beautiful"
   },
   photongeyser: {
     inherit: true,
@@ -8236,6 +8619,24 @@ const Moves = {
     target: "normal",
     type: "Psychic",
     contestType: "Cool"
+  },
+  prismpunch: {
+    num: 3573,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Prism Punch",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: null,
+	onEffectiveness(typeMod, target, type) {
+      if (type === "Light")
+        return 1;
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Tough"
   },
   probepunch: {
     num: 3304,
@@ -9742,6 +10143,44 @@ const Moves = {
     type: "Light",
     contestType: "Beautiful"
   },
+  shine: {
+    num: 3574,
+    accuracy: 100,
+    basePower: 45,
+    category: "Special",
+    name: "Shine",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        accuracy: -1
+      }
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Cool"
+  },
+  shininglaser: {
+    num: 3578,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Shining Laser",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      boosts: {
+        spa: -1
+      }
+    },
+    target: "normal",
+    type: "Light",
+    contestType: "Clever"
+  },
   shootingstar: {
     num: 3470,
     accuracy: true,
@@ -10431,6 +10870,24 @@ const Moves = {
     target: "normal",
     type: "Sound",
     contestType: "Clever",
+  },
+  spaceslam: {
+    num: 3581,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Space Slam",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onBasePower(basePower) {
+      if (this.field.getPseudoWeather("gravity")) {
+        return this.chainModify(2);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Cosmic"
   },
   spacialrend: {
     inherit: true,
@@ -11241,6 +11698,36 @@ const Moves = {
   surgingstrikes: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, legendary: 1 }
+  },
+  survivalprotocol: {
+    num: 3562,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Survival Protocol",
+    pp: 10,
+    priority: 0,
+    flags: {failencore: 1, nosleeptalk: 1, noassist: 1, failcopycat: 1, failmimic: 1, failinstruct: 1},
+    onHit(target, source, effect) {
+      const moves = this.dex.moves.all().filter(move => (
+        (![2, 4].includes(this.gen) || !source.moves.includes(move.id)) &&
+        (!move.isNonstandard || move.isNonstandard === "Unobtainable") &&
+        move.flags["heal"]
+      ));
+      let randomMove = "";
+      if (moves.length) {
+        moves.sort((a, b) => a.num - b.num);
+        randomMove = this.sample(moves).id;
+      }
+      if (!randomMove) return false;
+      source.side.lastSelectedMove = this.toID(randomMove);
+      this.actions.useMove(randomMove, target);
+    },
+    callsMove: true,
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    contestType: "Beautiful",
   },
   shadowforce: {
     inherit: true,
