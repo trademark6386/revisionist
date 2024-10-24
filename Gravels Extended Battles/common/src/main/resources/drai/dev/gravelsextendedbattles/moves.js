@@ -219,6 +219,24 @@ const Moves = {
     zMove: { effect: "heal" },
     contestType: "Cool"
   },
+  amethystassault: {
+    num: 3653,
+    accuracy: 95,
+    basePower: 100,
+    category: "Special",
+    name: "Amethyst Assault",
+    pp: 10,
+    flags: { protect: 1, mirror: 1 },
+    onEffectiveness(typeMod, target, type, move) {
+      return typeMod + this.dex.getEffectiveness("Fairy", type);
+    },
+    priority: 0,
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    zMove: { basePower: 170 },
+    contestType: "Tough"
+  },
   amoebahammer: {
     num: 3510,
     accuracy: 100,
@@ -2420,6 +2438,35 @@ const Moves = {
     type: "Ice",
     contestType: "Tough"
   },
+  criticalerror: {
+    num: 3640,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Critical Error",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
+  criticalstrike: {
+    num: 3636,
+    accuracy: 80,
+    basePower: 100,
+    category: "Physical",
+    name: "Critical Strike",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
   crushgrip: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, legendary: 1 }
@@ -2563,6 +2610,20 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, slicing: 1, hm: 1 }
   },
+  cyberfist: {
+    num: 3655,
+    accuracy: 100,
+    basePower: 75,
+    category: "Physical",
+    name: "Cyber Fist",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, punch: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
   cyclonebeatdown: {
     num: 3493,
     accuracy: 95,
@@ -2644,6 +2705,43 @@ const Moves = {
     target: "normal",
     type: "Sound",
     contestType: "Cool"
+  },
+  ddrkicks: {
+    num: 3638,
+    accuracy: 100,
+    basePower: 0,
+    basePowerCallback(pokemon, target, move) {
+      const currentSpecies = move.allies.shift().species;
+      const bp = 5 + Math.floor(currentSpecies.baseStats.atk / 10);
+      this.debug("BP for " + currentSpecies.name + " hit: " + bp);
+      return bp;
+    },
+	basePowerCallback(pokemon, target, move) {
+      // Track the number of hits and set base power accordingly
+      const hitCount = move.hit;
+      let bp = 0;
+    
+      if (hitCount === 1) {
+        bp = 20; // First hit has 20 power
+      } else if (hitCount === 2) {
+        bp = 40; // Second hit has 40 power
+      } else if (hitCount === 3) {
+        bp = 60; // Third hit has 60 power
+      }
+    
+      this.debug("Hit count: " + hitCount + ", BP: " + bp);
+      return bp;
+	},
+    category: "Physical",
+    name: "DDR Kicks",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, kick: 1 },
+    multihit: [1, 3],
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Clever"
   },
   darkbargain: {
     num: 3083,
@@ -2789,6 +2887,42 @@ const Moves = {
     target: "normal",
     type: "Eldritch",
     contestType: "Cute"
+  },
+  datadrill: {
+    num: 3661,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Data Drill",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
+  dataoverflow: {
+    num: 3648,
+    accuracy: 100,
+    basePower: 50,
+    category: "Special",
+    name: "Data Overflow",
+    pp: 25,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, beam: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Digital",
+    contestType: "Clever"
   },
   datatransfer: {
     num: 3088,
@@ -3072,6 +3206,24 @@ const Moves = {
     zMove: { boost: { accuracy: 1 } },
     contestType: "Cool"
   },
+  defragmentation: {
+    num: 3645,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Defragmentation",
+    pp: 30,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      spe: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
   dejavu: {
     num: 3095,
     accuracy: true,
@@ -3114,6 +3266,28 @@ const Moves = {
     type: "Dark",
     zMove: { boost: { spa: 1 } },
     contestType: "Cute"
+  },
+  denialofservice: {
+    num: 3646,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Denial of Service",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, bypasssub: 1, metronome: 1 },
+    volatileStatus: "disable",
+    onTryHit(target) {
+      if (!target.lastMove || target.lastMove.isZ || target.lastMove.isMax || target.lastMove.id === "struggle") {
+        return false;
+      }
+    },
+    
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
   },
   depthcharge: {
     num: 3097,
@@ -3305,6 +3479,25 @@ const Moves = {
     type: "Psychic",
     contestType: "Cool"
   },
+  diamonddust: {
+    num: 3652,
+    accuracy: 100,
+    basePower: 40,
+    category: "Special",
+    name: "Diamond Dust",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, powder: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        accuracy: -1
+      }
+    },
+    target: "normal",
+    type: "Crystal",
+    contestType: "Cute"
+  },
   diamondstorm: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, legendary: 1 }
@@ -3388,6 +3581,20 @@ const Moves = {
     target: "normal",
     type: "Ground",
     contestType: "Tough"
+  },
+  digibeam: {
+    num: 3641,
+    accuracy: 90,
+    basePower: 80,
+    category: "Special",
+    name: "Digibeam",
+    pp: 25,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, beam: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Beautiful"
   },
   dinokick: {
     num: 3597,
@@ -4234,6 +4441,26 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  elasticwave: {
+    num: 3649,
+    accuracy: 100,
+    basePower: 15,
+    category: "Special",
+    name: "Elastic Wave",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+	multihit: [2, 5],
+    secondary: {
+      chance: 10,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Plastic",
+    contestType: "Cool"
+  },
   eldritchblast: {
     num: 3563,
     accuracy: 100,
@@ -4492,6 +4719,27 @@ const Moves = {
     target: "normal",
     type: "Fairy",
     contestType: "Clever"
+  },
+  excitebike: {
+    num: 3662,
+    accuracy: 100,
+    basePower: 50,
+    category: "Physical",
+    name: "Excite Bike",
+    pp: 20,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    secondary: {
+      chance: 100,
+      self: {
+        boosts: {
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Digital",
+    contestType: "Cool"
   },
   exsanguinate: {
     num: 3143,
@@ -5322,6 +5570,25 @@ const Moves = {
     type: "Ice",
     contestType: "Cool"
   },
+  fullbattery: {
+    num: 3639,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Full Battery",
+    pp: 30,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      spe: 1,
+	  accuracy: -1
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
   fusionbolt: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, legendary: 1 }
@@ -5394,6 +5661,21 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Tough"
+  },
+  garnetbeam: {
+    num: 3654,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Garnet Beam",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, heal: 1, beam: 1 },
+    drain: [1, 2],
+    secondary: null,
+    target: "normal",
+    type: "Crystal",
+    contestType: "Clever"
   },
   garurukick: {
     num: 3603,
@@ -5628,6 +5910,25 @@ const Moves = {
     },
     target: "normal",
     type: "Cosmic",
+    contestType: "Tough"
+  },
+  gigabyte: {
+    num: 3659,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Giga Byte",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Digital",
     contestType: "Tough"
   },
   gigadestroyer: {
@@ -6722,6 +7023,24 @@ const Moves = {
     maxMove: { basePower: 130 },
     contestType: "Cool"
   },
+  increasedram: {
+    num: 3644,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Increased Ram",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      spa: 3
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   infernalblade: {
     num: 3223,
     accuracy: 95,
@@ -6925,6 +7244,20 @@ const Moves = {
   junglehealing: {
     inherit: true,
 	flags: { heal: 1, bypasssub: 1, allyanim: 1, legendary: 1 }
+  },
+  kilobyte: {
+    num: 3660,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Kilo Byte",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, metronome: 1, bite: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
   },
   kindleseed: {
     num: 3230,
@@ -7489,6 +7822,23 @@ const Moves = {
     target: "normal",
     type: "Plastic"
   },
+  megabyte: {
+    num: 3658,
+    accuracy: 100,
+    basePower: 60,
+    category: "Physical",
+    name: "Mega Byte",
+    pp: 25,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, bite: 1 },
+    secondary: {
+      chance: 30,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Digital",
+    contestType: "Tough"
+  },
   megakick: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, kick: 1 }
@@ -7908,6 +8258,25 @@ const Moves = {
   mistball: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, bullet: 1, legendary: 1 }
+  },
+  moltenplasticblast: {
+    num: 3656,
+    accuracy: 100,
+    basePower: 120,
+    category: "Special",
+    name: "Molten Plastic Blast",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, defrost: 1 },
+	recoil: [1, 2],
+    thawsTarget: true,
+    secondary: {
+      chance: 30,
+      status: "brn"
+    },
+    target: "normal",
+    type: "Plastic",
+    contestType: "Tough"
   },
   moongeistbeam: {
     inherit: true,
@@ -8664,6 +9033,20 @@ const Moves = {
     type: "Wind",
     contestType: "Tough"
   },
+  pacstrike: {
+    num: 3637,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Pac Strike",
+    pp: 15,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Beautiful"
+  },
   pagefault: {
     num: 3621,
     accuracy: 100,
@@ -9103,6 +9486,25 @@ const Moves = {
     type: "Plastic",
     zMove: { boost: { spa: 1 } },
     contestType: "Cute"
+  },
+  plasticstorm: {
+    num: 3650,
+    accuracy: 70,
+    basePower: 110,
+    category: "Special",
+    name: "Plastic Storm",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      boosts: {
+        spe: -2
+      }
+    },
+    target: "normal",
+    type: "Plastic",
+    contestType: "Beautiful"
   },
   poisonbubbles: {
     num: 3623,
@@ -9923,6 +10325,21 @@ const Moves = {
     target: "normal",
     type: "Water",
     maxMove: { basePower: 130 }
+  },
+  remotecontrol: {
+    num: 3647,
+    accuracy: 100,
+    basePower: 95,
+    category: "Physical",
+    name: "Remote Control",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    overrideOffensivePokemon: "target",
+    secondary: null,
+    target: "normal",
+    type: "Digital",
+    contestType: "Clever"
   },
   replicate: {
     num: 3327,
@@ -12630,6 +13047,27 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
   },
+  syntheticsurge: {
+    num: 3651,
+    accuracy: 100,
+    basePower: 85,
+    category: "Special",
+    name: "Synthetic Surge",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 50,
+      self: {
+        boosts: {
+          spa: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Plastic",
+    contestType: "Beautiful"
+  },
   tachyoncutter: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, metronome: 1, slicing: 1, legendary: 1 }
@@ -13281,6 +13719,24 @@ const Moves = {
     target: "normal",
     type: "Cosmic"
   },
+  upgrade: {
+    num: 3643,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Upgrade",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      atk: 2
+    },
+    secondary: null,
+    target: "self",
+    type: "Digital",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Beautiful"
+  },
   uproarsound: {
     num: 3459,
     accuracy: 100,
@@ -13325,6 +13781,20 @@ const Moves = {
     target: "normal",
     type: "Nuclear",
     contestType: "Beautiful"
+  },
+  usbwhip: {
+    num: 3642,
+    accuracy: 100,
+    basePower: 100,
+    category: "Physical",
+    name: "USB Whip",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [33, 100],
+    secondary: null,
+    target: "normal",
+    type: "Digital"
   },
   uvray: {
     num: 3438,
@@ -13917,6 +14387,35 @@ const Moves = {
     target: "normal",
     type: "Cosmic",
     contestType: "Beautiful"
+  },
+  yoink: {
+    num: 3657,
+    accuracy: 100,
+    basePower: 60,
+    category: "Physical",
+    name: "Yoink",
+    pp: 25,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, failmefirst: 1, noassist: 1, failcopycat: 1 },
+    onAfterHit(target, source, move) {
+      if (source.item || source.volatiles["gem"]) {
+        return;
+      }
+      const yourItem = target.takeItem(source);
+      if (!yourItem) {
+        return;
+      }
+      if (!this.singleEvent("TakeItem", yourItem, target.itemState, source, target, move, yourItem) || !source.setItem(yourItem)) {
+        target.item = yourItem.id;
+        return;
+      }
+      this.add("-enditem", target, yourItem, "[silent]", "[from] move: Yoink", "[of] " + source);
+      this.add("-item", source, yourItem, "[from] move: Yoink", "[of] " + target);
+    },
+    secondary: null,
+    target: "normal",
+    type: "Sound",
+    contestType: "Tough"
   },
   yuckytongue: {
     num: 3631,
