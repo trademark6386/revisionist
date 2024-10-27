@@ -22,6 +22,22 @@ __export(items_exports, {
 });
 module.exports = __toCommonJS(items_exports);
 const Items = {
+  analysismap: {
+    name: "Analysis Map",
+    fling: {
+      basePower: 0
+    },
+    spritenum: 3016,
+    onModifyAtk(atk, user) {
+      if (user.species.name === "Terubim") {
+        return this.chainModify(2);
+      }
+	},
+    itemUser: ["Terubim"],
+    num: 3016,
+    gen: 8,
+    isNonstandard: "Past"
+  },
   boltorb: {
     name: "Bolt Orb",
     spritenum: 3000,
@@ -78,6 +94,24 @@ const Items = {
     num: 3002,
     gen: 2
   },
+  cursedsash: {
+    name: "Cursed Sash",
+    spritenum: 3018,
+    fling: {
+      basePower: 10
+    },
+    onDamagePriority: -40,
+    onDamage(damage, target, source, effect) {
+      if (target.hp === target.maxhp) {
+        this.add("-activate", target, "item: Cursed Sash");
+        this.boost({ def: -2, spd: -2 }, target);
+        target.useItem();
+        return 0;
+      }
+	},
+    num: 3018,
+    gen: 4
+  },
   darkrock: {
     name: "Dark Rock",
     spritenum: 3003,
@@ -101,6 +135,22 @@ const Items = {
     },
     num: 3004,
     gen: 5
+  },
+  forecastmap: {
+    name: "Forecast Map",
+    fling: {
+      basePower: 0
+    },
+    spritenum: 3017,
+	onModifySpD(spd, user) {
+      if (user.species.name === "Terubim") {
+        return this.chainModify(2); // Doubles the Special Defense stat
+      }
+	},
+    itemUser: ["Terubim"],
+    num: 3017,
+    gen: 8,
+    isNonstandard: "Past"
   },
   foulrock: {
     name: "Foul Rock",
@@ -135,6 +185,19 @@ const Items = {
     },
     num: 3006,
     gen: 4
+  },
+  hailstone: {
+    name: "Hailstone",
+    spritenum: 3019,
+    fling: {
+      basePower: 60
+    },
+	onStart(source) {
+      this.field.setWeather("hail");
+    },
+    num: 3019,
+    gen: 8,
+    isNonstandard: "Past"
   },
   iceshard: {
     name: "Ice Shard",
@@ -278,6 +341,23 @@ const Items = {
     num: 3014,
     gen: 9,
     isNonstandard: "Past"
+  },
+  totemofundying: {
+    name: "Totem of Undying",
+    spritenum: 3020,
+    fling: {
+      basePower: 10
+    },
+    onDamagePriority: -40,
+    onDamage(damage, target, source, effect) {
+      if (target.hp === target.maxhp && damage >= target.hp && effect && effect.effectType === "Move") {
+        if (target.useItem()) {
+          return target.hp - 1;
+        }
+      }
+    },
+    num: 3020,
+    gen: 4
   },
   xrayspecs: {
     name: "X-Ray Specs",

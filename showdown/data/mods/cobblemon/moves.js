@@ -337,6 +337,20 @@ const Moves = {
     type: "Ground",
     contestType: "Tough"
   },
+  aquaimpact: {
+    num: 3663,
+    accuracy: 100,
+    basePower: 120,
+    category: "Physical",
+    name: "Aqua Impact",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    recoil: [33, 100],
+    secondary: null,
+    target: "normal",
+    type: "Water"
+  },
   aquaslam: {
     num: 3009,
     accuracy: 100,
@@ -372,6 +386,23 @@ const Moves = {
     zMove: { basePower: 180 },
     maxMove: { basePower: 130 },
     contestType: "Cool"
+  },
+  aromawind: {
+    num: 3664,
+    accuracy: 95,
+    basePower: 70,
+    category: "Special",
+    name: "Aroma Wind",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "confusion"
+    },
+    target: "normal",
+    type: "Grass",
+    contestType: "Clever"
   },
   asteroidbelt: {
     num: 3011,
@@ -467,6 +498,56 @@ const Moves = {
     target: "normal",
     type: "Cosmic",
     contestType: "Beautiful"
+  },
+  astroforce: {
+    num: 3665,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Astroforce",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      self: {
+        boosts: {
+          atk: 1,
+          def: 1,
+          spa: 1,
+          spd: 1,
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Psychic",
+    contestType: "Tough"
+  },
+  astroforcecosmic: {
+    num: 3666,
+    accuracy: 100,
+    basePower: 60,
+    category: "Special",
+    name: "Astroforce Cosmic",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      self: {
+        boosts: {
+          atk: 1,
+          def: 1,
+          spa: 1,
+          spd: 1,
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Cosmic",
+    contestType: "Tough"
   },
   atomicbreath: {
     num: 3464,
@@ -1011,6 +1092,33 @@ const Moves = {
     type: "Light",
     contestType: "Tough"
   },
+  blitzcannon: {
+    num: 3667,
+    accuracy: 100,
+    basePower: 70,
+    category: "Special",
+    name: "Blitz Cannon",
+    pp: 5,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      self: {
+        boosts: {
+          spa: 1
+        }
+      }
+    },
+	onHit(target, source) {
+      if (source.ability !== "megalauncher") {
+        source.setAbility("megalauncher");
+        this.add("-ability", source, "Mega Launcher", "[from] move: Blitz Cannon");
+      }
+    },
+    target: "normal",
+    type: "Steel",
+    contestType: "Beautiful"
+  },
   blockblitz: {
     num: 3484,
     accuracy: 70,
@@ -1082,6 +1190,25 @@ const Moves = {
     type: "Sound",
     zMove: { effect: "clearnegativeboost" },
     contestType: "Clever"
+  },
+  boldblaze: {
+    num: 3668,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Bold Blaze",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onBasePower(basePower, pokemon, target) {
+      if (target.hp * 2 <= target.maxhp) {
+        return this.chainModify(2);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    contestType: "Tough"
   },
   boltblitz: {
     num: 3034,
@@ -1810,6 +1937,25 @@ const Moves = {
     type: "Dragon",
     contestType: "Tough"
   },
+  chromeball: {
+    num: 3669,
+    accuracy: 100,
+    basePower: 90,
+    category: "Special",
+    name: "Chrome Ball",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1, bullet: 1 },
+    secondary: {
+      chance: 20,
+      boosts: {
+        spd: -1
+      }
+    },
+    target: "normal",
+    type: "Steel",
+    contestType: "Clever"
+  },
   cinderbreath: {
     num: 3061,
     accuracy: 100,
@@ -1827,6 +1973,21 @@ const Moves = {
     },
     target: "normal",
     type: "Fire",
+    contestType: "Tough"
+  },
+  clamhammer: {
+    num: 3670,
+    accuracy: 90,
+    basePower: 90,
+    category: "Physical",
+    name: "Clamhammer",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Ice",
     contestType: "Tough"
   },
   clockworkmouse: {
@@ -2009,6 +2170,35 @@ const Moves = {
     type: "Dark",
     zMove: { boost: { def: 1 } },
     contestType: "Cute"
+  },
+  condensate: {
+    num: 3697,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Condensate",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      const newTypes = target.types.map(type => {
+        if (type === "Wind") return "Water";
+        return type;
+      });
+
+      if (newTypes.join() === target.types.join()) {
+        this.add("-fail", target);
+        return null;
+      }
+
+      target.setType(newTypes);
+      this.add("-start", target, "typechange", newTypes.join("/"));
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ice",
+    zMove: { boost: { spd: 1 } },
+    contestType: "Beautiful"
   },
   constructionblocks: {
     num: 3066,
@@ -2483,6 +2673,22 @@ const Moves = {
     target: "allAdjacentFoes",
     type: "Fairy",
     contestType: "Beautiful"
+  },
+  cryoshock: {
+    num: 3671,
+    accuracy: 100,
+    basePower: 85,
+    category: "Physical",
+    name: "Cryoshock",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      status: "frz"
+    },
+    target: "normal",
+    type: "Ice"
   },
   crystaldance: {
     num: 3501,
@@ -4670,6 +4876,35 @@ const Moves = {
     type: "Eldritch",
     contestType: "Tough"
   },
+  evaporate: {
+    num: 3696,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Evaporate",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      const newTypes = target.types.map(type => {
+        if (type === "Water") return "Wind";
+        return type;
+      });
+
+      if (newTypes.join() === target.types.join()) {
+        this.add("-fail", target);
+        return null;
+      }
+
+      target.setType(newTypes);
+      this.add("-start", target, "typechange", newTypes.join("/"));
+    },
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Clever"
+  },
   eventhorizon: {
     num: 3582,
     accuracy: 30,
@@ -5019,6 +5254,20 @@ const Moves = {
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1, slicing: 1 },
     critRatio: 2,
+    secondary: null,
+    target: "normal",
+    type: "Water",
+    contestType: "Tough"
+  },
+  finsmack: {
+    num: 3672,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Fin Smack",
+    pp: 35,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
     secondary: null,
     target: "normal",
     type: "Water",
@@ -6097,6 +6346,26 @@ const Moves = {
     type: "Slime",
     contestType: "Tough"
   },
+  glorywing: {
+    num: 3673,
+    accuracy: 100,
+    basePower: 95,
+    category: "Special",
+    name: "Glory Wing",
+    pp: 15,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      self: {
+        boosts: {
+          spa: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Flying"
+  },
   glowingorb: {
     num: 3194,
     accuracy: 100,
@@ -6296,6 +6565,25 @@ const Moves = {
     maxMove: { basePower: 130 },
     contestType: "Cute"
   },
+  grimebuster: {
+    num: 3674,
+    accuracy: 90,
+    basePower: 130,
+    category: "Physical",
+    name: "Grimebuster",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        atk: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Poison",
+    contestType: "Beautiful"
+  },
   grimstinger: {
     num: 3201,
     accuracy: 100,
@@ -6446,6 +6734,25 @@ const Moves = {
     type: "Questionmark",
     contestType: "Cool"
   },
+  hairpinturn: {
+    num: 3675,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Hairpin Turn",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1, dance: 1 },
+    boosts: {
+      spe: 1,
+      evasion: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Flying",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Cool"
+  },
   halflife: {
     num: 3206,
     accuracy: 90,
@@ -6477,6 +6784,20 @@ const Moves = {
     target: "normal",
     type: "Cosmic",
     contestType: "Tough"
+  },
+  hardknock: {
+    num: 3676,
+    accuracy: 90,
+    basePower: 90,
+    category: "Physical",
+    name: "Hard Knock",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    overrideOffensiveStat: "def",
+    secondary: null,
+    target: "normal",
+    type: "Rock"
   },
   haunt: {
     num: 3207,
@@ -6953,6 +7274,22 @@ const Moves = {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, legendary: 1 }
   },
+  iceentomb: {
+    num: 3677,
+    accuracy: 40,
+    basePower: 0,
+    category: "Status",
+    name: "Ice Entomb",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1 },
+    status: "frz",
+    secondary: null,
+    target: "normal",
+    type: "Ice",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Beautiful"
+  },
   iceshard: {
     inherit: true,
 	flags: { protect: 1, mirror: 1, speed: 1 }
@@ -7166,6 +7503,26 @@ const Moves = {
   jetpunch: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, punch: 1, speed: 1 }
+  },
+  jetshoot: {
+    num: 3678,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Jet Shoot",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 30,
+      self: {
+        boosts: {
+          spe: 1
+        }
+      }
+    },
+    target: "normal",
+    type: "Flying"
   },
   jetstrike: {
     num: 3227,
@@ -7859,6 +8216,49 @@ const Moves = {
     target: "normal",
     type: "Water",
     contestType: "Cool"
+  },
+  melt: {
+    num: 3695,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Melt",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      if (target.getTypes().join() === "Rock" || !target.setType("Rock")) {
+        this.add("-fail", target);
+        return null;
+      }
+      this.add("-start", target, "typechange", "Rock");
+    },
+	onHit(target) {
+      const newTypes = target.types.map(type => {
+        // Replace Ice with Water
+        if (type === "Ice") return "Water";
+        // Replace Steel with Normal
+        if (type === "Steel") return "Normal";
+        // Replace Plastic with Poison
+        if (type === "Plastic") return "Poison";
+        // Keep other types as is
+        return type;
+      });
+
+      // If no change occurred (no Ice, Steel, or Plastic type), move fails
+      if (newTypes.join() === target.types.join()) {
+        this.add("-fail", target);
+        return null;
+      }
+
+      target.setType(newTypes);
+      this.add("-start", target, "typechange", newTypes.join("/"));
+	},
+    secondary: null,
+    target: "normal",
+    type: "Fire",
+    zMove: { boost: { spa: 1 } },
+    contestType: "Tough"
   },
   meltdown: {
     num: 3250,
@@ -10007,6 +10407,19 @@ const Moves = {
     type: "Ground",
     contestType: "Tough"
   },
+  quickturn: {
+    num: 3679,
+    accuracy: 100,
+    basePower: 70,
+    category: "Physical",
+    name: "Quick Turn",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Dragon"
+  },
   radiantblade: {
     num: 3314,
     accuracy: 100,
@@ -10277,6 +10690,32 @@ const Moves = {
 	target: "self",
 	type: "Digital",
 	contestType: "Cool"
+  },
+  regalfang: {
+    num: 3680,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Regal Fang",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, nonsky: 1 },
+    onEffectiveness(typeMod, target, type, move) {
+      if (move.type !== "Ground")
+        return;
+      if (!target)
+        return;
+      if (!target.runImmunity("Ground")) {
+        if (target.hasType("Flying"))
+          return 0;
+      }
+    },
+    ignoreImmunity: { "Ground": true },
+    secondary: null,
+    target: "normal",
+    type: "Ground",
+    zMove: { basePower: 180 },
+    contestType: "Beautiful"
   },
   relicsong: {
     inherit: true,
@@ -10582,6 +11021,21 @@ const Moves = {
     target: "normal",
     type: "Cosmic",
     contestType: "Cool"
+  },
+  rocketdrive: {
+    num: 3681,
+    accuracy: 100,
+    basePower: 90,
+    category: "Physical",
+    name: "Rocket Drive",
+    pp: 15,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    recoil: [1, 4],
+    secondary: null,
+    target: "normal",
+    type: "Steel",
+    contestType: "Tough"
   },
   rocksmash: {
     inherit: true,
@@ -11024,6 +11478,25 @@ const Moves = {
     type: "Shadow",
     contestType: "Tough"
   },
+  shadowfin: {
+    num: 3682,
+    accuracy: 100,
+    basePower: 80,
+	basePowerCallback(pokemon) {
+      const speedBoosts = pokemon.boosts.spe || 0; // Get the user's Speed stat boost stages
+      const extraPower = speedBoosts > 0 ? 10 * speedBoosts : 0; // Increase base power by 10 for each Speed stage
+      return 80 + extraPower; // Base power starts at 80, adds 10 per Speed boost stage
+	},
+    category: "Physical",
+    name: "Shadow Fin",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Tough"
+  },
   shadowfire: {
     num: 3355,
     accuracy: 100,
@@ -11203,6 +11676,23 @@ const Moves = {
   shadowsneak: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, speed: 1 }
+  },
+  shadowsplit: {
+    num: 3683,
+    accuracy: 100,
+    basePower: 80,
+    category: "Physical",
+    name: "Shadow Split",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: {
+      chance: 10,
+      volatileStatus: "flinch"
+    },
+    target: "normal",
+    type: "Ghost",
+    contestType: "Tough"
   },
   shadowstorm: {
     num: 3364,
@@ -11818,6 +12308,25 @@ const Moves = {
     type: "Sound",
     contestType: "Cute"
   },
+  soilthrow: {
+    num: 3684,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Soil Throw",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    secondary: {
+      chance: 100,
+      boosts: {
+        def: -1
+      }
+    },
+    target: "normal",
+    type: "Ground",
+    contestType: "Tough"
+  },
   solarbeam: {
     inherit: true,
 	flags: { charge: 1, protect: 1, mirror: 1, nosleeptalk: 1, failinstruct: 1, beam: 1 },
@@ -11930,6 +12439,35 @@ const Moves = {
     type: "Light",
     contestType: "Tough"
   },
+  solidificate: {
+    num: 3698,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Solidificate",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
+    onHit(target) {
+      const newTypes = target.types.map(type => {
+        if (type === "Water") return "Ice";
+        return type;
+      });
+
+      if (newTypes.join() === target.types.join()) {
+        this.add("-fail", target);
+        return null;
+      }
+
+      target.setType(newTypes);
+      this.add("-start", target, "typechange", newTypes.join("/"));
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ice",
+    zMove: { boost: { def: 1 } },
+    contestType: "Tough"
+  },
   somnismog: {
     num: 3384,
     accuracy: 60,
@@ -11976,6 +12514,25 @@ const Moves = {
     target: "normal",
     type: "Ghost",
     contestType: "Clever"
+  },
+  soulshock: {
+    num: 3685,
+    accuracy: 100,
+    basePower: 65,
+    category: "Physical",
+    name: "Soulshock",
+    pp: 10,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    onBasePower(basePower, pokemon, target) {
+      if (target.hp * 2 <= target.maxhp) {
+        return this.chainModify(2);
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ghost",
+    contestType: "Tough"
   },
   soulstealing7starstrike: {
     inherit: true,
@@ -12162,6 +12719,20 @@ const Moves = {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, bypasssub: 1, legendary: 1 }
   },
+  speedmite: {
+    num: 3686,
+    accuracy: 100,
+    basePower: 40,
+    category: "Physical",
+    name: "Speedmite",
+    pp: 20,
+    priority: 1,
+    flags: { contact: 1, protect: 1, mirror: 1, speed: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Rock",
+    contestType: "Cool"
+  },
   spindash: {
     num: 3476,
     accuracy: 85,
@@ -12330,6 +12901,25 @@ const Moves = {
     secondary: null,
     target: "any",
     type: "Fairy",
+    contestType: "Tough"
+  },
+  spookysound: {
+    num: 3687,
+    accuracy: 95,
+    basePower: 0,
+    category: "Status",
+    name: "Spooky Sound",
+    pp: 20,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1 },
+    boosts: {
+      spa: -1,
+      spd: -1
+    },
+    secondary: null,
+    target: "allAdjacent",
+    type: "Ghost",
+    zMove: { boost: { def: 1 } },
     contestType: "Tough"
   },
   spotlightlight: {
@@ -12640,6 +13230,26 @@ const Moves = {
   strength: {
     inherit: true,
 	flags: { contact: 1, protect: 1, mirror: 1, hm: 1 }
+  },
+  stretch: {
+    num: 3688,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Stretch",
+    pp: 10,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      atk: 1,
+      spe: 1,
+	  evasion: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Fighting",
+    zMove: { effect: "clearnegativeboost" },
+    contestType: "Clever"
   },
   subwoofer: {
     num: 3404,
@@ -13217,6 +13827,26 @@ const Moves = {
     inherit: true,
 	flags: { protect: 1, mirror: 1, noassist: 1, failcopycat: 1, failmimic: 1, legendary: 1 }
   },
+  terrafirm: {
+    num: 3689,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Terrafirm",
+    pp: 25,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      atk: 1,
+      def: 1,
+	  spe: -1
+    },
+    secondary: null,
+    target: "self",
+    type: "Ground",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Cool"
+  },
   terraforce: {
     num: 3626,
     accuracy: 100,
@@ -13247,6 +13877,25 @@ const Moves = {
     target: "normal",
     type: "Ghost",
     contestType: "Clever"
+  },
+  thicketslip: {
+    num: 3690,
+    accuracy: true,
+    basePower: 0,
+    category: "Status",
+    name: "Thicket Slip",
+    pp: 20,
+    priority: 0,
+    flags: { snatch: 1 },
+    boosts: {
+      spe: 1,
+      evasion: 1
+    },
+    secondary: null,
+    target: "self",
+    type: "Grass",
+    zMove: { boost: { atk: 1 } },
+    contestType: "Cool"
   },
   thornwhip: {
     num: 3423,
@@ -13409,6 +14058,20 @@ const Moves = {
     },
     target: "normal",
     type: "Grass",
+    contestType: "Cool"
+  },
+  titanichorn: {
+    num: 3691,
+    accuracy: 85,
+    basePower: 120,
+    category: "Physical",
+    name: "Titanic Horn",
+    pp: 5,
+    priority: 0,
+    flags: { contact: 1, protect: 1, mirror: 1 },
+    secondary: null,
+    target: "normal",
+    type: "Steel",
     contestType: "Cool"
   },
   tornado: {
@@ -13737,6 +14400,25 @@ const Moves = {
     zMove: { effect: "clearnegativeboost" },
     contestType: "Beautiful"
   },
+  upheaval: {
+    num: 3692,
+    accuracy: 80,
+    basePower: 120,
+    category: "Special",
+    name: "Upheaval",
+    pp: 10,
+    priority: 0,
+    flags: { protect: 1, mirror: 1 },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
+    secondary: null,
+    target: "normal",
+    type: "Ground",
+    contestType: "Beautiful"
+  },
   uproarsound: {
     num: 3459,
     accuracy: 100,
@@ -14013,6 +14695,42 @@ const Moves = {
     },
     target: "normal",
     type: "Rock"
+  },
+  warble: {
+    num: 3693,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Warble",
+    pp: 40,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    boosts: {
+      spd: -1
+    },
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Flying",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cute"
+  },
+  warblesound: {
+    num: 3694,
+    accuracy: 100,
+    basePower: 0,
+    category: "Status",
+    name: "Warble Sound",
+    pp: 40,
+    priority: 0,
+    flags: { protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1 },
+    boosts: {
+      spd: -1
+    },
+    secondary: null,
+    target: "allAdjacentFoes",
+    type: "Sound",
+    zMove: { boost: { def: 1 } },
+    contestType: "Cute"
   },
   waterfall: {
     inherit: true,
