@@ -11,7 +11,7 @@ public abstract class IEvolutionNode implements Comparable<IEvolutionNode> {
     public abstract void addEvolution(IEvolutionNode formEvolutionNode);
     public abstract void addPreEvolution(IEvolutionNode formEvolutionNode);
     public abstract String getForm();
-    public abstract String getSpecies();
+    public abstract Species getSpecies();
     public abstract List<IEvolutionNode> getPreEvolutions();
     public abstract Set<Evolution> getPokemonEvolutions();
     public abstract int getPokedexNumber();

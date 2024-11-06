@@ -1,7 +1,5 @@
 package drai.dev.gravelmon.pokemon.attributes;
 
-import dev.architectury.platform.*;
-
 import java.util.*;
 
 public enum Label {
@@ -71,7 +69,7 @@ public enum Label {
     CYARE("cyare"),
     DHIOME("dhiome"),
     ENJIN("enjin"),
-    FLIGA("fliga"),
+    AVALOS("fliga"),
     GOETIA("goetia"),
     IONOS("ionos"),
     KURIA("kuria"),
@@ -102,8 +100,9 @@ public enum Label {
     CHAOSINVESTIA,
     SOULSTONES,
     MASTENIAN,
-    KORZA
-    ;
+    FORM,
+    KORZA,
+    RAIAN, PALMIA, NORSE, TRIZOR, ALDAO, BAGO, FRA, IVRIS, ELB(), FABEL(), FERRAN(), AROMA(), SAHL(), MAHAL(), BORAZUL(), KUULKID(), MIKITARI(), SORIN();
 
     private String name;
     Label(String name){
@@ -119,7 +118,7 @@ public enum Label {
     public static Map<Label, String> passwordProtectedLabels;
     static{
         passwordProtectedLabels = new HashMap<>();
-        if(!Platform.isDevelopmentEnvironment()){
+        if(false){
             passwordProtectedLabels.put(OTTORA, "15thaddictionIsAddicted");
             passwordProtectedLabels.put(IONOS, "airikr4283");
             passwordProtectedLabels.put(MASTENIA, "airikr4283");
@@ -156,7 +155,7 @@ public enum Label {
             passwordProtectedLabels.put(NOSTO, "vanished");
             passwordProtectedLabels.put(URZAVOS, "scarfflesLooker");
             passwordProtectedLabels.put(SPION, "sketchyant");
-            passwordProtectedLabels.put(FLIGA, "skur01Rocks");
+            passwordProtectedLabels.put(AVALOS, "skur01Rocks");
             passwordProtectedLabels.put(NOVRAI, "znogyrop");
             passwordProtectedLabels.put(PASTEL_ISLAND, "mysteriousIsland");
             passwordProtectedLabels.put(MYTH, "dramaQueen");

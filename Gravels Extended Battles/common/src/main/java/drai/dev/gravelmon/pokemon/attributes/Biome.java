@@ -77,6 +77,7 @@ public enum Biome {
     IS_WARM_OCEAN("#cobblemon","is_warm_ocean"),
     IS_OLD_GROWTH_TAIGA("#cobblemon","is_old_growth_taiga"),
     IS_WINTER("#cobblemon","has_season/winter"),
+    IS_BIRCH("minecraft","birch_forest"),
     IS_CHERRY_GROVE("minecraft", "cherry_grove");
     private String id;
     private String name;

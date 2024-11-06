@@ -33,8 +33,8 @@ public class SpeciesEvolutionNode extends IEvolutionNode{
         return null;
     }
 
-    public String getSpecies(){
-        return pokemon.getName().toLowerCase();
+    public Species getSpecies(){
+        return pokemon;
     }
 
     public List<IEvolutionNode> getPreEvolutions() {

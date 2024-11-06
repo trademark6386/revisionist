@@ -75,6 +75,11 @@ public class EvolutionGraph {
             updateDexNumbers(species, dexNumber);
         }
         GravelsExtendedBattles.SORTED_SPECIES = sortedSpecies;
+        var pokedexSorted = sortedSpecies.stream().sorted(Comparator.comparingInt(IEvolutionNode::getPokedexNumber)).toList();
+        for (int i = 0; i < pokedexSorted.size(); i++) {
+            var species = pokedexSorted.get(i);
+            System.out.println(i+1 + ": " + species.getSpecies().getName());
+        }
     }
 
     public void shiftDex(IEvolutionNode node, int newNumber) {
