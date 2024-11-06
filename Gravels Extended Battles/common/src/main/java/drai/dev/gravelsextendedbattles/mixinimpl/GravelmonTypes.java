@@ -28,6 +28,7 @@ public class GravelmonTypes {
             GravelsExtendedBattles.NEW_TYPES.add(createType("sound", 0x59bfa6));
             GravelsExtendedBattles.NEW_TYPES.add(createType("wind", 0x6eefb6));
             GravelsExtendedBattles.NEW_TYPES.add(createType("eldritch", 0x962c46));
+            GravelsExtendedBattles.NEW_TYPES.add(createType("blood", 0x761310));
             System.out.println("finished adding new types");
             isInit=true;
         }

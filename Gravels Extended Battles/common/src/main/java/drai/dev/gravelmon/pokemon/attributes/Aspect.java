@@ -96,7 +96,7 @@ public enum Aspect {
     AYREIAN,
     KASKADIAN,
     MYSTIC,
-    FLIGIAN,
+    AVALOSSIAN,
     ENJINNIAN,
     NOVRAN,
     NEO,
@@ -165,7 +165,22 @@ public enum Aspect {
     CEFIRAN_ELECTRIC,
     MALE_X,
     FEMALE_X,
-    DELTA_UNLEASHED;
+    DELTA_UNLEASHED,
+    AFRICANUSAN,
+    VESITAN,
+    EPOCH,
+    TOKASSIAN,
+    PASTELIAN,
+    NODORRAN,
+    OLYSOSIAN,
+    OTTORAN,
+    MYSTISIAN,
+    MASTENIAN,
+    THEOSSIAN,
+    DHIOMAN,
+    IONOSIAN,
+    FORMAN,
+    RAIANIAN, TRIBAL, NORSE, PALMIAN, TRIZORAN, FOREST, CAVE, SEA, IVRISIAN, FERRANIAN, MAHALIAN, FABELIAN, SAHLIAN, ELBIAN, AROMIAN, MIKITARIAN;
     private String name;
     private boolean isNew;
     private boolean isDefault;

@@ -14,14 +14,12 @@ import net.minecraft.server.level.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.SORTED_SPECIES;
 
 public class GravelmonGiveAllPokemonCommand {
     public static void modifyGiveCommand(CommandContext<CommandSourceStack> context, CallbackInfoReturnable<Integer> cir) throws CommandSyntaxException {
-        if (SORTED_SPECIES.isEmpty()) {
-            SORTED_SPECIES = GravelmonGiveAllPokemonCommand.genSortedList();
-        }
         ServerPlayer player = context.getSource().getPlayerOrException();
         Intrinsics.checkNotNullExpressionValue(player, "player");
         PCStore pcStore = PlayerExtensionsKt.party(player).getOverflowPC();
@@ -29,7 +27,8 @@ public class GravelmonGiveAllPokemonCommand {
             cir.setReturnValue(0);
         } else {
             PCStore pc = pcStore;
-            for (Species species : SORTED_SPECIES) {
+            for (Species species : PokemonSpecies.INSTANCE.getSpecies().stream()
+                    .sorted(Comparator.comparingInt(Species::getNationalPokedexNumber)).toList()) {
                 pc.add(species.create(10));
                 var forms = species.getForms();
                 forms.sort(Comparator.comparing(formData -> {

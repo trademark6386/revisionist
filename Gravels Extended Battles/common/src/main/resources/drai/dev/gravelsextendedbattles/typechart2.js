@@ -22,6 +22,44 @@ __export(typechart_exports, {
 });
 module.exports = __toCommonJS(typechart_exports);
 const TypeChart = {
+    blood: {
+        damageTaken: {
+            fallout: 1,
+            Bug: 1,
+            Cosmic: 0,
+            Crystal: 0,
+            Dark: 1,
+            Digital: 0,
+            Dragon: 0,
+            Eldritch: 0,
+            Electric: 0,
+            Fairy: 2,
+            Fighting: 2,
+            Fire: 0,
+            Flying: 0,
+            Ghost: 2,
+            Grass: 0,
+            Ground: 0,
+            Ice: 0,
+            light: 0,
+            Normal: 0,
+            Nuclear: 1,
+            Plastic: 0,
+            Poison: 1,
+            Psychic: 0,
+            Questionmark: 0,
+            Rock: 1,
+            Shadow: 1,
+            Slime: 2,
+            Sound: 2,
+            Steel: 0,
+            Stellar: 0,
+            Water: 0,
+            Wind: 0,
+            Blood: 2
+        },
+        inherit: true
+    },
   bug: {
     damageTaken: {
       Bug: 0,
@@ -54,7 +92,8 @@ const TypeChart = {
       Steel: 0,
 	  Stellar: 0,
       Water: 0,
-	  Wind: 1
+	  Wind: 1,
+        Blood: 2
     },
     inherit: true
   },
@@ -162,7 +201,8 @@ const TypeChart = {
       Steel: 0,
 	  Stellar: 0,
       Water: 0,
-	  Wind: 0
+	  Wind: 0,
+        Blood: 2
     },
     inherit: true
   },
@@ -343,7 +383,8 @@ const TypeChart = {
       Steel: 1,
 	  Stellar: 0,
       Water: 0,
-	  Wind: 0
+	  Wind: 0,
+        Blood: 1
     }
   },
   fighting: {
@@ -415,7 +456,8 @@ const TypeChart = {
       Steel: 2,
 	  Stellar: 0,
       Water: 1,
-	  Wind: 2
+	  Wind: 2,
+        Blood: 1
     },
     inherit: true
   },
@@ -564,7 +606,8 @@ const TypeChart = {
       Steel: 0,
 	  Stellar: 0,
       Water: 1,
-	  Wind: 1
+	  Wind: 1,
+        Blood: 1
     },
     inherit: true
   },
@@ -782,7 +825,8 @@ const TypeChart = {
       Steel: 0,
 	  Stellar: 0,
       Water: 0,
-	  Wind: 1
+	  Wind: 1,
+        Blood: 2
     },
     inherit: true
   },
@@ -890,7 +934,8 @@ const TypeChart = {
       Steel: 1,
 	  Stellar: 0,
       Water: 1,
-	  Wind: 0
+	  Wind: 0,
+        Blood: 1
     },
     inherit: true
   },
@@ -1110,7 +1155,8 @@ const TypeChart = {
       Steel: 2,
 	  Stellar: 0,
       Water: 2,
-	  Wind: 0
+	  Wind: 0,
+        Blood: 1
     },
     inherit: true
   },

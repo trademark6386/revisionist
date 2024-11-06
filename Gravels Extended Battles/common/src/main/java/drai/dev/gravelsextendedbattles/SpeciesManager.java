@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.types.*;
 import com.cobblemon.mod.common.pokemon.*;
 import com.cobblemon.mod.common.pokemon.evolution.requirements.*;
 import com.cobblemon.mod.common.pokemon.evolution.variants.*;
+import com.google.common.collect.*;
 import drai.dev.gravelmon.pokemon.attributes.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
@@ -21,6 +22,7 @@ import static drai.dev.gravelsextendedbattles.GravelsExtendedBattles.*;
 public class SpeciesManager {
     private static final Map<String, List<TypeChangeEntry>> changedTypes = new HashMap<>();
     private static final HashMap<String, List<EvolutionEntry>> additionalFormEvolutions = new HashMap<>();
+    private static final HashMap<String, Float> additionalFormBaseScaleChanges = new HashMap<>();
 
     public static void banPokemon(@NotNull PokemonSpecies pokemonSpecies, GravelmonPokemonSpeciesAccessor accessor) {
         var currentSpecies = accessor.getSpeciesByIdentifier();
@@ -118,6 +120,10 @@ public class SpeciesManager {
 
     public static void registerTypeChange(String pokemon, TypeChangeEntry typeChangeEntry){
         changedTypes.computeIfAbsent(pokemon, k -> new ArrayList<>()).add(typeChangeEntry);
+    }
+
+    public static void registerBaseScaleChange(String pokemon, float baseScale){
+        additionalFormBaseScaleChanges.put(pokemon, baseScale);
     }
 
     public static void processTypeChanges(){
@@ -250,6 +256,21 @@ public class SpeciesManager {
                     evolutions.add(evolutionObj);
                     ((FormDataAccessor) (Object) form).setEvolutions(evolutions);
                 }
+            }
+        });
+    }
+
+    public static void processFormBaseScaleAdditions(){
+        additionalFormBaseScaleChanges.forEach((key,value)-> {
+            var splitFrom = key.split(" ");
+            var pokemon = PokemonSpecies.INSTANCE.getByName(splitFrom[0]);
+            if(pokemon!=null){
+                if(splitFrom.length<2){
+                    return;
+                }
+                FormData form = form = pokemon.getForm(new HashSet<>(List.of(splitFrom[1])));
+                if(form.getName().equalsIgnoreCase("normal")) return;
+                ((FormDataAccessor) (Object) form).setBaseScale(value);
             }
         });
     }

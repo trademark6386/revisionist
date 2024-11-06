@@ -32,7 +32,8 @@ public enum Type {
     SLIME("slime", Type.POISON),
     CRYSTAL("crystal", Type.ROCK),
     ELDRITCH("eldritch", Type.GHOST),
-    QUESTION_MARK("questionmark", Type.NORMAL);
+    QUESTION_MARK("questionmark", Type.NORMAL),
+    BLOOD("blood", Type.DARK);
     private final String name;
     @Nullable
     private Type substitutionType;
