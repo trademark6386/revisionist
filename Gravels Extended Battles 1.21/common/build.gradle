@@ -14,7 +14,6 @@ dependencies {
 
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
     modImplementation "com.cobblemon:mod:${cobblemon_file}"
-    modImplementation "maven.modrinth:kotlin-for-forge:${kotlin_forge_file}"
     modImplementation "maven.modrinth:midnightlib:Ct1rAic5"
 }
 
