@@ -40,9 +40,11 @@ public class GravelsExtendedBattles {
     public static int TYPE_COUNT = 18;
     public static boolean ADD_STARTERS = false;
     public static List<IEvolutionNode> SORTED_SPECIES = new ArrayList<>();
+    public static IGravelmonConfig gravelmonConfig;
+
     public static void init(String minecraftFolder) {
         MidnightConfig.init("gravelmon", GravelmonConfig.class);
-        var gravelmonConfig = new GravelmonConfig();
+        gravelmonConfig = new GravelmonConfig();
         BANNED_LABELS = gravelmonConfig.getBannedLabels();
         ALLOWED_LABELS = gravelmonConfig.getAllowedLabels();
         IMPLEMENTED_TYPES = gravelmonConfig.getImplementedTypes();
@@ -85,16 +87,8 @@ public class GravelsExtendedBattles {
             }
         }
         PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, pokemonSpecies -> {
-            SpeciesManager.processFormEvolutionAdditions();
-            SpeciesManager.processTypeChanges();
-            SpeciesManager.processFormBaseScaleAdditions();
-            SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
-            if (gravelmonConfig.getEnableDexResort()) {
-                GravelmonPokedexResorter.resort(pokemonSpecies);
-            }
-            GravelmonStarterManager.processStarters();
-            GravelmonMoveSubstitution.substituteMoves();
-
+            speciesFinished = true;
+            applyGravelmonExtensions();
             return Unit.INSTANCE;
         });
 
@@ -110,11 +104,36 @@ public class GravelsExtendedBattles {
         });
 
         Dexes.INSTANCE.getObservable().subscribe(Priority.LOWEST, dexes -> {
-            GravelmonPokedexManager.processPokedexBans(dexes);
-            GravelmonPokedexManager.processPokedexResorting(dexes);
+            dexesFinished = true;
+            applyGravelmonExtensions();
             return Unit.INSTANCE;
         });
+
+    }
+
+    private static boolean speciesFinished = false;
+    private static boolean dexesFinished = false;
+
+    public static void applyGravelmonExtensions(){
+        if(!speciesFinished || !dexesFinished)  return;
+        var pokemonSpecies = PokemonSpecies.INSTANCE;
+        var dexes = Dexes.INSTANCE;
+        SpeciesManager.processFormEvolutionAdditions();
+        SpeciesManager.processTypeChanges();
+        SpeciesManager.processFormBaseScaleAdditions();
+        SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
+
+        GravelmonStarterManager.processStarters();
+        GravelmonMoveSubstitution.substituteMoves();
+
         //TODO filter dex entries out for banned pokemon, banned/locked regions, and resorting the national dex
+        GravelmonPokedexManager.processPokedexBans(dexes);
+        if (gravelmonConfig.getEnableDexResort()) {
+            GravelmonPokedexResorter.resort(pokemonSpecies);
+        }
+
+        speciesFinished = false;
+        dexesFinished = false;
     }
 
     public static void logJVM() {

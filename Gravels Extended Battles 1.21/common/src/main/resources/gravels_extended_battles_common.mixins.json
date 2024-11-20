@@ -17,6 +17,7 @@
     "FormDataAccessor",
     "FormDataMixin",
     "LevelRequirementAccessor",
+    "NationalDexMixin",
     "NbtItemPredicateAccessor",
     "PokedexManagerAccessor",
     "PokemonSpawnDetailMixin",

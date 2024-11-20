@@ -189,4 +189,20 @@ public class EvolutionGraph {
             updateDexNumbersRecursive(evolution, integer);
         }
     }
+
+    public Map<String, IEvolutionNode> getNodes() {
+        return nodes;
+    }
+
+    public Collection<Species> getSpecies() {
+        return species;
+    }
+
+    public List<IEvolutionNode> getSortedSpecies() {
+        return sortedSpecies;
+    }
+
+    public List<IEvolutionNode> getSpeciesWithMultiplePreEvolutions() {
+        return speciesWithMultiplePreEvolutions;
+    }
 }

@@ -5,6 +5,8 @@ import com.cobblemon.mod.common.api.pokedex.entry.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
 import drai.dev.gravelsextendedbattles.mixin.*;
+import drai.dev.gravelsextendedbattles.resorting.*;
+import net.minecraft.resources.*;
 
 import java.util.*;
 
@@ -25,17 +27,41 @@ public class GravelmonPokedexManager {
             var entries = new ArrayList<>(dexDef.getEntries());
             for (var entry : entries){
                 var species = pokemonSpecies.getByIdentifier(entry.getSpeciesId());
-                if(speciesToBeRemoved.contains(species)){
+                if(species == null || speciesToBeRemoved.contains(species)){
                     dexDef.getEntries().remove(entry);
                 }
+                assert species != null;
+                var formsToRemove = entry.getForms().stream().filter(pokedexForm -> {
+                    var form = species.getFormByName(pokedexForm.getDisplayForm());
+                    if(form.getName().equalsIgnoreCase("normal")) return false;
+                    if (containsBannedLabels(form.getLabels().stream().toList())) {
+                        species.getForms().remove(form);
+                        return true;
+                    }
+                    return false;
+                }).toList();
+                for(var form : formsToRemove){
+                    entry.getForms().remove(form);
+                }
             }
-
             //empty pokedexes should be removed
             if(dexDef.getEntries().isEmpty()) dexes.getDexEntryMap().remove(dex.getKey());
         }
     }
 
-    public static void processPokedexResorting(Dexes dexes){
-
+    public static List<PokedexEntry> processPokedexResorting(List<PokedexEntry> nationalDexEntries){
+        var evolutionGraph = GravelmonPokedexResorter.GRAPH_INSTANCE;
+        var sortedSpecies = evolutionGraph.getSortedSpecies();
+        var sortedEntries = new ArrayList<PokedexEntry>();
+        var pokemonSpecies = PokemonSpecies.INSTANCE;
+        for (int i = 0; i < sortedSpecies.size(); i++) {
+            var sortedSpeciesEntry = sortedSpecies.get(i);
+            var species = sortedSpeciesEntry.getSpecies();
+            var dexEntry = nationalDexEntries.stream().filter(entry -> pokemonSpecies.getByIdentifier(entry.getSpeciesId()) == species).findFirst();
+            if(dexEntry.isPresent()){
+                sortedEntries.add(dexEntry.get());
+            }
+        }
+        return sortedEntries;
     }
 }
