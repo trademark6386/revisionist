@@ -93,6 +93,7 @@ public class GravelsExtendedBattles {
             }
             GravelmonStarterManager.processStarters();
             GravelmonMoveSubstitution.substituteMoves();
+
             return Unit.INSTANCE;
         });
 
@@ -106,5 +107,16 @@ public class GravelsExtendedBattles {
             GravelmonFossilManager.scanLootPools();
             return Unit.INSTANCE;
         });
+
+        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, dexes -> {
+            GravelmonPokedexManager.processPokedexBans(dexes);
+            GravelmonPokedexManager.processPokedexResorting(dexes);
+            return Unit.INSTANCE;
+        });
+        //TODO filter dex entries out for banned pokemon, banned/locked regions, and resorting the national dex
+    }
+
+    public static void logJVM() {
+        System.out.println(System.getProperty("java.version"));
     }
 }

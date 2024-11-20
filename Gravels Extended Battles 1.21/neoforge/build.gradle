@@ -29,6 +29,7 @@ repositories {
         name = 'NeoForged'
         url = 'https://maven.neoforged.net/releases'
     }
+    maven{url = "https://thedarkcolour.github.io/KotlinForForge/"}
 }
 
 dependencies {
@@ -41,7 +42,9 @@ dependencies {
 
     modImplementation "com.cobblemon:neoforge:${cobblemon_file}"
     modImplementation "maven.modrinth:midnightlib:YeePowOJ"
-    modImplementation "maven.modrinth:kotlin-for-forge:${kotlin_forge_file}"
+    forgeRuntimeLibrary("thedarkcolour:kotlinforforge-neoforge:5.3.0") {
+        exclude group: "net.neoforged.fancymodloader", module: "loader"
+    }
 }
 
 def replaceProperties = [mod_id          : mod_id,

@@ -48,7 +48,7 @@ const Moves = {
     num: 3001,
     accuracy: 100,
     basePower: 95,
-    category: "Speecial",
+    category: "Special",
     name: "Ace's Play",
     pp: 15,
     priority: 0,
@@ -2916,12 +2916,6 @@ const Moves = {
     num: 3638,
     accuracy: 100,
     basePower: 0,
-    basePowerCallback(pokemon, target, move) {
-      const currentSpecies = move.allies.shift().species;
-      const bp = 5 + Math.floor(currentSpecies.baseStats.atk / 10);
-      this.debug("BP for " + currentSpecies.name + " hit: " + bp);
-      return bp;
-    },
 	basePowerCallback(pokemon, target, move) {
       // Track the number of hits and set base power accordingly
       const hitCount = move.hit;
@@ -2931,7 +2925,7 @@ const Moves = {
         bp = 20; // First hit has 20 power
       } else if (hitCount === 2) {
         bp = 40; // Second hit has 40 power
-      } else if (hitCount === 3) {
+      } else if (hitCount === 3 || hitCount > 3) {
         bp = 60; // Third hit has 60 power
       }
     
@@ -4704,7 +4698,7 @@ const Moves = {
     accuracy: 100,
     basePower: 85,
     category: "Physical",
-    name: "Amp Claw",
+    name: "Electro Bash",
     pp: 15,
     priority: 0,
     flags: { contact: 1, protect: 1, mirror: 1 },
@@ -8226,13 +8220,6 @@ const Moves = {
     pp: 20,
     priority: 0,
     flags: { protect: 1, reflectable: 1, mirror: 1, allyanim: 1 },
-    onHit(target) {
-      if (target.getTypes().join() === "Rock" || !target.setType("Rock")) {
-        this.add("-fail", target);
-        return null;
-      }
-      this.add("-start", target, "typechange", "Rock");
-    },
 	onHit(target) {
       const newTypes = target.types.map(type => {
         // Replace Ice with Water
@@ -11525,7 +11512,7 @@ const Moves = {
       if (["darkness"].includes(attacker.effectiveWeather())) {
         this.attrLastMove("[still]");
         this.addMove("-anim", attacker, move.name, defender);
-        return;
+        return this.chainModify(1.5);
       }
       if (!this.runEvent("ChargeMove", attacker, defender, move)) {
         return;
@@ -13533,16 +13520,6 @@ const Moves = {
     target: "self",
     type: "Digital",
     contestType: "Beautiful",
-  },
-  shadowforce: {
-    inherit: true,
-    onBasePower(basePower, pokemon, target) {
-      const weakWeathers = ["darkness"];
-      if (weakWeathers.includes(pokemon.effectiveWeather())) {
-        this.debug("weakened by weather");
-        return this.chainModify(1.5);
-      }
-    }
   },
   spectralsap: {
     num: 3412,

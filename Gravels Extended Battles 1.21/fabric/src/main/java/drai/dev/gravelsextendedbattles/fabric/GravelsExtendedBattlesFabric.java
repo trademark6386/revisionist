@@ -1,5 +1,6 @@
 package drai.dev.gravelsextendedbattles.fabric;
 
+import com.cobblemon.mod.relocations.graalvm.polyglot.*;
 import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.loot.*;
 import drai.dev.gravelsextendedbattles.mixin.loot.*;
