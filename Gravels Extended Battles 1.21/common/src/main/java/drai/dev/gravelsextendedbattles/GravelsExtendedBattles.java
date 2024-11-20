@@ -2,6 +2,7 @@ package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.*;
 import com.cobblemon.mod.common.api.fossil.*;
+import com.cobblemon.mod.common.api.pokedex.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.types.*;
 import drai.dev.gravelsextendedbattles.interfaces.*;
@@ -108,7 +109,7 @@ public class GravelsExtendedBattles {
             return Unit.INSTANCE;
         });
 
-        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, dexes -> {
+        Dexes.INSTANCE.getObservable().subscribe(Priority.LOWEST, dexes -> {
             GravelmonPokedexManager.processPokedexBans(dexes);
             GravelmonPokedexManager.processPokedexResorting(dexes);
             return Unit.INSTANCE;
