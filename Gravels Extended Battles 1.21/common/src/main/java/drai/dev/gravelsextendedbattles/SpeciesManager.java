@@ -1,5 +1,6 @@
 package drai.dev.gravelsextendedbattles;
 
+import com.cobblemon.mod.common.api.drop.*;
 import com.cobblemon.mod.common.api.pokemon.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.*;
 import com.cobblemon.mod.common.api.pokemon.evolution.requirement.*;
@@ -290,7 +291,7 @@ public class SpeciesManager {
         if(result.getSpecies()==null) return null;
         if(evolutionEntry.getKind() == EvolutionType.LEVEL_UP){
             Set<EvolutionRequirement> requirements = getEvolutionRequirements(evolutionEntry);
-            return new LevelUpEvolution(evolutionId, result, shedder, true, false, requirements, new HashSet<>(), true);
+            return new LevelUpEvolution(evolutionId, result, shedder, true, false, requirements, new HashSet<>(), new DropTable(), true);
         }
         return null;
     }

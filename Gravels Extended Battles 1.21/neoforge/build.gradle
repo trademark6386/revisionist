@@ -39,8 +39,7 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
-
-    modImplementation "com.cobblemon:neoforge:${cobblemon_file}"
+    modImplementation("com.cobblemon:neoforge:${cobblemon_file}") { transitive = false }
     modImplementation "maven.modrinth:midnightlib:YeePowOJ"
     forgeRuntimeLibrary("thedarkcolour:kotlinforforge-neoforge:5.3.0") {
         exclude group: "net.neoforged.fancymodloader", module: "loader"

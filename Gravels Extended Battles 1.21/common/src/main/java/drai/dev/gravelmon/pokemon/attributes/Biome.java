@@ -59,6 +59,7 @@ public enum Biome {
     IS_SANDY("#cobblemon","is_sandy"),
     IS_SAVANNA("#cobblemon","is_savanna"),
     IS_SKY("#cobblemon","is_sky"),
+    IS_MANGROVE("minecraft","mangrove_swamp"),
     IS_SNOWY("#cobblemon","is_snowy"),
     IS_SNOWY_FOREST("#cobblemon","is_snowy_forest"),
     IS_SPOOKY("#cobblemon","is_spooky"),

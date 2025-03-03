@@ -68,18 +68,17 @@ public class EvolutionGraph {
             }
         });
 
-        sortedSpecies = new ArrayList<IEvolutionNode>(sortedSpecies.stream().sorted().toList());
+        sortedSpecies = new ArrayList<>(sortedSpecies.stream().sorted(Comparator.comparingInt(IEvolutionNode::findLowestPokedexNumber)).toList());
         var dexNumber = new MutableInt(0);
         for (int i = 0; i < sortedSpecies.size(); i++) {
-            var species = sortedSpecies.get(i);
-            updateDexNumbers(species, dexNumber);
+            var node = sortedSpecies.get(i);
+            updateDexNumbers(node, dexNumber);
         }
-        GravelsExtendedBattles.SORTED_SPECIES = sortedSpecies;
-        var pokedexSorted = sortedSpecies.stream().sorted(Comparator.comparingInt(IEvolutionNode::getPokedexNumber)).toList();
-        for (int i = 0; i < pokedexSorted.size(); i++) {
-            var species = pokedexSorted.get(i);
-            System.out.println(i+1 + ": " + species.getSpecies().getName());
-        }
+        GravelsExtendedBattles.SORTED_SPECIES  = sortedSpecies.stream().sorted(Comparator.comparingInt(IEvolutionNode::getPokedexNumber)).toList();
+        /*for (int i = 0; i < GravelsExtendedBattles.SORTED_SPECIES.size(); i++) {
+            var species = GravelsExtendedBattles.SORTED_SPECIES.get(i);
+//            System.out.println(i+1 + ": " + species.getSpecies().getName());
+        }*/
     }
 
     public void shiftDex(IEvolutionNode node, int newNumber) {
@@ -161,7 +160,7 @@ public class EvolutionGraph {
     }
 
     public void printEvolutions(IEvolutionNode node, int i) {
-        if(isBeginningNode(node)) printEvolutions(node, i, "");
+//        if(isBeginningNode(node)) printEvolutions(node, i, "");
     }
 
     private boolean isBeginningNode(IEvolutionNode node) {
@@ -179,7 +178,10 @@ public class EvolutionGraph {
     }
 
     private void updateDexNumbers(IEvolutionNode node, MutableInt integer) {
-        if(isBeginningNode(node)) updateDexNumbersRecursive(node, integer);
+//        integer.setValue(node.findLowestPokedexNumber());
+        if(isBeginningNode(node)){
+            updateDexNumbersRecursive(node, integer);
+        }
     }
 
     private void updateDexNumbersRecursive(IEvolutionNode node, MutableInt integer) {
@@ -198,8 +200,8 @@ public class EvolutionGraph {
         return species;
     }
 
-    public List<IEvolutionNode> getSortedSpecies() {
-        return sortedSpecies;
+    public static List<IEvolutionNode> getSortedSpecies() {
+        return GravelsExtendedBattles.SORTED_SPECIES;
     }
 
     public List<IEvolutionNode> getSpeciesWithMultiplePreEvolutions() {

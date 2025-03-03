@@ -103,7 +103,7 @@ public enum Label {
     MASTENIAN,
     FORM,
     KORZA,
-    RAIAN, PALMIA, NORSE, TRIZOR, ALDAO, BAGO, FRA, IVRIS, ELB(), FABEL(), FERRAN(), AROMA(), SAHL(), MAHAL(), BORAZUL(), KUULKID(), MIKITARI(), SORIN();
+    RAIAN, PALMIA, NORSE, TRIZOR, ALDAO, BAGO, FRA, IVRIS, ELB(), FABEL(), FERRAN(), AROMA(), SAHL(), MAHAL(), BORAZUL(), KUULKID(), MIKITARI(), SORIN(), INSTAGRAM();
 
     private String name;
     Label(String name){
@@ -161,10 +161,9 @@ public enum Label {
             passwordProtectedLabels.put(NOVRAI, "znogyrop");
             passwordProtectedLabels.put(PASTEL_ISLAND, "mysteriousIsland");
             passwordProtectedLabels.put(MYTH, "dramaQueen");
-            passwordProtectedLabels.put(URANIUM, "morrowind");
             passwordProtectedLabels.put(ISIAH, "hiddenNinjaVillage");
             passwordProtectedLabels.put(CROZOIC, "prehistoric");
-            passwordProtectedLabels.put(FLUX, "ghosted");
+            passwordProtectedLabels.put(INSTAGRAM, "thezuccc");
         }
     }
 

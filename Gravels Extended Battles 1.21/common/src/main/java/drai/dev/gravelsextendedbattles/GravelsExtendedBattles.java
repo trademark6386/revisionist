@@ -86,7 +86,13 @@ public class GravelsExtendedBattles {
                 }
             }
         }
-        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, pokemonSpecies -> {
+        PokemonSpecies.
+                INSTANCE
+                .getObservable()
+                .subscribe(
+                Priority.
+                        LOWEST,
+                        pokemonSpecies -> {
             speciesFinished = true;
             applyGravelmonExtensions();
             return Unit.INSTANCE;
@@ -121,13 +127,13 @@ public class GravelsExtendedBattles {
         SpeciesManager.processFormEvolutionAdditions();
         SpeciesManager.processTypeChanges();
         SpeciesManager.processFormBaseScaleAdditions();
+        GravelmonPokedexManager.processPokedexBans(dexes);
         SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
 
         GravelmonStarterManager.processStarters();
         GravelmonMoveSubstitution.substituteMoves();
 
         //TODO filter dex entries out for banned pokemon, banned/locked regions, and resorting the national dex
-        GravelmonPokedexManager.processPokedexBans(dexes);
         if (gravelmonConfig.getEnableDexResort()) {
             GravelmonPokedexResorter.resort(pokemonSpecies);
         }

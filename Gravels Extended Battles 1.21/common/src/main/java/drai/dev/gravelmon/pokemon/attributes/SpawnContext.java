@@ -4,7 +4,8 @@ public enum SpawnContext {
     GROUNDED("grounded"),
     SEAFLOOR("seafloor"),
     SUBMERGED("submerged"),
-    SURFACE("surface");
+    SURFACE("surface"),
+    FISHING("fishing");
     private String name;
     SpawnContext(String name){
         this.name = name;
