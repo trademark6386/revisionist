@@ -3,6 +3,7 @@ package drai.dev.gravelmon.pokemon.attributes;
 public enum SpawnPreset {
     DERELICT("derelict"),
     FOLIAGE("foliage"),
+    @Deprecated
     FRESHWATER("freshwater"),
     LAVA_SURFACE("lava"),
     NATURAL("natural"),
@@ -39,7 +40,7 @@ public enum SpawnPreset {
     WILD("wild"),
     NEAR_BOOKSHELVES("near_bookshelves"),
     REEF("reef"),
-    NETHER_FORTRESS("nether_fortress"),
+    NETHER_FORTRESS("nether_structures"),
     NEAR_MUD("near_mud");
 
     SpawnPreset(String name){

@@ -1,5 +1,6 @@
 plugins {
     id 'com.github.johnrengelman.shadow'
+    id 'org.jetbrains.kotlin.jvm' version "2.1.10"
 }
 
 architectury {
@@ -29,7 +30,10 @@ repositories {
         name = 'NeoForged'
         url = 'https://maven.neoforged.net/releases'
     }
-    maven{url = "https://thedarkcolour.github.io/KotlinForForge/"}
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
 }
 
 dependencies {
@@ -39,13 +43,13 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
-    modImplementation("com.cobblemon:neoforge:${cobblemon_file}") { transitive = false }
+
+    modImplementation "com.cobblemon:neoforge:${cobblemon_file}"
     modImplementation "maven.modrinth:midnightlib:YeePowOJ"
-    forgeRuntimeLibrary("thedarkcolour:kotlinforforge-neoforge:5.3.0") {
+    forgeRuntimeLibrary("thedarkcolour:kotlinforforge-neoforge:5.5.0") {
         exclude group: "net.neoforged.fancymodloader", module: "loader"
     }
 }
-
 def replaceProperties = [mod_id          : mod_id,
                          mod_name        : mod_name,
                          mod_version     : mod_version,
@@ -54,10 +58,10 @@ def replaceProperties = [mod_id          : mod_id,
                          mod_base_package: mod_base_package,
                          minecraft_version: minecraft_version,
                          fabric_version  : fabric_api_version,
-                         loader_version  : fabric_loader_version]
+                         fabric_loader_version  : fabric_loader_version]
 
 processResources {
-    inputs.properties replaceProperties
+    inputs.property 'version', project.version
 
     filesMatching('META-INF/neoforge.mods.toml') {
         expand replaceProperties

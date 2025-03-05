@@ -12,5 +12,3 @@ dependencies {
     modImplementation "com.cobblemon:mod:${cobblemon_file}"
     modImplementation "maven.modrinth:midnightlib:Ct1rAic5"
 }
-
-

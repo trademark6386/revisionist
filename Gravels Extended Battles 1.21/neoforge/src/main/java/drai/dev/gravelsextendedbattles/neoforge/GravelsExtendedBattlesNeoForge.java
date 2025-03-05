@@ -1,4 +1,4 @@
-package drai.dev.gravelsextendedbattles.forge;
+package drai.dev.gravelsextendedbattles.neoforge;
 
 import drai.dev.gravelsextendedbattles.*;
 import drai.dev.gravelsextendedbattles.loot.*;
@@ -10,9 +10,9 @@ import net.neoforged.neoforge.common.*;
 import net.neoforged.neoforge.event.*;
 
 @Mod(GravelsExtendedBattles.MOD_ID)
-public class GravelsExtendedBattlesForge {
+public class GravelsExtendedBattlesNeoForge {
     public static String SHOWDOWN_MODS_COBBLEMON_FOLDER = FMLPaths.GAMEDIR.get().toString()+"/showdown/data/mods/cobblemon/";
-    public GravelsExtendedBattlesForge() {
+    public GravelsExtendedBattlesNeoForge() {
         GravelsExtendedBattles.init(SHOWDOWN_MODS_COBBLEMON_FOLDER);
         NeoForge.EVENT_BUS.addListener(this::onLootTableLoad);
     }
