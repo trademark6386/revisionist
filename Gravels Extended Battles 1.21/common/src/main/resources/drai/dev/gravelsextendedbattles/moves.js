@@ -13921,8 +13921,8 @@ const Moves = {
   thunderclap: {
     num: 3424,
     accuracy: 100,
-    basePower: 40,
-    category: "Physical",
+    basePower: 70,
+    category: "Special",
     name: "Thunderclap",
     pp: 30,
     priority: 1,
