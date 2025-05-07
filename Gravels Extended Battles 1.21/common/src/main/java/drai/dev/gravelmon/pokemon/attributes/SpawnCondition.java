@@ -1,5 +1,7 @@
 package drai.dev.gravelmon.pokemon.attributes;
 
+import org.apache.commons.lang3.*;
+
 public class SpawnCondition {
     private SpawnConditionType conditionType;
     private String condition;
@@ -18,5 +20,10 @@ public class SpawnCondition {
     }
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.capitalize(conditionType+ condition);
     }
 }

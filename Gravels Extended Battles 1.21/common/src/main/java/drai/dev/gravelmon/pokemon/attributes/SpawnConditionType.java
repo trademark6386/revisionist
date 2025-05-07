@@ -22,6 +22,11 @@ public enum SpawnConditionType {
         this.valueType = valueType;
     }
 
+    @Override
+    public String toString() {
+        return name+"= ";
+    }
+
     public String getName() {
         return name;
     }

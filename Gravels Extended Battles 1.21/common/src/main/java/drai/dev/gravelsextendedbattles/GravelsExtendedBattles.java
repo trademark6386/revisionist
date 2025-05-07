@@ -1,6 +1,7 @@
 package drai.dev.gravelsextendedbattles;
 
 import com.cobblemon.mod.common.api.*;
+import com.cobblemon.mod.common.api.events.*;
 import com.cobblemon.mod.common.api.fossil.*;
 import com.cobblemon.mod.common.api.pokedex.*;
 import com.cobblemon.mod.common.api.pokemon.*;
@@ -86,13 +87,8 @@ public class GravelsExtendedBattles {
                 }
             }
         }
-        PokemonSpecies.
-                INSTANCE
-                .getObservable()
-                .subscribe(
-                Priority.
-                        LOWEST,
-                        pokemonSpecies -> {
+
+        PokemonSpecies.INSTANCE.getObservable().subscribe(Priority.LOWEST, pokemonSpecies -> {
             speciesFinished = true;
             applyGravelmonExtensions();
             return Unit.INSTANCE;
@@ -115,6 +111,10 @@ public class GravelsExtendedBattles {
             return Unit.INSTANCE;
         });
 
+        CobblemonEvents.EVOLUTION_COMPLETE.subscribe(Priority.NORMAL, evolutionCompleteEvent -> {
+            if(evolutionCompleteEvent.component1().hasLabels("digimon")) evolutionCompleteEvent.component1().initializeMoveset(true);
+            return Unit.INSTANCE;
+        });
     }
 
     private static boolean speciesFinished = false;
@@ -131,7 +131,7 @@ public class GravelsExtendedBattles {
         SpeciesManager.banPokemon(pokemonSpecies, ((GravelmonPokemonSpeciesAccessor) (Object) pokemonSpecies));
 
         GravelmonStarterManager.processStarters();
-        GravelmonMoveSubstitution.substituteMoves();
+        if(gravelmonConfig.getAutomaticMoveInsertion()) GravelmonMoveSubstitution.substituteMoves();
 
         //TODO filter dex entries out for banned pokemon, banned/locked regions, and resorting the national dex
         if (gravelmonConfig.getEnableDexResort()) {
@@ -140,9 +140,5 @@ public class GravelsExtendedBattles {
 
         speciesFinished = false;
         dexesFinished = false;
-    }
-
-    public static void logJVM() {
-        System.out.println(System.getProperty("java.version"));
     }
 }

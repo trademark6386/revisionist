@@ -20,6 +20,8 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
     public static boolean resortPokedexInEvolutionOrder = false;
     @Entry(name = "Add Starters to the starter screen: ")
     public static boolean addStartersToTheStarterScreen = true;
+    @Entry(name = "Enable automatic move insertion: ")
+    public static boolean enableAutomaticMoveInsertion = true;
 
     @Override
     public boolean getEnableOriginalFanGameTypings() {
@@ -29,6 +31,11 @@ public class GravelmonConfig extends MidnightConfig implements IGravelmonConfig 
     @Override
     public boolean getEnableDexResort() {
         return resortPokedexInEvolutionOrder;
+    }
+
+    @Override
+    public boolean getAutomaticMoveInsertion() {
+        return enableAutomaticMoveInsertion;
     }
 
     @Override

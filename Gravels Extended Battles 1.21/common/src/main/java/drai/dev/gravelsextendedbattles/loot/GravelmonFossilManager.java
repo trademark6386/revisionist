@@ -34,8 +34,8 @@ public class GravelmonFossilManager {
     public static void scanLootPools(){
         LOOT_POOLS.forEach(lootPools->Arrays.stream(lootPools).forEach(lootPool -> {
             var accessor = createLootPoolAccessor(lootPool);
-            var entries = accessor.getEntries();
-            entries.stream().filter(lootPoolEntryContainer -> lootPoolEntryContainer.getType()== LootPoolEntries.ITEM).map(entryContainer -> (LootItem) entryContainer)
+            var entries = new ArrayList<>(accessor.getEntries());
+            accessor.getEntries().stream().filter(lootPoolEntryContainer -> lootPoolEntryContainer.getType()== LootPoolEntries.ITEM).map(entryContainer -> (LootItem) entryContainer)
                     .forEach(lootItem -> {
                         var item = createLootItemAccessor(lootItem).getItem();
                         var itemId = BuiltInRegistries.ITEM.getKey(item.value());
