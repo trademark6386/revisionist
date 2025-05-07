@@ -1,0 +1,33 @@
+{
+  "required": true,
+  "package": "drai.dev.gravelsextendedbattles.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "TypeIconMixin",
+    "TypeWidgetMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "CobblemonPreEvolutionAdapterMixin",
+    "ElementalTypesMixin",
+    "FormDataAccessor",
+    "FormDataMixin",
+    "LevelRequirementAccessor",
+    "NationalDexAccessor",
+    "NationalDexMixin",
+    "NbtItemPredicateAccessor",
+    "PokedexManagerAccessor",
+    "PokemonSpawnDetailMixin",
+    "PokemonSpeciesAccessor",
+    "RegistryLikeIdentifierConditionAccessor",
+    "SimplePokedexDefAccessor",
+    "SpeciesMixin",
+    "TeraTypesMixin",
+    "loot.LootItemAccessor",
+    "loot.LootPoolAccessor",
+    "loot.LootTableAccessor"
+  ]
+}
