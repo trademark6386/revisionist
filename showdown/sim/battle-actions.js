@@ -26,46 +26,74 @@ const CHOOSABLE_TARGETS = /* @__PURE__ */ new Set(["normal", "any", "adjacentAll
 class BattleActions {
   constructor(battle) {
     this.MAX_MOVES = {
-      Flying: "Max Airstream",
-      Dark: "Max Darkness",
-      Fire: "Max Flare",
-      Bug: "Max Flutterby",
-      Water: "Max Geyser",
-      Status: "Max Guard",
-      Ice: "Max Hailstorm",
-      Fighting: "Max Knuckle",
-      Electric: "Max Lightning",
-      Psychic: "Max Mindstorm",
-      Poison: "Max Ooze",
-      Grass: "Max Overgrowth",
-      Ghost: "Max Phantasm",
-      Ground: "Max Quake",
-      Rock: "Max Rockfall",
-      Fairy: "Max Starfall",
-      Steel: "Max Steelspike",
-      Normal: "Max Strike",
-      Dragon: "Max Wyrmwind"
-    };
-    this.Z_MOVES = {
-      Poison: "Acid Downpour",
-      Fighting: "All-Out Pummeling",
-      Dark: "Black Hole Eclipse",
-      Grass: "Bloom Doom",
-      Normal: "Breakneck Blitz",
-      Rock: "Continental Crush",
-      Steel: "Corkscrew Crash",
-      Dragon: "Devastating Drake",
-      Electric: "Gigavolt Havoc",
-      Water: "Hydro Vortex",
-      Fire: "Inferno Overdrive",
-      Ghost: "Never-Ending Nightmare",
-      Bug: "Savage Spin-Out",
-      Psychic: "Shattered Psyche",
-      Ice: "Subzero Slammer",
-      Flying: "Supersonic Skystrike",
-      Ground: "Tectonic Rage",
-      Fairy: "Twinkle Tackle"
-    };
+            Flying: "Max Airstream",
+            Dark: "Max Darkness",
+            Fire: "Max Flare",
+            Bug: "Max Flutterby",
+            Water: "Max Geyser",
+            Status: "Max Guard",
+            Ice: "Max Hailstorm",
+            Fighting: "Max Knuckle",
+            Electric: "Max Lightning",
+            Psychic: "Max Mindstorm",
+            Poison: "Max Ooze",
+            Grass: "Max Overgrowth",
+            Ghost: "Max Phantasm",
+            Ground: "Max Quake",
+            Rock: "Max Rockfall",
+            Fairy: "Max Starfall",
+            Steel: "Max Steelspike",
+            Normal: "Max Strike",
+            Dragon: "Max Wyrmwind",
+			Fallout: "Max Fallout",
+			Cosmic: "Max Galaxy",
+			Crystal: "Max Statterstorm",
+			Digital: "Max Overclock",
+			Eldritch: "Max Dreadvoid",
+			Light: "Max Radiance",
+			Nuclear: "Max Meltdown",
+			Plastic: "Max Recast",
+			Questionmark: "Max ???",
+			Shadow: "Max Umbrage",
+			Slime: "Max Ooze Flood",
+			Sound: "Max Reverb",
+			Wind: "Max Tempest",
+			Blood: "Max Leechrush"
+        };
+        this.Z_MOVES = {
+            Poison: "Acid Downpour",
+            Fighting: "All-Out Pummeling",
+            Dark: "Black Hole Eclipse",
+            Grass: "Bloom Doom",
+            Normal: "Breakneck Blitz",
+            Rock: "Continental Crush",
+            Steel: "Corkscrew Crash",
+            Dragon: "Devastating Drake",
+            Electric: "Gigavolt Havoc",
+            Water: "Hydro Vortex",
+            Fire: "Inferno Overdrive",
+            Ghost: "Never-Ending Nightmare",
+            Bug: "Savage Spin-Out",
+            Psychic: "Shattered Psyche",
+            Ice: "Subzero Slammer",
+            Flying: "Supersonic Skystrike",
+            Ground: "Tectonic Rage",
+            Fairy: "Twinkle Tackle",
+			Fallout: "Atomic Apocalypse",
+			Cosmic: "Supernova Implosion",
+			Crystal: "Prism Breaker Beam",
+			Digital: "Code Overload",
+			Eldritch: "Whispers Beyond the Veil",
+			Light: "Divine Nova",
+			Nuclear: "Core Detonation",
+			Plastic: "Synthetic Evolution",
+			Questionmark: "??? Protocol",
+			Shadow: "Veil of Oblivion",
+			Slime: "Mucus Tsunami",
+			Sound: "Bass Drop Finale",
+			Wind: "Heaven’s Gale",
+			Blood: "Crimson Pact"
+        };
     this.battle = battle;
     this.dex = battle.dex;
     if (this.dex.data.Scripts.actions)
@@ -1330,42 +1358,148 @@ class BattleActions {
       return zMoves;
   }
   getMaxMove(move, pokemon) {
-    if (typeof move === "string")
-      move = this.dex.moves.get(move);
-    if (move.name === "Struggle")
-      return move;
-    if (pokemon.gigantamax && pokemon.canGigantamax && move.category !== "Status") {
-      const gMaxMove = this.dex.moves.get(pokemon.canGigantamax);
-      if (gMaxMove.exists && gMaxMove.type === move.type)
-        return gMaxMove;
-    }
-    const maxMove = this.dex.moves.get(this.MAX_MOVES[move.category === "Status" ? move.category : move.type]);
-    if (maxMove.exists)
-      return maxMove;
+  if (typeof move === "string")
+    move = this.dex.moves.get(move);
+  if (move.name === "Struggle")
+    return move;
+  // Assign the Gigantamax move based on species
+  let GigantamaxMove = null;
+  const GIGANTAMAX_MOVES = {
+	venusaur: "gmaxvinelash",//Works  
+    charizard: "gmaxwildfire",//Works
+	blastoise: "gmaxcannonade",//Works
+    butterfree: "gmaxbefuddle",//Works
+	pikachu: "gmaxvoltcrash",//Works
+    meowth: "gmaxgoldrush",//Works
+    machamp: "gmaxchistrike",//Works
+    gengar: "gmaxterror",//Works
+    kingler: "gmaxfoamburst",//Works
+    lapras: "gmaxresonance",//Works
+    eevee: "gmaxcuddle",//Works
+    snorlax: "gmaxreplenish",//Works
+    garbodor: "gmaxmalodor",//Works
+	melmetal: "gmaxmeltdown",//Works
+    copperajah: "gmaxsteelsurge",//Works
+    duraludon: "gmaxdepletion",//Works
+    corviknight: "gmaxwindrage",//Works
+	orbeetle: "gmaxgravitas",//Works
+    toxtricity: "gmaxstunshock",//Works
+	toxtricitylowkey: "gmaxstunshock",//Works
+    centiskorch: "gmaxcentiferno",//Works
+    hatterene: "gmaxsmite",//Works
+    grimmsnarl: "gmaxsnooze",//Works
+	alcremie: "gmaxfinale",//Works
+    alcremierubycream: "gmaxfinale",//Works
+	alcremiematchacream: "gmaxfinale",//Works
+	alcremiemintcream: "gmaxfinale",//Works
+	alcremielemoncream: "gmaxfinale",//Works
+	alcremiesaltedcream: "gmaxfinale",//Works
+	alcremierubyswirl: "gmaxfinale",//Works
+	alcremiecaramelswirl: "gmaxfinale",//Works
+	alcremierainbowswirl: "gmaxfinale",//Works
+    drednaw: "gmaxstonesurge",//Works
+    coalossal: "gmaxvolcalith",//Works
+	flapple: "gmaxtartness",//Works
+	appletun: "gmaxsweetness",//Works
+    sandaconda: "gmaxsandblast",//Works
+    inteleon: "gmaxhydrosnipe",//Works
+    cinderace: "gmaxfireball",//Works
+    rillaboom: "gmaxdrumsolo",//Works
+    urshifu: "gmaxoneblow",//Works
+    urshifurapidstrike: "gmaxrapidflow",//Works
+  };
+
+  const speciesName = this.dex.toID(pokemon.species?.name);
+  if (speciesName && pokemon.gigantamax && GIGANTAMAX_MOVES[speciesName]) {
+    GigantamaxMove = GIGANTAMAX_MOVES[speciesName];
+  }
+  
+  if (GigantamaxMove && move.category !== "Status") {
+    const gMaxMove = this.dex.moves.get(GigantamaxMove);
+    if (gMaxMove.exists && gMaxMove.type === move.type)
+      return gMaxMove;
+  }
+  const maxMove = this.dex.moves.get(this.MAX_MOVES[move.category === "Status" ? move.category : move.type]);
+  if (maxMove.exists)
+    return maxMove;
   }
   getActiveMaxMove(move, pokemon) {
-    if (typeof move === "string")
-      move = this.dex.getActiveMove(move);
-    if (move.name === "Struggle")
-      return this.dex.getActiveMove(move);
-    let maxMove = this.dex.getActiveMove(this.MAX_MOVES[move.category === "Status" ? move.category : move.type]);
-    if (move.category !== "Status") {
-      if (pokemon.gigantamax && pokemon.canGigantamax) {
-        const gMaxMove = this.dex.getActiveMove(pokemon.canGigantamax);
-        if (gMaxMove.exists && gMaxMove.type === move.type)
-          maxMove = gMaxMove;
-      }
-      if (!move.maxMove?.basePower)
-        throw new Error(`${move.name} doesn't have a maxMove basePower`);
-      if (!["gmaxdrumsolo", "gmaxfireball", "gmaxhydrosnipe"].includes(maxMove.id)) {
-        maxMove.basePower = move.maxMove.basePower;
-      }
-      maxMove.category = move.category;
+  if (typeof move === "string")
+    move = this.dex.getActiveMove(move);
+  if (move.name === "Struggle")
+    return this.dex.getActiveMove(move);
+
+  // Assign the Gigantamax move based on species
+  let GigantamaxMove = null;
+  const GIGANTAMAX_MOVES = {
+	venusaur: "gmaxvinelash",//Works  
+    charizard: "gmaxwildfire",//Works
+	blastoise: "gmaxcannonade",//Works
+    butterfree: "gmaxbefuddle",//Works
+	pikachu: "gmaxvoltcrash",//Works
+    meowth: "gmaxgoldrush",//Works
+    machamp: "gmaxchistrike",//Works
+    gengar: "gmaxterror",//Works
+    kingler: "gmaxfoamburst",//Works
+    lapras: "gmaxresonance",//Works
+    eevee: "gmaxcuddle",//Works
+    snorlax: "gmaxreplenish",//Works
+    garbodor: "gmaxmalodor",//Works
+	melmetal: "gmaxmeltdown",//Works
+    copperajah: "gmaxsteelsurge",//Works
+    duraludon: "gmaxdepletion",//Works
+    corviknight: "gmaxwindrage",//Works
+	orbeetle: "gmaxgravitas",//Works
+    toxtricity: "gmaxstunshock",//Works
+	toxtricitylowkey: "gmaxstunshock",//Works
+    centiskorch: "gmaxcentiferno",//Works
+    hatterene: "gmaxsmite",//Works
+    grimmsnarl: "gmaxsnooze",//Works
+	alcremie: "gmaxfinale",//Works
+    alcremierubycream: "gmaxfinale",//Works
+	alcremiematchacream: "gmaxfinale",//Works
+	alcremiemintcream: "gmaxfinale",//Works
+	alcremielemoncream: "gmaxfinale",//Works
+	alcremiesaltedcream: "gmaxfinale",//Works
+	alcremierubyswirl: "gmaxfinale",//Works
+	alcremiecaramelswirl: "gmaxfinale",//Works
+	alcremierainbowswirl: "gmaxfinale",//Works
+    drednaw: "gmaxstonesurge",//Works
+    coalossal: "gmaxvolcalith",//Works
+	flapple: "gmaxtartness",//Works
+	appletun: "gmaxsweetness",//Works
+    sandaconda: "gmaxsandblast",//Works
+    inteleon: "gmaxhydrosnipe",//Works
+    cinderace: "gmaxfireball",//Works
+    rillaboom: "gmaxdrumsolo",//Works
+    urshifu: "gmaxoneblow",//Works
+    urshifurapidstrike: "gmaxrapidflow",//Works
+  };
+
+  const speciesName = this.dex.toID(pokemon.species?.name);
+  if (speciesName && pokemon.gigantamax && GIGANTAMAX_MOVES[speciesName]) {
+    GigantamaxMove = GIGANTAMAX_MOVES[speciesName];
+  }
+
+  let maxMove = this.dex.getActiveMove(this.MAX_MOVES[move.category === "Status" ? move.category : move.type]);
+  if (move.category !== "Status") {
+    if (GigantamaxMove) {
+      const gMaxMove = this.dex.getActiveMove(GigantamaxMove);
+      if (gMaxMove.exists && gMaxMove.type === move.type)
+        maxMove = gMaxMove;
     }
-    maxMove.baseMove = move.id;
-    maxMove.priority = move.priority;
-    maxMove.isZOrMaxPowered = true;
-    return maxMove;
+    if (!move.maxMove?.basePower)
+      throw new Error(`${move.name} doesn't have a maxMove basePower`);
+    // Only update basePower if it's not a special-case G-Max move
+    if (!["gmaxdrumsolo", "gmaxfireball", "gmaxhydrosnipe"].includes(maxMove.id)) {
+      maxMove.basePower = move.maxMove.basePower;
+    }
+    maxMove.category = move.category;
+  }
+  maxMove.baseMove = move.id;
+  maxMove.priority = move.priority;
+  maxMove.isZOrMaxPowered = true;
+  return maxMove;
   }
   runZPower(move, pokemon) {
     const zPower = this.dex.conditions.get("zpower");
@@ -1559,24 +1693,31 @@ class BattleActions {
     baseDamage = this.battle.randomizer(baseDamage);
     if (type !== "???") {
       let stab = 1;
-      const isSTAB = move.forceSTAB || pokemon.hasType(type) || pokemon.getTypes(false, true).includes(type);
+	  // Ensure stellarBoostedTypes is initialized
+      if (!pokemon.stellarBoostedTypes) {
+        pokemon.stellarBoostedTypes = [];
+	  }
+      const isSTAB = move.forceSTAB || pokemon.hasType(type) || pokemon.getTypes(false, true).includes(type) || (pokemon.terastallized && pokemon.teraType.toLowerCase() === type.toLowerCase());
       if (isSTAB) {
         stab = 1.5;
       }
-      if (pokemon.terastallized === "Stellar") {
-        if (!pokemon.stellarBoostedTypes.includes(type) || move.stellarBoosted) {
-          stab = isSTAB ? 2 : [4915, 4096];
-          move.stellarBoosted = true;
-          if (pokemon.species.name !== "Terapagos-Stellar") {
-            pokemon.stellarBoostedTypes.push(type);
-          }
-        }
-      } else {
-        if (pokemon.terastallized === type && pokemon.getTypes(false, true).includes(type)) {
-          stab = 2;
-        }
-        stab = this.battle.runEvent("ModifySTAB", pokemon, target, move, stab);
+      if (pokemon.terastallized && pokemon.teraType.toLowerCase() === "stellar") {
+        if (!pokemon.stellarBoostedTypes.includes(type)) {
+			if (isSTAB) {
+				stab = 2;  // First-time Stellar Boost (2x STAB)
+				pokemon.stellarBoostedTypes.push(type);
+			} else {
+				stab = 1.2;
+				pokemon.stellarBoostedTypes.push(type);
+				// Do NOT change `stab = 1.5` here, keep the previous STAB value
+				//move.stellarBoosted = true;
+			}
+		}
+	  }
+	  if (pokemon.terastallized && (pokemon.teraType.toLowerCase() === type.toLowerCase())) {
+        stab = 2;
       }
+	  stab = this.battle.runEvent("ModifySTAB", pokemon, target, move, stab);
       baseDamage = this.battle.modify(baseDamage, stab);
     }
     let typeMod = target.runEffectiveness(move);
@@ -1634,10 +1775,17 @@ class BattleActions {
   // #region MEGA EVOLUTION
   // ==================================================================
   canMegaEvo(pokemon) {
-    const species = pokemon.baseSpecies;
+    const species = pokemon.species;
     const item = pokemon.getItem();
+	if (species.baseSpecies === "Rayquaza" && pokemon.terastallized) {
+      return null;
+    }
+    if (species.baseSpecies === "Rayquaza" && pokemon.baseMoves.includes("dragonascent")) {
+      return "Rayquaza-Mega";
+    }
     const megaKey = species.otherFormes?.find((form) => /.*-Mega(-[a-zA-Z])?/.test(form));
     const megaForme = megaKey && this.dex.species.get(megaKey);
+	
     if ((this.battle.gen <= 7 || this.battle.ruleTable.has("+pokemontag:past")) && megaForme?.requiredMove && pokemon.baseMoves.includes((0, import_dex.toID)(megaForme.requiredMove)) && !item.zMove) {
       return megaForme.name;
     }
@@ -1669,7 +1817,10 @@ class BattleActions {
     return true;
   }
   canTerastallize(pokemon) {
-    if (pokemon.getItem().zMove || pokemon.canMegaEvo || this.dex.gen !== 9) {
+	  if (pokemon.species.baseSpecies === "Rayquaza") {
+      return pokemon.teraType;
+    }
+      if (pokemon.getItem().zMove || pokemon.canMegaEvo || this.dex.gen !== 9 || pokemon.volatiles["dynamax"]) {
       return null;
     }
     return pokemon.teraType;
@@ -1678,12 +1829,14 @@ class BattleActions {
     if (pokemon.illusion && ["Ogerpon", "Terapagos"].includes(pokemon.illusion.species.baseSpecies)) {
       this.battle.singleEvent("End", this.dex.abilities.get("Illusion"), pokemon.abilityState, pokemon);
     }
-    const type = pokemon.teraType;
-    this.battle.add("-terastallize", pokemon, type);
+	const type = pokemon.teraType.charAt(0).toUpperCase() + pokemon.teraType.slice(1).toLowerCase();
+	this.battle.add("-terastallize", pokemon, type);
+	pokemon.canMegaEvo = null;
     pokemon.terastallized = type;
     for (const ally of pokemon.side.pokemon) {
       ally.canTerastallize = null;
     }
+	
     pokemon.addedType = "";
     pokemon.knownType = true;
     pokemon.apparentType = type;
@@ -1701,6 +1854,7 @@ class BattleActions {
       pokemon.maxhp = newMaxHP;
       this.battle.add("-heal", pokemon, pokemon.getHealth, "[silent]");
     }
+	
     this.battle.runEvent("AfterTerastallization", pokemon);
   }
   // #endregion
