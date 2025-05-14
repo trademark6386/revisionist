@@ -1293,6 +1293,146 @@ const Items = {
     num: 3081,
     gen: 6,
     isNonstandard: "Past"
+  },
+  falloutiumz: {
+    name: "Falloutium Z",
+    spritenum: 3082,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Fallout",
+    num: 3082,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  cosmiumz: {
+    name: "Cosmium Z",
+    spritenum: 3083,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Cosmic",
+    num: 3083,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  crystalloniumz: {
+    name: "Crystallonium Z",
+    spritenum: 3084,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Crystal",
+    num: 3084,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  digitiumz: {
+    name: "Digitium Z",
+    spritenum: 3085,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Digital",
+    num: 3085,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  eldrichiumz: {
+    name: "Eldrichium Z",
+    spritenum: 3086,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Eldritch",
+    num: 3086,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  luxiumz: {
+    name: "Luxium Z",
+    spritenum: 3087,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Light",
+    num: 3087,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  nucleariumz: {
+    name: "Nuclearium Z",
+    spritenum: 3088,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Nuclear",
+    num: 3088,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  plasticinez: {
+    name: "Plasticine Z",
+    spritenum: 3089,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Plastic",
+    num: 3089,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  questionmarkz: {
+    name: "???ium Z",
+    spritenum: 3090,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Questionmark",
+    num: 3090,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  umbriumz: {
+    name: "Umbrium Z",
+    spritenum: 3091,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Shadow",
+    num: 3091,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  visciumz: {
+    name: "Viscium Z",
+    spritenum: 3092,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Slime",
+    num: 3092,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  resoniumz: {
+    name: "Resonium Z",
+    spritenum: 3093,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Sound",
+    num: 3093,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  aeriumz: {
+    name: "Aerium Z",
+    spritenum: 3094,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Wind",
+    num: 3094,
+    gen: 7,
+    isNonstandard: "Past"
+  },
+  sanguiniumz: {
+    name: "Sanguinium Z",
+    spritenum: 3095,
+    onTakeItem: false,
+    zMove: true,
+    zMoveType: "Blood",
+    num: 3095,
+    gen: 7,
+    isNonstandard: "Past"
   }
 };
 //# sourceMappingURL=items.js.map
