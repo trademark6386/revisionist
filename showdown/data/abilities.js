@@ -5841,6 +5841,19 @@ const Abilities = {
     rating: 3,
     num: -3
   },
+  oneeighty: {
+    onDamagePriority: 1,
+    onDamage(damage, target, source, effect) {
+      if (effect.id === "confusion") {
+        this.heal(target.baseMaxhp / 8);
+        return false;
+      }
+    },
+    flags: {},
+    name: "One-Eighty",
+    rating: 4,
+    num: 2002
+  },
   persistent: {
     isNonstandard: "CAP",
     // implemented in the corresponding move
